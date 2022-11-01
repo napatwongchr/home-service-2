@@ -7,7 +7,7 @@ import {
   Container
 } from "@chakra-ui/react";
 import React from "react";
-import bigbro from "../asset/image/browithblueshirt.svg";
+import bigbro from "../../asset/image/homePage/browithblueshirt.svg";
 
 const Banner = () => {
   return (
@@ -58,7 +58,7 @@ const Banner = () => {
             ml={162}
             borderRadius="8px"
             bg="#336DF2"
-            _hover={{ bg: "#4C7FF4", color: "#FFFFFF"}}
+            _hover={{ bg: "#4C7FF4", color: "#FFFFFF" }}
             _active={{ bg: "#0E3FB0", color: "#FFFFFF" }}
           >
             <Text textStyle="h2" color="#FFFFFF">
