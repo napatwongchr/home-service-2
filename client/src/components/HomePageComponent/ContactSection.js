@@ -13,7 +13,7 @@ const ContactSection = () => {
       h="378px"
       centerContent
     >
-      <Box width="100%">
+      <Box width="1440px">
         <Flex>
           <Image
             src={male}

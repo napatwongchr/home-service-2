@@ -15,7 +15,7 @@ const NavComponent = () => {
                     </Box>
                 </Flex>
                 <Flex mr="184px">
-                    <Button colorScheme='teal' variant='outline' borderColor="blue.600" fontWeight="500" fontSize="16px" color="blue.500">
+                    <Button colorScheme='teal' variant='outline' borderColor="blue.600" fontWeight="500" fontSize="16px" color="blue.500" _hover={{ borderColor: "blue.400", color: "blue.400" }} _active={{ borderColor: "blue.800", color: "blue.800" }}>
                         เข้าสู่ระบบ
                     </Button>
                 </Flex>
