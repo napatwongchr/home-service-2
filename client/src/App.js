@@ -1,10 +1,10 @@
 
-import RecommendServiceSection from "./components/RecommendServiceSection";
+import AllServiceSection from "./components/AllServiceSection";
 
 function App() {
   return (
     <div className="App">
-      <RecommendServiceSection />
+      <AllServiceSection />
     </div>
   );
 }

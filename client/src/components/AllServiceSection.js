@@ -1,26 +1,45 @@
-import { Badge, Box, Center, Flex, Grid, Image, Text } from '@chakra-ui/react';
+import { Badge, Box, Center, Container, Flex, Grid, Image, Text } from '@chakra-ui/react';
 import React from 'react';
 import { serviceData } from '../asset/model/serviceData';
 
 const AllServiceSection = () => {
+    const handleColorButton = (type) => {
+        switch (type) {
+            case 'บริการทั่วไป':
+                return 'blue.100'
+            case 'บริการห้องครัว':
+                return 'purple.100'
+            case 'บริการห้องน้ำ':
+                return 'green.100'
+            default:
+                return 'blue.100'
+        }
+    }
+    const handleColorText = (type) => {
+        switch (type) {
+            case 'บริการทั่วไป':
+                return 'blue.800'
+            case 'บริการห้องครัว':
+                return 'purple.900'
+            case 'บริการห้องน้ำ':
+                return 'green.900'
+            default:
+                return 'blue.800'
+        }
+    }
     return (
-        <>
+        <Container className='recommendService' maxW='100%' bg='gray.100' centerContent>
             <Flex>
-                <Center w='1440px' mb='42px'>
-                    <Text textStyle='h1' color='blue.950'>บริการยอดฮิตของเรา</Text>
-                </Center>
-            </Flex>
-            <Flex>
-                <Center w='1440px'>
-                    <Grid templateColumns='repeat(3, 1fr)' gap={6}>
+                <Center w='1440px' mt='80px' mb='121px'>
+                    <Grid templateColumns='repeat(3, 1fr)' columnGap='37px' rowGap='48px'>
                         {
                             serviceData.map((item, index) => {
                                 return (
                                     <Box w='349px' h='369px' bg='utility.white' overflow='hidden' border='1px' borderColor='gray.300' borderRadius='8px' key={index}>
                                         <Image src={item.image} alt={null} h='200px' w='100%' />
-                                        <Badge borderRadius='10%' px='10px' py='4px' bg='blue.100' mx='24px' mt='16px' mb='8px'>
-                                            <Text textStyle='b4' color='blue.800'>{item.type}</Text>
-                                        </Badge>
+                                        <Badge borderRadius='10%' px='10px' py='4px' bg={handleColorButton(item.type)} mx='24px' mt='16px' mb='8px'>
+                                            <Text textStyle='b4' color={handleColorText(item.type)}>{item.type}</Text>
+                                        </Badge> :
                                         <Text textStyle='h2' color='gray.950' mx='24px' mb='4px'>{item.name}</Text>
                                         <Flex mx='24px' mb='22px'>
                                             <svg width="14" height="15" viewBox="0 -1 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,9 +56,7 @@ const AllServiceSection = () => {
                     </Grid>
                 </Center>
             </Flex>
-
-
-        </>
+        </Container >
 
     )
 }
