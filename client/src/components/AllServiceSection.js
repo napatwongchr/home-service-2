@@ -39,7 +39,7 @@ const AllServiceSection = () => {
                                         <Image src={item.image} alt={null} h='200px' w='100%' />
                                         <Badge borderRadius='10%' px='10px' py='4px' bg={handleColorButton(item.type)} mx='24px' mt='16px' mb='8px'>
                                             <Text textStyle='b4' color={handleColorText(item.type)}>{item.type}</Text>
-                                        </Badge> :
+                                        </Badge>
                                         <Text textStyle='h2' color='gray.950' mx='24px' mb='4px'>{item.name}</Text>
                                         <Flex mx='24px' mb='22px'>
                                             <svg width="14" height="15" viewBox="0 -1 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
