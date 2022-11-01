@@ -1,15 +1,26 @@
 import React from "react";
-import { Flex, Box, Text } from "@chakra-ui/react";
+import { Flex, Box, Text, Container, Image } from "@chakra-ui/react";
 import male from "../asset/image/contact-section/male.svg";
 import house from "../asset/image/contact-section/house1.svg";
 import "./contact.css";
 
 const ContactSection = () => {
   return (
-    <section className="contact-banner">
-      <Box bg="blue.600" width="1440px" height="378px">
-        <Flex justify="space-between">
-          <img src={male} alt="male-holding-tools-box" />
+    <Container
+      className="contact-banner"
+      bg="blue.600"
+      maxWidth="100%"
+      h="378px"
+      centerContent
+    >
+      <Box width="100%">
+        <Flex>
+          <Image
+            src={male}
+            alt="male-holding-tools-box"
+            height="fit-content"
+            marginLeft="-1rem"
+          />
           <Flex direction="column" width="100%">
             <Text
               textStyle="h1"
@@ -37,14 +48,21 @@ const ContactSection = () => {
               color="white"
               marginTop="1.5rem"
               marginLeft="7rem"
+              whiteSpace="nowrap"
             >
               ติดต่อมาที่อีเมล: job@homeservices.co
             </Text>
           </Flex>
-          <img className="house-pic" alt="house" src={house} />
+          <Image
+            className="house-pic"
+            alt="house"
+            src={house}
+            marginRight="-1rem"
+            marginBottom="-1rem"
+          />
         </Flex>
       </Box>
-    </section>
+    </Container>
   );
 };
 
