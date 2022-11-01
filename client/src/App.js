@@ -1,8 +1,8 @@
-import Banner from "./components/BannerSection.js";
-
 function App() {
   return (
-      <Banner/>
+    <div className="App">
+    
+    </div>
   );
 }
 
