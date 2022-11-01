@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex, Box, Text } from "@chakra-ui/react";
-import male from "../contact-section-svg/male.svg";
-import house from "../contact-section-svg/house1.svg";
+import male from "../asset/image/contact-section/male.svg";
+import house from "../asset/image/contact-section/house1.svg";
 import "./contact.css";
 
 const ContactSection = () => {
@@ -24,8 +24,6 @@ const ContactSection = () => {
             </Text>
             <Text
               textStyle="h3"
-              fontSize="20px"
-              fontWeight="400"
               color="white"
               marginTop="1.5rem"
               marginLeft="7rem"
@@ -36,7 +34,6 @@ const ContactSection = () => {
             </Text>
             <Text
               textStyle="h1"
-              fontSize="32px"
               color="white"
               marginTop="1.5rem"
               marginLeft="7rem"
