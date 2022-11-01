@@ -2,7 +2,7 @@ import { Badge, Box, Button, Center, Container, Flex, Grid, Image, Text } from '
 import React from 'react';
 const RecommendServiceSection = () => {
     return (
-        <Container className='recommendService' maxW='100%' bg='gray.900' centerContent>
+        <Container className='recommendService' maxW='100%' bg='gray.100' centerContent>
             <Flex>
                 <Center w='1440px' mb='42px' mt='80px'>
                     <Text textStyle='h1' color='blue.950'>บริการยอดฮิตของเรา</Text>
