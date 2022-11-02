@@ -1,4 +1,4 @@
-import { pool } from '../../../utrils/db.js'
+import { pool } from '../utrils/db.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
