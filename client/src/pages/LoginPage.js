@@ -4,7 +4,7 @@ import LoginForm from "../components/LoginPage/LoginForm";
 
 const RegisterPage = () => {
   return (
-    <section className="registerPage">
+    <section className="loginPage">
       <Nav />
       <LoginForm />
     </section>
