@@ -7,14 +7,20 @@ import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme.js';
 import './index.css'
+import { AuthProvider } from './contexts/authentication';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <App />
-    </ChakraProvider>
-  </React.StrictMode>
+    <BrowserRouter>
+      <AuthProvider>
+        <ChakraProvider theme={theme}>
+          <App />
+        </ChakraProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  </React.StrictMode >
 );
 
 reportWebVitals();
