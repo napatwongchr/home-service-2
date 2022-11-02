@@ -4,15 +4,13 @@ import { Link } from 'react-router-dom';
 
 const NavComponent = () => {
     return (
-        <Container className='navBar' maxW={'100%'} bg={'utility.white'} centerContent>
+        <Container className='navBar' w={'100%'} centerContent>
             <Flex alignItems="center" height="80px" w={'1440px'} justifyContent="space-between">
                 <Flex alignItems="center">
-                    <Link to={'/'}>
-                        <Flex ml="161px" >
-                            <Image src={require("../../asset/image/homePage/house-logo.png")} alt="house-logo" />
-                            <Text color="blue.600" fontWeight="500" fontSize="24px">HomeServices</Text>
-                        </Flex>
-                    </Link>
+                    <Flex ml="161px" >
+                        <Image src={require("../../asset/image/homePage/house-logo.png")} alt="house-logo" />
+                        <Text color="blue.600" fontWeight="500" fontSize="24px">HomeServices</Text>
+                    </Flex>
                     <Box ml="20">
                         <Text fontSize="16px" textStyle="h5" fontWeight="600" color="utility.black">บริการของเรา</Text>
                     </Box>
