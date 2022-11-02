@@ -1,3 +1,4 @@
+import "./loginPage.css";
 import React from "react";
 import facebookLogo from "../../asset/image/loginpage/facebook-logo.svg";
 import {
@@ -11,9 +12,13 @@ import {
   Image,
   Link,
 } from "@chakra-ui/react";
-import { Formik, Field, Form } from "formik";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { useAuth } from "../../contexts/authentication.js";
 
 const LoginForm = () => {
+  const { login } = useAuth();
+
   return (
     <Container
       maxW={"100%"}
@@ -27,83 +32,99 @@ const LoginForm = () => {
           email: "",
           password: "",
         }}
-        onSubmit={async (values) => {
-          await new Promise((r) => setTimeout(r, 500));
-          alert(JSON.stringify(values, null, 2));
+        validationSchema={Yup.object({
+          email: Yup.string().required("ใส่อีเมลด้วย"),
+          password: Yup.string().required("ใส่รหัสผ่านด้วย"),
+        })}
+        onSubmit={(values) => {
+          console.log(values);
+          login(values);
         }}
       >
-        <Form>
-          <Flex
-            flexDirection={"column"}
-            w={614}
-            h={600}
-            bg="utility.white"
-            borderRadius={"8px"}
-            px={"87px"}
-            py={"30px"}
-            justify="center"
-          >
-            <Text textStyle={"h1"} color="blue.950" textAlign={"center"}>
-              เข้าสู่ระบบ
-            </Text>
-            <label htmlFor="email">อีเมล*</label>
-            <Input
-              id="email"
-              name="email"
-              placeholder="กรุณากรอกอีเมล"
-              marginBottom="1rem"
-            />
-
-            <label htmlFor="password">รหัสผ่าน*</label>
-            <Input
-              id="password"
-              name="password"
-              placeholder="กรุณากรอกรหัสผ่าน"
-              marginBottom="2rem"
-            />
-
-            <Button
-              type="submit"
-              bg="blue.600"
-              color={"white"}
-              textStyle="h5"
-              fontWeight={"500"}
-              height="44px"
+        {(formik) => (
+          <Form>
+            <Flex
+              flexDirection={"column"}
+              w={614}
+              h={600}
+              bg="utility.white"
+              borderRadius={"8px"}
+              px={"87px"}
+              py={"30px"}
+              justify="center"
             >
-              เข้าสู่ระบบ
-            </Button>
-
-            <Stack direction="row" p={7} align={"center"}>
-              <Divider />
-              <Text whiteSpace={"nowrap"} textStyle="b3">
-                หรือลงชื่อเข้าใช้ผ่าน
+              <Text textStyle={"h1"} color="blue.950" textAlign={"center"}>
+                เข้าสู่ระบบ
               </Text>
-              <Divider />
-            </Stack>
-            <Button
-              leftIcon={<Image src={facebookLogo} />}
-              bg="white"
-              border={"1px"}
-              borderColor="blue.600"
-              color={"blue.600"}
-              textAlign="center"
-              height="44px"
-            >
-              เข้าสู่ระบบด้วย Facebook
-            </Button>
-            <Text align={"center"} marginTop="2rem">
-              ยังไม่มีบัญชีผู้ใช้ HomeService?{" "}
-              <Link
-                color="blue.600"
-                href="/register"
-                fontWeight={"600"}
-                textDecoration={"underline"}
+              <label htmlFor="email">
+                อีเมล <span className="star">*</span>
+              </label>
+              <Input
+                id="email"
+                name="email"
+                {...formik.getFieldProps("email")}
+                placeholder="กรุณากรอกอีเมล"
+              />
+              {formik.touched.email && formik.errors.password ? (
+                <div className="text-error">{formik.errors.email}</div>
+              ) : null}
+              <label htmlFor="password">
+                รหัสผ่าน <span className="star">*</span>
+              </label>
+              <Input
+                id="password"
+                name="password"
+                {...formik.getFieldProps("password")}
+                placeholder="กรุณากรอกรหัสผ่าน"
+              />
+              {formik.touched.password && formik.errors.password ? (
+                <div className="text-error">{formik.errors.password}</div>
+              ) : null}
+              <Button
+                type="submit"
+                bg="blue.600"
+                color={"white"}
+                textStyle="h5"
+                fontWeight={"500"}
+                height="44px"
+                marginTop="2.5rem"
               >
-                ลงทะเบียน
-              </Link>
-            </Text>
-          </Flex>
-        </Form>
+                เข้าสู่ระบบ
+              </Button>
+
+              <Stack direction="row" p={7} align={"center"}>
+                <Divider />
+                <Text whiteSpace={"nowrap"} textStyle="b3">
+                  หรือลงชื่อเข้าใช้ผ่าน
+                </Text>
+                <Divider />
+              </Stack>
+              <Button
+                type="submit"
+                leftIcon={<Image src={facebookLogo} />}
+                bg="white"
+                border={"1px"}
+                borderColor="blue.600"
+                color={"blue.600"}
+                textAlign="center"
+                height="44px"
+              >
+                เข้าสู่ระบบด้วย Facebook
+              </Button>
+              <Text align={"center"} marginTop="2rem">
+                ยังไม่มีบัญชีผู้ใช้ HomeService?{" "}
+                <Link
+                  color="blue.600"
+                  href="/register"
+                  fontWeight={"600"}
+                  textDecoration={"underline"}
+                >
+                  ลงทะเบียน
+                </Link>
+              </Text>
+            </Flex>
+          </Form>
+        )}
       </Formik>
     </Container>
   );
