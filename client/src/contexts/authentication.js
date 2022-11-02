@@ -1,18 +1,18 @@
 import React from "react";
-// import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "../api/axios";
 
 
 const AuthContext = React.createContext();
 
 function AuthProvider(props) {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     // register the user
     const register = async (data) => {
         console.log(data);
-        // await axios.post("http://localhost:4000/auth/register", data);
-        // navigate("/login");
+        await axios.post("/users/register", data);
+        navigate("/");
     };
 
     return (

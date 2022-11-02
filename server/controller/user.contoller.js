@@ -52,20 +52,7 @@ const userController = {
 
 
             //เมื่อ สร้าง user แล้ว ตัว recentUserId จะเก็บ user_id ที่เพิ่มล่าสุดเอาไว้ เพื่อรองรับการเอาไปใช้ในการแสดงผล user ที่เพิ่งสมัครได้
-<<<<<<< HEAD
             const recentUserId = await pool.query(`insert into users(first_name, last_name, phone_number, email, password)
-            values($1, $2, $3, $4, $5) returning(user_id)`, 
-            [
-                firstName,
-                lastName,
-                req.body.phoneNumber,
-                req.body.email,
-                password
-            ])
-            
-    
-=======
-            const recentUserId = await pool.query(`insert into users(firstname, lastname, phone_number, email, password)
             values($1, $2, $3, $4, $5) returning(user_id)`,
                 [
                     firstName,
@@ -76,7 +63,6 @@ const userController = {
                 ])
 
 
->>>>>>> e0abf66 (feat: updated register)
             return res.status(201).json({
                 msg: "user has been created",
                 data: recentUserId.rows[0]
@@ -111,15 +97,9 @@ const userController = {
 
             const token = jwt.sign(
                 {
-<<<<<<< HEAD
-                    id : user.user_id,
-                    fitstname : user.first_name,
-                    lastname : user.last_name
-=======
                     id: user.user_id,
-                    fitstname: user.firstname,
-                    lastname: user.lastname
->>>>>>> e0abf66 (feat: updated register)
+                    fitstname: user.first_name,
+                    lastname: user.last_name
                 },
                 process.env.SECRET_KEY,
                 {
@@ -141,11 +121,7 @@ const userController = {
         }
     },
 
-<<<<<<< HEAD
-    async getUser (req, res) {
-=======
     async getUser(req, res) {
->>>>>>> e0abf66 (feat: updated register)
         const result = await pool.query(`select user_id, first_name, last_name, phone_number, email from users`);
         res.json({
             data: result.rows

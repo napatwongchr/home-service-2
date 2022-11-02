@@ -15,7 +15,7 @@ const RegisterForm = () => {
                     <Text textStyle={'h1'} color='blue.950' textAlign={'center'}>ลงทะเบียน</Text>
                     <Formik
                         initialValues={{
-                            fullName: '',
+                            fullname: '',
                             phoneNumber: '',
                             email: '',
                             password: '',
@@ -23,7 +23,7 @@ const RegisterForm = () => {
                         }}
                         // validate
                         validationSchema={Yup.object({
-                            fullName: Yup.string()
+                            fullname: Yup.string()
                                 .required('กรุณากรอกชื่อ นามสกุล'),
                             phoneNumber: Yup.string()
                                 .required('กรุณากรอกเบอร์โทรศัพท์')
@@ -33,7 +33,7 @@ const RegisterForm = () => {
                                 .required('กรุณากรอกอีเมล'),
                             password: Yup.string()
                                 .required('กรุณากรอกรหัสผ่าน')
-                                .matches(/[a-zA-Z-]{16,}/, 'รหัสผ่านต้องมีความยาวอย่างน้อย 16 ตัวอักษร และมีทั้งตัวอักษรภาษาอังกฤษตัวเล็ก และตัวใหญ่ '),
+                                .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{16,}$/, 'รหัสผ่านต้องมีความยาวอย่างน้อย 16 ตัวอักษร และมีทั้งตัวอักษรภาษาอังกฤษตัวเล็ก และตัวใหญ่ '),
                             acceptedTerms: Yup.boolean()
                                 .oneOf([true], 'กรุณาอ่านรายละเอียด และยอมรับข้อตกลง'),
                         })}
@@ -44,8 +44,8 @@ const RegisterForm = () => {
                         <Form>
                             <MyTextInput
                                 label="ชื่อ - นามสกุล"
-                                id="fullName"
-                                name="fullName"
+                                id="fullname"
+                                name="fullname"
                                 type="text"
                                 placeholder="กรุณากรอกชื่อ นามสกุล"
                             />
