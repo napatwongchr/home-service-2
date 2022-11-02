@@ -50,6 +50,7 @@ const LoginForm = () => {
             <Input
               id="email"
               name="email"
+              type="email"
               placeholder="กรุณากรอกอีเมล"
               marginBottom="1rem"
             />
@@ -58,6 +59,7 @@ const LoginForm = () => {
             <Input
               id="password"
               name="password"
+              type="password"
               placeholder="กรุณากรอกรหัสผ่าน"
               marginBottom="2rem"
             />
