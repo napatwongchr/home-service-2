@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #fullname,
+=======
+#fullName,
+>>>>>>> 217065bd677e83e17bf769ced5b01e5390a47289
 #phoneNumber,
 #email,
 #password {
@@ -63,6 +67,7 @@ svg {
     bottom: 29px;
 }
 
+<<<<<<< HEAD
 span .css-0 {
     font-weight: 400;
     font-size: 16px;
@@ -79,4 +84,10 @@ span .css-0 {
     height: 100vh;
     width: 100vw;
     background-color: #EFEFF2;
+=======
+.css-0 {
+    font-weight: 400;
+    font-size: 16px;
+    color: #C82438;
+>>>>>>> 217065bd677e83e17bf769ced5b01e5390a47289
 }
