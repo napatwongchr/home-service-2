@@ -1,5 +1,6 @@
 import { Badge, Box, Button, Center, Container, Flex, Grid, Image, Text } from '@chakra-ui/react';
 import React from 'react';
+import { Link } from 'react-router-dom';
 const RecommendServiceSection = () => {
     return (
         <Container className='recommendService' maxW='100%' bg='gray.100' centerContent>
@@ -61,7 +62,9 @@ const RecommendServiceSection = () => {
             </Flex>
             <Flex>
                 <Center w='1440px'>
-                    <Button role='click' bg='blue.600' textStyle='h5' color='utility.white' px='24px' py='10px' mt='70px' mb='175px' _hover={{ bg: 'blue.500' }} _active={{ bg: 'blue.800' }}>ดูบริการทั้งหมด</Button>
+                    <Link to={'/service-list'}>
+                        <Button role='click' bg='blue.600' textStyle='h5' color='utility.white' px='24px' py='10px' mt='70px' mb='175px' _hover={{ bg: 'blue.500' }} _active={{ bg: 'blue.800' }}>ดูบริการทั้งหมด</Button>
+                    </Link>
                 </Center>
             </Flex>
         </Container >
