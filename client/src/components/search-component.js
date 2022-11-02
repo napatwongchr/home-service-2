@@ -109,32 +109,28 @@ const SearchSection = () => {
                   height="22px"
                   bg="white"
                   w="150px"
-                  _hover={{
-                    background: "#EFEFF2",
-                  }}
                 >
                   0-2000฿
                 </MenuButton>
-                <MenuList
-                  height="100px"
-                  width="250px"
-                  padding="10px"
-                  display="flex"
-                  alignItems="center"
-                >
-                  <MenuItem>
+                <MenuList height="100px" width="250px" padding="10px">
+                  <MenuItem
+                    _hover={{
+                      background: "none",
+                    }}
+                  >
                     <RangeSlider
                       defaultValue={[0, 240]}
                       min={0}
                       max={2000}
-                      step={30}
+                      step={20}
                       onChangeEnd={(val) => setSliderValue(val)}
-                      display="flex"
                       justifyContent="space-between"
+                      display="flex"
                     >
                       <RangeSliderTrack bg="#CCD0D7">
                         <RangeSliderFilledTrack bg="blue.500" />
                       </RangeSliderTrack>
+
                       <RangeSliderThumb boxSize={4} index={0} bg="blue.700" />
                       <Text marginTop="40px" color="blue.700">
                         {sliderValue[0]}
@@ -177,6 +173,7 @@ const SearchSection = () => {
                 <option value="descending">ตามตัวอักษร (Descending)</option>
               </Select>
             </Box>
+
             <Button bg="blue.600" textColor="white" textStyle="h5" w="5rem">
               ค้นหา
             </Button>
