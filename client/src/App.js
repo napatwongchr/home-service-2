@@ -1,11 +1,13 @@
-import SearchSection from "./components/search-component.js";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
     <div className="App">
-      <SearchSection />
+      <HomePage />
+
     </div>
   );
 }
 
 export default App;
+
