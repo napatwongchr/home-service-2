@@ -62,6 +62,7 @@ const LoginForm = () => {
               <Input
                 id="email"
                 name="email"
+                type="email"
                 {...formik.getFieldProps("email")}
                 placeholder="กรุณากรอกอีเมล"
               />
@@ -74,6 +75,7 @@ const LoginForm = () => {
               <Input
                 id="password"
                 name="password"
+                type="password"
                 {...formik.getFieldProps("password")}
                 placeholder="กรุณากรอกรหัสผ่าน"
               />
