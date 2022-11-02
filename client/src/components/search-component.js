@@ -112,34 +112,43 @@ const SearchSection = () => {
                 >
                   0-2000฿
                 </MenuButton>
-                <MenuList height="100px" width="250px" padding="10px">
+                <MenuList height="120px" width="250px" padding="10px">
                   <MenuItem
                     _hover={{
                       background: "none",
                     }}
+                    _focus={{
+                      background: "none",
+                    }}
                   >
-                    <RangeSlider
-                      defaultValue={[0, 240]}
-                      min={0}
-                      max={2000}
-                      step={20}
-                      onChangeEnd={(val) => setSliderValue(val)}
-                      justifyContent="space-between"
-                      display="flex"
-                    >
-                      <RangeSliderTrack bg="#CCD0D7">
-                        <RangeSliderFilledTrack bg="blue.500" />
-                      </RangeSliderTrack>
+                    <Stack height="100px" width="inherit">
+                      <Text>
+                        {sliderValue[0]}-{sliderValue[1]}฿
+                      </Text>
+                      <RangeSlider
+                        height="2rem"
+                        defaultValue={[0, 240]}
+                        min={0}
+                        max={2000}
+                        step={20}
+                        onChangeEnd={(val) => setSliderValue(val)}
+                        justifyContent="space-between"
+                        display="flex"
+                      >
+                        <RangeSliderTrack bg="#CCD0D7">
+                          <RangeSliderFilledTrack bg="blue.500" />
+                        </RangeSliderTrack>
 
-                      <RangeSliderThumb boxSize={4} index={0} bg="blue.700" />
-                      <Text marginTop="40px" color="blue.700">
-                        {sliderValue[0]}
-                      </Text>
-                      <RangeSliderThumb boxSize={4} index={1} bg="blue.700" />
-                      <Text marginTop="40px" color="blue.700">
-                        {sliderValue[1]}
-                      </Text>
-                    </RangeSlider>
+                        <RangeSliderThumb boxSize={4} index={0} bg="blue.700" />
+                        <Text marginTop="1rem" color="blue.700">
+                          {sliderValue[0]}
+                        </Text>
+                        <RangeSliderThumb boxSize={4} index={1} bg="blue.700" />
+                        <Text marginTop="1rem" color="blue.700">
+                          {sliderValue[1]}
+                        </Text>
+                      </RangeSlider>
+                    </Stack>
                   </MenuItem>
                 </MenuList>
               </Menu>
@@ -167,13 +176,16 @@ const SearchSection = () => {
                   background: "#EFEFF2",
                 }}
               >
-                <option value="recommended-services">บริการแนะนำ</option>
-                <option value="popular-services">บริการยอดนิยม</option>
-                <option value="ascending">ตามตัวอักษร (Ascending)</option>
-                <option value="descending">ตามตัวอักษร (Descending)</option>
+                <option value="recommended-service">บริการแนะนำ</option>
+                <option value="popular-service">บริการยอดนิยม</option>
+                <option value="ascending-search">
+                  ตามตัวอักษร (Ascending)
+                </option>
+                <option value="descending-search">
+                  ตามตัวอักษร (Descending)
+                </option>
               </Select>
             </Box>
-
             <Button bg="blue.600" textColor="white" textStyle="h5" w="5rem">
               ค้นหา
             </Button>
