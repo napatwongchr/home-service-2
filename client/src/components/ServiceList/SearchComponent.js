@@ -27,9 +27,9 @@ import {
 const SearchSection = () => {
   const [input, setInput] = useState("");
   const [category, setCategory] = "";
-  const [sliderValue, setSliderValue] = useState(0);
+  const [sliderValue, setSliderValue] = useState([0, 2000]);
   const [alphabetSearch, setAlphabetSearch] = "";
-
+  const [toggle, setToggle] = useState(false);
   return (
     <Container
       className="search-bar"
@@ -59,7 +59,6 @@ const SearchSection = () => {
                 value={input}
                 onChange={(e) => {
                   setInput(e.target.value);
-                  console.log(input);
                 }}
                 border="1px"
                 borderRadius="8px"
@@ -85,6 +84,7 @@ const SearchSection = () => {
                 _hover={{
                   background: "#EFEFF2",
                 }}
+                color='gray.950'
               >
                 <option value="general-services">บริการทั้งหมด</option>
                 <option value="general-services">บริการทั่วไป</option>
@@ -112,48 +112,54 @@ const SearchSection = () => {
                   height="22px"
                   bg="white"
                   w="150px"
+                  fontStyle={'h5'}
+                  color='gray.950'
+                  onClick={() => setToggle(!toggle)}
+                  pos='relative'
                 >
-                  0-2000฿
+                  {sliderValue[0]}-{sliderValue[1]}฿
                 </MenuButton>
-                <MenuList height="120px" width="250px" padding="10px">
-                  <MenuItem
-                    _hover={{
-                      background: "none",
-                    }}
-                    _focus={{
-                      background: "none",
-                    }}
-                  >
-                    <Stack height="100px" width="inherit">
-                      <Text>
-                        {sliderValue[0]}-{sliderValue[1]}฿
-                      </Text>
-                      <RangeSlider
-                        height="2rem"
-                        defaultValue={[0, 240]}
-                        min={0}
-                        max={2000}
-                        step={20}
-                        onChangeEnd={(val) => setSliderValue(val)}
-                        justifyContent="space-between"
-                        display="flex"
-                      >
-                        <RangeSliderTrack bg="#CCD0D7">
-                          <RangeSliderFilledTrack bg="blue.500" />
-                        </RangeSliderTrack>
+                {toggle &&
+                  <Container height="120px" width="250px" padding="10px" borderRadius={8} bg={'utility.white'} pos='absolute' boxShadow={'md'} top={410}>
+                    <MenuItem
+                      _hover={{
+                        background: "none",
+                      }}
+                      _focus={{
+                        background: "none",
+                      }}
+                    >
+                      <Stack height="100px" width="inherit">
+                        <Text>
+                          {sliderValue[0]}-{sliderValue[1]}฿
+                        </Text>
+                        <RangeSlider
+                          height="2rem"
+                          defaultValue={[0, 240]}
+                          min={0}
+                          max={5000}
+                          step={20}
+                          onChangeEnd={(val) => setSliderValue(val)}
+                          justifyContent="space-between"
+                          display="flex"
+                        >
+                          <RangeSliderTrack bg="#CCD0D7">
+                            <RangeSliderFilledTrack bg="blue.500" />
+                          </RangeSliderTrack>
 
-                        <RangeSliderThumb boxSize={4} index={0} bg="blue.700" />
-                        <Text marginTop="1rem" color="blue.700">
-                          {sliderValue[0]}
-                        </Text>
-                        <RangeSliderThumb boxSize={4} index={1} bg="blue.700" />
-                        <Text marginTop="1rem" color="blue.700">
-                          {sliderValue[1]}
-                        </Text>
-                      </RangeSlider>
-                    </Stack>
-                  </MenuItem>
-                </MenuList>
+                          <RangeSliderThumb boxSize={4} index={0} bg="blue.700" />
+                          <Text marginTop="1rem" color="blue.700">
+                            {sliderValue[0]}
+                          </Text>
+                          <RangeSliderThumb boxSize={4} index={1} bg="blue.700" />
+                          <Text marginTop="1rem" color="blue.700">
+                            {sliderValue[1]}
+                          </Text>
+                        </RangeSlider>
+                      </Stack>
+                    </MenuItem>
+                  </Container>
+                }
               </Menu>
             </Box>
 
@@ -178,8 +184,9 @@ const SearchSection = () => {
                 _hover={{
                   background: "#EFEFF2",
                 }}
+                color='gray.950'
               >
-                <option value="recommended-service">บริการแนะนำ</option>
+                <option value="recommended-service" >บริการแนะนำ</option>
                 <option value="popular-service">บริการยอดนิยม</option>
                 <option value="ascending-search">
                   ตามตัวอักษร (Ascending)
@@ -194,8 +201,8 @@ const SearchSection = () => {
             </Button>
           </Flex>
         </Box>
-      </Stack>
-    </Container>
+      </Stack >
+    </Container >
   );
 };
 
