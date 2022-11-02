@@ -1,6 +1,6 @@
 import { Badge, Box, Center, Container, Flex, Grid, Image, Text } from '@chakra-ui/react';
 import React from 'react';
-import { serviceData } from '../asset/model/serviceData';
+import { serviceData } from '../../asset/model/serviceData';
 
 const AllServiceSection = () => {
     const handleColorButton = (type) => {

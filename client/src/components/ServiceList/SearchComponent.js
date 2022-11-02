@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import arrow from "../asset/image/search-section/dropdown.svg";
-import glass from "../asset/image/search-section/magnifying-glass.svg";
+import arrow from "../../asset/image/serviceListPage/dropdown.svg";
+import glass from "../../asset/image/serviceListPage/magnifying-glass.svg";
 import {
   Container,
   Box,
@@ -37,12 +37,14 @@ const SearchSection = () => {
       height="84px"
       border="1px"
       borderColor="gray.100"
+      centerContent
     >
       <Stack
         direction="row"
         justify="space-evenly"
         alignItems="center"
         h="100%"
+        w='1440px'
       >
         <Box className="search-input">
           <Flex align="center">
@@ -61,7 +63,8 @@ const SearchSection = () => {
                 }}
                 border="1px"
                 borderRadius="8px"
-                borderColor="#CCD0D7"
+                borderColor="gray.300"
+                _focus={{ borderColor: 'blue.600' }}
               />
             </InputGroup>
           </Flex>
@@ -186,7 +189,7 @@ const SearchSection = () => {
                 </option>
               </Select>
             </Box>
-            <Button bg="blue.600" textColor="white" textStyle="h5" w="5rem">
+            <Button bg="blue.600" textColor="white" textStyle="h5" w="5rem" _hover={{ bg: "blue.500" }} _active={{ bg: "blue.950" }}>
               ค้นหา
             </Button>
           </Flex>
