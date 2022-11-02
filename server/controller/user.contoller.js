@@ -52,7 +52,7 @@ const userController = {
 
     
             //เมื่อ สร้าง user แล้ว ตัว recentUserId จะเก็บ user_id ที่เพิ่มล่าสุดเอาไว้ เพื่อรองรับการเอาไปใช้ในการแสดงผล user ที่เพิ่งสมัครได้
-            const recentUserId = await pool.query(`insert into users(firstname, lastname, phone_number, email, password)
+            const recentUserId = await pool.query(`insert into users(first_name, last_name, phone_number, email, password)
             values($1, $2, $3, $4, $5) returning(user_id)`, 
             [
                 firstName,
@@ -98,8 +98,8 @@ const userController = {
             const token = jwt.sign(
                 {
                     id : user.user_id,
-                    fitstname : user.firstname,
-                    lastname : user.lastname
+                    fitstname : user.first_name,
+                    lastname : user.last_name
                 },
                 process.env.SECRET_KEY,
                 {
@@ -122,7 +122,7 @@ const userController = {
     },
 
     async getUser (req, res) {
-        const result = await pool.query(`select user_id, firstname, lastname, phone_number, email from users`);
+        const result = await pool.query(`select user_id, first_name, last_name, phone_number, email from users`);
         res.json({
             data : result.rows
         })
