@@ -105,7 +105,7 @@ const userController = {
             const token = jwt.sign(
                 {
                     id: user.user_id,
-                    fitstname: user.first_name,
+                    firstname: user.first_name,
                     lastname: user.last_name
                 },
                 process.env.SECRET_KEY,
