@@ -2,7 +2,7 @@ import React from "react";
 import Nav from "../components/HomePage/Nav";
 import LoginForm from "../components/LoginPage/LoginForm";
 
-const RegisterPage = () => {
+const LoginPage = () => {
   return (
     <section className="loginPage">
       <Nav />
@@ -11,4 +11,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default LoginPage;
