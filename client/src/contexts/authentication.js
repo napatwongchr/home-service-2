@@ -19,8 +19,10 @@ function AuthProvider(props) {
 
   // register the user
   const register = async (data) => {
-    await axios.post("/users/register", data);
+    const response = await axios.post("/users/register", data);
+    if (response.data.msg) return;
     navigate("/");
+
   };
 
   // login
