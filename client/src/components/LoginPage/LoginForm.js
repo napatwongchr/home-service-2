@@ -88,6 +88,8 @@ const LoginForm = () => {
                 fontWeight={"500"}
                 height="44px"
                 marginTop="2.5rem"
+                _hover={{ bg: 'blue.500' }}
+                _active={{ bg: 'blue.800' }}
               >
                 เข้าสู่ระบบ
               </Button>
@@ -108,6 +110,8 @@ const LoginForm = () => {
                 color={"blue.600"}
                 textAlign="center"
                 height="44px"
+                _hover={{ borderColor: 'blue.400', color: 'blue.400' }}
+                _active={{ borderColor: 'blue.800', color: 'blue.800' }}
               >
                 เข้าสู่ระบบด้วย Facebook
               </Button>
@@ -117,6 +121,8 @@ const LoginForm = () => {
                   color="blue.600"
                   href="/register"
                   fontWeight={"600"}
+                  _hover={{ color: 'blue.400' }}
+                  _active={{ color: 'blue.800' }}
                   textDecoration={"underline"}
                 >
                   ลงทะเบียน
