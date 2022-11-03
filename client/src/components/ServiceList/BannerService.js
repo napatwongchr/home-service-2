@@ -8,16 +8,16 @@ const BannerService = () => {
       className="bannerService"
       p={0}
       maxW="100%"
-      w={1440}
       h={240}
       overflow="hidden"
       centerContent
     >
       <Flex>
         <Box
-          w={1440}
+          w={'100vw'}
           h="240px"
-          bgSize="1440px"
+          bgSize="100%"
+          objectFit={'contain'}
           bgImage={bannerCoverImage}
           bgPosition="center"
         >
