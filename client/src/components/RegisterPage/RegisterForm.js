@@ -12,7 +12,7 @@ const RegisterForm = () => {
     const [msg, setMsg] = useState('')
 
     return (
-        <Container maxW={'100%'} h={'100vh'} py={'52px'} bg={'gray.100'} centerContent>
+        <Container maxW={'100%'} minH={'100%'} py={'52px'} bg={'gray.100'} centerContent>
             <Flex flexDirection={'column'} w={614} bg='utility.white' borderRadius={'8px'} px={'87px'} py={'30px'}>
                 <Text textStyle={'h1'} color='blue.950' textAlign={'center'}>ลงทะเบียน</Text>
                 <Formik
@@ -67,7 +67,13 @@ const RegisterForm = () => {
                             name="fullname"
                             type="text"
                             placeholder="กรุณากรอกชื่อ นามสกุล"
-                            w={'440px'} h={'44px'}
+                        />
+                        <MyTextInput
+                            label="เบอร์โทรศัพท์"
+                            id="phoneNumber"
+                            name="phoneNumber"
+                            type="string"
+                            placeholder="กรุณากรอกเบอร์โทรศัพท์"
                         />
 
                         <MyTextInput
