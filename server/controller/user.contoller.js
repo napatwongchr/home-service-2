@@ -86,7 +86,7 @@ const userController = {
 
     async login(req, res) {
         try {
-            const hasUser = await pool.query("select * from users where email = $1", [req.body.email])
+            const hasUser = await pool.query("select * from users where email = $1", [req.body.email.toLowerCase()])
             const user = hasUser.rows[0]
             if (!user) {
                 return res.json({
