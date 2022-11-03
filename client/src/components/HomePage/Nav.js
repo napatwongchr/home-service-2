@@ -5,11 +5,13 @@ import notification from "../../asset/image/homePage/notification.svg";
 import userPrc from "../../asset/image/homePage/user.svg";
 import order from "../../asset/image/homePage/order.svg";
 import history from "../../asset/image/homePage/history.svg";
+import houseLogo from "../../asset/image/homePage/house-logo.svg";
 import logoutPic from "../../asset/image/homePage/logoutPic.svg";
+
 import { useState } from "react";
 const NavComponent = () => {
   const { isAuthenticated, logout } = useAuth();
-  const user = JSON.parse(window.localStorage.getItem('user'));
+  const user = JSON.parse(window.localStorage.getItem("user"));
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -26,14 +28,17 @@ const NavComponent = () => {
         w={"1440px"}
         justifyContent="space-between"
       >
-        <Flex alignItems="center">
+        <Flex alignItems="center" marginLeft="10rem">
           <Link to={"/"}>
-            <Flex ml="161px">
-              <Image
-                src={require("../../asset/image/homePage/house-logo.png")}
-                alt="house-logo"
-              />
-              <Text color="blue.600" fontWeight="500" fontSize="24px">
+            <Flex>
+              <Image src={houseLogo} alt="house-logo" />
+              <Text
+                color="blue.600"
+                fontWeight="500"
+                fontSize="24px"
+                alignSelf={"center"}
+                marginLeft="10px"
+              >
                 HomeServices
               </Text>
             </Flex>
@@ -54,7 +59,7 @@ const NavComponent = () => {
             <>
               <Flex alignItems={"center"} position="relative">
                 <Text fontStyle={"h3"}>
-                  {user.firstname + ' ' + user.lastname}
+                  {user.firstname + " " + user.lastname}
                 </Text>
                 <Image
                   src="https://st4.depositphotos.com/11634452/41441/v/600/depositphotos_414416674-stock-illustration-picture-profile-icon-male-icon.jpg"

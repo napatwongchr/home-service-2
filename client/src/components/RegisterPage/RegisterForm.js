@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Flex, Link, Text } from '@chakra-ui/react';
 import { Formik, Form, } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/authentication'
 import { MyTextInput, MyCheckbox } from '../../utils/formInput'
 import './registerPage.css';
+import axios from '../../api/axios';
 
 const RegisterForm = () => {
     const { register } = useAuth()
+    const [alreadyEmail, setAlreadyEmail] = useState([])
+
+    const emailUser = async () => {
+        const result = await axios.get('/users/email')
+        setAlreadyEmail(result.data.data)
+    }
+
+    useEffect(() => {
+        emailUser()
+    }, [])
     return (
         <div className='bg-register'>
             <Container maxW={'100%'} minH={'100%'} py={'52px'} bg={'gray.100'} centerContent>
@@ -30,7 +41,9 @@ const RegisterForm = () => {
                                 .matches(/^[0-9]{10}$/, 'กรุณาตรวจสอบเบอร์โทรศัพท์'),
                             email: Yup.string()
                                 .email('กรุณาตรวจสอบอีเมลอีกครั้ง')
-                                .required('กรุณากรอกอีเมล'),
+                                .required('กรุณากรอกอีเมล')
+                                .notOneOf(alreadyEmail, 'อีเมลนี้มีคนใช้แล้ว กรุณาเปลี่ยนอีเมลใหม่')
+                            ,
                             password: Yup.string()
                                 .required('กรุณากรอกรหัสผ่าน')
                                 .min(16, 'รหัสผ่านต้องมีความยาวอย่างน้อย 16 ตัวอักษร')
