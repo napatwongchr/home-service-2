@@ -16,7 +16,7 @@ const userController = {
             const alreadyHasEmail = await pool.query("select * from users where email = $1", [ req.body.email.toLowerCase() ])
 
             if(alreadyHasEmail.rows.length > 0){
-                return res.json({
+                return res.status(403).json({
                     msg : "email already exists"
                 })
             }
@@ -32,13 +32,13 @@ const userController = {
             // }
 
             if (!emailConditionCheck) {
-                return res.json({
+                return res.status(403).json({
                     msg: "invalid email"
                 })
             }
 
             if (!passwordConditionCheck) {
-                return res.json({
+                return res.status(403).json({
                     msg: "password must greater then 15 character and contain uppercase and lower case"
                 })
             }
@@ -48,7 +48,7 @@ const userController = {
 
             //เช็คว่า ถ้าชื่อ ขึ้นต้นด้วย เว้นวรรค จะไม่ให้ผ่าน
             if (/^\s/.test(req.body.fullname)) {
-                return res.json({
+                return res.status(403).json({
                     msg: "fullname must start with character"
                 })
             }
@@ -89,7 +89,7 @@ const userController = {
             const hasUser = await pool.query("select * from users where email = $1", [req.body.email.toLowerCase()])
             const user = hasUser.rows[0]
             if (!user) {
-                return res.json({
+                return res.status(401).json({
                     msg: "user not fround"
                 })
             }
@@ -97,7 +97,7 @@ const userController = {
 
             const isValidPassword = await bcrypt.compare(req.body.password, user.password)
             if (!isValidPassword) {
-                return res.json({
+                return res.status(401).json({
                     msg: "password is invalid"
                 })
             }
@@ -114,7 +114,7 @@ const userController = {
                 }
             )
 
-            return res.json({
+            return res.status(200).json({
                 msg: "login successfully",
                 token
             })
@@ -130,7 +130,7 @@ const userController = {
 
     async getUser(req, res) {
         const result = await pool.query(`select user_id, first_name, last_name, phone_number, email from users`);
-        res.json({
+        res.status(200).json({
             data: result.rows
         })
     }
