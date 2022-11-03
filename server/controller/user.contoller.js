@@ -13,6 +13,14 @@ const userController = {
             //Email form Validate
             const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
             const emailConditionCheck = EMAIL_REGEX.test(req.body.email)
+            const alreadyHasEmail = await pool.query("select * from users where email = $1", [ req.body.email ])
+            console.log(alreadyHasEmail.rows.length)
+
+            if(alreadyHasEmail.rows.length > 0){
+                return res.json({
+                    msg : "email already exists"
+                })
+            }
 
             //phonenumber condition check
             // const PhoneNumber_Regex = /((\+66|0)(\d{1,2}\-?\d{3}\-?\d{3,4}))|((\+๖๖|๐)([๐-๙]{1,2}\-?[๐-๙]{3}\-?[๐-๙]{3,4}))/gm;
@@ -55,10 +63,10 @@ const userController = {
             const recentUserId = await pool.query(`insert into users(first_name, last_name, phone_number, email, password)
             values($1, $2, $3, $4, $5) returning(user_id)`,
                 [
-                    firstName,
-                    lastName,
+                    firstName.toLowerCase(),
+                    lastName.toLowerCase(),
                     req.body.phoneNumber,
-                    req.body.email,
+                    req.body.email.toLowerCase(),
                     password
                 ])
 
