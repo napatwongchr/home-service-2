@@ -9,6 +9,16 @@ import axios from '../../api/axios';
 
 const RegisterForm = () => {
     const { register } = useAuth()
+    const [alreadyEmail, setAlreadyEmail] = useState([])
+
+    const emailUser = async () => {
+        const result = await axios.get('/users/email')
+        setAlreadyEmail(result.data.data)
+    }
+
+    useEffect(() => {
+        emailUser()
+    }, [])
     return (
         <div className='bg-register'>
             <Container maxW={'100%'} minH={'100%'} py={'52px'} bg={'gray.100'} centerContent>
@@ -32,21 +42,7 @@ const RegisterForm = () => {
                             email: Yup.string()
                                 .email('กรุณาตรวจสอบอีเมลอีกครั้ง')
                                 .required('กรุณากรอกอีเมล')
-                                .test('Unique Email', 'Email already in use',
-                                    function (value) {
-                                        return new Promise((resolve, reject) => {
-                                            axios.get(`/users/${value}`)
-                                                .then((res) => {
-                                                    resolve(true)
-                                                })
-                                                .catch((error) => {
-                                                    if (error.response.data.content === "The email has already been taken.") {
-                                                        resolve(false);
-                                                    }
-                                                })
-                                        })
-                                    }
-                                )
+                                .notOneOf(alreadyEmail, 'อีเมลนี้มีคนใช้แล้ว กรุณาเปลี่ยนอีเมลใหม่')
                             ,
                             password: Yup.string()
                                 .required('กรุณากรอกรหัสผ่าน')

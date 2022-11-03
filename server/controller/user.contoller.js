@@ -136,9 +136,11 @@ const userController = {
     },
 
     async getUserByEmail(req, res) {
-        const result = await pool.query(`select email from users where email = $1`);
+        const email = []
+        const result = await pool.query(`select email from users`);
+        result.rows.map(item => email.push(item.email))
         res.json({
-            data: result.rows
+            data: email
         })
     }
 }
