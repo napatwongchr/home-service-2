@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Container, Flex, Link, Text } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { Container, Flex, Link, Text } from '@chakra-ui/react';
 import { Formik, Form, } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/authentication'
@@ -9,18 +9,10 @@ import './registerPage.css';
 
 const RegisterForm = () => {
     const { register } = useAuth()
-    const [alreadyEmail, setAlreadyEmail] = useState([])
+    const [msg, setMsg] = useState('')
 
-    const emailUser = async () => {
-        const result = await axios.get('/users/email')
-        setAlreadyEmail(result.data.data)
-    }
-
-    useEffect(() => {
-        emailUser()
-    }, [])
     return (
-        <Container maxW={'100%'} h={'100vh'} py={'52px'} bg={'gray.100'} centerContent>
+        <Container maxW={'100%'} minH={'100%'} py={'52px'} bg={'gray.100'} centerContent>
             <Flex flexDirection={'column'} w={614} bg='utility.white' borderRadius={'8px'} px={'87px'} py={'30px'}>
                 <Text textStyle={'h1'} color='blue.950' textAlign={'center'}>ลงทะเบียน</Text>
                 <Formik
@@ -41,7 +33,21 @@ const RegisterForm = () => {
                         email: Yup.string()
                             .email('กรุณาตรวจสอบอีเมลอีกครั้ง')
                             .required('กรุณากรอกอีเมล')
-                            .notOneOf(alreadyEmail, 'อีเมลนี้มีคนใช้แล้ว กรุณาเปลี่ยนอีเมลใหม่')
+                            .test('Unique Email', msg,
+                                async function (value) {
+                                    try {
+                                        const response = await axios.get(`/users?email=${value}`)
+                                        if (response.data.data[0]) {
+                                            setMsg('อีเมลนี้มีคนใช้แล้ว กรุณาเปลี่ยนอีเมลใหม่')
+                                        } else {
+                                            setMsg('')
+                                        }
+                                    }
+                                    catch (err) {
+                                        console.log(err);
+                                    }
+                                }
+                            )
                         ,
                         password: Yup.string()
                             .required('กรุณากรอกรหัสผ่าน')
@@ -61,7 +67,13 @@ const RegisterForm = () => {
                             name="fullname"
                             type="text"
                             placeholder="กรุณากรอกชื่อ นามสกุล"
-                            w={'440px'} h={'44px'}
+                        />
+                        <MyTextInput
+                            label="เบอร์โทรศัพท์"
+                            id="phoneNumber"
+                            name="phoneNumber"
+                            type="string"
+                            placeholder="กรุณากรอกเบอร์โทรศัพท์"
                         />
 
                         <MyTextInput
