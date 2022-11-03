@@ -13,9 +13,8 @@ function AuthProvider(props) {
     error: null,
     user: null,
   });
-  useEffect(() => {
 
-  }, [])
+  useEffect(() => {}, []);
 
   // register the user
   const register = async (data) => {
@@ -29,8 +28,8 @@ function AuthProvider(props) {
     const token = result.data.token;
     localStorage.setItem("token", token);
     const userDataFromToken = jwtDecode(token);
-    setState({ ...state, user: userDataFromToken });
     navigate("/");
+    setState({ ...state, user: userDataFromToken });
   };
 
   // clear the token in localStorage and the user data
@@ -42,7 +41,9 @@ function AuthProvider(props) {
   const isAuthenticated = Boolean(localStorage.getItem("token"));
 
   return (
-    <AuthContext.Provider value={{ register, login, isAuthenticated, state, logout }}>
+    <AuthContext.Provider
+      value={{ register, login, isAuthenticated, state, logout }}
+    >
       {props.children}
     </AuthContext.Provider>
   );

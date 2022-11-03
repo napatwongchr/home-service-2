@@ -1,24 +1,24 @@
 import { Flex, Box, Button, Image, Text, Container } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication";
-import notification from '../../asset/image/homePage/notification.svg'
-import userPrc from '../../asset/image/homePage/user.svg'
-import order from '../../asset/image/homePage/order.svg'
-import history from '../../asset/image/homePage/history.svg'
-import logoutPic from '../../asset/image/homePage/logoutPic.svg'
+import notification from "../../asset/image/homePage/notification.svg";
+import userPrc from "../../asset/image/homePage/user.svg";
+import order from "../../asset/image/homePage/order.svg";
+import history from "../../asset/image/homePage/history.svg";
+import logoutPic from "../../asset/image/homePage/logoutPic.svg";
 import { useState } from "react";
 const NavComponent = () => {
-  const { isAuthenticated, state, logout } = useAuth()
+  const { isAuthenticated, state, logout } = useAuth();
   console.log(state);
-  // const user = state.user
-  const [toggle, setToggle] = useState(false)
+  // const user = state.user;
+  const [toggle, setToggle] = useState(false);
 
   return (
     <Container
       className="navBar"
       maxW={"100%"}
       bg={"utility.white"}
-      boxShadow={'lg'}
+      boxShadow={"lg"}
       centerContent
     >
       <Flex
@@ -51,36 +51,88 @@ const NavComponent = () => {
           </Box>
         </Flex>
         <Flex mr="184px">
-
-          {isAuthenticated ?
+          {isAuthenticated ? (
             <>
-              <Flex alignItems={'center'} position='relative'>
-                <Text fontStyle={'h3'}>{"Test"}</Text>
-                <Image src='https://st4.depositphotos.com/11634452/41441/v/600/depositphotos_414416674-stock-illustration-picture-profile-icon-male-icon.jpg' alt="profile picture" w={'40px'} borderRadius={'999px'} mx={'12px'} onClick={() => setToggle(!toggle)} />
-                <Image src={notification} w={'40px'} borderRadius={'999px'} />
+              <Flex alignItems={"center"} position="relative">
+                <Text fontStyle={"h3"}>
+                  {/* {user.firstname} {user.lastname} */}
+                </Text>
+                <Image
+                  src="https://st4.depositphotos.com/11634452/41441/v/600/depositphotos_414416674-stock-illustration-picture-profile-icon-male-icon.jpg"
+                  alt="profile picture"
+                  w={"40px"}
+                  borderRadius={"999px"}
+                  mx={"12px"}
+                  onClick={() => setToggle(!toggle)}
+                />
+                <Image src={notification} w={"40px"} borderRadius={"999px"} />
               </Flex>
-              {toggle &&
-                <Container bg={'utility.white'} position='absolute' w={'180px'} borderRadius={'8px'} boxShadow='lg' top={'80px'} zIndex='100' px={0} py='6px'>
-                  <Flex w={'100%'} h={'35px'} alignItems={'center'} p='14px' _hover={{ bg: 'gray.100' }} _active={{ bg: 'gray.200' }}>
-                    <Image src={userPrc} mr={'15px'} />
-                    <Text textStyle={'b3'}>ข้อมูลผู้ใช้งาน</Text>
+              {toggle && (
+                <Container
+                  bg={"utility.white"}
+                  position="absolute"
+                  w={"180px"}
+                  borderRadius={"8px"}
+                  boxShadow="lg"
+                  top={"80px"}
+                  zIndex="100"
+                  px={0}
+                  py="6px"
+                >
+                  <Flex
+                    w={"100%"}
+                    h={"35px"}
+                    alignItems={"center"}
+                    p="14px"
+                    _hover={{ bg: "gray.100" }}
+                    _active={{ bg: "gray.200" }}
+                  >
+                    <Image src={userPrc} mr={"15px"} />
+                    <Text textStyle={"b3"}>ข้อมูลผู้ใช้งาน</Text>
                   </Flex>
-                  <Flex w={'100%'} h={'35px'} alignItems={'center'} p='14px' _hover={{ bg: 'gray.100' }} _active={{ bg: 'gray.200' }}>
-                    <Image src={order} mr={'15px'} />
-                    <Text textStyle={'b3'}>รายการคำสั่งซ่อม</Text>
+                  <Flex
+                    w={"100%"}
+                    h={"35px"}
+                    alignItems={"center"}
+                    p="14px"
+                    _hover={{ bg: "gray.100" }}
+                    _active={{ bg: "gray.200" }}
+                  >
+                    <Image src={order} mr={"15px"} />
+                    <Text textStyle={"b3"}>รายการคำสั่งซ่อม</Text>
                   </Flex>
-                  <Flex w={'100%'} h={'35px'} alignItems={'center'} p='14px' _hover={{ bg: 'gray.100' }} _active={{ bg: 'gray.200' }}>
-                    <Image src={history} mr={'15px'} />
-                    <Text textStyle={'b3'}>ประวัติการซ่อม</Text>
+                  <Flex
+                    w={"100%"}
+                    h={"35px"}
+                    alignItems={"center"}
+                    p="14px"
+                    _hover={{ bg: "gray.100" }}
+                    _active={{ bg: "gray.200" }}
+                  >
+                    <Image src={history} mr={"15px"} />
+                    <Text textStyle={"b3"}>ประวัติการซ่อม</Text>
                   </Flex>
-                  <Flex w={'100%'} h={'35px'} alignItems={'center'} p='14px' _hover={{ bg: 'gray.100' }} _active={{ bg: 'gray.200' }} onClick={() => logout()}>
-                    <Image src={logoutPic} mr={'15px'} left='3px' pos={'relative'} />
-                    <Text textStyle={'b3'}>ออกจากระบบ</Text>
+                  <Flex
+                    w={"100%"}
+                    h={"35px"}
+                    alignItems={"center"}
+                    p="14px"
+                    _hover={{ bg: "gray.100" }}
+                    _active={{ bg: "gray.200" }}
+                    onClick={() => logout()}
+                  >
+                    <Image
+                      src={logoutPic}
+                      mr={"15px"}
+                      left="3px"
+                      pos={"relative"}
+                    />
+                    <Text textStyle={"b3"}>ออกจากระบบ</Text>
                   </Flex>
                 </Container>
-              }
+              )}
             </>
-            :
+          ) : (
             <Link to={"/login"}>
               <Button
                 colorScheme="teal"
@@ -95,7 +147,7 @@ const NavComponent = () => {
                 เข้าสู่ระบบ
               </Button>
             </Link>
-          }
+          )}
         </Flex>
       </Flex>
     </Container>
