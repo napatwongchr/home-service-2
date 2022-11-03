@@ -47,6 +47,14 @@ label {
     border-radius: 8px;
 }
 
+#btnRegister:hover {
+    background-color: #4C7FF4;
+}
+
+#btnRegister:active {
+    background-color: #0E3FB0;
+}
+
 #checkbox {
     width: 24px;
     height: 24px;
