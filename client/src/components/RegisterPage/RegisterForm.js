@@ -1,15 +1,11 @@
-<<<<<<< HEAD
+
 import React, { useState } from 'react';
-=======
-import React, { useEffect, useState } from 'react';
->>>>>>> 02a1e6f (feat: refactor register page)
 import { Button, Container, Flex, Link, Text } from '@chakra-ui/react';
 import { Formik, Form, } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/authentication'
 import { MyTextInput, MyCheckbox } from '../../utils/formInput'
 import axios from '../../api/axios';
-import './registerPage.css';
 
 const RegisterForm = () => {
     const { register } = useAuth()
@@ -37,7 +33,7 @@ const RegisterForm = () => {
                         email: Yup.string()
                             .email('กรุณาตรวจสอบอีเมลอีกครั้ง')
                             .required('กรุณากรอกอีเมล')
-<<<<<<< HEAD
+
                             .test('Unique Email', msg,
                                 async function (value) {
                                     try {
@@ -53,9 +49,6 @@ const RegisterForm = () => {
                                     }
                                 }
                             )
-=======
-                            .notOneOf(alreadyEmail, 'อีเมลนี้มีคนใช้แล้ว กรุณาเปลี่ยนอีเมลใหม่')
->>>>>>> 02a1e6f (feat: refactor register page)
                         ,
                         password: Yup.string()
                             .required('กรุณากรอกรหัสผ่าน')
