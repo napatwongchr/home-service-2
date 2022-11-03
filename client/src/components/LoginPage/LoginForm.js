@@ -33,8 +33,8 @@ const LoginForm = () => {
           password: "",
         }}
         validationSchema={Yup.object({
-          email: Yup.string().required("ใส่อีเมลด้วย"),
-          password: Yup.string().required("ใส่รหัสผ่านด้วย"),
+          email: Yup.string().required("กรุณากรอกอีเมล"),
+          password: Yup.string().required("กรุณากรอกรหัสผ่าน"),
         })}
         onSubmit={(values) => {
           console.log(values);
