@@ -13,8 +13,7 @@ const userController = {
             //Email form Validate
             const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
             const emailConditionCheck = EMAIL_REGEX.test(req.body.email)
-            const alreadyHasEmail = await pool.query("select * from users where email = $1", [ req.body.email ])
-            console.log(alreadyHasEmail.rows.length)
+            const alreadyHasEmail = await pool.query("select * from users where email = $1", [ req.body.email.toLowerCase() ])
 
             if(alreadyHasEmail.rows.length > 0){
                 return res.json({
