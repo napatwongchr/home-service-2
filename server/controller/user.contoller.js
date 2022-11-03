@@ -13,11 +13,11 @@ const userController = {
             //Email form Validate
             const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
             const emailConditionCheck = EMAIL_REGEX.test(req.body.email)
-            const alreadyHasEmail = await pool.query("select * from users where email = $1", [ req.body.email.toLowerCase() ])
+            const alreadyHasEmail = await pool.query("select * from users where email = $1", [req.body.email.toLowerCase()])
 
-            if(alreadyHasEmail.rows.length > 0){
+            if (alreadyHasEmail.rows.length > 0) {
                 return res.json({
-                    msg : "email already exists"
+                    msg: "email already exists"
                 })
             }
 
@@ -132,6 +132,15 @@ const userController = {
         const result = await pool.query(`select user_id, first_name, last_name, phone_number, email from users`);
         res.json({
             data: result.rows
+        })
+    },
+
+    async getUserByEmail(req, res) {
+        const email = []
+        const result = await pool.query(`select email from users`);
+        result.rows.map(item => email.push(item.email))
+        res.json({
+            data: email
         })
     }
 }
