@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Flex, Link, Text } from '@chakra-ui/react';
 import { Formik, Form, } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/authentication'
 import { MyTextInput, MyCheckbox } from '../../utils/formInput'
 import './registerPage.css';
+import axios from '../../api/axios';
 
 const RegisterForm = () => {
     const { register } = useAuth()
@@ -30,7 +31,23 @@ const RegisterForm = () => {
                                 .matches(/^[0-9]{10}$/, 'กรุณาตรวจสอบเบอร์โทรศัพท์'),
                             email: Yup.string()
                                 .email('กรุณาตรวจสอบอีเมลอีกครั้ง')
-                                .required('กรุณากรอกอีเมล'),
+                                .required('กรุณากรอกอีเมล')
+                                .test('Unique Email', 'Email already in use',
+                                    function (value) {
+                                        return new Promise((resolve, reject) => {
+                                            axios.get(`/users/${value}`)
+                                                .then((res) => {
+                                                    resolve(true)
+                                                })
+                                                .catch((error) => {
+                                                    if (error.response.data.content === "The email has already been taken.") {
+                                                        resolve(false);
+                                                    }
+                                                })
+                                        })
+                                    }
+                                )
+                            ,
                             password: Yup.string()
                                 .required('กรุณากรอกรหัสผ่าน')
                                 .min(16, 'รหัสผ่านต้องมีความยาวอย่างน้อย 16 ตัวอักษร')
