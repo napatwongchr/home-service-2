@@ -1,32 +1,11 @@
-import { Badge, Box, Center, Container, Flex, Grid, Image, Text } from '@chakra-ui/react';
+import { Badge, Box, Button, Center, Container, Flex, Grid, Image, Text } from '@chakra-ui/react';
 import React from 'react';
 import { serviceData } from '../../asset/model/serviceData';
 import priceTag from '../../asset/image/homePage/Group.svg'
+import filterCategory from '../../utils/filterCategory';
 const AllServiceSection = () => {
-    const handleColorButton = (type) => {
-        switch (type) {
-            case 'บริการทั่วไป':
-                return 'blue.100'
-            case 'บริการห้องครัว':
-                return 'purple.100'
-            case 'บริการห้องน้ำ':
-                return 'green.100'
-            default:
-                return 'blue.100'
-        }
-    }
-    const handleColorText = (type) => {
-        switch (type) {
-            case 'บริการทั่วไป':
-                return 'blue.800'
-            case 'บริการห้องครัว':
-                return 'purple.900'
-            case 'บริการห้องน้ำ':
-                return 'green.900'
-            default:
-                return 'blue.800'
-        }
-    }
+    const { handleColorButton, handleColorText } = filterCategory
+
     return (
         <Container className='recommendService' maxW='100%' bg='gray.100' centerContent>
             <Flex>
@@ -45,7 +24,16 @@ const AllServiceSection = () => {
                                             <Image src={priceTag} />
                                             <Text className='price' textStyle='b3' color='gray.700' ml='8px'>ค่าบริการประมาณ {item.price} ฿</Text>
                                         </Flex>
-                                        <Text textStyle='button' color='blue.600' textDecoration='underline' mx='24px'>เลือกบริการ</Text>
+                                        <Button
+                                            textStyle="button"
+                                            color="blue.600"
+                                            variant='ghost'
+                                            px={0}
+                                            bottom={'5px'}
+                                            mx="24px"
+                                        >
+                                            เลือกบริการ
+                                        </Button>
                                     </Box>
                                 )
                             })
