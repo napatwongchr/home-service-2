@@ -1,15 +1,14 @@
-import "./loginPage.css";
 import React from "react";
-import facebookLogo from "../../asset/image/loginpage/facebook-logo.svg";
+// import facebookLogo from "../../asset/image/loginpage/facebook-logo.svg";
 import {
   Container,
   Flex,
   Input,
   Text,
   Button,
-  Divider,
-  Stack,
-  Image,
+  // Divider,
+  // Stack,
+  // Image,
   Link,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
@@ -57,7 +56,10 @@ const LoginForm = () => {
                 เข้าสู่ระบบ
               </Text>
               <label htmlFor="email">
-                อีเมล <span className="star">*</span>
+                อีเมล{" "}
+                <span className="star" style={{ color: "#c82438" }}>
+                  *{" "}
+                </span>
               </label>
               <Input
                 id="email"
@@ -70,7 +72,10 @@ const LoginForm = () => {
                 <div className="text-error">{formik.errors.email}</div>
               ) : null}
               <label htmlFor="password">
-                รหัสผ่าน <span className="star">*</span>
+                รหัสผ่าน{" "}
+                <span className="star" style={{ color: "#c82438" }}>
+                  *
+                </span>
               </label>
               <Input
                 id="password"
@@ -96,7 +101,7 @@ const LoginForm = () => {
                 เข้าสู่ระบบ
               </Button>
 
-              <Stack direction="row" p={7} align={"center"}>
+              {/* <Stack direction="row" p={7} align={"center"}>
                 <Divider />
                 <Text whiteSpace={"nowrap"} textStyle="b3">
                   หรือลงชื่อเข้าใช้ผ่าน
@@ -116,7 +121,7 @@ const LoginForm = () => {
                 _active={{ borderColor: "blue.800", color: "blue.800" }}
               >
                 เข้าสู่ระบบด้วย Facebook
-              </Button>
+              </Button> */}
               <Text align={"center"} marginTop="2rem">
                 ยังไม่มีบัญชีผู้ใช้ HomeService?{" "}
                 <Link
