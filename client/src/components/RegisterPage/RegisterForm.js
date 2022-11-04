@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import { Container, Flex, Link, Text } from '@chakra-ui/react';
+import { Button, Container, Flex, Link, Text } from '@chakra-ui/react';
 import { Formik, Form, } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/authentication'
 import { MyTextInput, MyCheckbox } from '../../utils/formInput'
 import axios from '../../api/axios';
-import './registerPage.css';
 
 const RegisterForm = () => {
     const { register } = useAuth()
     const [msg, setMsg] = useState('')
 
     return (
+<<<<<<< HEAD
         <Container maxW={'100%'} minH={'100%'} py={'52px'} bg={'gray.100'} centerContent>
+=======
+        <Container maxW={'100%'} h={'100vh'} py={'52px'} bg={'gray.100'} centerContent>
+>>>>>>> 46d650c (feat: refactor register page)
             <Flex flexDirection={'column'} w={614} bg='utility.white' borderRadius={'8px'} px={'87px'} py={'30px'}>
                 <Text textStyle={'h1'} color='blue.950' textAlign={'center'}>ลงทะเบียน</Text>
                 <Formik
@@ -67,6 +70,7 @@ const RegisterForm = () => {
                             name="fullname"
                             type="text"
                             placeholder="กรุณากรอกชื่อ นามสกุล"
+<<<<<<< HEAD
                         />
                         <MyTextInput
                             label="เบอร์โทรศัพท์"
@@ -74,6 +78,9 @@ const RegisterForm = () => {
                             name="phoneNumber"
                             type="string"
                             placeholder="กรุณากรอกเบอร์โทรศัพท์"
+=======
+                            w={'440px'} h={'44px'}
+>>>>>>> 46d650c (feat: refactor register page)
                         />
 
                         <MyTextInput
