@@ -38,7 +38,7 @@ export const serviceData = [
     {
         'name': 'ติดตั้งเครื่องดูดควัน',
         'price': '1,000.00',
-        'type': 'บริการห้องครัว ',
+        'type': 'บริการห้องครัว',
         'image': require(`../image/serviceImage/ติดตั้งเครื่องดูดควัน.png`)
     },
     {

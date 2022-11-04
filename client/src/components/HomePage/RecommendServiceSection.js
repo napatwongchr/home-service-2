@@ -67,14 +67,16 @@ const RecommendServiceSection = () => {
                   ค่าบริการประมาณ 500.00 - 1,000.00 ฿
                 </Text>
               </Flex>
-              <Text
+              <Button
                 textStyle="button"
                 color="blue.600"
-                textDecoration="underline"
+                variant='ghost'
+                px={0}
+                bottom={'5px'}
                 mx="24px"
               >
                 เลือกบริการ
-              </Text>
+              </Button>
             </Box>
             <Box
               w="349px"
@@ -113,14 +115,16 @@ const RecommendServiceSection = () => {
                   ค่าบริการประมาณ 500.00 - 1,000.00 ฿
                 </Text>
               </Flex>
-              <Text
+              <Button
                 textStyle="button"
                 color="blue.600"
-                textDecoration="underline"
+                variant='ghost'
+                px={0}
+                bottom={'5px'}
                 mx="24px"
               >
                 เลือกบริการ
-              </Text>
+              </Button>
             </Box>
             <Box
               w="349px"
@@ -159,14 +163,16 @@ const RecommendServiceSection = () => {
                   ค่าบริการประมาณ 500.00 ฿
                 </Text>
               </Flex>
-              <Text
+              <Button
                 textStyle="button"
                 color="blue.600"
-                textDecoration="underline"
+                variant='ghost'
+                px={0}
+                bottom={'5px'}
                 mx="24px"
               >
                 เลือกบริการ
-              </Text>
+              </Button>
             </Box>
           </Grid>
         </Center>
@@ -176,15 +182,12 @@ const RecommendServiceSection = () => {
           <Link to={"/service-list"}>
             <Button
               role="click"
-              bg="blue.600"
               textStyle="h5"
-              color="utility.white"
               px="24px"
               py="10px"
               mt="70px"
               mb="175px"
-              _hover={{ bg: "blue.500" }}
-              _active={{ bg: "blue.800" }}
+              variant='primary'
             >
               ดูบริการทั้งหมด
             </Button>

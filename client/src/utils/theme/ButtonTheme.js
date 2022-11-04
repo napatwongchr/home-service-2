@@ -61,6 +61,13 @@ export const Button = defineStyleConfig({
                 bg: 'none',
                 color: 'gray.400'
             }
+        },
+        dropdown: {
+            color: 'gray.950',
+            bg: 'utility.white',
+            _hover: {
+                bg: 'gray.100',
+            },
         }
 
     },
@@ -68,6 +75,7 @@ export const Button = defineStyleConfig({
     // The default size and variant values
     defaultProps: {
         variant: 'primary',
+
     },
 
 })

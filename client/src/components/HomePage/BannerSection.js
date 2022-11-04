@@ -56,10 +56,7 @@ const Banner = () => {
             h="54px"
             mt={47}
             ml={162}
-            borderRadius="8px"
-            bg="#336DF2"
-            _hover={{ bg: "#4C7FF4", color: "#FFFFFF" }}
-            _active={{ bg: "#0E3FB0", color: "#FFFFFF" }}
+            variant='primary'
           >
             <Text textStyle="h2" color="#FFFFFF">
               เช็คราคาบริการ
