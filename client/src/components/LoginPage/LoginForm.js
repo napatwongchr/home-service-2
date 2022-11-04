@@ -45,7 +45,7 @@ const LoginForm = () => {
             <Flex
               flexDirection={"column"}
               w={614}
-              h={600}
+              h={"30rem"}
               bg="utility.white"
               borderRadius={"8px"}
               px={"87px"}
