@@ -7,7 +7,7 @@ const userController = {
         try {
             let password = req.body.password
 
-            //password condition == password must include both Uppercase and Lowercase and lanth of password must morethen 15
+            //set password condition
             const passwordConditionCheck = /[A-Z]/g.test(password) && /[a-z]/g.test(password) && password.length >= 16
 
             //Email form Validate
@@ -20,16 +20,6 @@ const userController = {
                     msg : "email already exists"
                 })
             }
-
-            //phonenumber condition check
-            // const PhoneNumber_Regex = /((\+66|0)(\d{1,2}\-?\d{3}\-?\d{3,4}))|((\+๖๖|๐)([๐-๙]{1,2}\-?[๐-๙]{3}\-?[๐-๙]{3,4}))/gm;
-            // const phoneConditionCheck = PhoneNumber_Regex.test(req.body.phoneNumber)
-
-            // if(!phoneConditionCheck){
-            //     return res.json({
-            //         msg : "invalid form of phone number"
-            //     })
-            // }
 
             if (!emailConditionCheck) {
                 return res.status(403).json({
@@ -46,7 +36,7 @@ const userController = {
             const salt = await bcrypt.genSalt(10)
             password = await bcrypt.hash(password, salt)
 
-            //เช็คว่า ถ้าชื่อ ขึ้นต้นด้วย เว้นวรรค จะไม่ให้ผ่าน
+            //prevent space on first letter
             if (/^\s/.test(req.body.fullname)) {
                 return res.status(403).json({
                     msg: "fullname must start with character"
@@ -58,7 +48,7 @@ const userController = {
             const lastName = removeSpace[1]
 
 
-            //เมื่อ สร้าง user แล้ว ตัว recentUserId จะเก็บ user_id ที่เพิ่มล่าสุดเอาไว้ เพื่อรองรับการเอาไปใช้ในการแสดงผล user ที่เพิ่งสมัครได้
+            //recentUserId = <recent user_id>
             const recentUserId = await pool.query(`insert into users(first_name, last_name, phone_number, email, password)
             values($1, $2, $3, $4, $5) returning(user_id)`,
                 [
@@ -139,7 +129,7 @@ const userController = {
         const email = []
         const result = await pool.query(`select email from users`);
         result.rows.map(item => email.push(item.email))
-        res.json({
+        return res.status(200).json({
             data: email
         })
     }

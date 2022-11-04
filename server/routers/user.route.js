@@ -1,5 +1,5 @@
 import Route from 'express'
-import userController from '../controller/user.contoller.js'
+import userController from '../controllers/user.controller.js'
 
 const userRoute = Route();
 
