@@ -4,7 +4,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 dotenv.config()
 
-import userRoute from './router/user.route.js'
+import userRoute from './routers/user.route.js'
 
 const port = process.env.PORT || 4012
 
