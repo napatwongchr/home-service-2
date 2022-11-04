@@ -1,4 +1,7 @@
 import { extendTheme } from "@chakra-ui/react"
+import { Button } from './ButtonTheme'
+import { Input } from './InputTheme'
+import { Checkbox } from './CheckboxTheme'
 
 const theme = extendTheme({
     colors: {
@@ -97,7 +100,12 @@ const theme = extendTheme({
             fontWeight: '600',
             lineHeight: '24px',
         }
-    }
+    },
+    components: {
+        Button,
+        Input,
+        Checkbox
+    },
 })
 
 export default theme
