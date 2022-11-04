@@ -61,6 +61,7 @@ export const Button = defineStyleConfig({
                 bg: 'none',
                 color: 'gray.400'
             }
+<<<<<<< HEAD
         },
         dropdown: {
             color: 'gray.950',
@@ -68,6 +69,8 @@ export const Button = defineStyleConfig({
             _hover: {
                 bg: 'gray.100',
             },
+=======
+>>>>>>> bffc9c9 (feat: refactor register page)
         }
 
     },
@@ -75,7 +78,10 @@ export const Button = defineStyleConfig({
     // The default size and variant values
     defaultProps: {
         variant: 'primary',
+<<<<<<< HEAD
 
+=======
+>>>>>>> bffc9c9 (feat: refactor register page)
     },
 
 })

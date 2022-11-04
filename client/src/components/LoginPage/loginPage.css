@@ -1,0 +1,51 @@
+/* #fullname,
+#phoneNumber,
+#email,
+#password {
+  padding: 10px 16px;
+  width: 440px;
+  height: 44px;
+  border-radius: 8px;
+  border: 1px solid #ccd0d7;
+}
+
+input::placeholder {
+  font-weight: 400;
+}
+
+input:focus::placeholder {
+  color: #232630 !important;
+}
+
+input:focus {
+  outline: none !important;
+  border: 1px solid #336df2 !important;
+}
+
+.star {
+  font-size: 16px;
+  font-weight: 500;
+  color: #c82438;
+}
+
+.error {
+  border: 1px solid #c82438 !important;
+}
+
+svg {
+  position: relative;
+  left: 412px;
+  bottom: 29px;
+}
+
+span .css-0 {
+  font-weight: 400;
+  font-size: 16px;
+  color: #c82438;
+}
+
+.text-error {
+  font-weight: 400;
+  font-size: 16px;
+  color: #c82438;
+} */

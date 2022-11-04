@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button, Container, Flex, Link, Text } from '@chakra-ui/react';
 import { Formik, Form, } from 'formik';
@@ -6,6 +5,7 @@ import * as Yup from 'yup';
 import { useAuth } from '../../contexts/authentication'
 import { MyTextInput, MyCheckbox } from '../../utils/formInput'
 import axios from '../../api/axios';
+import './registerPage.css';
 
 const RegisterForm = () => {
     const { register } = useAuth()
