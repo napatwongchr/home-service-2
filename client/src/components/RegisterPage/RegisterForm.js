@@ -33,7 +33,6 @@ const RegisterForm = () => {
                         email: Yup.string()
                             .email('กรุณาตรวจสอบอีเมลอีกครั้ง')
                             .required('กรุณากรอกอีเมล')
-
                             .test('Unique Email', msg,
                                 async function (value) {
                                     try {
