@@ -108,10 +108,11 @@ const LoginForm = () => {
               <Button
                 variant='ghost'
                 p={0}
-                href="/register"
                 fontWeight={"600"}
               >
-                ลงทะเบียน
+                <Link href="/register">
+                  ลงทะเบียน
+                </Link>
               </Button>
             </Text>
           </Flex>

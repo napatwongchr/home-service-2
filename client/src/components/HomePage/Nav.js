@@ -1,4 +1,4 @@
-import { Flex, Box, Button, Image, Text, Container } from "@chakra-ui/react";
+import { Flex, Box, Button, Image, Text, Container, MenuItem, MenuList, Menu, MenuButton, Avatar } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication";
 import notification from "../../asset/image/homePage/notification.svg";
@@ -7,6 +7,7 @@ import order from "../../asset/image/homePage/order.svg";
 import history from "../../asset/image/homePage/history.svg";
 import houseLogo from "../../asset/image/homePage/house-logo.svg";
 import logoutPic from "../../asset/image/homePage/logoutPic.svg";
+import bell from "../../asset/image/homePage/bell.svg";
 
 import { useState } from "react";
 const NavComponent = () => {
@@ -61,80 +62,45 @@ const NavComponent = () => {
                 <Text fontStyle={"h3"}>
                   {user.firstname + " " + user.lastname}
                 </Text>
-                <Image
-                  src="https://st4.depositphotos.com/11634452/41441/v/600/depositphotos_414416674-stock-illustration-picture-profile-icon-male-icon.jpg"
-                  alt="profile picture"
-                  w={"40px"}
-                  borderRadius={"999px"}
-                  mx={"12px"}
-                  onClick={() => setToggle(!toggle)}
-                />
+                <Menu>
+                  <MenuButton as={Button} variant='dropdown' _hover={{ bg: 'none' }} minW="0px" w='100%px' onClick={() => setToggle(false)}>
+                    <Avatar name={user.firstname} src={bell} size={'40px'} onClick={() => setToggle(!toggle)} />
+                  </MenuButton>
+                  <MenuList
+                    minW="0px"
+                    w='100%'
+                    py="6px"
+                    borderRadius={8}
+                    bg={'utility.white'}
+                    boxShadow={'lg'}
+                    border='none'
+                    textStyle={'b3'}
+                  >
+                    <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}>
+                      <Image src={userPrc} mr={"15px"} />
+                      <Text textStyle={"b3"}>ข้อมูลผู้ใช้งาน</Text>
+                    </MenuItem>
+                    <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}>
+                      <Image src={order} mr={"15px"} />
+                      <Text textStyle={"b3"}>รายการคำสั่งซ่อม</Text>
+                    </MenuItem>
+                    <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}>
+                      <Image src={history} mr={"15px"} pos={'relative'} left={'-2px'} />
+                      <Text textStyle={"b3"}>ประวัติการซ่อม</Text>
+                    </MenuItem>
+                    <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }} onClick={() => logout()}>
+                      <Image
+                        src={logoutPic}
+                        mr={"15px"}
+                        pos={'relative'}
+                        left={'1px'}
+                      />
+                      <Text textStyle={"b3"}>ออกจากระบบ</Text>
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
                 <Image src={notification} w={"40px"} borderRadius={"999px"} />
               </Flex>
-              {toggle && (
-                <Container
-                  bg={"utility.white"}
-                  position="absolute"
-                  w={"180px"}
-                  borderRadius={"8px"}
-                  boxShadow="lg"
-                  top={"80px"}
-                  zIndex="100"
-                  px={0}
-                  py="6px"
-                >
-                  <Flex
-                    w={"100%"}
-                    h={"35px"}
-                    alignItems={"center"}
-                    p="14px"
-                    _hover={{ bg: "gray.100" }}
-                    _active={{ bg: "gray.200" }}
-                  >
-                    <Image src={userPrc} mr={"15px"} />
-                    <Text textStyle={"b3"}>ข้อมูลผู้ใช้งาน</Text>
-                  </Flex>
-                  <Flex
-                    w={"100%"}
-                    h={"35px"}
-                    alignItems={"center"}
-                    p="14px"
-                    _hover={{ bg: "gray.100" }}
-                    _active={{ bg: "gray.200" }}
-                  >
-                    <Image src={order} mr={"15px"} />
-                    <Text textStyle={"b3"}>รายการคำสั่งซ่อม</Text>
-                  </Flex>
-                  <Flex
-                    w={"100%"}
-                    h={"35px"}
-                    alignItems={"center"}
-                    p="14px"
-                    _hover={{ bg: "gray.100" }}
-                    _active={{ bg: "gray.200" }}
-                  >
-                    <Image src={history} mr={"15px"} />
-                    <Text textStyle={"b3"}>ประวัติการซ่อม</Text>
-                  </Flex>
-                  <Flex
-                    w={"100%"}
-                    h={"35px"}
-                    alignItems={"center"}
-                    p="14px"
-                    _hover={{ bg: "gray.100" }}
-                    _active={{ bg: "gray.200" }}
-                    onClick={() => logout()}
-                  >
-                    <Image
-                      src={logoutPic}
-                      mr={"15px"}
-                      left="3px"
-                      pos={"relative"}
-                    />
-                    <Text textStyle={"b3"}>ออกจากระบบ</Text>
-                  </Flex>
-                </Container>
-              )}
             </>
           ) : (
             <Link to={"/login"}>
@@ -149,8 +115,8 @@ const NavComponent = () => {
             </Link>
           )}
         </Flex>
-      </Flex>
-    </Container>
+      </Flex >
+    </Container >
   );
 };
 
