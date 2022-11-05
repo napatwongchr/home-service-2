@@ -119,7 +119,10 @@ const userController = {
     },
 
     async getUser(req, res) {
-        const result = await pool.query(`select user_id, first_name, last_name, phone_number, email from users`);
+        const result = await pool.query(`select users.user_id, first_name, last_name, phone_number, roles, created_at, updated_at
+        from user_profile
+        inner join users
+        on users.user_id = user_profile.user_id`);
         res.status(200).json({
             data: result.rows
         })
