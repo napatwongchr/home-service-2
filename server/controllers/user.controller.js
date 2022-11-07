@@ -98,13 +98,13 @@ const userController = {
 
             const user_id = users.rows[0].user_id
             const user_profile = await pool.query(`select * from user_profile where user_id = $1`, [user_id])
-            console.log(user_profile.rows[0].first_name)
 
             const token = jwt.sign(
                 {
                     id: user_id,
                     firstname: user_profile.rows[0].first_name,
-                    lastname: user_profile.rows[0].last_name
+                    lastname: user_profile.rows[0].last_name,
+                    role: user_profile.rows[0].roles
                 },
                 process.env.SECRET_KEY,
                 {
