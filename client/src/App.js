@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import ServiceList from "./pages/ServiceList";
 import LoginPage from "./pages/LoginPage";
 import ViewServiceCategory from "./components/ServiceCategory/ViewServiceCategory";
+import CreateServiceCategory from "./components/ServiceCategory/CreateServiceCategory";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
     //   <Route path="/register" element={<RegisterPage />} />
     //   <Route path="/login" element={<LoginPage />} />
     // </Routes>
-    <ViewServiceCategory />
+    <CreateServiceCategory />
   );
 }
 
