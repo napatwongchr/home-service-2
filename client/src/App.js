@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import ServiceList from "./pages/ServiceList";
 import LoginPage from "./pages/LoginPage";
 import AdminDashboardPage from "./pages/Admin/AdminDashBoard";
+import AdminCreateService from "./pages/Admin/AdminCreateService";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
+      <Route path="/admin-dashboard-create-service" element={<AdminCreateService />} />
     </Routes>
   );
 }
