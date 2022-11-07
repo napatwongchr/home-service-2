@@ -100,7 +100,7 @@ const userController = {
 
             const user_id = users.rows[0].user_id
             const user_profile = await pool.query(`select * from user_profile where user_id = $1`, [ user_id ])
-            console.log(user_profile.rows[0])
+            console.log(user_profile.rows[0].first_name)
 
             const token = jwt.sign(
                 {
