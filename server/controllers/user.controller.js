@@ -82,27 +82,30 @@ const userController = {
 
     async login(req, res) {
         try {
-            const hasUser = await pool.query("select * from users where email = $1", [req.body.email.toLowerCase()])
-            const user = hasUser.rows[0]
-            if (!user) {
+            const users = await pool.query("select * from users where email = $1", [req.body.email.toLowerCase()])
+            const hasUser = Boolean(users.rows[0])
+
+            if (!hasUser) {
                 return res.status(401).json({
                     msg: "user not fround"
                 })
             }
 
-
-            const isValidPassword = await bcrypt.compare(req.body.password, user.password)
+            const isValidPassword = await bcrypt.compare(req.body.password, users.rows[0].password)
             if (!isValidPassword) {
                 return res.status(401).json({
                     msg: "password is invalid"
                 })
             }
 
+            const user_id = users.rows[0].user_id
+            const user_profile = await pool.query(`select * from user_profile where user_id = $1`, [ user_id ])
+
             const token = jwt.sign(
                 {
-                    id: user.user_id,
-                    firstname: user.first_name,
-                    lastname: user.last_name
+                    id: user_id,
+                    firstname: user_profile.first_name,
+                    lastname: user_profile.last_name
                 },
                 process.env.SECRET_KEY,
                 {
