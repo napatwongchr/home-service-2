@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Container, Flex, Link, Text } from '@chakra-ui/react';
 import { Formik, Form, } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/authentication'
 import { MyTextInput, MyCheckbox } from '../../utils/formInput'
-import axios from '../../api/axios';
 
 const RegisterForm = () => {
     const { register } = useAuth()
-    const [msg, setMsg] = useState('')
 
     return (
         <Container maxW={'100%'} h={'100vh'} py={'52px'} bg={'gray.100'} centerContent>
@@ -32,21 +30,6 @@ const RegisterForm = () => {
                         email: Yup.string()
                             .email('กรุณาตรวจสอบอีเมลอีกครั้ง')
                             .required('กรุณากรอกอีเมล')
-                            .test('Unique Email', msg,
-                                async function (value) {
-                                    try {
-                                        const response = await axios.get(`/users?email=${value}`)
-                                        if (response.data.data[0]) {
-                                            setMsg('อีเมลนี้มีคนใช้แล้ว กรุณาเปลี่ยนอีเมลใหม่')
-                                        } else {
-                                            setMsg('')
-                                        }
-                                    }
-                                    catch (err) {
-                                        console.log(err);
-                                    }
-                                }
-                            )
                         ,
                         password: Yup.string()
                             .required('กรุณากรอกรหัสผ่าน')
