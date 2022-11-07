@@ -1,9 +1,10 @@
+import { query } from "express";
 import { pool } from "../utils/db.js";
 
-const serviceController = {
+const serviceCategoryController = {
     async createServiceCategory ( req, res ) {
         try{
-            const findCategory = await pool.query(`select * from service_category where service_category_name = $1`, [ req.body.serviceCategoryName ])
+            const findCategory = await pool.query(`select * from service_category where service_category_name = $1`, [ req.body.categoryName ])
             const hasCategory = Boolean(findCategory.rows[0])
             
             if (hasCategory){
@@ -17,7 +18,7 @@ const serviceController = {
                 to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM'),
                 to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM')
             ) returning service_category_id
-            `, [req.body.serviceCategoryName])
+            `, [req.body.categoryName])
     
             return res.status(201).json({
                 msg : "add service successfully",
@@ -73,7 +74,32 @@ const serviceController = {
                 msg : "invalid input"
             })
         }
-    }
+    },
+
+    async editServiceCategory ( req, res ) {
+        try{
+            let categoryId = req.query.categoryId
+            let categoryName = req.body.categoryName
+            await pool.query(`update service_category
+                set service_category_name = $1, 
+                updated_at = to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM')
+                where service_category_id = $2
+            `, [ categoryName, categoryId ])
+
+            const getRecentupdate = await pool.query(`select * from service_category where service_category_id = $1`, [categoryId])
+
+            return res.status(200).json({
+                msg : "category updated",
+                data : getRecentupdate.rows[0]
+            })
+
+        } catch(err){
+            return res.status(400).json({
+                msg : "invalid input"
+            })
+        }
+
+        }
 }
 
-export default serviceController;
+export default serviceCategoryController;

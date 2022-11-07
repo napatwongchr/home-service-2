@@ -1,9 +1,10 @@
 import Route from 'express'
-import serviceController from '../controllers/service.controller.js';
+import serviceCategoryController from '../controllers/service-category.contoller.js';
 
 const serviceRoute = Route();
 
-serviceRoute.get('/category', serviceController.getServiceCategory);
-serviceRoute.post('/category', serviceController.createServiceCategory);
+serviceRoute.get('/category', serviceCategoryController.getServiceCategory);
+serviceRoute.post('/category', serviceCategoryController.createServiceCategory);
+serviceRoute.put('/category', serviceCategoryController.editServiceCategory);
 
 export default serviceRoute;
