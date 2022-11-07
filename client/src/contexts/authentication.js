@@ -15,7 +15,7 @@ function AuthProvider(props) {
 
   useEffect(() => {
     autoLogout()
-  }, [])
+  })
 
   // register the user
   const register = async (data) => {
@@ -40,6 +40,7 @@ function AuthProvider(props) {
     localStorage.removeItem("token");
     localStorage.removeItem('user')
     setState({ ...state, user: null, error: false });
+    navigate("/");
   };
 
   const isAuthenticated = Boolean(localStorage.getItem("token"));

@@ -88,7 +88,18 @@ const NavComponent = () => {
                       <Image src={history} mr={"15px"} pos={'relative'} left={'-2px'} />
                       <Text textStyle={"b3"}>ประวัติการซ่อม</Text>
                     </MenuItem>
-                    <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }} onClick={() => logout()}>
+                    {
+                      user.role === 'admin' ?
+                        <Link to='/admin-dashboard'>
+                          <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}>
+                            <Image src={history} mr={"15px"} pos={'relative'} left={'-2px'} />
+                            <Text textStyle={"b3"}>Admin Dashboard</Text>
+                          </MenuItem>
+                        </Link>
+                        : null
+                    }
+
+                    <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }} borderTop='1px' borderColor='gray.300' onClick={() => logout()}>
                       <Image
                         src={logoutPic}
                         mr={"15px"}
