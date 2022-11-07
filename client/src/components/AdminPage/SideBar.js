@@ -8,7 +8,7 @@ import codeIcon from '../../asset/image/sideBar/codeIcon.svg';
 const SideBar = () => {
 
     return (
-        <Container w='240px' h='100vh' bg='blue.950' py='32px' px='0' display='flex' flexDirection='column' justifyContent='space-between'>
+        <Container w='240px' h='100vh' bg='blue.950' py='32px' px='0' display='flex' flexDirection='column' justifyContent='space-between' m='0'>
             <Flex flexDirection='column'>
                 <Box w='192px' h='46px' bg='blue.100' display='flex' justifyContent='center' alignItems='center' gap='6px' borderRadius='12px' px='12px' mx='24px' mb='32px'>
                     <Img src={house} w='26px' />
