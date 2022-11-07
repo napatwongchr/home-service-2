@@ -37,15 +37,15 @@ const userController = {
             password = await bcrypt.hash(password, salt)
 
             //prevent space on first letter
-            // if (/^\s/.test(req.body.fullname)) {
-            //     return res.status(403).json({
-            //         msg: "fullname must start with character"
-            //     })
-            // }
-            // const splitedFullname = req.body.fullname.split(' ')
-            // const removeSpace = splitedFullname.filter(item => item !== "")
-            // const firstName = removeSpace[0]
-            // const lastName = removeSpace[1]
+            if (/^\s/.test(req.body.fullname)) {
+                return res.status(403).json({
+                    msg: "fullname must start with character"
+                })
+            }
+            const splitedFullname = req.body.fullname.split(' ')
+            const removeSpace = splitedFullname.filter(item => item !== "")
+            const firstName = removeSpace[0]
+            const lastName = removeSpace[1]
 
 
             //recentUserId = <recent user_id>
@@ -55,11 +55,15 @@ const userController = {
                     req.body.email.toLowerCase(),
                     password
                 ])
-            // await pool.query(`inser into user_profile(user_id, first_name, last_name, phone_number, roles, created_at, updated_at)
-            //     values($1, $2, $3, $4, $5, $6, $7)
-            // `, [
-            //     recentUserId.user_id
-            // ])
+            await pool.query(`insert into user_profile(user_id, first_name, last_name, phone_number, roles, created_at, updated_at)
+                values($1, $2, $3, $4, $5, to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM'), to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM'))
+            `, [
+                recentUserId.rows[0].user_id,
+                firstName,
+                lastName,
+                req.body.phoneNumber,
+                "customer"
+            ])
 
 
             return res.status(201).json({
