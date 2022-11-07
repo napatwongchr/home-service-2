@@ -10,10 +10,10 @@ import { useAuth } from "../../contexts/authentication";
 const SideBar = () => {
     const { logout } = useAuth()
     return (
-        <Container w='240px' h='100vh' bg='blue.950' py='32px' px='0' display='flex' flexDirection='column' justifyContent='space-between' m='0'>
+        <Container w='20%' minH='100vh' bg='blue.950' py='32px' px='0' display='flex' flexDirection='column' justifyContent='space-between' m='0'>
             <Flex flexDirection='column'>
                 <Link to='/'>
-                    <Box w='192px' h='46px' bg='blue.100' display='flex' justifyContent='center' alignItems='center' gap='6px' borderRadius='12px' px='12px' mx='24px' mb='32px'>
+                    <Box w='192px' h='46px' bg='blue.100' display='flex' justifyContent='center' alignItems='center' gap='6px' borderRadius='12px' px='12px' mx='auto' mb='32px'>
                         <Img src={house} w='26px' />
                         <Text fontWeight='500' fontSize='20px' color='blue.600' pos='relative' top='1px'>HomeServices</Text>
                     </Box>
