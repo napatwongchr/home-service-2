@@ -8,4 +8,5 @@ userRoute.get('/email', userController.getUserByEmail)
 userRoute.post('/register', userController.register)
 userRoute.post('/login', userController.login)
 
+
 export default userRoute;

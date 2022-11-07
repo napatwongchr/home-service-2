@@ -49,15 +49,21 @@ const userController = {
 
 
             //recentUserId = <recent user_id>
-            const recentUserId = await pool.query(`insert into users(first_name, last_name, phone_number, email, password)
-            values($1, $2, $3, $4, $5) returning(user_id)`,
+            const recentUserId = await pool.query(`insert into users(email, password)
+            values($1, $2) returning(user_id)`,
                 [
-                    firstName.toLowerCase(),
-                    lastName.toLowerCase(),
-                    req.body.phoneNumber,
                     req.body.email.toLowerCase(),
                     password
                 ])
+            await pool.query(`insert into user_profile(user_id, first_name, last_name, phone_number, roles, created_at, updated_at)
+                values($1, $2, $3, $4, $5, to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM'), to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM'))
+            `, [
+                recentUserId.rows[0].user_id,
+                firstName,
+                lastName,
+                req.body.phoneNumber,
+                "customer"
+            ])
 
 
             return res.status(201).json({
@@ -76,27 +82,31 @@ const userController = {
 
     async login(req, res) {
         try {
-            const hasUser = await pool.query("select * from users where email = $1", [req.body.email.toLowerCase()])
-            const user = hasUser.rows[0]
-            if (!user) {
+            const users = await pool.query("select * from users where email = $1", [req.body.email.toLowerCase()])
+            const hasUser = Boolean(users.rows[0])
+
+            if (!hasUser) {
                 return res.status(401).json({
                     msg: "user not fround"
                 })
             }
 
-
-            const isValidPassword = await bcrypt.compare(req.body.password, user.password)
+            const isValidPassword = await bcrypt.compare(req.body.password, users.rows[0].password)
             if (!isValidPassword) {
                 return res.status(401).json({
                     msg: "password is invalid"
                 })
             }
 
+            const user_id = users.rows[0].user_id
+            const user_profile = await pool.query(`select * from user_profile where user_id = $1`, [ user_id ])
+            console.log(user_profile.rows[0].first_name)
+
             const token = jwt.sign(
                 {
-                    id: user.user_id,
-                    firstname: user.first_name,
-                    lastname: user.last_name
+                    id: user_id,
+                    firstname: user_profile.rows[0].first_name,
+                    lastname: user_profile.rows[0].last_name
                 },
                 process.env.SECRET_KEY,
                 {
@@ -119,7 +129,10 @@ const userController = {
     },
 
     async getUser(req, res) {
-        const result = await pool.query(`select user_id, first_name, last_name, phone_number, email from users`);
+        const result = await pool.query(`select users.user_id, first_name, last_name, phone_number, roles, created_at, updated_at
+        from user_profile
+        inner join users
+        on users.user_id = user_profile.user_id`);
         res.status(200).json({
             data: result.rows
         })
