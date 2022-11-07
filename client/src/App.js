@@ -3,6 +3,7 @@ import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import ServiceList from "./pages/ServiceList";
 import LoginPage from "./pages/LoginPage";
+import SideBar from "./components/AdminPage/SideBar";
 function App() {
   return (
     <Routes>
@@ -10,6 +11,7 @@ function App() {
       <Route path="/service-list" element={<ServiceList />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/admin-dashboard" element={<SideBar />} />
     </Routes>
   );
 }
