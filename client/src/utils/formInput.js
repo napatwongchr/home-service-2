@@ -1,5 +1,5 @@
 import React from 'react';
-import { useField } from 'formik';
+import { Field, useField } from 'formik';
 import { Flex, Text, Input, FormLabel, Image, Checkbox } from '@chakra-ui/react';
 import errorIcon from '../asset/image/errorIcon.svg'
 const MyTextInput = ({ label, ...props }) => {
@@ -45,6 +45,50 @@ const MyTextInput = ({ label, ...props }) => {
     );
 };
 
+
+const MyFieldInput = ({ label, ...props }) => {
+    const [field, meta] = useField(props);
+    return (
+        <>
+            {meta.touched && meta.error ? (
+                <Flex flexDirection={'column'}>
+                    <FormLabel
+                        mt={'20px'}
+                        mb={'4px'}
+                        fontStyle='h5'
+                        color={'gray.900'}
+                        htmlFor={props.id || props.name}
+
+                    >
+                        <Flex fontStyle={'h5'}>
+                            <Text color={'gray.900'}>{label}</Text><Text color={'utility.red'}>*</Text>
+                        </Flex>
+                    </FormLabel>
+                    <Field as={Input} variant={'error'} {...field} {...props} />
+                    <Image src={errorIcon} pos='relative' left='412px' bottom={'29px'} w={'14px'} />
+                    <Text fontStyle={'b4'} color='utility.red'>{meta.error}</Text>
+                </Flex>
+            ) :
+                <Flex flexDirection={'column'}>
+                    <FormLabel
+                        mt={'20px'}
+                        mb={'4px'}
+                        fontStyle='h5'
+                        color={'gray.900'}
+                        htmlFor={props.id || props.name}
+
+                    >
+                        <Flex fontStyle={'h5'}>
+                            <Text color={'gray.900'}>{label}</Text><Text color={'utility.red'}>*</Text>
+                        </Flex>
+                    </FormLabel>
+                    <Field as={Input} variant={meta.touched ? 'success' : 'default'} {...field} {...props} />
+                </Flex>
+            }
+        </>
+    );
+};
+
 const MyCheckbox = ({ children, ...props }) => {
     const [field, meta] = useField({ ...props, type: 'checkbox' });
     return (
@@ -74,4 +118,4 @@ const MyCheckbox = ({ children, ...props }) => {
     );
 };
 
-export { MyTextInput, MyCheckbox }
+export { MyTextInput, MyFieldInput, MyCheckbox }
