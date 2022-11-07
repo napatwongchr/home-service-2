@@ -49,12 +49,13 @@ const userController = {
 
 
             //recentUserId = <recent user_id>
-            const recentUserId = await pool.query(`insert into users(first_name, last_name, phone_number, email, password)
-            values($1, $2, $3, $4, $5) returning(user_id)`,
+            const recentUserId = await pool.query(`insert into users(first_name, last_name, phone_number, roles, email, password)
+            values($1, $2, $3, $4, $5 $6) returning(user_id)`,
                 [
                     firstName.toLowerCase(),
                     lastName.toLowerCase(),
                     req.body.phoneNumber,
+                    "customer",
                     req.body.email.toLowerCase(),
                     password
                 ])
