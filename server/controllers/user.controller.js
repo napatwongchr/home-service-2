@@ -6,7 +6,6 @@ const userController = {
     async register(req, res) {
         try {
             let password = req.body.password
-
             //set password condition
             const passwordConditionCheck = /[A-Z]/g.test(password) && /[a-z]/g.test(password) && password.length >= 16
 
@@ -14,7 +13,6 @@ const userController = {
             const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
             const emailConditionCheck = EMAIL_REGEX.test(req.body.email)
             const alreadyHasEmail = await pool.query("select * from users where email = $1", [req.body.email.toLowerCase()])
-
             if (alreadyHasEmail.rows.length > 0) {
                 return res.status(403).json({
                     msg: "email already exists"

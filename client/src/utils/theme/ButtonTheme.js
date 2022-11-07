@@ -68,12 +68,14 @@ export const Button = defineStyleConfig({
             _hover: {
                 bg: 'gray.100',
             },
-        },
+        }
 
-        // The default size and variant values
-        defaultProps: {
-            variant: 'primary',
-        },
+    },
 
-    }
+    // The default size and variant values
+    defaultProps: {
+        variant: 'primary',
+
+    },
+
 })
