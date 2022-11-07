@@ -97,8 +97,13 @@ const serviceCategoryController = {
             return res.status(400).json({
                 msg : "invalid input"
             })
-        }
+        }},
 
+        async deleteServiceCategory( req, res ) {
+            await pool.query(`delete from service_category where service_category_id = $1`, [ req.query.categoryId ])
+            return res.status(202).json({
+                msg : "category has been deleted"
+            })
         }
 }
 

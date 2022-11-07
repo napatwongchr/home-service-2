@@ -6,5 +6,6 @@ const serviceRoute = Route();
 serviceRoute.get('/category', serviceCategoryController.getServiceCategory);
 serviceRoute.post('/category', serviceCategoryController.createServiceCategory);
 serviceRoute.put('/category', serviceCategoryController.editServiceCategory);
+serviceRoute.delete('/category', serviceCategoryController.deleteServiceCategory);
 
 export default serviceRoute;
