@@ -1,28 +1,9 @@
-import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
-import editIcon from "../../asset/image/serviceCategory/edit-icon.svg";
-import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
 import {
   Container,
-  Box,
   Text,
   Flex,
   FormLabel,
-  Image,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
   Button,
-  useDisclosure,
   Input,
 } from "@chakra-ui/react";
 
