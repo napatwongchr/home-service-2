@@ -6,7 +6,6 @@ const userController = {
     async register(req, res) {
         try {
             let password = req.body.password
-
             //set password condition
             const passwordConditionCheck = /[A-Z]/g.test(password) && /[a-z]/g.test(password) && password.length >= 16
 
@@ -14,10 +13,9 @@ const userController = {
             const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
             const emailConditionCheck = EMAIL_REGEX.test(req.body.email)
             const alreadyHasEmail = await pool.query("select * from users where email = $1", [req.body.email.toLowerCase()])
-
-            if(alreadyHasEmail.rows.length > 0){
+            if (alreadyHasEmail.rows.length > 0) {
                 return res.status(403).json({
-                    msg : "email already exists"
+                    msg: "email already exists"
                 })
             }
 
@@ -99,7 +97,7 @@ const userController = {
             }
 
             const user_id = users.rows[0].user_id
-            const user_profile = await pool.query(`select * from user_profile where user_id = $1`, [ user_id ])
+            const user_profile = await pool.query(`select * from user_profile where user_id = $1`, [user_id])
             console.log(user_profile.rows[0].first_name)
 
             const token = jwt.sign(
@@ -129,23 +127,22 @@ const userController = {
     },
 
     async getUser(req, res) {
-        const result = await pool.query(`select users.user_id, first_name, last_name, phone_number, roles, created_at, updated_at
+        const email = req.query.email
+        let result;
+
+        if (email) {
+            result = await pool.query(`select email from users where email = $1`, [email]);
+        } else {
+            result = await pool.query(`select users.user_id, first_name, last_name, phone_number, roles, created_at, updated_at
         from user_profile
         inner join users
         on users.user_id = user_profile.user_id`);
-        res.status(200).json({
+        }
+
+        res.json({
             data: result.rows
         })
     },
-
-    async getUserByEmail(req, res) {
-        const email = []
-        const result = await pool.query(`select email from users`);
-        result.rows.map(item => email.push(item.email))
-        return res.status(200).json({
-            data: email
-        })
-    }
 }
 
 export default userController;

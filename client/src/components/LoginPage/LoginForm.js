@@ -3,7 +3,6 @@ import React from "react";
 import {
   Container,
   Flex,
-  Input,
   Text,
   Button,
   // Divider,
@@ -14,6 +13,7 @@ import {
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "../../contexts/authentication.js";
+import { MyTextInput } from "../../utils/formInput.js";
 
 const LoginForm = () => {
   const { login } = useAuth();
@@ -32,76 +32,57 @@ const LoginForm = () => {
           password: "",
         }}
         validationSchema={Yup.object({
-          email: Yup.string().required("กรุณากรอกอีเมล"),
+          email: Yup.string().required("กรุณากรอกอีเมล").email('กรุณาตรวจสอบอีเมลอีกครั้ง'),
           password: Yup.string().required("กรุณากรอกรหัสผ่าน"),
         })}
         onSubmit={(values) => {
-          console.log(values);
           login(values);
         }}
       >
-        {(formik) => (
-          <Form>
-            <Flex
-              flexDirection={"column"}
-              w={614}
-              h={"30rem"}
-              bg="utility.white"
-              borderRadius={"8px"}
-              px={"87px"}
-              py={"30px"}
-              justify="center"
-            >
-              <Text textStyle={"h1"} color="blue.950" textAlign={"center"}>
-                เข้าสู่ระบบ
-              </Text>
-              <label htmlFor="email">
-                อีเมล{" "}
-                <span className="star" style={{ color: "#c82438" }}>
-                  *{" "}
-                </span>
-              </label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                {...formik.getFieldProps("email")}
-                placeholder="กรุณากรอกอีเมล"
-              />
-              {formik.touched.email && formik.errors.password ? (
-                <div className="text-error">{formik.errors.email}</div>
-              ) : null}
-              <label htmlFor="password">
-                รหัสผ่าน{" "}
-                <span className="star" style={{ color: "#c82438" }}>
-                  *
-                </span>
-              </label>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                {...formik.getFieldProps("password")}
-                placeholder="กรุณากรอกรหัสผ่าน"
-              />
-              {formik.touched.password && formik.errors.password ? (
-                <div className="text-error">{formik.errors.password}</div>
-              ) : null}
-              <Button
-                type="submit"
-                bg="blue.600"
-                color={"white"}
-                textStyle="h5"
-                fontWeight={"500"}
-                height="44px"
-                marginTop="2.5rem"
-                _hover={{ bg: "blue.500" }}
-                _active={{ bg: "blue.800" }}
-              >
-                เข้าสู่ระบบ
-              </Button>
+        <Form>
+          <Flex
+            flexDirection={"column"}
+            w={614}
+            h={"100%"}
+            bg="utility.white"
+            borderRadius={"8px"}
+            px={"87px"}
+            py={"30px"}
+            justify="center"
+          >
+            <Text textStyle={"h1"} color="blue.950" textAlign={"center"}>
+              เข้าสู่ระบบ
+            </Text>
 
-              {/* <Stack direction="row" p={7} align={"center"}>
+            <MyTextInput
+              label="อีเมล"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="กรุณากรอกอีเมล"
+              autoComplete="username"
+              w={'440px'} h={'44px'}
+            />
+
+            <MyTextInput
+              label="รหัสผ่าน"
+              id="password"
+              name="password"
+              type="password"
+              placeholder="กรุณากรอกรหัสผ่าน"
+              autoComplete="current-password"
+              w={'440px'} h={'44px'}
+            />
+            <Button
+              type="submit"
+              textStyle="h5"
+              height="44px"
+              marginTop="2.5rem"
+            >
+              เข้าสู่ระบบ
+            </Button>
+
+            {/* <Stack direction="row" p={7} align={"center"}>
                 <Divider />
                 <Text whiteSpace={"nowrap"} textStyle="b3">
                   หรือลงชื่อเข้าใช้ผ่าน
@@ -122,22 +103,20 @@ const LoginForm = () => {
               >
                 เข้าสู่ระบบด้วย Facebook
               </Button> */}
-              <Text align={"center"} marginTop="2rem">
-                ยังไม่มีบัญชีผู้ใช้ HomeService?{" "}
-                <Link
-                  color="blue.600"
-                  href="/register"
-                  fontWeight={"600"}
-                  _hover={{ color: "blue.400" }}
-                  _active={{ color: "blue.800" }}
-                  textDecoration={"underline"}
-                >
+            <Text align={"center"} marginTop="2rem">
+              ยังไม่มีบัญชีผู้ใช้ HomeService?{" "}
+              <Button
+                variant='ghost'
+                p={0}
+                fontWeight={"600"}
+              >
+                <Link href="/register">
                   ลงทะเบียน
                 </Link>
-              </Text>
-            </Flex>
-          </Form>
-        )}
+              </Button>
+            </Text>
+          </Flex>
+        </Form>
       </Formik>
     </Container>
   );

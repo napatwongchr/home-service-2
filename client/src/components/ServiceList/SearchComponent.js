@@ -11,7 +11,6 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Select,
   Stack,
   Button,
   Menu,
@@ -32,8 +31,7 @@ const SearchSection = () => {
   const [alphabetSearch, setAlphabetSearch] = "";
 
   const [toggle, setToggle] = useState(false);
-  const [toggleCategory, setToggleCategory] = useState(false)
-  const [toggleOrder, setToggleOrder] = useState(false)
+
   return (
     <Container
       className="search-bar"
@@ -77,93 +75,46 @@ const SearchSection = () => {
           <Flex alignItems="center">
             <Box className="category" mr="20px">
               <Menu>
-                <Text fontSize="12px" ml="15px" color="gray.700">
+                <Text fontSize="12px" ml="15px" color="gray.700" pos='relative' top={'6px'} zIndex={'10'} left={'2px'}>
                   หมวดหมู่บริการ
                 </Text>
-                <MenuButton
-                  as={Button}
-                  rightIcon={<Image src={arrow} />}
-                  textAlign="left"
-                  height="22px"
-                  bg="white"
-                  w="150px"
-                  fontStyle={'h5'}
-                  color='gray.950'
-                  onClick={() => {
-                    setToggleCategory(!toggleCategory)
-                    setToggle(false)
-                    setToggleOrder(false)
-                  }}
-                  pos='relative'
-                >
-                  {category}
-                </MenuButton>
-                {toggleCategory &&
-                  <Container width="180px" px={0}
-                    py="6px" borderRadius={8} bg={'utility.white'} pos='absolute' boxShadow={'lg'} top={410}>
-                    <Flex
-                      w={"100%"}
-                      h={"35px"}
-                      alignItems={"center"}
-                      p="14px"
-                      _hover={{ bg: "gray.100" }}
-                      _active={{ bg: "gray.200" }}
+
+                <Menu>
+                  <MenuButton as={Button} variant='dropdown' w='150px' textAlign='left' rightIcon={<Image src={arrow} />} onClick={() => setToggle(false)}>
+                    {category}
+                  </MenuButton>
+                  <MenuList
+                    minW="0px"
+                    w='180px'
+                    py="6px"
+                    borderRadius={8}
+                    bg={'utility.white'}
+                    boxShadow={'lg'}
+                    border='none'
+                    textStyle={'b3'}
+                  >
+                    <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
+                      color={category === 'บริการทั้งหมด' ? 'blue.700' : null}
                       onClick={() => {
                         setCategory('บริการทั้งหมด')
-                        setToggleCategory(false)
-                        setToggleOrder(false)
-                      }}
-                    >
-
-                      <Text textStyle={"b3"} color={category === 'บริการทั้งหมด' ? 'blue.700' : null}>บริการทั้งหมด</Text>
-                    </Flex>
-                    <Flex
-                      w={"100%"}
-                      h={"35px"}
-                      alignItems={"center"}
-                      p="14px"
-                      _hover={{ bg: "gray.100" }}
-                      _active={{ bg: "gray.200" }}
+                      }}>บริการทั้งหมด</MenuItem>
+                    <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
+                      color={category === 'บริการทั่วไป' ? 'blue.700' : null}
                       onClick={() => {
                         setCategory('บริการทั่วไป')
-                        setToggleCategory(false)
-                      }}
-                    >
-
-                      <Text textStyle={"b3"} color={category === 'บริการทั่วไป' ? 'blue.700' : null}>บริการทั่วไป</Text>                    </Flex>
-                    <Flex
-                      w={"100%"}
-                      h={"35px"}
-                      alignItems={"center"}
-                      p="14px"
-                      _hover={{ bg: "gray.100" }}
-                      _active={{ bg: "gray.200" }}
+                      }}>บริการทั่วไป</MenuItem>
+                    <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
+                      color={category === 'บริการห้องครัว' ? 'blue.700' : null}
                       onClick={() => {
                         setCategory('บริการห้องครัว')
-                        setToggleCategory(false)
-                      }}
-                    >
-
-                      <Text textStyle={"b3"} color={category === 'บริการห้องครัว' ? 'blue.700' : null}>บริการห้องครัว</Text>
-                    </Flex>
-                    <Flex
-                      w={"100%"}
-                      h={"35px"}
-                      alignItems={"center"}
-                      p="14px"
-                      _hover={{ bg: "gray.100" }}
-                      _active={{ bg: "gray.200" }}
+                      }}>บริการห้องครัว</MenuItem>
+                    <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
+                      color={category === 'บริการห้องน้ำ' ? 'blue.700' : null}
                       onClick={() => {
                         setCategory('บริการห้องน้ำ')
-                        setToggleCategory(false)
-                      }}
-                    >
-
-                      <Text textStyle={"b3"} color={category === 'บริการห้องน้ำ' ? 'blue.700' : null} >บริการห้องน้ำ</Text>
-                    </Flex>
-
-                  </Container>
-                }
+                      }}>บริการห้องน้ำ</MenuItem>
+                  </MenuList>
+                </Menu>
               </Menu>
             </Box>
             <Box
@@ -175,69 +126,60 @@ const SearchSection = () => {
               mr="20px"
             >
               <Menu>
-                <Text fontSize="12px" ml="15px" color="gray.700">
+                <Text fontSize="12px" ml="15px" color="gray.700" pos='relative' top={'6px'} zIndex={'10'} left={'2px'}>
                   ราคา
                 </Text>
-                <MenuButton
-                  as={Button}
-                  rightIcon={<Image src={arrow} />}
-                  textAlign="left"
-                  height="22px"
-                  bg="white"
-                  w="150px"
-                  fontStyle={'h5'}
-                  color='gray.950'
-                  onClick={() => {
-                    setToggle(!toggle)
-                    setToggleCategory(false)
-                    setToggleOrder(false)
-                  }}
-                  pos='relative'
-                >
-                  {sliderValue[0]}-{sliderValue[1]}฿
-                </MenuButton>
-                {toggle &&
-                  <Container height="120px" width="250px" padding="10px" borderRadius={8} bg={'utility.white'} pos='absolute' boxShadow={'lg'} top={410}>
-                    <MenuItem
-                      _hover={{
-                        background: "none",
-                      }}
-                      _focus={{
-                        background: "none",
-                      }}
-                    >
-                      <Stack height="100px" width="inherit">
-                        <Text>
-                          {sliderValue[0]}-{sliderValue[1]}฿
-                        </Text>
-                        <RangeSlider
-                          height="2rem"
-                          defaultValue={[sliderValue[0], sliderValue[1]]}
-                          min={0}
-                          max={5000}
-                          step={20}
-                          onChangeEnd={(val) => setSliderValue(val)}
-                          justifyContent="space-between"
-                          display="flex"
-                        >
-                          <RangeSliderTrack bg="#CCD0D7">
-                            <RangeSliderFilledTrack bg="blue.500" />
-                          </RangeSliderTrack>
+                <Menu>
+                  <MenuButton as={Button} variant='dropdown' w='100%' textAlign='left' rightIcon={<Image src={arrow} />}
+                    onClick={() => {
+                      setToggle(!toggle)
+                    }}>
+                    {sliderValue[0]}-{sliderValue[1]}฿
+                  </MenuButton>
+                  {toggle &&
+                    <Container height="120px" width="250px" padding="10px" borderRadius={8} bg={'utility.white'} pos='absolute' boxShadow={'lg'} top={410}>
+                      <MenuItem
+                        _hover={{
+                          background: "none",
+                        }}
+                        _focus={{
+                          background: "none",
+                        }}
+                      >
+                        <Stack height="100px" width="inherit">
+                          <Text>
+                            {sliderValue[0]}-{sliderValue[1]}฿
+                          </Text>
+                          <RangeSlider
+                            height="2rem"
+                            defaultValue={[sliderValue[0], sliderValue[1]]}
+                            min={0}
+                            max={5000}
+                            step={20}
+                            onChangeEnd={(val) => setSliderValue(val)}
+                            justifyContent="space-between"
+                            display="flex"
+                          >
+                            <RangeSliderTrack bg="#CCD0D7">
+                              <RangeSliderFilledTrack bg="blue.500" />
+                            </RangeSliderTrack>
 
-                          <RangeSliderThumb boxSize={4} index={0} bg="blue.700" />
-                          <Text marginTop="1rem" color="blue.700">
-                            {sliderValue[0]}
-                          </Text>
-                          <RangeSliderThumb boxSize={4} index={1} bg="blue.700" />
-                          <Text marginTop="1rem" color="blue.700">
-                            {sliderValue[1]}
-                          </Text>
-                        </RangeSlider>
-                      </Stack>
-                    </MenuItem>
-                  </Container>
-                }
+                            <RangeSliderThumb boxSize={4} index={0} bg="blue.700" />
+                            <Text marginTop="1rem" color="blue.700">
+                              {sliderValue[0]}
+                            </Text>
+                            <RangeSliderThumb boxSize={4} index={1} bg="blue.700" />
+                            <Text marginTop="1rem" color="blue.700">
+                              {sliderValue[1]}
+                            </Text>
+                          </RangeSlider>
+                        </Stack>
+                      </MenuItem>
+                    </Container>
+                  }
+                </Menu>
               </Menu>
+
             </Box>
             <Box className="sort-by"
               borderLeft="1px"
@@ -247,9 +189,48 @@ const SearchSection = () => {
               w="250px"
               mr="10px">
               <Menu>
-                <Text fontSize="12px" ml="15px" color="gray.700">
-                  หมวดหมู่บริการ
+                <Text fontSize="12px" ml="15px" color="gray.700" pos='relative' top={'6px'} zIndex={'10'} left={'2px'}>
+                  เรียงตาม
                 </Text>
+
+                <Menu>
+                  <MenuButton as={Button} variant='dropdown' w='100%' textAlign='left' rightIcon={<Image src={arrow} />} onClick={() => setToggle(false)}>
+                    {order}
+                  </MenuButton>
+                  <MenuList
+                    minW="0px"
+                    w='100%'
+                    py="6px"
+                    borderRadius={8}
+                    bg={'utility.white'}
+                    boxShadow={'lg'}
+                    border='none'
+                    textStyle={'b3'}
+                  >
+                    <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
+                      color={order === 'บริการแนะนำ' ? 'blue.700' : null}
+                      onClick={() => {
+                        setOrder('บริการแนะนำ')
+                      }}>บริการแนะนำ</MenuItem>
+                    <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
+                      color={order === 'บริการยอดนิยม' ? 'blue.700' : null}
+                      onClick={() => {
+                        setOrder('บริการยอดนิยม')
+                      }}>บริการยอดนิยม</MenuItem>
+                    <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
+                      color={order === 'ตามตัวอักษร (Ascending)' ? 'blue.700' : null}
+                      onClick={() => {
+                        setOrder('ตามตัวอักษร (Ascending)')
+                      }}>ตามตัวอักษร (Ascending)</MenuItem>
+                    <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
+                      color={order === 'ตามตัวอักษร (Descending' ? 'blue.700' : null}
+                      onClick={() => {
+                        setOrder('ตามตัวอักษร (Descending)')
+                      }}>ตามตัวอักษร (Descending)</MenuItem>
+                  </MenuList>
+                </Menu>
+              </Menu>
+              {/* <Menu>
                 <MenuButton
                   as={Button}
                   rightIcon={<Image src={arrow} />}
@@ -333,9 +314,9 @@ const SearchSection = () => {
 
                   </Container>
                 }
-              </Menu>
+              </Menu> */}
             </Box>
-            <Button bg="blue.600" textColor="white" textStyle="h5" w="5rem" _hover={{ bg: "blue.500" }} _active={{ bg: "blue.950" }}>
+            <Button textStyle="h5" w="5rem">
               ค้นหา
             </Button>
           </Flex>

@@ -5,7 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import { ChakraProvider } from "@chakra-ui/react";
-import theme from "./theme.js";
+import theme from "./utils/theme/theme.js";
 import "./index.css";
 import { AuthProvider } from "./contexts/authentication";
 import { BrowserRouter } from "react-router-dom";
