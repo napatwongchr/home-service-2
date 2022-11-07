@@ -107,7 +107,8 @@ const userController = {
                 {
                     id: user_id,
                     firstname: user_profile.rows[0].first_name,
-                    lastname: user_profile.rows[0].last_name
+                    lastname: user_profile.rows[0].last_name,
+                    role: user_profile.rows[0].roles
                 },
                 process.env.SECRET_KEY,
                 {
