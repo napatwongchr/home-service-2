@@ -2,8 +2,7 @@ import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
 import editIcon from "../../asset/image/serviceCategory/edit-icon.svg";
 import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
 import { useNavigate, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 
 import {
   Text,
@@ -30,12 +29,9 @@ import useServiceCategories from "../../hooks/useServiceCategories.js";
 
 const ViewServiceCategory = () => {
   const navigate = useNavigate();
-  const { serviceCategories, getServiceCategories } = useServiceCategories();
-
+  const { serviceCategories, getServiceCategories, params } =
+    useServiceCategories();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  {
-    console.log(serviceCategories);
-  }
 
   useEffect(() => {
     getServiceCategories();
@@ -76,19 +72,81 @@ const ViewServiceCategory = () => {
             </Tr>
           </Thead>
           <Tbody className="categoty-box">
-            {/* {categories.map((item) => {
+            {serviceCategories.map((item) => {
               return (
-                <Tr className="categoty-lists" height={"88"}>
+                <Tr
+                  className="categoty-lists"
+                  height={"88"}
+                  key={item.service_category_id}
+                >
                   <Td className="sequence" textAlign={"center"}>
-                    1
+                    {item.service_category_id}
                   </Td>
-                  <Td className="category-name">{item}</Td>
-                  <Td className="created-at">12/02/2022 10:30PM</Td>
-                  <Td className="edited-at">12/02/2022 10:30PM</Td>
+                  <Td className="category-name">
+                    <button
+                      onClick={() => {
+                        navigate(
+                          `/admin-dashboard/category/view/${item.service_category_id}`
+                        );
+                      }}
+                    >
+                      {item.service_category_name}
+                    </button>
+                  </Td>
+                  <Td className="created-at">{item.created_at}</Td>
+                  <Td className="edited-at">{item.updated_at}</Td>
                   <Td className="action-button">
                     <Flex justifyContent={"space-evenly"}>
                       <button className="delete-button" onClick={onOpen}>
                         <Image src={binIcon} alt="bin icon" />
+                        <Modal isOpen={isOpen} onClose={onClose}>
+                          <ModalOverlay />
+                          <ModalContent
+                            textAlign="center"
+                            height="250px"
+                            width="350px"
+                            borderRadius={"16px"}
+                          >
+                            <ModalHeader marginTop="1.5rem">
+                              <Flex direction="column" alignItems={"center"}>
+                                <Image
+                                  src={warningICon}
+                                  alt="warning icon"
+                                  width="30px"
+                                  marginBottom="10px"
+                                />
+                                <Text textStyle={"h2"} color="gray.950">
+                                  ยืนยันการลบรายการ?
+                                </Text>
+                              </Flex>
+                            </ModalHeader>
+                            <ModalBody maxH="30px" paddingTop="-15px">
+                              <Text fontWeight={300}>
+                                คุณต้องการลบรายการ {item.service_category_name}
+                                ใช่หรือไม่
+                              </Text>
+                            </ModalBody>
+                            <ModalFooter alignSelf={"center"}>
+                              <Button
+                                onClick={() => {}}
+                                colorScheme="blue"
+                                mr={3}
+                              >
+                                ลบรายการ
+                              </Button>
+                              <Button
+                                onClick={onClose}
+                                variant="ghost"
+                                color="blue.600"
+                                border={"1px"}
+                                borderColor={"blue.600"}
+                                textDecoration="none"
+                              >
+                                ยกเลิก
+                              </Button>
+                            </ModalFooter>
+                          </ModalContent>
+                        </Modal>
                       </button>
                       <button className="edit-button">
                         <Link to="/admin-dashboard/category/edit">
@@ -99,50 +157,9 @@ const ViewServiceCategory = () => {
                   </Td>
                 </Tr>
               );
-            })} */}
+            })}
           </Tbody>
         </Table>
-
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent
-            textAlign="center"
-            height="250px"
-            width="350px"
-            borderRadius={"16px"}
-          >
-            <ModalHeader marginTop="1.5rem">
-              <Flex direction="column" alignItems={"center"}>
-                <Image
-                  src={warningICon}
-                  alt="warning icon"
-                  width="30px"
-                  marginBottom="10px"
-                />
-                <Text textStyle={"h2"} color="gray.950">
-                  ยืนยันการลบรายการ?
-                </Text>
-              </Flex>
-            </ModalHeader>
-            <ModalBody maxH="30px" paddingTop="-15px">
-              <Text fontWeight={300}>คุณต้องการลบรายการ "..." ใช่หรือไม่</Text>
-            </ModalBody>
-            <ModalFooter alignSelf={"center"}>
-              <Button colorScheme="blue" mr={3}>
-                ลบรายการ
-              </Button>
-              <Button
-                onClick={onClose}
-                variant="ghost"
-                color="blue.600"
-                border={"1px"}
-                borderColor={"blue.600"}
-              >
-                ยกเลิก
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
       </TableContainer>
     </Container>
   );
