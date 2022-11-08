@@ -31,6 +31,7 @@ const EditServiceCategory = () => {
     serviceCategory,
     getServiceCategoryById,
     updateServiceCategoryById,
+    deleteServiceCategory,
     params,
   } = useServiceCategories();
 
@@ -171,7 +172,7 @@ const EditServiceCategory = () => {
         <ModalOverlay />
         <ModalContent
           textAlign="center"
-          height="250px"
+          height="fit-content"
           width="350px"
           borderRadius={"16px"}
         >
@@ -188,11 +189,20 @@ const EditServiceCategory = () => {
               </Text>
             </Flex>
           </ModalHeader>
-          <ModalBody maxH="30px" paddingTop="-15px">
-            <Text fontWeight={300}>คุณต้องการลบรายการ "..." ใช่หรือไม่</Text>
+          <ModalBody maxH="fit-content" paddingTop="-15px">
+            <Text fontWeight={300}>
+              คุณต้องการลบรายการ '{serviceCategory.service_category_name}'
+              ใช่หรือไม่
+            </Text>
           </ModalBody>
-          <ModalFooter alignSelf={"center"}>
-            <Button colorScheme="blue" mr={3}>
+          <ModalFooter alignSelf={"center"} paddingBottom={"2rem"}>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              onClick={() => {
+                deleteServiceCategory(serviceCategory.service_category_id);
+              }}
+            >
               ลบรายการ
             </Button>
             <Button
@@ -201,6 +211,7 @@ const EditServiceCategory = () => {
               color="blue.600"
               border={"1px"}
               borderColor={"blue.600"}
+              textDecoration={"none"}
             >
               ยกเลิก
             </Button>

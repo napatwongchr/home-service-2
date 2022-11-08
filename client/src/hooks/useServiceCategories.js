@@ -52,6 +52,23 @@ const useServiceCategories = () => {
     }
   };
 
+  const deleteServiceCategory = async (categoryId) => {
+    try {
+      console.log(categoryId);
+
+      await axios.delete(
+        `http://localhost:4000/service/category?categoryId=${categoryId}`
+      );
+      const newCategories = serviceCategories.filter((category) => {
+        return category.service_category_id !== categoryId;
+      });
+      setServiceCategories(newCategories);
+      navigate("/admin-dashboard");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return {
     serviceCategories,
     getServiceCategories,
@@ -60,6 +77,7 @@ const useServiceCategories = () => {
     params,
     createServiceCategory,
     updateServiceCategoryById,
+    deleteServiceCategory,
   };
 };
 
