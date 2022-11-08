@@ -4,6 +4,7 @@ import { Formik, Form, } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/authentication'
 import { MyTextInput, MyCheckbox } from '../../utils/formInput'
+import axios from '../../api/axios';
 
 const RegisterForm = () => {
     const { register } = useAuth()
@@ -30,7 +31,23 @@ const RegisterForm = () => {
                         email: Yup.string()
                             .email('กรุณาตรวจสอบอีเมลอีกครั้ง')
                             .required('กรุณากรอกอีเมล')
-                        ,
+                            .test('Unique Email', 'อีเมลนี้มีคนใช้แล้วกรุณาเปลี่ยนอีเมล',
+                                function (value) {
+                                    return new Promise((resolve, reject) => {
+                                        axios.get(`/users?email=${value}`)
+                                            .then((res) => {
+                                                if (res.data.data) {
+                                                    resolve(false);
+                                                } else {
+                                                    resolve(true)
+                                                }
+                                            })
+                                            .catch((error) => {
+                                                resolve(false);
+                                            })
+                                    })
+                                }
+                            ),
                         password: Yup.string()
                             .required('กรุณากรอกรหัสผ่าน')
                             .min(16, 'รหัสผ่านต้องมีความยาวอย่างน้อย 16 ตัวอักษร')
@@ -103,7 +120,7 @@ const RegisterForm = () => {
                     </Form>
                 </Formik>
             </Flex>
-        </Container>
+        </Container >
     );
 }
 

@@ -134,7 +134,6 @@ const userController = {
         const emailQuery = req.query.email
         const userIdQuery = req.query.userId
         let result;
-
         if (emailQuery) {
             result = await pool.query(`select users.user_id, first_name, last_name, phone_number, roles, created_at, updated_at from users
                 inner join user_profile
@@ -142,19 +141,19 @@ const userController = {
                 where users.email = $1
             `, [emailQuery]);
             return res.status(200).json({
-                data : result.rows[0]
+                data: result.rows[0]
             })
-        } 
-        else if (userIdQuery){
+        }
+        else if (userIdQuery) {
             result = await pool.query(`select users.user_id, first_name, last_name, phone_number, roles, created_at, updated_at from users
                 inner join user_profile
                 on user_profile.user_id = users.user_id
                 where users.user_id = $1
             `, [userIdQuery]);
             return res.status(200).json({
-                data : result.rows[0]
+                data: result.rows[0]
             })
-        } 
+        }
         else {
             result = await pool.query(`select users.user_id, first_name, last_name, phone_number, roles, created_at, updated_at
                 from user_profile
