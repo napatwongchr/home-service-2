@@ -6,7 +6,7 @@ const NavCreateService = (props) => {
             <Text textStyle='h2' color='utility.black'>{props.children}</Text>
             <Flex pos='relative' gap='24px' >
                 <Button variant='secondary' w='112px' h='44px'>ยกเลิก</Button>
-                <Button variant='primary' w='112px' h='44px'>สร้าง</Button>
+                <Button variant='primary' w='112px' h='44px' type="submit">สร้าง</Button>
             </Flex >
         </Flex >
     );
