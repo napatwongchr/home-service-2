@@ -10,7 +10,10 @@ const useServiceCategories = () => {
 
   const getServiceCategories = async () => {
     try {
-      const results = await axios.get(`http://localhost:4000/service/category`);
+      const params = new URLSearchParams();
+      const results = await axios.get(
+        `http://localhost:4000/service/category?${params.toString()}`
+      );
       setServiceCategories(results.data.data);
     } catch (error) {
       console.log(error);
