@@ -11,12 +11,12 @@ const MyTextInput = ({ label, ...props }) => {
                     <FormLabel
                         mt={'20px'}
                         mb={'4px'}
-                        fontStyle='h5'
+                        textStyle='h5'
                         color={'gray.900'}
                         htmlFor={props.id || props.name}
 
                     >
-                        <Flex fontStyle={'h5'}>
+                        <Flex textStyle={'h5'}>
                             <Text color={'gray.900'}>{label}</Text><Text color={'utility.red'}>*</Text>
                         </Flex>
                     </FormLabel>
@@ -31,12 +31,12 @@ const MyTextInput = ({ label, ...props }) => {
                     <FormLabel
                         mt={'20px'}
                         mb={'4px'}
-                        fontStyle='h5'
+                        textStyle='h5'
                         color={'gray.900'}
                         htmlFor={props.id || props.name}
 
                     >
-                        <Flex fontStyle={'h5'}>
+                        <Flex textStyle={'h5'}>
                             <Text color={'gray.900'}>{label}</Text><Text color={'utility.red'}>*</Text>
                         </Flex>
                     </FormLabel>
@@ -47,7 +47,6 @@ const MyTextInput = ({ label, ...props }) => {
     );
 };
 
-
 const MyFieldInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     return (
@@ -57,30 +56,30 @@ const MyFieldInput = ({ label, ...props }) => {
                     <FormLabel
                         mt={'20px'}
                         mb={'4px'}
-                        fontStyle='h5'
+                        textStyle='h5'
                         color={'gray.900'}
                         htmlFor={props.id || props.name}
 
                     >
-                        <Flex fontStyle={'h5'}>
+                        <Flex textStyle={'h5'}>
                             <Text color={'gray.900'}>{label}</Text><Text color={'utility.red'}>*</Text>
                         </Flex>
                     </FormLabel>
                     <Field as={Input} variant={'error'} {...field} {...props} />
                     <Image src={errorIcon} pos='relative' left='412px' bottom={'29px'} w={'14px'} />
-                    <Text fontStyle={'b4'} color='utility.red'>{meta.error}</Text>
+                    <Text textStyle={'b4'} color='utility.red'>{meta.error}</Text>
                 </Flex>
             ) :
                 <Flex flexDirection={'column'}>
                     <FormLabel
                         mt={'20px'}
                         mb={'4px'}
-                        fontStyle='h5'
+                        textStyle='h5'
                         color={'gray.900'}
                         htmlFor={props.id || props.name}
 
                     >
-                        <Flex fontStyle={'h5'}>
+                        <Flex textStyle={'h5'}>
                             <Text color={'gray.900'}>{label}</Text><Text color={'utility.red'}>*</Text>
                         </Flex>
                     </FormLabel>
