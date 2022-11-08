@@ -55,6 +55,7 @@ const RegisterForm = () => {
                         acceptedTerms: Yup.boolean()
                             .oneOf([true], 'กรุณาอ่านรายละเอียด และยอมรับข้อตกลง'),
                     })}
+                    validateOnChange={false}
                     onSubmit={(values) => {
                         register(values);
                     }}
