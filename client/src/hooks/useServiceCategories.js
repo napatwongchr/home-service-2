@@ -10,10 +10,7 @@ const useServiceCategories = () => {
 
   const getServiceCategories = async () => {
     try {
-      const params = new URLSearchParams();
-      const results = await axios.get(
-        `http://localhost:4000/service/category?${params.toString()}`
-      );
+      const results = await axios.get(`http://localhost:4000/service/category`);
       setServiceCategories(results.data.data);
     } catch (error) {
       console.log(error);
@@ -54,8 +51,6 @@ const useServiceCategories = () => {
 
   const deleteServiceCategory = async (categoryId) => {
     try {
-      console.log(categoryId);
-
       await axios.delete(
         `http://localhost:4000/service/category?categoryId=${categoryId}`
       );
