@@ -148,10 +148,15 @@ const ViewServiceCategory = () => {
                           </ModalContent>
                         </Modal>
                       </button>
-                      <button className="edit-button">
-                        <Link to="/admin-dashboard/category/edit">
-                          <Image src={editIcon} alt="edit icon" />
-                        </Link>
+                      <button
+                        className="edit-button"
+                        onClick={() => {
+                          navigate(
+                            `/admin-dashboard/category/edit/${item.service_category_id}`
+                          );
+                        }}
+                      >
+                        <Image src={editIcon} alt="edit icon" />
                       </button>
                     </Flex>
                   </Td>

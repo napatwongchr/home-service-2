@@ -22,7 +22,7 @@ function App() {
         element={<CreateServiceCategory />}
       />
       <Route
-        path="/admin-dashboard/category/edit"
+        path="/admin-dashboard/category/edit/:categoryId"
         element={<EditServiceCategory />}
       />
       <Route
