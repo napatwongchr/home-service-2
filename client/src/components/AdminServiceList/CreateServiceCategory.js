@@ -8,8 +8,9 @@ import { MyFieldInput } from '../../utils/formInput';
 import * as Yup from 'yup';
 import NavCreateService from "../AdminPage/NavCreateService";
 import errorIcon from '../../asset/image/errorIcon.svg'
-
+import axios from '../../api/axios'
 const CreateServiceList = () => {
+  const formData = new FormData();
   const [category, setCategory] = useState('เลือกหมวดหมู่');
   const initialValues = {
     serviceName: '',
@@ -42,7 +43,14 @@ const CreateServiceList = () => {
         }))
       })}
       onSubmit={async (values) => {
-        console.log(values);
+        formData.append('serviceName', (values.serviceName));
+        formData.append('serviceCategory', (values.serviceCategory));
+        formData.append('serviceImage', (values.serviceImage));
+        formData.append('serviceList', JSON.stringify(values.serviceList));
+
+        await axios.post('/service/category/list', formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
       }}
     >
 
