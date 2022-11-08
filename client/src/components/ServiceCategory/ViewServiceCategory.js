@@ -122,8 +122,7 @@ const ViewServiceCategory = () => {
                             </ModalHeader>
                             <ModalBody maxH="30px" paddingTop="-15px">
                               <Text fontWeight={300}>
-                                คุณต้องการลบรายการ {item.service_category_name}
-                                ใช่หรือไม่
+                                คุณต้องการลบรายการ ' ' ใช่หรือไม่
                               </Text>
                             </ModalBody>
                             <ModalFooter alignSelf={"center"}>
