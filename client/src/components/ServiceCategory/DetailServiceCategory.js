@@ -3,26 +3,24 @@ import {
   Text,
   Image,
   Flex,
-  FormLabel,
   Button,
   Divider,
-  Input,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  useDisclosure,
   Box,
 } from "@chakra-ui/react";
 import SideBar from "../AdminPage/SideBar";
 import arrow from "../../asset/image/serviceCategory/left-arrow.svg";
-import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
-import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
 import { Link } from "react-router-dom";
+import useServiceCategories from "../../hooks/useServiceCategories";
+import { useEffect } from "react";
 
 const DetailServiceCategory = () => {
+  const { serviceCategory, getServiceCategoryById, params } =
+    useServiceCategories();
+
+  useEffect(() => {
+    getServiceCategoryById(params);
+  }, []);
+
   return (
     <Container bg="#F3F4F6" maxW="100%" height="100vh" paddingLeft="0px">
       <Flex>
@@ -61,7 +59,7 @@ const DetailServiceCategory = () => {
                   textStyle="h2"
                   color="utility.black"
                 >
-                  บริการห้องครัว
+                  {serviceCategory.service_category_name}
                 </Text>
               </Flex>
             </Flex>
@@ -101,8 +99,7 @@ const DetailServiceCategory = () => {
                 textStyle="b1"
                 color={"utility.black"}
               >
-                {" "}
-                ชื่อ
+                {serviceCategory.service_category_name}
               </Text>
             </Flex>
             <Divider padding={"1rem"} />
@@ -111,13 +108,13 @@ const DetailServiceCategory = () => {
                 <Text textStyle="h5" marginRight="5rem" width={"5rem"}>
                   สร้างเมื่อ
                 </Text>
-                <Text className="created-at">12/02/2022 10:30PM</Text>
+                <Text className="created-at">{serviceCategory.created_at}</Text>
               </Flex>
               <Flex className="edited-info">
                 <Text textStyle="h5" marginRight="5rem" width={"5rem"}>
                   แก้ไขล่าสุด
                 </Text>
-                <Text className="edited-at">12/02/2022 10:30PM</Text>
+                <Text className="edited-at">{serviceCategory.updated_at}</Text>
               </Flex>
             </Box>
           </Flex>

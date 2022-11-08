@@ -21,9 +21,19 @@ import arrow from "../../asset/image/serviceCategory/left-arrow.svg";
 import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
 import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import useServiceCategories from "../../hooks/useServiceCategories.js";
 
 const EditServiceCategory = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { serviceCategory, getServiceCategoryById } = useServiceCategories();
+
+  console.log(serviceCategory);
+
+  // useEffect(() => {
+  //   getServiceCategoryById();
+  // }, []);
 
   return (
     <Container bg="#F3F4F6" maxW="100%" height="100vh" paddingLeft="0px">
@@ -62,9 +72,7 @@ const EditServiceCategory = () => {
                   className="category-name"
                   textStyle="h2"
                   color="utility.black"
-                >
-                  บริการห้องครัว
-                </Text>
+                ></Text>
               </Flex>
             </Flex>
             <Flex

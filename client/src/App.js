@@ -26,7 +26,7 @@ function App() {
         element={<EditServiceCategory />}
       />
       <Route
-        path="/admin-dashboard/category/detail"
+        path="/admin-dashboard/category/view/:categoryId"
         element={<DetailServiceCategory />}
       />
       <Route path="/admin-service" element={<AdminServiceListPage />} />
