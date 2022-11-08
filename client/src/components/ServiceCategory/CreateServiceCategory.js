@@ -8,8 +8,18 @@ import {
 } from "@chakra-ui/react";
 import SideBar from "../AdminPage/SideBar";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import useServiceCategories from "../../hooks/useServiceCategories";
 
 const CreateServiceCategory = () => {
+  const { createServiceCategory } = useServiceCategories();
+  const [categoryName, setCategoryName] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    createServiceCategory({ categoryName });
+  };
+
   return (
     <Container bg="#F3F4F6" maxW="100%" height="100vh" paddingLeft="0px">
       <Flex>
@@ -51,7 +61,7 @@ const CreateServiceCategory = () => {
                   ยกเลิก
                 </Button>
               </Link>
-              <Button width={"5.5rem"} onSubmit={{}}>
+              <Button width={"5.5rem"} onClick={handleSubmit}>
                 สร้าง
               </Button>
             </Flex>
@@ -73,7 +83,14 @@ const CreateServiceCategory = () => {
             <FormLabel>
               ชื่อหมวดหมู่ <span style={{ color: "#C82438" }}> * </span>
             </FormLabel>
-            <Input width={"433px"} marginLeft="7rem" />
+            <Input
+              width={"433px"}
+              marginLeft="7rem"
+              value={categoryName}
+              onChange={(event) => {
+                setCategoryName(event.target.value);
+              }}
+            />
           </Flex>
         </Flex>
       </Flex>

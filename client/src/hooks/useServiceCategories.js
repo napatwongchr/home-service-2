@@ -32,12 +32,22 @@ const useServiceCategories = () => {
     }
   };
 
+  const createServiceCategory = async (data) => {
+    try {
+      await axios.post(`http://localhost:4000/service/category`, data);
+      navigate("/admin-dashboard");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     serviceCategories,
     getServiceCategories,
     serviceCategory,
     getServiceCategoryById,
     params,
+    createServiceCategory,
   };
 };
 
