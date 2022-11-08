@@ -13,6 +13,6 @@ serviceRoute.put('/category', serviceCategoryController.editServiceCategory);
 serviceRoute.delete('/category', serviceCategoryController.deleteServiceCategory);
 
 
-serviceRoute.post('/category/list', upload.single('serviceImage'), serviceListController.createServiceList);
+serviceRoute.post('/category/list', upload.single("serviceImage"), serviceListController.createServiceList);
 
 export default serviceRoute;

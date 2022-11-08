@@ -7,7 +7,6 @@ const cloudinaryUpload = async (file) => {
         folder: "home-service/file-uploading",
         type: "private",
     });
-    console.log(result);
     fileUrl.push({
         url: result.secure_url,
         publicId: result.public_id,
