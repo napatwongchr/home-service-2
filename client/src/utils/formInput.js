@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field, useField } from 'formik';
-import { Flex, Text, Input, FormLabel, Image, Checkbox } from '@chakra-ui/react';
+import { Flex, Text, Input, FormLabel, Image, Checkbox, Box } from '@chakra-ui/react';
 import errorIcon from '../asset/image/errorIcon.svg'
 const MyTextInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
@@ -52,7 +52,7 @@ const MyFieldInput = ({ label, ...props }) => {
     return (
         <>
             {meta.touched && meta.error ? (
-                <Flex flexDirection={'column'}>
+                <Flex flexDirection={'column'} justifyContent='start' mb='20px'>
                     <FormLabel
                         mt={'20px'}
                         mb={'4px'}
@@ -65,12 +65,14 @@ const MyFieldInput = ({ label, ...props }) => {
                             <Text color={'gray.900'}>{label}</Text><Text color={'utility.red'}>*</Text>
                         </Flex>
                     </FormLabel>
-                    <Field as={Input} variant={'error'} {...field} {...props} />
-                    <Image src={errorIcon} pos='relative' left='412px' bottom={'29px'} w={'14px'} />
-                    <Text textStyle={'b4'} color='utility.red'>{meta.error}</Text>
+                    <Box position={'relative'}>
+                        <Field as={Input} variant={'error'} {...field} {...props} />
+                        <Image src={errorIcon} pos='absolute' left={`calc(${props.w} - 25px)`} bottom={'16px'} w={'14px'} zIndex={10} />
+                        <Text textStyle={'b2'} color='utility.red' pos={'absolute'} bottom='-30px' left={'10px'}>{meta.error}</Text>
+                    </Box>
                 </Flex>
             ) :
-                <Flex flexDirection={'column'}>
+                <Flex flexDirection={'column'} justifyContent='start' mb='20px'>
                     <FormLabel
                         mt={'20px'}
                         mb={'4px'}

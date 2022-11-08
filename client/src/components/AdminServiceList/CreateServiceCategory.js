@@ -31,11 +31,15 @@ const CreateServiceList = () => {
         serviceName: Yup.string()
           .required('กรุณากรอกชื่อบริการ'),
         serviceCategory: Yup.string()
-          //   .required('กรุณากรอกชื่อบริการ')
           .test("UNSELECTED", "กรุณาเลือกหมวดหมู่บริการ", value => (value && value !== 'เลือกหมวดหมู่')),
         serviceImage: Yup.mixed()
           .required('กรุณาใส่รูปบริการ')
-          .test("FILE_SIZE", "ไฟล์รูปภาพมีขนาดใหญ่เกิน 5MB", value => (value && value.size <= 500000))
+          .test("FILE_SIZE", "ไฟล์รูปภาพมีขนาดใหญ่เกิน 5MB", value => (value && value.size <= 500000)),
+        serviceList: Yup.array().of(Yup.object({
+          name: Yup.string().required('กรุณากรอกชื่อรายการ'),
+          price: Yup.string().required('กรุณากรอกค่าบริการ').matches(/\d/g, 'กรุณากรอกค่าบริการเป็นตัวเลข'),
+          unit: Yup.string().required('กรุณากรอกหน่วยบริการ')
+        }))
       })}
       onSubmit={async (values) => {
         console.log(values);
@@ -63,7 +67,7 @@ const CreateServiceList = () => {
                   </FormLabel>
                   {errors.serviceName && touched.serviceName ? (
 
-                    <Flex flexDirection={'column'}>
+                    <Flex flexDirection={'column'} pos='relative'>
                       <Field as={Input}
                         variant='error'
                         id="serviceName"
@@ -71,8 +75,8 @@ const CreateServiceList = () => {
                         type="text"
                         w={'440px'} h={'44px'}
                         onChange={(e) => setFieldValue('serviceName', e.target.value)} />
-                      <Image src={errorIcon} pos='relative' left='412px' bottom={'29px'} w={'14px'} />
-                      <Text textStyle={'b2'} color='utility.red'>{errors.serviceName}</Text>
+                      <Image src={errorIcon} pos='absolute' left='412px' bottom={'15px'} w={'14px'} />
+                      <Text textStyle={'b2'} color='utility.red' pos='absolute' bottom={'-30px'}>{errors.serviceName}</Text>
                     </Flex>
 
                   ) :
@@ -103,13 +107,13 @@ const CreateServiceList = () => {
                   <Menu>
                     {errors.serviceCategory && touched.serviceCategory ? (
 
-                      <Flex flexDirection={'column'}>
+                      <Flex flexDirection={'column'} pos='relative'>
                         <MenuButton as={Button} variant='secondary' borderColor={'utility.red'} w={'440px'} h={'44px'} textAlign='left' rightIcon={<Image src={arrow} />} border='1px'
                           pos='relative'>
                           <Text color={'gray.700'} textStyle='b2'>{category} </Text>
                         </MenuButton>
-                        <Image src={errorIcon} pos='relative' left='412px' bottom={'29px'} w={'14px'} />
-                        <Text textStyle={'b2'} color='utility.red'>{errors.serviceCategory}</Text>
+                        <Image src={errorIcon} pos='absolute' left='412px' bottom={'15px'} w={'14px'} />
+                        <Text textStyle={'b2'} color='utility.red' pos='absolute' bottom={'-30px'}>{errors.serviceCategory}</Text>
                       </Flex>
 
 
@@ -217,17 +221,17 @@ const CreateServiceList = () => {
                         <Text display='flex'><FormLabel m='0' mr='6px' htmlFor='serviceImage' color='blue.600' cursor={'pointer'} >อัพโหลดรูปภาพ</FormLabel>หรือ ลากและวางที่นี่</Text>
                         <Text>PNG, JPG ขนาดไม่เกิน 5MB</Text>
                       </FormLabel>}
-                    <Flex justifyContent={'space-between'}>
+                    <Flex justifyContent={'space-between'} pos='relative'>
                       {errors.serviceImage && touched.serviceImage ? (
                         <Text textStyle={'b2'} color='utility.red'>{errors.serviceImage}</Text>
-                      ) : <Text color={'gray.700'} textStyle='b3'>ขนาดภาพที่แนะนำ: 1440 x 225 PX</Text>
+                      ) : <Text color={'gray.700'} textStyle='b2'>ขนาดภาพที่แนะนำ: 1440 x 225 PX</Text>
                       }
-                      {values.serviceImage ? <Button variant={'ghost'} textStyle='button' h='15px' onClick={() => setFieldValue('serviceImage', '')}>ลบรูปภาพ</Button> : null}
+                      {values.serviceImage ? <Button variant={'ghost'} textStyle='button' h='15px' pos='absolute' right={0} top='10px' onClick={() => setFieldValue('serviceImage', '')}>ลบรูปภาพ</Button> : null}
                     </Flex>
                   </Flex>
                 </Flex>
                 <hr />
-                <Text color={'gray.700'} textStyle={'h5'}>รายการบริการย่อย</Text>
+                <Text color={'gray.700'} textStyle={'h5'} mb='-30px'>รายการบริการย่อย</Text>
 
                 <FieldArray name='serviceList'>
                   {({ insert, remove, push }) => (
@@ -240,6 +244,7 @@ const CreateServiceList = () => {
                             name={`serviceList.${index}.name`}
                             type="text"
                             w={'440px'} h={'44px'} mt='0'
+
                           />
                           <MyFieldInput
                             label="ค่าบริการ / 1 หน่วย"
@@ -255,7 +260,7 @@ const CreateServiceList = () => {
                             type="text"
                             w={'240px'} h={'44px'} mt='0'
                           />
-                          <Button variant={'ghost'} color='gray.400' onClick={() => values.serviceList.length > 1 && remove(index)}>ลบรายการ</Button>
+                          <Button pos='relative' top='-20px' variant={'ghost'} color='gray.400' onClick={() => values.serviceList.length > 1 && remove(index)}>ลบรายการ</Button>
                         </Flex>
                       ))}
                       <Button variant={'secondary'} rightIcon={<Image src={plusIcon} />} mt='40px' px='25px'
