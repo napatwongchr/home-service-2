@@ -1,8 +1,8 @@
 import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
 import editIcon from "../../asset/image/serviceCategory/edit-icon.svg";
 import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
-import { useNavigate, Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import {
   Text,
@@ -29,8 +29,13 @@ import useServiceCategories from "../../hooks/useServiceCategories.js";
 
 const ViewServiceCategory = () => {
   const navigate = useNavigate();
-  const { serviceCategories, getServiceCategories, params } =
-    useServiceCategories();
+  const {
+    serviceCategories,
+    getServiceCategories,
+    params,
+    deleteServiceCategory,
+  } = useServiceCategories();
+  const [categorySearch, setCategorySearch] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
@@ -72,7 +77,7 @@ const ViewServiceCategory = () => {
             </Tr>
           </Thead>
           <Tbody className="categoty-box">
-            {serviceCategories.map((item) => {
+            {serviceCategories.map((item, index) => {
               return (
                 <Tr
                   className="categoty-lists"
@@ -80,7 +85,7 @@ const ViewServiceCategory = () => {
                   key={item.service_category_id}
                 >
                   <Td className="sequence" textAlign={"center"}>
-                    {item.service_category_id}
+                    {index + 1}
                   </Td>
                   <Td className="category-name">
                     <button
@@ -127,7 +132,11 @@ const ViewServiceCategory = () => {
                             </ModalBody>
                             <ModalFooter alignSelf={"center"}>
                               <Button
-                                onClick={() => {}}
+                                onClick={() => {
+                                  deleteServiceCategory(
+                                    item.service_category_id
+                                  ).then(onClose);
+                                }}
                                 colorScheme="blue"
                                 mr={3}
                               >
