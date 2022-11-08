@@ -23,13 +23,8 @@ import {
   RangeSliderThumb,
 } from "@chakra-ui/react";
 
-const SearchSection = () => {
-  const [input, setInput] = useState("");
-  const [category, setCategory] = useState('บริการทั้งหมด');
-  const [order, setOrder] = useState('ตามตัวอักษร (Ascending)')
-  const [sliderValue, setSliderValue] = useState([0, 2000]);
-  const [alphabetSearch, setAlphabetSearch] = "";
-
+const SearchSection = (props) => {
+  const { input, setInput, category, setCategory, order, setOrder, sliderValue, setSliderValue } = props
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -230,91 +225,6 @@ const SearchSection = () => {
                   </MenuList>
                 </Menu>
               </Menu>
-              {/* <Menu>
-                <MenuButton
-                  as={Button}
-                  rightIcon={<Image src={arrow} />}
-                  textAlign="left"
-                  height="22px"
-                  bg="white"
-                  w="100%"
-                  fontStyle={'h5'}
-                  color='gray.950'
-                  onClick={() => {
-                    setToggleCategory(false)
-                    setToggle(false)
-                    setToggleOrder(!toggleOrder)
-                  }}
-                  pos='relative'
-                >
-                  {order}
-                </MenuButton>
-                {toggleOrder &&
-                  <Container width="200px" px={0}
-                    py="6px" borderRadius={8} bg={'utility.white'} pos='absolute' boxShadow={'lg'} top={410}>
-                    <Flex
-                      w={"100%"}
-                      h={"35px"}
-                      alignItems={"center"}
-                      p="14px"
-                      _hover={{ bg: "gray.100" }}
-                      _active={{ bg: "gray.200" }}
-                      onClick={() => {
-                        setOrder('บริการแนะนำ')
-                        setToggleOrder(false)
-                      }}
-                    >
-
-                      <Text textStyle={"b3"} color={order === 'บริการแนะนำ' ? 'blue.700' : null}>บริการแนะนำ</Text>
-                    </Flex>
-                    <Flex
-                      w={"100%"}
-                      h={"35px"}
-                      alignItems={"center"}
-                      p="14px"
-                      _hover={{ bg: "gray.100" }}
-                      _active={{ bg: "gray.200" }}
-                      onClick={() => {
-                        setOrder('บริการยอดนิยม')
-                        setToggleOrder(false)
-                      }}
-                    >
-
-                      <Text textStyle={"b3"} color={order === 'บริการยอดนิยม' ? 'blue.700' : null}>บริการยอดนิยม</Text>                    </Flex>
-                    <Flex
-                      w={"100%"}
-                      h={"35px"}
-                      alignItems={"center"}
-                      p="14px"
-                      _hover={{ bg: "gray.100" }}
-                      _active={{ bg: "gray.200" }}
-                      onClick={() => {
-                        setOrder('ตามตัวอักษร (Ascending)')
-                        setToggleOrder(false)
-                      }}
-                    >
-
-                      <Text textStyle={"b3"} color={order === 'ตามตัวอักษร (Ascending)' ? 'blue.700' : null}>ตามตัวอักษร (Ascending)</Text>
-                    </Flex>
-                    <Flex
-                      w={"100%"}
-                      h={"35px"}
-                      alignItems={"center"}
-                      p="14px"
-                      _hover={{ bg: "gray.100" }}
-                      _active={{ bg: "gray.200" }}
-                      onClick={() => {
-                        setOrder('ตามตัวอักษร (Descending)')
-                        setToggleOrder(false)
-                      }}
-                    >
-
-                      <Text textStyle={"b3"} color={order === 'ตามตัวอักษร (Descending)' ? 'blue.700' : null} >ตามตัวอักษร (Descending)</Text>
-                    </Flex>
-
-                  </Container>
-                }
-              </Menu> */}
             </Box>
             <Button textStyle="h5" w="5rem">
               ค้นหา

@@ -3,9 +3,9 @@ import React from 'react';
 import { serviceData } from '../../asset/model/serviceData';
 import priceTag from '../../asset/image/homePage/Group.svg'
 import filterCategory from '../../utils/filterCategory';
-const AllServiceSection = () => {
+const AllServiceSection = (props) => {
     const { handleColorButton, handleColorText } = filterCategory
-
+    const { input, category, order, sliderValue } = props
     return (
         <Container className='recommendService' maxW='100%' bg='gray.100' centerContent>
             <Flex>
