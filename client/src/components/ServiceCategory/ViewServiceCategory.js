@@ -36,6 +36,7 @@ const ViewServiceCategory = () => {
     deleteServiceCategory,
   } = useServiceCategories();
   const [categorySearch, setCategorySearch] = useState("");
+  const [categoryName, setCategoryName] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
@@ -102,14 +103,20 @@ const ViewServiceCategory = () => {
                   <Td className="edited-at">{item.updated_at}</Td>
                   <Td className="action-button">
                     <Flex justifyContent={"space-evenly"}>
-                      <button className="delete-button" onClick={onOpen}>
+                      <button
+                        className="delete-button"
+                        onClick={() => {
+                          setCategoryName(`${item.service_category_name}`);
+                          onOpen();
+                        }}
+                      >
                         <Image src={binIcon} alt="bin icon" />
                         <Modal isOpen={isOpen} onClose={onClose}>
                           <ModalOverlay />
                           <ModalContent
                             textAlign="center"
                             height="250px"
-                            width="350px"
+                            width="fit-content"
                             borderRadius={"16px"}
                           >
                             <ModalHeader marginTop="1.5rem">
@@ -127,7 +134,7 @@ const ViewServiceCategory = () => {
                             </ModalHeader>
                             <ModalBody maxH="30px" paddingTop="-15px">
                               <Text fontWeight={300}>
-                                คุณต้องการลบรายการ ' ' ใช่หรือไม่
+                                คุณต้องการลบรายการ '{categoryName}' ใช่หรือไม่
                               </Text>
                             </ModalBody>
                             <ModalFooter alignSelf={"center"}>
