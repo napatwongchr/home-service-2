@@ -2,7 +2,6 @@ import { Button, Flex, Img, Input, Text } from "@chakra-ui/react";
 import React from "react";
 import searchIcon from '../../asset/image/adminDashboardPage/searchIcon.svg'
 const NavDashBoard = (props) => {
-
     return (
         <Flex h='80px' w='100%' bg='utility.white' borderBottom='1px' borderColor='gray.100' justifyContent='space-between' alignItems='center' px='40px' >
             <Text textStyle='h2' color='utility.black'>{props.children}</Text>

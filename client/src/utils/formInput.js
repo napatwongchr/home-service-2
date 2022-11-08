@@ -1,5 +1,5 @@
 import React from 'react';
-import { useField } from 'formik';
+import { Field, useField } from 'formik';
 import { Flex, Text, Input, FormLabel, Image, Checkbox, Box } from '@chakra-ui/react';
 import errorIcon from '../asset/image/errorIcon.svg'
 const MyTextInput = ({ label, ...props }) => {
@@ -11,12 +11,12 @@ const MyTextInput = ({ label, ...props }) => {
                     <FormLabel
                         mt={'20px'}
                         mb={'4px'}
-                        fontStyle='h5'
+                        textStyle='h5'
                         color={'gray.900'}
                         htmlFor={props.id || props.name}
 
                     >
-                        <Flex fontStyle={'h5'}>
+                        <Flex textStyle={'h5'}>
                             <Text color={'gray.900'}>{label}</Text><Text color={'utility.red'}>*</Text>
                         </Flex>
                     </FormLabel>
@@ -31,16 +31,61 @@ const MyTextInput = ({ label, ...props }) => {
                     <FormLabel
                         mt={'20px'}
                         mb={'4px'}
-                        fontStyle='h5'
+                        textStyle='h5'
                         color={'gray.900'}
                         htmlFor={props.id || props.name}
 
                     >
-                        <Flex fontStyle={'h5'}>
+                        <Flex textStyle={'h5'}>
                             <Text color={'gray.900'}>{label}</Text><Text color={'utility.red'}>*</Text>
                         </Flex>
                     </FormLabel>
                     <Input variant={meta.touched ? 'success' : 'default'} {...field} {...props} />
+                </Flex>
+            }
+        </>
+    );
+};
+
+const MyFieldInput = ({ label, ...props }) => {
+    const [field, meta] = useField(props);
+    return (
+        <>
+            {meta.touched && meta.error ? (
+                <Flex flexDirection={'column'} justifyContent='start' mb='20px'>
+                    <FormLabel
+                        mt={'20px'}
+                        mb={'4px'}
+                        textStyle='h5'
+                        color={'gray.900'}
+                        htmlFor={props.id || props.name}
+
+                    >
+                        <Flex textStyle={'h5'}>
+                            <Text color={'gray.900'}>{label}</Text><Text color={'utility.red'}>*</Text>
+                        </Flex>
+                    </FormLabel>
+                    <Box position={'relative'}>
+                        <Field as={Input} variant={'error'} {...field} {...props} />
+                        <Image src={errorIcon} pos='absolute' left={`calc(${props.w} - 25px)`} bottom={'16px'} w={'14px'} zIndex={10} />
+                        <Text textStyle={'b2'} color='utility.red' pos={'absolute'} bottom='-30px' left={'10px'}>{meta.error}</Text>
+                    </Box>
+                </Flex>
+            ) :
+                <Flex flexDirection={'column'} justifyContent='start' mb='20px'>
+                    <FormLabel
+                        mt={'20px'}
+                        mb={'4px'}
+                        textStyle='h5'
+                        color={'gray.900'}
+                        htmlFor={props.id || props.name}
+
+                    >
+                        <Flex textStyle={'h5'}>
+                            <Text color={'gray.900'}>{label}</Text><Text color={'utility.red'}>*</Text>
+                        </Flex>
+                    </FormLabel>
+                    <Field as={Input} variant={meta.touched ? 'success' : 'default'} {...field} {...props} />
                 </Flex>
             }
         </>
@@ -76,4 +121,4 @@ const MyCheckbox = ({ children, ...props }) => {
     );
 };
 
-export { MyTextInput, MyCheckbox }
+export { MyTextInput, MyFieldInput, MyCheckbox }
