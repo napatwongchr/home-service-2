@@ -4,7 +4,10 @@ import HomePage from "./pages/HomePage";
 import ServiceList from "./pages/ServiceList";
 import LoginPage from "./pages/LoginPage";
 import AdminDashboardPage from "./pages/Admin/AdminDashBoard";
-import AdminServiceListPage from "./pages/Admin/AdminServiceLists"
+import AdminServiceListPage from "./pages/Admin/AdminServiceLists";
+import CreateServiceCategory from "./components/ServiceCategory/CreateServiceCategory";
+import EditServiceCategory from "./components/ServiceCategory/EditServiceCategory";
+import DetailServiceCategory from "./components/ServiceCategory/DetailServiceCategory";
 
 function App() {
   return (
@@ -14,6 +17,18 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
+      <Route
+        path="/admin-dashboard/category/create"
+        element={<CreateServiceCategory />}
+      />
+      <Route
+        path="/admin-dashboard/category/edit"
+        element={<EditServiceCategory />}
+      />
+      <Route
+        path="/admin-dashboard/category/detail"
+        element={<DetailServiceCategory />}
+      />
       <Route path="/admin-service" element={<AdminServiceListPage />} />
     </Routes>
   );
