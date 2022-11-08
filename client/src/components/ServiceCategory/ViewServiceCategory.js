@@ -37,11 +37,21 @@ const ViewServiceCategory = () => {
   } = useServiceCategories();
   const [categorySearch, setCategorySearch] = useState("");
   const [categoryName, setCategoryName] = useState("");
+  const [categoryUniqueId, setCategoryUniqueId] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     getServiceCategories();
   }, []);
+
+  // `${item.service_category_id}`
+
+  const handleDelete = (categoryId) => {
+    setCategoryUniqueId();
+    console.log(categoryId);
+    // deleteServiceCategory();
+    onClose();
+  };
 
   return (
     <Container maxW="100%" p="40px" h="calc(100% - 3.25rem)" bg="gray.100">
@@ -86,7 +96,7 @@ const ViewServiceCategory = () => {
                   key={item.service_category_id}
                 >
                   <Td className="sequence" textAlign={"center"}>
-                    {index + 1}
+                    {index + 1} with ID: {item.service_category_id}
                   </Td>
                   <Td className="category-name">
                     <button
@@ -140,9 +150,7 @@ const ViewServiceCategory = () => {
                             <ModalFooter alignSelf={"center"}>
                               <Button
                                 onClick={() => {
-                                  deleteServiceCategory(
-                                    item.service_category_id
-                                  ).then(onClose);
+                                  handleDelete(item.service_category_id);
                                 }}
                                 colorScheme="blue"
                                 mr={3}

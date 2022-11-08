@@ -17,7 +17,11 @@ const CreateServiceCategory = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    createServiceCategory({ categoryName });
+    if (categoryName === "") {
+      return alert("category name can't be empty");
+    } else {
+      createServiceCategory({ categoryName });
+    }
   };
 
   return (
