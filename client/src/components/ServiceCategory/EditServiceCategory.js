@@ -22,18 +22,32 @@ import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
 import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import useServiceCategories from "../../hooks/useServiceCategories.js";
 
 const EditServiceCategory = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { serviceCategory, getServiceCategoryById } = useServiceCategories();
+  const [categoryName, setCategoryName] = useState();
+  const {
+    serviceCategory,
+    getServiceCategoryById,
+    updateServiceCategoryById,
+    params,
+  } = useServiceCategories();
 
-  console.log(serviceCategory);
+  useEffect(() => {
+    getServiceCategoryById(params);
+  }, []);
 
-  // useEffect(() => {
-  //   getServiceCategoryById();
-  // }, []);
+  useEffect(() => {
+    if (serviceCategory) {
+      setCategoryName(serviceCategory.service_category_name);
+    }
+  }, [serviceCategory]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    updateServiceCategoryById(params, { categoryName });
+  };
 
   return (
     <Container bg="#F3F4F6" maxW="100%" height="100vh" paddingLeft="0px">
@@ -72,7 +86,9 @@ const EditServiceCategory = () => {
                   className="category-name"
                   textStyle="h2"
                   color="utility.black"
-                ></Text>
+                >
+                  {serviceCategory.service_category_name}
+                </Text>
               </Flex>
             </Flex>
             <Flex
@@ -92,7 +108,7 @@ const EditServiceCategory = () => {
                   ยกเลิก
                 </Button>
               </Link>
-              <Button width={"5.5rem"} onSubmit={{}}>
+              <Button width={"5.5rem"} onClick={handleSubmit}>
                 ยืนยัน
               </Button>
             </Flex>
@@ -115,7 +131,14 @@ const EditServiceCategory = () => {
               <FormLabel>
                 ชื่อหมวดหมู่ <span style={{ color: "#C82438" }}> * </span>
               </FormLabel>
-              <Input width={"433px"} marginLeft="7rem" />
+              <Input
+                value={categoryName}
+                onChange={(event) => {
+                  setCategoryName(event.target.value);
+                }}
+                width={"433px"}
+                marginLeft="7rem"
+              />
             </Flex>
             <Divider padding={"1rem"} />
             <Box className="info" marginTop="3rem">
@@ -123,13 +146,13 @@ const EditServiceCategory = () => {
                 <Text textStyle="h5" marginRight="5rem" width={"5rem"}>
                   สร้างเมื่อ
                 </Text>
-                <Text className="created-at">12/02/2022 10:30PM</Text>
+                <Text className="created-at">{serviceCategory.created_at}</Text>
               </Flex>
               <Flex className="edited-info">
                 <Text textStyle="h5" marginRight="5rem" width={"5rem"}>
                   แก้ไขล่าสุด
                 </Text>
-                <Text className="edited-at">12/02/2022 10:30PM</Text>
+                <Text className="edited-at">{serviceCategory.updated_at}</Text>
               </Flex>
             </Box>
           </Flex>
