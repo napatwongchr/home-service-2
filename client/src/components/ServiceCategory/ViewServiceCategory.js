@@ -1,7 +1,9 @@
 import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
 import editIcon from "../../asset/image/serviceCategory/edit-icon.svg";
 import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 import {
   Text,
@@ -24,9 +26,21 @@ import {
   useDisclosure,
   Container,
 } from "@chakra-ui/react";
+import useServiceCategories from "../../hooks/useServiceCategories.js";
 
 const ViewServiceCategory = () => {
+  const navigate = useNavigate();
+  const { serviceCategories, getServiceCategories } = useServiceCategories();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
+  {
+    console.log(serviceCategories);
+  }
+
+  useEffect(() => {
+    getServiceCategories();
+  }, []);
+
   return (
     <Container maxW="100%" p="40px" h="calc(100% - 3.25rem)" bg="gray.100">
       <TableContainer
@@ -62,64 +76,30 @@ const ViewServiceCategory = () => {
             </Tr>
           </Thead>
           <Tbody className="categoty-box">
-            <Tr className="categoty-lists" height={"88"}>
-              <Td className="sequence" textAlign={"center"}>
-                1
-              </Td>
-              <Td className="category-name">บริการทั่วไป</Td>
-              <Td className="created-at">12/02/2022 10:30PM</Td>
-              <Td className="edited-at">12/02/2022 10:30PM</Td>
-              <Td className="action-button">
-                <Flex justifyContent={"space-evenly"}>
-                  <button className="delete-button" onClick={onOpen}>
-                    <Image src={binIcon} alt="bin icon" />
-                  </button>
-                  <button className="edit-button">
-                    <Link to="/admin-dashboard/category/edit">
-                      <Image src={editIcon} alt="edit icon" />
-                    </Link>
-                  </button>
-                </Flex>
-              </Td>
-            </Tr>
-
-            {/* <Tr className="categoty-lists" height={"88"}>
-              <Td className="sequence" textAlign={"center"}>
-                2
-              </Td>
-              <Td className="category-name">บริการห้องครัว</Td>
-              <Td className="created-at">12/02/2022 10:30PM</Td>
-              <Td className="edited-at">12/02/2022 10:30PM</Td>
-              <Td className="action-button">
-                <Flex justifyContent={"space-evenly"}>
-                  <button className="delete-button" onClick={onOpen}>
-                    <Image src={binIcon} alt="bin icon" />
-                  </button>
-                  <button className="edit-button">
-                    <Image src={editIcon} alt="edit icon" />
-                  </button>
-                </Flex>
-              </Td>
-            </Tr>
-
-            <Tr className="categoty-lists" height={"88"}>
-              <Td className="sequence" textAlign={"center"}>
-                3
-              </Td>
-              <Td className="category-name">บริการห้องน้ำ</Td>
-              <Td className="created-at">12/02/2022 10:30PM</Td>
-              <Td className="edited-at">12/02/2022 10:30PM</Td>
-              <Td className="action-button">
-                <Flex justifyContent={"space-evenly"}>
-                  <button className="delete-button" onClick={onOpen}>
-                    <Image src={binIcon} alt="bin icon" />
-                  </button>
-                  <button className="edit-button">
-                    <Image src={editIcon} alt="edit icon" />
-                  </button>
-                </Flex>
-              </Td>
-            </Tr> */}
+            {/* {categories.map((item) => {
+              return (
+                <Tr className="categoty-lists" height={"88"}>
+                  <Td className="sequence" textAlign={"center"}>
+                    1
+                  </Td>
+                  <Td className="category-name">{item}</Td>
+                  <Td className="created-at">12/02/2022 10:30PM</Td>
+                  <Td className="edited-at">12/02/2022 10:30PM</Td>
+                  <Td className="action-button">
+                    <Flex justifyContent={"space-evenly"}>
+                      <button className="delete-button" onClick={onOpen}>
+                        <Image src={binIcon} alt="bin icon" />
+                      </button>
+                      <button className="edit-button">
+                        <Link to="/admin-dashboard/category/edit">
+                          <Image src={editIcon} alt="edit icon" />
+                        </Link>
+                      </button>
+                    </Flex>
+                  </Td>
+                </Tr>
+              );
+            })} */}
           </Tbody>
         </Table>
 
