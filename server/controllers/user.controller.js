@@ -133,38 +133,59 @@ const userController = {
     async getUser(req, res) {
         const emailQuery = req.query.email
         const userIdQuery = req.query.userId
+        const passwordQuery = req.query.password
         let result;
-
-        if (emailQuery) {
-            result = await pool.query(`select users.user_id, first_name, last_name, phone_number, roles, created_at, updated_at from users
-                inner join user_profile
-                on user_profile.user_id = users.user_id
-                where users.email = $1
-            `, [emailQuery]);
-            return res.status(200).json({
-                data : result.rows[0]
-            })
-        } 
-        else if (userIdQuery){
+        if (passwordQuery) {
+            if (!emailQuery) {
+                return res.status(200).json({
+                    msg: "email is blank"
+                })
+            } else {
+                const users = await pool.query("select * from users where email = $1", [emailQuery.toLowerCase()])
+                const isValidPassword = await bcrypt.compare(passwordQuery, users.rows[0].password)
+                if (!isValidPassword) {
+                    return res.status(200).json({
+                        msg: "password is invalid"
+                    })
+                } else {
+                    return res.status(200).json({
+                        msg: "success"
+                    })
+                }
+            }
+        }
+        else if (userIdQuery) {
             result = await pool.query(`select users.user_id, first_name, last_name, phone_number, roles, created_at, updated_at from users
                 inner join user_profile
                 on user_profile.user_id = users.user_id
                 where users.user_id = $1
             `, [userIdQuery]);
             return res.status(200).json({
-                data : result.rows[0]
+                data: result.rows[0]
             })
-        } 
+        }
+        else if (emailQuery) {
+            result = await pool.query(`select users.user_id, first_name, last_name, phone_number, roles, created_at, updated_at from users
+                    inner join user_profile
+                    on user_profile.user_id = users.user_id
+                    where users.email = $1
+                `, [emailQuery.toLowerCase()]);
+            return res.status(200).json({
+                data: result.rows[0]
+            })
+
+        }
         else {
             result = await pool.query(`select users.user_id, first_name, last_name, phone_number, roles, created_at, updated_at
                 from user_profile
                 inner join users
                 on users.user_id = user_profile.user_id`);
+            res.json({
+                data: result.rows
+            })
         }
 
-        res.json({
-            data: result.rows
-        })
+
     },
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // import facebookLogo from "../../asset/image/loginpage/facebook-logo.svg";
 import {
   Container,
@@ -14,10 +14,11 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "../../contexts/authentication.js";
 import { MyTextInput } from "../../utils/formInput.js";
+import axios from "../../api/axios.js";
 
 const LoginForm = () => {
   const { login } = useAuth();
-
+  const [checkEmail, setCheckEmail] = useState('')
   return (
     <Container
       maxW={"100%"}
@@ -28,13 +29,53 @@ const LoginForm = () => {
     >
       <Formik
         initialValues={{
-          email: "",
+          email: '',
           password: "",
         }}
         validationSchema={Yup.object({
-          email: Yup.string().required("กรุณากรอกอีเมล").email('กรุณาตรวจสอบอีเมลอีกครั้ง'),
-          password: Yup.string().required("กรุณากรอกรหัสผ่าน"),
+          email: Yup.string()
+            .required("กรุณากรอกอีเมล")
+            .email('กรุณาตรวจสอบอีเมลอีกครั้ง')
+            .test('Email not found', 'กรุณาตรวจสอบอีเมลอีกครั้ง',
+              function (value) {
+                return new Promise((resolve, reject) => {
+                  axios.get(`/users?email=${value}`)
+                    .then((res) => {
+                      if (res.data.data) {
+                        setCheckEmail(value)
+                        resolve(true)
+                      } else {
+                        resolve(false);
+                      }
+                    })
+                    .catch((error) => {
+                      resolve(false);
+                    })
+                })
+              }
+            ),
+          password: Yup.string().required("กรุณากรอกรหัสผ่าน")
+            .test('password in not valid', 'กรุณาตรวจสอบรหัสผ่านอีกครั้ง',
+              function (value) {
+                return new Promise((resolve, reject) => {
+                  axios.get(`/users?password=${value}&email=${checkEmail}`)
+                    .then((res) => {
+                      if (res.data.msg === "email is blank") {
+                        resolve(true)
+                      } else if (res.data.msg === "password is invalid") {
+                        resolve(false)
+                      } else if (res.data.msg === "success") {
+                        resolve(true)
+                      }
+                    })
+                    .catch((error) => {
+                      resolve(false);
+                    })
+                })
+              }
+            ),
         })}
+        validateOnChange={false}
         onSubmit={(values) => {
           login(values);
         }}
@@ -118,7 +159,7 @@ const LoginForm = () => {
           </Flex>
         </Form>
       </Formik>
-    </Container>
+    </Container >
   );
 };
 
