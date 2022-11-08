@@ -14,5 +14,6 @@ serviceRoute.delete('/category', serviceCategoryController.deleteServiceCategory
 
 
 serviceRoute.post('/', upload.single("serviceImage"), serviceListController.createServiceList);
+serviceRoute.get('/', serviceListController.getService);
 
 export default serviceRoute;
