@@ -18,6 +18,11 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
+      <Route path="/admin-service" element={<AdminServiceListPage />} />
+      <Route
+        path="/admin-dashboard-create-service"
+        element={<AdminCreateService />}
+      />
       <Route
         path="/admin-dashboard/category/create"
         element={<CreateServiceCategory />}
@@ -29,11 +34,6 @@ function App() {
       <Route
         path="/admin-dashboard/category/view/:categoryId"
         element={<DetailServiceCategory />}
-      />
-      <Route path="/admin-service" element={<AdminServiceListPage />} />
-      <Route
-        path="/admin-dashboard-create-service"
-        element={<AdminCreateService />}
       />
     </Routes>
   );
