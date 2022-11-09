@@ -1,3 +1,4 @@
+import serviceRoute from "../routers/service.route.js";
 import { pool } from "../utils/db.js";
 import { cloudinaryUpload } from "../utils/upload.js";
 
@@ -59,11 +60,23 @@ const serviceListController = {
     },
     async getService ( req, res ) {
         try{
+            const serviceId = req.query.serviceId
+            console.log(serviceId)
+            if(serviceId){
+                
+                let findService = await pool.query(`select * from service where service_id = $1`, [ serviceId ])
+                
+                return res.status(200).json({
+                    data : findService.rows[0]
+                })
+            }
+            
             const findService = await pool.query(`select * from service`)
             return res.status(200).json({
                 data : findService.rows
             })
         } catch(err){
+            console.log(err)
             return res.status(400).json({
                 msg : "invalid input"
             })
