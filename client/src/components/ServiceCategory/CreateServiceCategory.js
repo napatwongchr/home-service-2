@@ -1,6 +1,7 @@
 import {
   Container,
   Text,
+  Image,
   Flex,
   FormLabel,
   Button,
@@ -8,97 +9,150 @@ import {
 } from "@chakra-ui/react";
 import SideBar from "../AdminPage/SideBar";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import useServiceCategories from "../../hooks/useServiceCategories";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import errorIcon from "../../asset/image/errorIcon.svg";
 
 const CreateServiceCategory = () => {
   const { createServiceCategory } = useServiceCategories();
-  const [categoryName, setCategoryName] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (categoryName === "") {
-      return alert("category name can't be empty");
-    } else {
-      createServiceCategory({ categoryName });
-    }
+  const initialValues = {
+    categoryName: "",
   };
 
   return (
-    <Container bg="#F3F4F6" maxW="100%" height="100vh" paddingLeft="0px">
-      <Flex>
-        <SideBar />
-        <Flex
-          className="create-service-field"
-          direction="column"
-          alignItems={"center"}
-          width="100vw"
-          height="100vh"
-        >
-          <Flex
-            className="create-service-category-bar"
-            bg="white"
-            borderBottom={"1px"}
-            borderColor="gray.300"
-            width="100%"
-            height={"80px"}
-            justify={"space-between"}
-            alignItems="center"
-          >
-            <Text textStyle="h2" marginLeft="3rem" color="utility.black">
-              เพิ่มหมวดหมู่
-            </Text>
-            <Flex
-              className="button-group"
-              justifyContent="space-between"
-              width="12rem"
-              marginRight="5rem"
-            >
-              <Link to="/admin-dashboard">
-                <Button
+    <Formik
+      initialValues={initialValues}
+      validationSchema={Yup.object({
+        categoryName: Yup.string().required("กรุณากรอกชื่อหมวดหมู่"),
+      })}
+      onSubmit={async (values) => {
+        const categoryName = values.categoryName;
+        if (values === null || values === " ") {
+          return;
+        } else {
+          createServiceCategory({ categoryName });
+        }
+      }}
+    >
+      {({ values, handleSubmit, setFieldValue, errors, touched, meta }) => (
+        <Container bg="#F3F4F6" maxW="100%" height="100vh" paddingLeft="0px">
+          <Form onSubmit={handleSubmit}>
+            <Flex>
+              <SideBar />
+              <Flex
+                className="create-service-field"
+                direction="column"
+                alignItems={"center"}
+                width="100vw"
+                height="100vh"
+              >
+                <Flex
+                  className="create-service-category-bar"
                   bg="white"
-                  color="blue.600"
-                  border="1px"
-                  borderColor="blue.600"
-                  width={"5.5rem"}
+                  borderBottom={"1px"}
+                  borderColor="gray.300"
+                  width="100%"
+                  height={"80px"}
+                  justify={"space-between"}
+                  alignItems="center"
                 >
-                  ยกเลิก
-                </Button>
-              </Link>
-              <Button width={"5.5rem"} onClick={handleSubmit}>
-                สร้าง
-              </Button>
+                  <Text textStyle="h2" marginLeft="3rem" color="utility.black">
+                    เพิ่มหมวดหมู่
+                  </Text>
+                  <Flex
+                    className="button-group"
+                    justifyContent="space-between"
+                    width="12rem"
+                    marginRight="5rem"
+                  >
+                    <Link to="/admin-dashboard">
+                      <Button
+                        bg="white"
+                        color="blue.600"
+                        border="1px"
+                        borderColor="blue.600"
+                        width={"5.5rem"}
+                      >
+                        ยกเลิก
+                      </Button>
+                    </Link>
+                    <Button width={"5.5rem"} type="submit">
+                      สร้าง
+                    </Button>
+                  </Flex>
+                </Flex>
+                <Flex
+                  className="create-service-input"
+                  direction={"row"}
+                  justify="left"
+                  paddingLeft={"2rem"}
+                  alignItems={"center"}
+                  bg="white"
+                  border="1px"
+                  borderColor="gray.200"
+                  borderRadius={"8px"}
+                  width={"1120px"}
+                  height="fit-content"
+                  padding={"3rem"}
+                  marginTop="4rem"
+                >
+                  <FormLabel>
+                    ชื่อหมวดหมู่ <span style={{ color: "#C82438" }}> * </span>
+                  </FormLabel>
+                  {errors.categoryName && touched.categoryName ? (
+                    <Flex flexDirection={"column"} pos="relative">
+                      <Field
+                        as={Input}
+                        variant="error"
+                        id="categoryName"
+                        name="categoryName"
+                        type="text"
+                        w={"440px"}
+                        h={"44px"}
+                        onChange={(e) =>
+                          setFieldValue("categoryName", e.target.value)
+                        }
+                      />
+                      <Image
+                        src={errorIcon}
+                        pos="absolute"
+                        left="412px"
+                        bottom={"15px"}
+                        w={"14px"}
+                      />
+                      <Text
+                        textStyle={"b2"}
+                        color="utility.red"
+                        pos="absolute"
+                        bottom={"-30px"}
+                      >
+                        {errors.categoryName}
+                      </Text>
+                    </Flex>
+                  ) : (
+                    <Flex flexDirection={"column"}>
+                      <Field
+                        as={Input}
+                        id="categoryName"
+                        name="categoryName"
+                        type="text"
+                        w={"440px"}
+                        h={"44px"}
+                        onChange={(e) =>
+                          setFieldValue("categoryName", e.target.value)
+                        }
+                      />
+                    </Flex>
+                  )}
+                </Flex>
+              </Flex>
             </Flex>
-          </Flex>
-          <Flex
-            className="create-service-input"
-            direction={"row"}
-            justify="left"
-            paddingLeft={"2rem"}
-            alignItems={"center"}
-            bg="white"
-            border="1px"
-            borderColor="gray.200"
-            borderRadius={"8px"}
-            width={"1120px"}
-            height="124px"
-            marginTop="4rem"
-          >
-            <FormLabel>
-              ชื่อหมวดหมู่ <span style={{ color: "#C82438" }}> * </span>
-            </FormLabel>
-            <Input
-              width={"433px"}
-              marginLeft="7rem"
-              value={categoryName}
-              onChange={(event) => {
-                setCategoryName(event.target.value);
-              }}
-            />
-          </Flex>
-        </Flex>
-      </Flex>
-    </Container>
+          </Form>
+        </Container>
+      )}
+    </Formik>
   );
 };
 
