@@ -57,6 +57,19 @@ const serviceListController = {
             })
         }
     },
+    async getService ( req, res ) {
+        try{
+            const findService = await pool.query(`select * from service`)
+            return res.status(200).json({
+                data : findService.rows
+            })
+        } catch(err){
+            return res.status(400).json({
+                msg : "invalid input"
+            })
+        }
+        
+    }
 }
 
 export default serviceListController;
