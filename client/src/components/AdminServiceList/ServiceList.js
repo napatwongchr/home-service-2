@@ -95,7 +95,7 @@ const AdminServiceList = () => {
           </Thead>
           {serviceLists.map((item, index) => {
             return (
-              <Tbody bg="#FFFFFF" key={index}>
+              <Tbody bg="#FFFFFF" key={index} h={90}>
                 <Tr>
                   <Td textAlign={"center"}>{index + 1}</Td>
                   <Td>{item.service_name}</Td>

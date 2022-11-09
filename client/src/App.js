@@ -6,7 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import AdminDashboardPage from "./pages/Admin/AdminDashBoard";
 import AdminCreateService from "./pages/Admin/AdminCreateService";
 import AdminServiceListPage from "./pages/Admin/AdminServiceLists";
-import AdminDetailService from "./components/AdminServiceList/DetailServiceCategory";
+import AdminDetailService from "./components/AdminServiceList/DetailServiceList";
 import CreateServiceCategory from "./components/ServiceCategory/CreateServiceCategory";
 import EditServiceCategory from "./components/ServiceCategory/EditServiceCategory";
 import DetailServiceCategory from "./components/ServiceCategory/DetailServiceCategory";
@@ -20,7 +20,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
       <Route path="/admin-dashboard/service" element={<AdminServiceListPage />} />
-      <Route path="/admin-detail/service/view/:serviceId" element={<AdminDetailService />} />
+      <Route path="/admin-detail/service/view/:serviceId" element={<AdminDetailService/>} />
       <Route
         path="/admin-dashboard/service/create"
         element={<AdminCreateService />}
