@@ -2,7 +2,7 @@ import { Container, Flex, Box } from '@chakra-ui/react';
 import React from 'react';
 import NavDashBoard from '../../components/AdminPage/NavDashboard';
 import SideBar from '../../components/AdminPage/SideBar';
-import AdminServiceList from '../../components/AdminServiceList/AdminServiceList';
+import ServiceList from '../../components/AdminServiceList/ServiceList';
 
 const adminServiceListPage = () => {
     return (
@@ -10,10 +10,10 @@ const adminServiceListPage = () => {
             <Flex w='100vw'>
                 <SideBar />
                 <Box w='100%' maxH='100%' overflow='hidden'>
-                    <NavDashBoard>
+                    <NavDashBoard to='/admin-dashboard/service/create'>
                         บริการ
                     </NavDashBoard>
-                    <AdminServiceList/>
+                    <ServiceList />
                 </Box>
             </Flex>
         </Container >

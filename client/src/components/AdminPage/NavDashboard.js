@@ -33,7 +33,7 @@ const NavDashBoard = (props) => {
           pl="50px"
         />
 
-        <Link to="/admin-dashboard/category/create">
+        <Link to={props.to}>
           <Button w="165px" h="44px">
             เพิ่ม{props.children}
           </Button>

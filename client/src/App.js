@@ -19,10 +19,10 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
-      <Route path="/admin-service" element={<AdminServiceListPage />} />
-      <Route path="/admin-detail/service/view/:serviceId" element={<AdminDetailService/>} />
+      <Route path="/admin-dashboard/service" element={<AdminServiceListPage />} />
+      <Route path="/admin-detail/service/view/:serviceId" element={<AdminDetailService />} />
       <Route
-        path="/admin-dashboard-create-service"
+        path="/admin-dashboard/service/create"
         element={<AdminCreateService />}
       />
       <Route
