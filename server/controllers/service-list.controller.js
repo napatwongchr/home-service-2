@@ -65,7 +65,8 @@ const serviceListController = {
 
             const serviceQuery = `select service_id, 
             service_name, 
-            service_category_name, 
+            service_category_name,
+            service_image_url, 
             service.created_at, 
             service.updated_at 
             from service
