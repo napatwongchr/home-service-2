@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const useServiceCategories = () => {
   const navigate = useNavigate();
   const [serviceCategories, setServiceCategories] = useState([]);
-  const [serviceCategory, setServiceCategory] = useState([]);
+  const [serviceCategory, setServiceCategory] = useState('');
   const params = useParams();
 
   const getServiceCategories = async () => {

@@ -18,9 +18,10 @@ const useAdminServiceLists = () => {
   };
 
   const getServiceListById = async (params) => {
+
     try {
       const result = await axios.get(
-        `http://localhost:4000/service?serviceId=${params.service_id}`
+        `http://localhost:4000/service?serviceId=${params.serviceId}`
       );
       setServiceList(result.data.data);
     } catch (error) {
