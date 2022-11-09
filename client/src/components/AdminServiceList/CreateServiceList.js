@@ -11,12 +11,13 @@ import errorIcon from '../../asset/image/errorIcon.svg'
 import axios from '../../api/axios'
 import UploadComponent from "../../utils/dragDropFile";
 import useServiceCategories from "../../hooks/useServiceCategories";
+import { useNavigate } from "react-router-dom";
 
 const CreateServiceList = () => {
   const formData = new FormData();
   const [category, setCategory] = useState('เลือกหมวดหมู่');
   const { serviceCategories, getServiceCategories } = useServiceCategories()
-
+  const navigate = useNavigate()
   useEffect(() => {
     getServiceCategories();
   }, []);
@@ -56,17 +57,17 @@ const CreateServiceList = () => {
         formData.append('serviceCategory', (values.serviceCategory));
         formData.append('serviceImage', (values.serviceImage));
         formData.append('serviceList', JSON.stringify(values.serviceList));
-
         await axios.post('/service', formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
+        navigate('/admin-dashboard/services')
       }}
     >
 
       {({ values, handleSubmit, setFieldValue, errors, touched, meta }) => (
         <Box w='100%' maxH='100%' overflow='hidden'>
           <Form onSubmit={handleSubmit}>
-            <NavCreateService>เพิ่มบริการ</NavCreateService>
+            <NavCreateService submit='สร้าง' to='/admin-dashboard/services'>เพิ่มบริการ</NavCreateService>
             <Container maxW='100%' p='40px' h='calc(100% - 3.25rem)' bg='gray.100'>
               <Flex bg='utility.white' px='24px' py='40px' border='1px' borderColor='gray.200' borderRadius='8px' flexDirection='column' gap='40px'>
                 <Flex alignItems='start'>
@@ -79,7 +80,7 @@ const CreateServiceList = () => {
 
                   >
                     <Flex fontStyle={'h5'} pos='relative' top='-5px' w='205px'>
-                      <Text color={'gray.700'} >ชื่อบริการ</Text><Text color={'utility.red'}>*</Text>
+                      <Text color={'gray.700'}>ชื่อบริการ</Text><Text color={'utility.red'}>*</Text>
                     </Flex>
                   </FormLabel>
                   {errors.serviceName && touched.serviceName ? (
@@ -190,9 +191,9 @@ const CreateServiceList = () => {
                     {values.serviceImage ?
                       <Box pos='relative' overflow='hidden' display={'flex'} justifyContent='center'>
                         <FormLabel pos='relative' display='flex' flexDirection='column' gap='12px' alignItems='center' w={'440px'} h={'180px'}
-                          border='1px dashed' borderColor='gray.300' textStyle='b3' color='gray.700' py='35px' overflow='hidden' objectFit={'fill'}>
+                          border='1px dashed' borderColor='gray.300' textStyle='b3' color='gray.700' py='35px' overflow='hidden' objectFit={'fill'} left='0px'>
+                          <Image src={URL.createObjectURL(values.serviceImage)} alt={values.serviceImage.name} pos='absolute' top={0} h='180px' maxW='440px' />
                         </FormLabel>
-                        <Image src={URL.createObjectURL(values.serviceImage)} alt={values.serviceImage.name} pos='absolute' top={0} h='180px' />
                       </Box>
                       : <FormLabel pos='relative' display='flex' flexDirection='column' gap='12px' alignItems='center' w={'440px'} h={'180px'}
                         border='1px dashed' borderColor='gray.300' textStyle='b3' color='gray.700' py='35px' overflow='hidden' objectFit={'fill'}>

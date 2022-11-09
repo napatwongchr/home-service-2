@@ -57,8 +57,8 @@ const serviceListController = {
             })
         }
     },
-    async getService ( req, res ) {
-        try{
+    async getService(req, res) {
+        try {
             //Get By ID
             const serviceId = req.query.serviceId
             const serviceName = req.query.serviceName
@@ -80,45 +80,45 @@ const serviceListController = {
             from sub_service where service_id = $1`
 
             //Qeury Service By ID
-            if(serviceId){
-                
-                let findService = await pool.query(`${serviceQuery} where service_id = $1`, [ serviceId ])
-                let findSubService = await pool.query(subServiceQueryById, [ serviceId ])
+            if (serviceId) {
 
-                if(!findService.rows[0]){
+                let findService = await pool.query(`${serviceQuery} where service_id = $1`, [serviceId])
+                let findSubService = await pool.query(subServiceQueryById, [serviceId])
+
+                if (!findService.rows[0]) {
                     return res.status(404).json({
-                        msg : "service not found"
+                        msg: "service not found"
                     })
                 }
                 return res.status(200).json({
-                    data : {
-                        service : findService.rows[0],
-                        subService : findSubService.rows
+                    data: {
+                        service: findService.rows[0],
+                        subService: findSubService.rows
                     }
                 })
                 //Query Service By Name
-            } else if (serviceName){
-                let findService = await pool.query(`${serviceQuery} where service_name like $1`, [ serviceName+'%' ])
+            } else if (serviceName) {
+                let findService = await pool.query(`${serviceQuery} where service_name like $1`, [serviceName + '%'])
 
-                if(!findService.rows[0]){
+                if (!findService.rows[0]) {
                     return res.status(404).json({
-                        msg : "service not found"
+                        msg: "service not found"
                     })
                 }
-            } else if (Object.keys(req.query).length > 0){
+            } else if (Object.keys(req.query).length > 0) {
                 return res.status(400).json({
-                    msg : "invalid query input"
+                    msg: "invalid query input"
                 })
             }
-            
+
             //Get All Service
             const findService = await pool.query(serviceQuery)
             return res.status(200).json({
-                data : findService.rows
+                data: findService.rows
             })
-        } catch(err){
+        } catch (err) {
             return res.status(400).json({
-                msg : "invalid input"
+                msg: "invalid input"
             })
         }
     }

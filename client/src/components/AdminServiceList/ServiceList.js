@@ -122,7 +122,11 @@ const AdminServiceList = () => {
                         <Image src={binIcon} alt="bin icon" />
                       </button>
                       <button className="edit-button">
-                        <Image src={editIcon} alt="edit icon" />
+                        <Image src={editIcon} alt="edit icon" onClick={() => {
+                          navigate(
+                            `/admin-dashboard/service/edit/${item.service_id}`
+                          );
+                        }} />
                       </button>
                     </Flex>
                   </Td>
