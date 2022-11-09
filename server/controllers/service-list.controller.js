@@ -1,7 +1,7 @@
 import serviceRoute from "../routers/service.route.js";
 import { pool } from "../utils/db.js";
 import { cloudinaryUpload } from "../utils/upload.js";
-
+import { v2 as cloudinary } from "cloudinary";
 const serviceListController = {
     async createServiceList(req, res) {
         try {
