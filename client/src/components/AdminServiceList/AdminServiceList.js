@@ -29,18 +29,26 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import filterCategory from "../../utils/filterCategory";
-// import useServiceCategories from "../../hooks/useServiceCategories.js";
-import { serviceList } from "../../asset/model/serviceList";
+import useAdminServiceLists from "../../hooks/useAdminServiceLists.js";
+// import { serviceList } from "../../asset/model/serviceList";
 
 const AdminServiceList = () => {
-  //   const navigate = useNavigate();
-  //   const { serviceCategories, getServiceCategories } = useServiceCategories();
-
+  const navigate = useNavigate();
+  const {
+    serviceLists,
+    getServiceLists,
+    params,
+    deleteServiceList,
+  } = useAdminServiceLists();
+  const [listSearch, setListSearch] = useState("");
+  const [listName, setListName] = useState("");
+  const [ListUniqueId, setListUniqueId] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // useEffect(() => {
-  //   getServiceCategories();
-  // }, []);
+  useEffect(() => {
+    getServiceLists();
+  }, []);
+  console.log(serviceLists);
 
   const { handleColorText, handleColorButton } = filterCategory;
   return (
@@ -86,12 +94,12 @@ const AdminServiceList = () => {
                     </Th>
                   </Tr>
                 </Thead>
-                {serviceList.map((item, index) => {
+                {serviceLists.map((item, index) => {
                   return (
                     <Tbody bg="#FFFFFF">
                       <Tr>
-                        <Td textAlign={"center"}>{item.number}</Td>
-                        <Td>{item.name}</Td>
+                        <Td textAlign={"center"}>{index+1}</Td>
+                        <Td>{item.service_name}</Td>
                         <Td>
                           <Badge
                             borderRadius="8px"
@@ -103,7 +111,7 @@ const AdminServiceList = () => {
                               textStyle="b4"
                               color={handleColorText(item.type)}
                             >
-                              {item.type}
+                              {item.service_category}
                             </Text>
                           </Badge>
                         </Td>
