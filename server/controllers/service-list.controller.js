@@ -1,7 +1,7 @@
 import serviceRoute from "../routers/service.route.js";
 import { pool } from "../utils/db.js";
 import { cloudinaryUpload } from "../utils/upload.js";
-
+import { v2 as cloudinary } from "cloudinary";
 const serviceListController = {
     async createServiceList(req, res) {
         try {
@@ -122,6 +122,17 @@ const serviceListController = {
                 msg: "invalid input"
             })
         }
+    },
+
+
+    deleteService(req, res) {
+        cloudinary.uploader.destroy('home-service/file-uploading/toobhuxwa2lwadrhy4hk', {
+            resource_type: "image",
+            type: "private"
+        })
+            .then(result => console.log(result))
+
+
     }
 }
 
