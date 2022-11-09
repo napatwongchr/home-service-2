@@ -52,7 +52,6 @@ const serviceListController = {
 
 
         } catch (err) {
-            console.log(err)
             return res.status(400).json({
                 msg: "invalid input"
             })
@@ -60,28 +59,53 @@ const serviceListController = {
     },
     async getService ( req, res ) {
         try{
+            //Get By ID
             const serviceId = req.query.serviceId
-            console.log(serviceId)
+            const serviceName = req.query.serviceName
+
+            const query = `select service_id, service_name, service_category_name, service.created_at, service.updated_at 
+            from service
+            inner join service_category
+            on service_category.service_category_id = service.service_category_id
+            `
+            //Qeury Service By ID
             if(serviceId){
                 
-                let findService = await pool.query(`select * from service where service_id = $1`, [ serviceId ])
-                
+                let findService = await pool.query(`${query} where service_id = $1`, [ serviceId ])
+
+                if(!findService.rows[0]){
+                    return res.status(404).json({
+                        msg : "service not found"
+                    })
+                }
                 return res.status(200).json({
                     data : findService.rows[0]
                 })
+                //Query Service By Name
+            } else if (serviceName){
+                let findService = await pool.query(`${query} where service_name like $1`, [ serviceName+'%' ])
+
+                if(!findService.rows[0]){
+                    return res.status(404).json({
+                        msg : "service not found"
+                    })
+                }
+            } else if (Object.keys(req.query).length > 0){
+                return res.status(400).json({
+                    msg : "invalid query input"
+                })
             }
             
-            const findService = await pool.query(`select * from service`)
+            //Get All Service
+            const findService = await pool.query(query)
             return res.status(200).json({
                 data : findService.rows
             })
         } catch(err){
-            console.log(err)
             return res.status(400).json({
                 msg : "invalid input"
             })
         }
-        
     }
 }
 
