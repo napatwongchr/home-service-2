@@ -1,4 +1,26 @@
-(
+import {
+  Container,
+  Text,
+  Image,
+  Flex,
+  Button,
+  Divider,
+  Box,
+} from "@chakra-ui/react";
+import SideBar from "../AdminPage/SideBar";
+import arrow from "../../asset/image/serviceCategory/left-arrow.svg";
+import { Link } from "react-router-dom";
+import useAdminServiceLists from "../../hooks/useAdminServiceLists";
+import { useEffect } from "react";
+
+const DetailServiceList = () => {
+  const { serviceList, getServiceListById, params } = useAdminServiceLists();
+
+  useEffect(() => {
+    getServiceListById(params);
+  }, []);
+
+  return (
     <Container bg="#F3F4F6" maxW="100%" height="100vh" paddingLeft="0px">
       <Flex>
         <SideBar />
@@ -25,10 +47,10 @@
               alignItems={"center"}
               marginLeft="3rem"
             >
-              <Link to="/admin-dashboard">
+              <Link to="/admin-service">
                 <Image src={arrow} marginRight="1.5rem" />
               </Link>
-  
+
               <Flex direction={"column"}>
                 <Text textStyle="b4">หมวดหมู่</Text>
                 <Text
@@ -36,7 +58,7 @@
                   textStyle="h2"
                   color="utility.black"
                 >
-                  {serviceCategory.service_category_name}
+                  {serviceList.service_category_name}
                 </Text>
               </Flex>
             </Flex>
@@ -67,16 +89,26 @@
             height="304px"
             marginTop="4rem"
           >
+            <Flex direction={"row"} >
+              <Text color={"gray.700"} w='205px'>ชื่อบริการ</Text>
+              <Text
+                className="category-name"
+                textStyle="b1"
+                color={"utility.black"}
+              >
+                {serviceList.service_category_name}
+              </Text>
+            </Flex>
             <Flex direction={"row"}>
-              <Text textStyle="h5" marginRight="10rem">
-                ชื่อหมวดหมู่
+              <Text fontStyle="h5" marginRight="10rem">
+                หมวดหมู่
               </Text>
               <Text
                 className="category-name"
                 textStyle="b1"
                 color={"utility.black"}
               >
-                {serviceCategory.service_category_name}
+                {serviceList.service_category_name}
               </Text>
             </Flex>
             <Divider padding={"1rem"} />
@@ -85,13 +117,13 @@
                 <Text textStyle="h5" marginRight="5rem" width={"5rem"}>
                   สร้างเมื่อ
                 </Text>
-                <Text className="created-at">{serviceCategory.created_at}</Text>
+                <Text className="created-at">{serviceList.created_at}</Text>
               </Flex>
               <Flex className="edited-info">
                 <Text textStyle="h5" marginRight="5rem" width={"5rem"}>
                   แก้ไขล่าสุด
                 </Text>
-                <Text className="edited-at">{serviceCategory.updated_at}</Text>
+                <Text className="edited-at">{serviceList.updated_at}</Text>
               </Flex>
             </Box>
           </Flex>
@@ -99,4 +131,6 @@
       </Flex>
     </Container>
   );
-  
+};
+
+export default DetailServiceList;

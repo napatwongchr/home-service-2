@@ -18,18 +18,24 @@ const SideBar = () => {
                         <Text fontWeight='500' fontSize='20px' color='blue.600' pos='relative' top='1px'>HomeServices</Text>
                     </Box>
                 </Link>
-                <Flex w='100%' h='54px' gap='20px' px='28px' alignItems='center' bg='blue.950' _hover={{ bg: 'blue.900' }}>
-                    <Img src={categoryIcon} w='16px' />
-                    <Text textStyle='h5' color='utility.white'>หมวดหมู่</Text>
-                </Flex>
-                <Flex w='100%' h='54px' gap='20px' px='28px' alignItems='center' bg='blue.950' _hover={{ bg: 'blue.900' }}>
-                    <Img src={serviceIcon} w='16px' />
-                    <Text textStyle='h5' color='utility.white'>บริการ</Text>
-                </Flex>
-                <Flex w='100%' h='54px' gap='20px' px='28px' alignItems='center' bg='blue.950' _hover={{ bg: 'blue.900' }}>
-                    <Img src={codeIcon} w='16px' />
-                    <Text textStyle='h5' color='utility.white'>Promotion Code</Text>
-                </Flex>
+                <Link to='/admin-dashboard'>
+                    <Flex w='100%' h='54px' gap='20px' px='28px' alignItems='center' bg='blue.950' _hover={{ bg: 'blue.900' }}>
+                        <Img src={categoryIcon} w='16px' />
+                        <Text textStyle='h5' color='utility.white'>หมวดหมู่</Text>
+                    </Flex>
+                </Link>
+                <Link to='/admin-dashboard/service'>
+                    <Flex w='100%' h='54px' gap='20px' px='28px' alignItems='center' bg='blue.950' _hover={{ bg: 'blue.900' }}>
+                        <Img src={serviceIcon} w='16px' />
+                        <Text textStyle='h5' color='utility.white'>บริการ</Text>
+                    </Flex>
+                </Link>
+                <Link>
+                    <Flex w='100%' h='54px' gap='20px' px='28px' alignItems='center' bg='blue.950' _hover={{ bg: 'blue.900' }}>
+                        <Img src={codeIcon} w='16px' />
+                        <Text textStyle='h5' color='utility.white'>Promotion Code</Text>
+                    </Flex>
+                </Link>
             </Flex>
 
             <Flex w='100%' h='54px' gap='20px' px='28px' alignItems='center' bg='blue.950' _hover={{ bg: 'blue.900' }} onClick={() => logout()}>
