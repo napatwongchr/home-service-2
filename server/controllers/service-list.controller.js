@@ -131,6 +131,7 @@ const serviceListController = {
         } catch (err) {
             return res.status(400).json({
                 msg: "invalid input"
+<<<<<<< HEAD
             })
         }
     },
@@ -189,6 +190,8 @@ const serviceListController = {
             console.log(err)
             return res.status(400).json({
                 msg: "something wrong"
+=======
+>>>>>>> 3cc2299 (feat: updated edit service)
             })
         }
     }

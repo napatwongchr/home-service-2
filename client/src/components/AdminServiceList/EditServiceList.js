@@ -56,15 +56,14 @@ const EditCreateServiceList = () => {
                     .test("UNSELECTED", "กรุณาเลือกหมวดหมู่บริการ", value => (value && value !== 'เลือกหมวดหมู่')),
                 serviceImage: Yup.mixed()
                     .required('กรุณาใส่รูปบริการ')
-                    .test("FILE_SIZE", "ไฟล์รูปภาพมีขนาดใหญ่เกิน 5MB", value => (value && value.size <= 5000000)),
+                    .test("FILE_SIZE", "ไฟล์รูปภาพมีขนาดใหญ่เกิน 5MB", value => (value && value.size <= 500000)),
                 serviceList: Yup.array().of(Yup.object({
-                    sub_service_name: Yup.string().required('กรุณากรอกชื่อรายการ'),
-                    price_per_unit: Yup.string().required('กรุณากรอกค่าบริการ').matches(/\d/g, 'กรุณากรอกค่าบริการเป็นตัวเลข'),
-                    unit_name: Yup.string().required('กรุณากรอกหน่วยบริการ')
+                    name: Yup.string().required('กรุณากรอกชื่อรายการ'),
+                    price: Yup.string().required('กรุณากรอกค่าบริการ').matches(/\d/g, 'กรุณากรอกค่าบริการเป็นตัวเลข'),
+                    unit: Yup.string().required('กรุณากรอกหน่วยบริการ')
                 }))
             })}
             onSubmit={async (values) => {
-                console.log(values);
                 formData.append('serviceName', (values.serviceName));
                 formData.append('serviceCategory', (values.serviceCategory));
                 formData.append('serviceImage', (values.serviceImage));
