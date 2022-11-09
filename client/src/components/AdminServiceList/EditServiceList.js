@@ -21,6 +21,7 @@ const EditCreateServiceList = () => {
     const [serviceImage, setServiceImage] = useState('');
     const [subServiceArr, setSubServiceArr] = useState([]);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     // const [initialValues, setInitialValues] = useState({
@@ -30,6 +31,9 @@ const EditCreateServiceList = () => {
     //     serviceList: [],
     // });
 >>>>>>> 3cc2299 (feat: updated edit service)
+=======
+
+>>>>>>> 9f40c75 (feat: update edit service page)
     const { serviceCategories, getServiceCategories } = useServiceCategories()
     const { params, getServiceListById, serviceList } = useAdminServiceLists()
 
@@ -39,6 +43,7 @@ const EditCreateServiceList = () => {
         getServiceListById(params)
         getServiceCategories();
     }, []);
+<<<<<<< HEAD
 <<<<<<< HEAD
     useEffect(() => {
         if (serviceList.service) {
@@ -70,6 +75,14 @@ const EditCreateServiceList = () => {
             //     serviceList: subServiceArr,
             // })
 >>>>>>> 3cc2299 (feat: updated edit service)
+=======
+    useEffect(() => {
+        if (serviceList.service) {
+            setServiceName(serviceList.service.service_name);
+            setServiceCategory(serviceList.service.service_category_name);
+            setServiceImage(serviceList.service.service_image_url);
+            setSubServiceArr(serviceList.subService);
+>>>>>>> 9f40c75 (feat: update edit service page)
         }
     }, [serviceList]);
 
@@ -81,9 +94,12 @@ const EditCreateServiceList = () => {
     };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     console.log(initialValues);
 >>>>>>> 3cc2299 (feat: updated edit service)
+=======
+>>>>>>> 9f40c75 (feat: update edit service page)
     return (
         <Formik
             enableReinitialize={true}
@@ -95,6 +111,7 @@ const EditCreateServiceList = () => {
                     .test("UNSELECTED", "กรุณาเลือกหมวดหมู่บริการ", value => (value && value !== 'เลือกหมวดหมู่')),
                 serviceImage: Yup.mixed()
                     .required('กรุณาใส่รูปบริการ')
+<<<<<<< HEAD
 <<<<<<< HEAD
                     .test("FILE_SIZE", "ไฟล์รูปภาพมีขนาดใหญ่เกิน 5MB", value => (value && value.size <= 5000000)),
                 serviceList: Yup.array().of(Yup.object({
@@ -115,13 +132,17 @@ const EditCreateServiceList = () => {
                 // navigate('/admin-dashboard/services')
 =======
                     .test("FILE_SIZE", "ไฟล์รูปภาพมีขนาดใหญ่เกิน 5MB", value => (value && value.size <= 500000)),
+=======
+                    .test("FILE_SIZE", "ไฟล์รูปภาพมีขนาดใหญ่เกิน 5MB", value => (value && value.size <= 5000000)),
+>>>>>>> 9f40c75 (feat: update edit service page)
                 serviceList: Yup.array().of(Yup.object({
-                    name: Yup.string().required('กรุณากรอกชื่อรายการ'),
-                    price: Yup.string().required('กรุณากรอกค่าบริการ').matches(/\d/g, 'กรุณากรอกค่าบริการเป็นตัวเลข'),
-                    unit: Yup.string().required('กรุณากรอกหน่วยบริการ')
+                    sub_service_name: Yup.string().required('กรุณากรอกชื่อรายการ'),
+                    price_per_unit: Yup.string().required('กรุณากรอกค่าบริการ').matches(/\d/g, 'กรุณากรอกค่าบริการเป็นตัวเลข'),
+                    unit_name: Yup.string().required('กรุณากรอกหน่วยบริการ')
                 }))
             })}
             onSubmit={async (values) => {
+<<<<<<< HEAD
                 formData.append('serviceName', (values.serviceName));
                 formData.append('serviceCategory', (values.serviceCategory));
                 formData.append('serviceImage', (values.serviceImage));
@@ -132,6 +153,17 @@ const EditCreateServiceList = () => {
                 })
                 navigate('/admin-dashboard/services')
 >>>>>>> 3cc2299 (feat: updated edit service)
+=======
+                console.log(values);
+                // formData.append('serviceName', (values.serviceName));
+                // formData.append('serviceCategory', (values.serviceCategory));
+                // formData.append('serviceImage', (values.serviceImage));
+                // formData.append('serviceList', JSON.stringify(values.serviceList));
+                // await axios.post('/service', formData, {
+                //     headers: { "Content-Type": "multipart/form-data" },
+                // })
+                // navigate('/admin-dashboard/services')
+>>>>>>> 9f40c75 (feat: update edit service page)
             }}
         >
 
@@ -297,12 +329,17 @@ const EditCreateServiceList = () => {
                                                     <MyFieldInput
                                                         label="ชื่อรายการ"
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                         id={`serviceList.${index}.sub_service_name`}
                                                         name={`serviceList.${index}.sub_service_name`}
 =======
                                                         id={`serviceList.${index}.name`}
                                                         name={`serviceList.${index}.name`}
 >>>>>>> 3cc2299 (feat: updated edit service)
+=======
+                                                        id={`serviceList.${index}.sub_service_name`}
+                                                        name={`serviceList.${index}.sub_service_name`}
+>>>>>>> 9f40c75 (feat: update edit service page)
                                                         type="text"
                                                         w={'440px'} h={'44px'} mt='0'
 
@@ -310,17 +347,23 @@ const EditCreateServiceList = () => {
                                                     <MyFieldInput
                                                         label="ค่าบริการ / 1 หน่วย"
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                         id={`serviceList.${index}.price_per_unit`}
                                                         name={`serviceList.${index}.price_per_unit`}
 =======
                                                         id={`serviceList.${index}.price`}
                                                         name={`serviceList.${index}.price`}
 >>>>>>> 3cc2299 (feat: updated edit service)
+=======
+                                                        id={`serviceList.${index}.price_per_unit`}
+                                                        name={`serviceList.${index}.price_per_unit`}
+>>>>>>> 9f40c75 (feat: update edit service page)
                                                         type="text"
                                                         w={'240px'} h={'44px'} mt='0'
                                                     />
                                                     <MyFieldInput
                                                         label="หน่วยการบริการ"
+<<<<<<< HEAD
 <<<<<<< HEAD
                                                         id={`serviceList.${index}.unit_name`}
                                                         name={`serviceList.${index}.unit_name`}
@@ -328,6 +371,10 @@ const EditCreateServiceList = () => {
                                                         id={`serviceList.${index}.unit`}
                                                         name={`serviceList.${index}.unit`}
 >>>>>>> 3cc2299 (feat: updated edit service)
+=======
+                                                        id={`serviceList.${index}.unit_name`}
+                                                        name={`serviceList.${index}.unit_name`}
+>>>>>>> 9f40c75 (feat: update edit service page)
                                                         type="text"
                                                         w={'240px'} h={'44px'} mt='0'
                                                     />
