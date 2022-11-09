@@ -65,7 +65,6 @@ const serviceListController = {
             })
         }
     },
-
     async getService(req, res) {
         try {
             //Get By ID

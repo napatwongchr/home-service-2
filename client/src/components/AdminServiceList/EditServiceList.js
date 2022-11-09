@@ -69,10 +69,11 @@ const EditCreateServiceList = () => {
                 formData.append('serviceCategory', (values.serviceCategory));
                 formData.append('serviceImage', (values.serviceImage));
                 formData.append('serviceList', JSON.stringify(values.serviceList));
-                // await axios.post('/service', formData, {
-                //     headers: { "Content-Type": "multipart/form-data" },
-                // })
-                // navigate('/admin-dashboard/services')
+
+                await axios.post('/service', formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                })
+                navigate('/admin-dashboard/services')
             }}
         >
 
