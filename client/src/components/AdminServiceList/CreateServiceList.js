@@ -1,5 +1,5 @@
 import { Box, Button, Container, Flex, FormLabel, Image, Input, Menu, MenuButton, MenuItem, MenuList, Text, } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import arrow from "../../asset/image/serviceListPage/dropdown.svg";
 import imageIcon from '../../asset/image/adminServiceList/imageIcon.svg';
 import plusIcon from '../../asset/image/adminDashboardPage/plusIcon.svg';
@@ -9,9 +9,18 @@ import * as Yup from 'yup';
 import NavCreateService from "../AdminPage/NavCreateService";
 import errorIcon from '../../asset/image/errorIcon.svg'
 import axios from '../../api/axios'
+import UploadComponent from "../../utils/dragDropFile";
+import useServiceCategories from "../../hooks/useServiceCategories";
+
 const CreateServiceList = () => {
   const formData = new FormData();
   const [category, setCategory] = useState('เลือกหมวดหมู่');
+  const { serviceCategories, getServiceCategories } = useServiceCategories()
+
+  useEffect(() => {
+    getServiceCategories();
+  }, []);
+
   const initialValues = {
     serviceName: '',
     serviceCategory: '',
@@ -48,7 +57,7 @@ const CreateServiceList = () => {
         formData.append('serviceImage', (values.serviceImage));
         formData.append('serviceList', JSON.stringify(values.serviceList));
 
-        await axios.post('/service/category/list', formData, {
+        await axios.post('/service', formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
       }}
@@ -144,43 +153,23 @@ const CreateServiceList = () => {
                       color='gray.700'
                       pos='absolute'
                       top='-8px'
+                      zIndex={200}
                     >
-                      <MenuItem px={'16px'} h='44px' _hover={{ bg: 'gray.100' }}
-                        color={category === 'บริการทั้งหมด' ? 'blue.700' : null}
-                        onClick={() => {
-                          setFieldValue('serviceCategory', 'บริการทั้งหมด');
-                          setCategory('บริการทั้งหมด');
-                        }}
-                      >
-                        บริการทั้งหมด
-                      </MenuItem>
-                      <MenuItem px={'16px'} h='44px' _hover={{ bg: 'gray.100' }}
-                        color={category === 'บริการทั่วไป' ? 'blue.700' : null}
-                        onClick={() => {
-                          setFieldValue('serviceCategory', 'บริการทั่วไป');
-                          setCategory('บริการทั่วไป');
-                        }}
-                      >
-                        บริการทั่วไป
-                      </MenuItem>
-                      <MenuItem px={'16px'} h='44px' _hover={{ bg: 'gray.100' }}
-                        color={category === 'บริการห้องครัว' ? 'blue.700' : null}
-                        onClick={() => {
-                          setFieldValue('serviceCategory', 'บริการห้องครัว');
-                          setCategory('บริการห้องครัว');
-                        }}
-                      >
-                        บริการห้องครัว
-                      </MenuItem>
-                      <MenuItem px={'16px'} h='44px' _hover={{ bg: 'gray.100' }}
-                        color={category === 'บริการห้องน้ำ' ? 'blue.700' : null}
-                        onClick={() => {
-                          setFieldValue('serviceCategory', 'บริการห้องน้ำ');
-                          setCategory('บริการห้องน้ำ')
-                        }}
-                      >
-                        บริการห้องน้ำ
-                      </MenuItem>
+                      {
+                        serviceCategories.map(item => {
+                          return (
+                            <MenuItem key={item.service_category_id} px={'16px'} h='44px' _hover={{ bg: 'gray.100' }}
+                              color={category === item.service_category_name ? 'blue.700' : null}
+                              onClick={() => {
+                                setFieldValue('serviceCategory', item.service_category_name);
+                                setCategory(item.service_category_name);
+                              }}
+                            >
+                              {item.service_category_name}
+                            </MenuItem>
+                          )
+                        })
+                      }
                     </MenuList>
                   </Menu>
                 </Flex>
@@ -196,31 +185,14 @@ const CreateServiceList = () => {
                     </Flex>
                   </FormLabel>
                   <Flex flexDirection={'column'}>
-                    <Input
-                      label="serviceImage"
-                      id="serviceImage"
-                      name="serviceImage"
-                      type="file"
-                      w={'440px'} h={'180px'}
-                      border='1px dashed'
-                      pos='relative'
-                      display='none'
-                      accept="image/png, image/jpeg"
-                      onChange={(e) => {
-                        setFieldValue('serviceImage', e.currentTarget.files[0])
-                      }}
-                    />
+                    <UploadComponent setFieldValue={setFieldValue} />
 
                     {values.serviceImage ?
-                      <Box pos='relative' overflow='hidden' >
+                      <Box pos='relative' overflow='hidden' display={'flex'} justifyContent='center'>
                         <FormLabel pos='relative' display='flex' flexDirection='column' gap='12px' alignItems='center' w={'440px'} h={'180px'}
                           border='1px dashed' borderColor='gray.300' textStyle='b3' color='gray.700' py='35px' overflow='hidden' objectFit={'fill'}>
-
-                          <Image src={imageIcon} w='36px' />
-                          <Text display='flex'><FormLabel m='0' mr='6px' htmlFor='serviceImage' color='blue.600' cursor={'pointer'} >อัพโหลดรูปภาพ</FormLabel>หรือ ลากและวางที่นี่</Text>
-                          <Text>PNG, JPG ขนาดไม่เกิน 5MB</Text>
                         </FormLabel>
-                        <Image src={URL.createObjectURL(values.serviceImage)} alt={values.serviceImage.name} pos='absolute' top={0} w='1440px' h='225px' />
+                        <Image src={URL.createObjectURL(values.serviceImage)} alt={values.serviceImage.name} pos='absolute' top={0} h='180px' />
                       </Box>
                       : <FormLabel pos='relative' display='flex' flexDirection='column' gap='12px' alignItems='center' w={'440px'} h={'180px'}
                         border='1px dashed' borderColor='gray.300' textStyle='b3' color='gray.700' py='35px' overflow='hidden' objectFit={'fill'}>
