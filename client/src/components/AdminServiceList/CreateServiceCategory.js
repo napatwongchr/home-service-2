@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import NavCreateService from "../AdminPage/NavCreateService";
 import errorIcon from '../../asset/image/errorIcon.svg'
 import axios from '../../api/axios'
+import UploadComponent from "../../utils/dragDropFile";
 const CreateServiceList = () => {
   const formData = new FormData();
   const [category, setCategory] = useState('เลือกหมวดหมู่');
@@ -196,31 +197,14 @@ const CreateServiceList = () => {
                     </Flex>
                   </FormLabel>
                   <Flex flexDirection={'column'}>
-                    <Input
-                      label="serviceImage"
-                      id="serviceImage"
-                      name="serviceImage"
-                      type="file"
-                      w={'440px'} h={'180px'}
-                      border='1px dashed'
-                      pos='relative'
-                      display='none'
-                      accept="image/png, image/jpeg"
-                      onChange={(e) => {
-                        setFieldValue('serviceImage', e.currentTarget.files[0])
-                      }}
-                    />
+                    <UploadComponent setFieldValue={setFieldValue} />
 
                     {values.serviceImage ?
-                      <Box pos='relative' overflow='hidden' >
+                      <Box pos='relative' overflow='hidden' display={'flex'} justifyContent='center'>
                         <FormLabel pos='relative' display='flex' flexDirection='column' gap='12px' alignItems='center' w={'440px'} h={'180px'}
                           border='1px dashed' borderColor='gray.300' textStyle='b3' color='gray.700' py='35px' overflow='hidden' objectFit={'fill'}>
-
-                          <Image src={imageIcon} w='36px' />
-                          <Text display='flex'><FormLabel m='0' mr='6px' htmlFor='serviceImage' color='blue.600' cursor={'pointer'} >อัพโหลดรูปภาพ</FormLabel>หรือ ลากและวางที่นี่</Text>
-                          <Text>PNG, JPG ขนาดไม่เกิน 5MB</Text>
                         </FormLabel>
-                        <Image src={URL.createObjectURL(values.serviceImage)} alt={values.serviceImage.name} pos='absolute' top={0} w='1440px' h='225px' />
+                        <Image src={URL.createObjectURL(values.serviceImage)} alt={values.serviceImage.name} pos='absolute' top={0} h='180px' />
                       </Box>
                       : <FormLabel pos='relative' display='flex' flexDirection='column' gap='12px' alignItems='center' w={'440px'} h={'180px'}
                         border='1px dashed' borderColor='gray.300' textStyle='b3' color='gray.700' py='35px' overflow='hidden' objectFit={'fill'}>
