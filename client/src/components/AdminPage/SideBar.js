@@ -24,7 +24,7 @@ const SideBar = () => {
                         <Text textStyle='h5' color='utility.white'>หมวดหมู่</Text>
                     </Flex>
                 </Link>
-                <Link to='/admin-dashboard/service'>
+                <Link to='/admin-dashboard/services'>
                     <Flex w='100%' h='54px' gap='20px' px='28px' alignItems='center' bg='blue.950' _hover={{ bg: 'blue.900' }}>
                         <Img src={serviceIcon} w='16px' />
                         <Text textStyle='h5' color='utility.white'>บริการ</Text>
