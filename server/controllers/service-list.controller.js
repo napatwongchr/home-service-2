@@ -63,15 +63,27 @@ const serviceListController = {
             const serviceId = req.query.serviceId
             const serviceName = req.query.serviceName
 
-            const query = `select service_id, service_name, service_category_name, service.created_at, service.updated_at 
+            const serviceQuery = `select service_id, 
+            service_name, 
+            service_category_name, 
+            service.created_at, 
+            service.updated_at 
             from service
             inner join service_category
             on service_category.service_category_id = service.service_category_id
             `
+            const subServiceQueryById = `select sub_service_id, 
+            sub_service_name, 
+            unit_name, price_per_unit, 
+            created_at, 
+            updated_at 
+            from sub_service where service_id = $1`
+
             //Qeury Service By ID
             if(serviceId){
                 
-                let findService = await pool.query(`${query} where service_id = $1`, [ serviceId ])
+                let findService = await pool.query(`${serviceQuery} where service_id = $1`, [ serviceId ])
+                let findSubService = await pool.query(subServiceQueryById, [ serviceId ])
 
                 if(!findService.rows[0]){
                     return res.status(404).json({
@@ -79,11 +91,14 @@ const serviceListController = {
                     })
                 }
                 return res.status(200).json({
-                    data : findService.rows[0]
+                    data : {
+                        service : findService.rows[0],
+                        subService : findSubService.rows
+                    }
                 })
                 //Query Service By Name
             } else if (serviceName){
-                let findService = await pool.query(`${query} where service_name like $1`, [ serviceName+'%' ])
+                let findService = await pool.query(`${serviceQuery} where service_name like $1`, [ serviceName+'%' ])
 
                 if(!findService.rows[0]){
                     return res.status(404).json({
@@ -97,7 +112,7 @@ const serviceListController = {
             }
             
             //Get All Service
-            const findService = await pool.query(query)
+            const findService = await pool.query(serviceQuery)
             return res.status(200).json({
                 data : findService.rows
             })
