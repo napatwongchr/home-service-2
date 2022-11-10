@@ -34,7 +34,7 @@ export const Input = defineStyleConfig({
         },
         success: {
             field: {
-                color: 'gray.950',
+                color: 'gray.700',
                 border: '1px',
                 borderColor: 'gray.300',
                 _placeholder: {
