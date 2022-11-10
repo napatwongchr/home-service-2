@@ -3,8 +3,6 @@ import editIcon from "../../asset/image/serviceCategory/edit-icon.svg";
 import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import SideBar from "../AdminPage/SideBar";
 import {
   Container,
   Image,
@@ -30,24 +28,19 @@ import {
 import React from "react";
 import filterCategory from "../../utils/filterCategory";
 import useAdminServiceLists from "../../hooks/useAdminServiceLists.js";
-// import { serviceList } from "../../asset/model/serviceList";
 
 const AdminServiceList = () => {
   const navigate = useNavigate();
-  const {
-    serviceLists,
-    getServiceLists,
-    params,
-    deleteServiceList,
-  } = useAdminServiceLists();
+  const { serviceLists, getServiceLists, params, deleteServiceList } =
+    useAdminServiceLists();
   const [listSearch, setListSearch] = useState("");
   const [listName, setListName] = useState("");
-  const [ListUniqueId, setListUniqueId] = useState();
+  const [listUniqueId, setListUniqueId] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     getServiceLists();
-  }, []);
+  }, [serviceLists]);
 
   const { handleColorText, handleColorButton } = filterCategory;
   return (
@@ -93,12 +86,22 @@ const AdminServiceList = () => {
               </Th>
             </Tr>
           </Thead>
-          {serviceLists.map((item, index) => {
-            return (
-              <Tbody bg="#FFFFFF" key={index} h={90}>
-                <Tr>
+          <Tbody bg="#FFFFFF">
+            {serviceLists.map((item, index) => {
+              return (
+                <Tr key={item.service_id} h={90}>
                   <Td textAlign={"center"}>{index + 1}</Td>
-                  <Td>{item.service_name}</Td>
+                  <Td>
+                    <button
+                      onClick={() => {
+                        navigate(
+                          `/admin-detail/service/view/${item.service_id}`
+                        );
+                      }}
+                    >
+                      {item.service_name}
+                    </button>
+                  </Td>
                   <Td>
                     <Badge
                       borderRadius="8px"
@@ -106,10 +109,7 @@ const AdminServiceList = () => {
                       py="4px"
                       bg={handleColorButton(item.type)}
                     >
-                      <Text
-                        textStyle="b4"
-                        color={handleColorText(item.type)}
-                      >
+                      <Text textStyle="b4" color={handleColorText(item.type)}>
                         {item.service_category_name}
                       </Text>
                     </Badge>
@@ -118,8 +118,62 @@ const AdminServiceList = () => {
                   <Td>{item.updated_at}</Td>
                   <Td className="action-button">
                     <Flex justifyContent={"space-evenly"}>
-                      <button className="delete-button" onClick={onOpen}>
+                      <button className="delete-button" onClick={() => {
+                          setListName(`${item.service_name}`);
+                          setListUniqueId(`${item.service_id}  `);
+                          onOpen();
+                        }}>
                         <Image src={binIcon} alt="bin icon" />
+                        <Modal isOpen={isOpen} onClose={onClose}>
+                          <ModalOverlay />
+                          <ModalContent
+                            textAlign="center"
+                            height="250px"
+                            width="fit-content"
+                            borderRadius={"16px"}
+                          >
+                            <ModalHeader marginTop="1.5rem">
+                              <Flex direction="column" alignItems={"center"}>
+                                <Image
+                                  src={warningICon}
+                                  alt="warning icon"
+                                  width="30px"
+                                  marginBottom="10px"
+                                />
+                                <Text textStyle={"h2"} color="gray.950">
+                                  ยืนยันการลบรายการ?
+                                </Text>
+                              </Flex>
+                            </ModalHeader>
+                            <ModalBody maxH="30px" paddingTop="-15px">
+                              <Text fontWeight={300}>
+                                คุณต้องการลบรายการ '{listName}' ใช่หรือไม่
+                              </Text>
+                            </ModalBody>
+                            <ModalFooter alignSelf={"center"}>
+                              <Button
+                                onClick={() => {
+                                  deleteServiceList(listUniqueId);
+                                  onClose();
+                                }}
+                                colorScheme="blue"
+                                mr={3}
+                              >
+                                ลบรายการ
+                              </Button>
+                              <Button
+                                onClick={onClose}
+                                variant="ghost"
+                                color="blue.600"
+                                border={"1px"}
+                                borderColor={"blue.600"}
+                                textDecoration="none"
+                              >
+                                ยกเลิก
+                              </Button>
+                            </ModalFooter>
+                          </ModalContent>
+                        </Modal>
                       </button>
                       <button className="edit-button">
                         <Image src={editIcon} alt="edit icon" onClick={() => {
@@ -131,57 +185,10 @@ const AdminServiceList = () => {
                     </Flex>
                   </Td>
                 </Tr>
-              </Tbody>
-            );
-          })}
+              );
+            })}
+          </Tbody>
         </Table>
-
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent
-            textAlign="center"
-            height="250px"
-            width="350px"
-            borderRadius={"16px"}
-          >
-            <ModalHeader marginTop="1.5rem">
-              <Flex direction="column" alignItems={"center"}>
-                <Image
-                  src={warningICon}
-                  alt="warning icon"
-                  width="30px"
-                  marginBottom="10px"
-                />
-                <Text textStyle={"h2"} color="gray.950">
-                  ยืนยันการลบรายการ?
-                </Text>
-              </Flex>
-            </ModalHeader>
-            <ModalBody maxH="30px" paddingTop="-15px">
-              {/* {serviceList.map((item, index) => {
-            return ( */}
-              <Text fontWeight={300}>
-                คุณต้องการลบรายการ "ล้างแอร์" ใช่หรือไม่
-              </Text>
-              {/* );
-          })} */}
-            </ModalBody>
-            <ModalFooter alignSelf={"center"}>
-              <Button colorScheme="blue" mr={3}>
-                ลบรายการ
-              </Button>
-              <Button
-                onClick={onClose}
-                variant="ghost"
-                color="blue.600"
-                border={"1px"}
-                borderColor={"blue.600"}
-              >
-                ยกเลิก
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
       </TableContainer>
     </Container>
   );

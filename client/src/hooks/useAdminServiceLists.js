@@ -24,6 +24,7 @@ const useAdminServiceLists = () => {
         `/service?serviceId=${params.serviceId}`
       );
       setServiceList(result.data.data);
+      console.log(serviceList);
     } catch (error) {
       console.log(error);
     }

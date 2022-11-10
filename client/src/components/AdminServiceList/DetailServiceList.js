@@ -7,7 +7,6 @@ import {
   Divider,
   Box,
 } from "@chakra-ui/react";
-import SideBar from "../AdminPage/SideBar";
 import arrow from "../../asset/image/serviceCategory/left-arrow.svg";
 import ล้างแอร์ from "../../asset/image/serviceImage/ล้างแอร์.png";
 import { Link } from "react-router-dom";
@@ -20,33 +19,35 @@ const DetailServiceList = () => {
   useEffect(() => {
     getServiceListById(params);
   }, []);
-
+  // console.log(params.serviceId);
+  console.log(serviceList);
+  
   return (
-    <Container bg="#F3F4F6" maxW="100%" height="100vh" paddingLeft="0px">
+    <Container bg="#F3F4F6" maxW="100%" height={"100%"} padding="0">
       <Flex>
-        <SideBar />
         <Flex
           className="create-service-field"
           direction="column"
           alignItems={"center"}
-          width="100vw"
-          height="100vh"
+          width="100%"
+          height="100%"
         >
           <Flex
-            className="create-service-category-bar"
+            className="create-service-bar"
             bg="white"
             borderBottom={"1px"}
             borderColor="gray.300"
             width="100%"
             height={"80px"}
             justify={"space-between"}
+            padding="2rem"
             alignItems="center"
           >
             <Flex
               className="left-side"
               direction="row"
               alignItems={"center"}
-              marginLeft="3rem"
+              // marginLeft="3rem"
             >
               <Link to="/admin-dashboard/service">
                 <Image src={arrow} marginRight="1.5rem" />
@@ -59,15 +60,15 @@ const DetailServiceList = () => {
                   textStyle="h2"
                   color="utility.black"
                 >
-                  ล้างแอร์
+                  {serviceList.service_name} 
                 </Text>
               </Flex>
             </Flex>
             <Flex
               className="button-group"
               justifyContent="space-between"
-              width="12rem"
-              marginRight="5rem"
+              // width="12rem"
+              // marginRight="5rem"
             >
               <Link to="/admin-dashboard/category/edit">
                 <Button width={"5.5rem"} onSubmit={{}}>
@@ -80,18 +81,25 @@ const DetailServiceList = () => {
             className="edit-service-input"
             direction={"column"}
             paddingLeft={"2rem"}
+            paddingRight={"2rem"}
             paddingTop="26px"
             paddingBottom="26px"
             alignItems={"left"}
-            bg="white"
             border="1px"
+            bg="white"
             borderColor="gray.200"
             borderRadius={"8px"}
-            width={"1120px"}
-            height="988px"
-            marginTop="4rem"
+            height="fit=content"
+            marginTop="-4.5rem"
+            sx={{ transform: "scale(0.8)" }}
+            w="1420px"
           >
-            <Flex direction={"row"} fontStyle={"h5"} marginBottom="32px">
+            <Flex
+              direction={"row"}
+              fontStyle={"h5"}
+              marginBottom="32px"
+              w={1120}
+            >
               <Text color={"gray.700"} w="205px">
                 ชื่อบริการ
               </Text>
@@ -100,7 +108,7 @@ const DetailServiceList = () => {
                 textStyle="b1"
                 color={"utility.black"}
               >
-                ล้างแอร์
+                {serviceList.service_name}
               </Text>
             </Flex>
 
@@ -130,7 +138,7 @@ const DetailServiceList = () => {
               />
             </Flex>
 
-            <Divider w="1056px" />
+            <Divider w="1356px" />
 
             <Box marginTop="40px" marginBottom="40px">
               <Flex direction={"column"}>
@@ -145,19 +153,25 @@ const DetailServiceList = () => {
                   marginBottom="32px"
                 >
                   <Flex direction={"column"}>
-                    <Text marginBottom="4px" w="488px">ชื่อรายการ</Text>
+                    <Text marginBottom="4px" w="488px">
+                      ชื่อรายการ
+                    </Text>
                     <Text textStyle="b1" color={"utility.black"}>
                       9,000 - 18,000 BTU, แบบติดผนัง
                     </Text>
                   </Flex>
                   <Flex direction={"column"}>
-                    <Text marginBottom="4px" w="252px">หน่วยการบริการ</Text>
+                    <Text marginBottom="4px" w="252px">
+                      หน่วยการบริการ
+                    </Text>
                     <Text textStyle="b1" color={"utility.black"}>
                       เครื่อง
                     </Text>
                   </Flex>
                   <Flex direction={"column"}>
-                    <Text marginBottom="4px" w="240px">ค่าบริการ / 1 หน่วย</Text>
+                    <Text marginBottom="4px" w="240px">
+                      ค่าบริการ / 1 หน่วย
+                    </Text>
                     <Text textStyle="b1" color={"utility.black"}>
                       800.00
                     </Text>
@@ -172,19 +186,25 @@ const DetailServiceList = () => {
                   marginBottom="32px"
                 >
                   <Flex direction={"column"}>
-                    <Text marginBottom="4px" w="488px">ชื่อรายการ</Text>
+                    <Text marginBottom="4px" w="488px">
+                      ชื่อรายการ
+                    </Text>
                     <Text textStyle="b1" color={"utility.black"}>
                       9,000 - 18,000 BTU, แบบติดผนัง
                     </Text>
                   </Flex>
                   <Flex direction={"column"}>
-                    <Text marginBottom="4px" w="252px">หน่วยการบริการ</Text>
+                    <Text marginBottom="4px" w="252px">
+                      หน่วยการบริการ
+                    </Text>
                     <Text textStyle="b1" color={"utility.black"}>
                       เครื่อง
                     </Text>
                   </Flex>
                   <Flex direction={"column"}>
-                    <Text marginBottom="4px" w="240px">ค่าบริการ / 1 หน่วย</Text>
+                    <Text marginBottom="4px" w="240px">
+                      ค่าบริการ / 1 หน่วย
+                    </Text>
                     <Text textStyle="b1" color={"utility.black"}>
                       800.00
                     </Text>
@@ -199,19 +219,25 @@ const DetailServiceList = () => {
                   marginBottom="32px"
                 >
                   <Flex direction={"column"}>
-                    <Text marginBottom="4px" w="488px">ชื่อรายการ</Text>
+                    <Text marginBottom="4px" w="488px">
+                      ชื่อรายการ
+                    </Text>
                     <Text textStyle="b1" color={"utility.black"}>
                       9,000 - 18,000 BTU, แบบติดผนัง
                     </Text>
                   </Flex>
                   <Flex direction={"column"}>
-                    <Text marginBottom="4px" w="252px">หน่วยการบริการ</Text>
+                    <Text marginBottom="4px" w="252px">
+                      หน่วยการบริการ
+                    </Text>
                     <Text textStyle="b1" color={"utility.black"}>
                       เครื่อง
                     </Text>
                   </Flex>
                   <Flex direction={"column"}>
-                    <Text marginBottom="4px" w="240px">ค่าบริการ / 1 หน่วย</Text>
+                    <Text marginBottom="4px" w="240px">
+                      ค่าบริการ / 1 หน่วย
+                    </Text>
                     <Text textStyle="b1" color={"utility.black"}>
                       800.00
                     </Text>
@@ -225,29 +251,34 @@ const DetailServiceList = () => {
                   color="#646C80"
                 >
                   <Flex direction={"column"}>
-                    <Text marginBottom="4px" w="488px">ชื่อรายการ</Text>
+                    <Text marginBottom="4px" w="488px">
+                      ชื่อรายการ
+                    </Text>
                     <Text textStyle="b1" color={"utility.black"}>
                       9,000 - 18,000 BTU, แบบติดผนัง
                     </Text>
                   </Flex>
                   <Flex direction={"column"}>
-                    <Text marginBottom="4px" w="252px">หน่วยการบริการ</Text>
+                    <Text marginBottom="4px" w="252px">
+                      หน่วยการบริการ
+                    </Text>
                     <Text textStyle="b1" color={"utility.black"}>
                       เครื่อง
                     </Text>
                   </Flex>
                   <Flex direction={"column"}>
-                    <Text marginBottom="4px" w="240px">ค่าบริการ / 1 หน่วย</Text>
+                    <Text marginBottom="4px" w="240px">
+                      ค่าบริการ / 1 หน่วย
+                    </Text>
                     <Text textStyle="b1" color={"utility.black"}>
                       800.00
                     </Text>
                   </Flex>
                 </Flex>
-
               </Flex>
             </Box>
 
-            <Divider w="1056px" />
+            <Divider w="1356px" />
 
             <Box className="info" marginTop="3rem">
               <Flex className="created-info" marginBottom={"2rem"}>
@@ -264,7 +295,7 @@ const DetailServiceList = () => {
                   textStyle="b1"
                   color={"utility.black"}
                 >
-                  12/02/2022 10:30PM
+                  {serviceList.updated_at}
                 </Text>
               </Flex>
               <Flex className="edited-info">
@@ -281,7 +312,7 @@ const DetailServiceList = () => {
                   textStyle="b1"
                   color={"utility.black"}
                 >
-                  12/02/2022 10:30PM
+                  {serviceList.created_at}
                 </Text>
               </Flex>
             </Box>
