@@ -57,12 +57,12 @@ const MyFieldInput = ({ label, ...props }) => {
                         mt={'20px'}
                         mb={'4px'}
                         textStyle='h5'
-                        color={'gray.900'}
+                        color={'gray.700'}
                         htmlFor={props.id || props.name}
 
                     >
                         <Flex textStyle={'h5'}>
-                            <Text color={'gray.900'}>{label}</Text><Text color={'utility.red'}>*</Text>
+                            <Text color={'gray.700'}>{label}</Text><Text color={'utility.red'}>*</Text>
                         </Flex>
                     </FormLabel>
                     <Box position={'relative'}>
@@ -77,12 +77,12 @@ const MyFieldInput = ({ label, ...props }) => {
                         mt={'20px'}
                         mb={'4px'}
                         textStyle='h5'
-                        color={'gray.900'}
+                        color={'gray.700'}
                         htmlFor={props.id || props.name}
 
                     >
                         <Flex textStyle={'h5'}>
-                            <Text color={'gray.900'}>{label}</Text><Text color={'utility.red'}>*</Text>
+                            <Text color={'gray.700'}>{label}</Text><Text color={'utility.red'}>*</Text>
                         </Flex>
                     </FormLabel>
                     <Field as={Input} variant={meta.touched ? 'success' : 'default'} {...field} {...props} />
