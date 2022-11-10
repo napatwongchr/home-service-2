@@ -29,6 +29,7 @@ const EditCreateServiceList = () => {
         getServiceListById(params)
         getServiceCategories();
     }, []);
+
     useEffect(() => {
         if (serviceList.service) {
             setServiceName(serviceList.service.service_name);
@@ -56,7 +57,7 @@ const EditCreateServiceList = () => {
                     .test("UNSELECTED", "กรุณาเลือกหมวดหมู่บริการ", value => (value && value !== 'เลือกหมวดหมู่')),
                 serviceImage: Yup.mixed()
                     .required('กรุณาใส่รูปบริการ')
-                    .test("FILE_SIZE", "ไฟล์รูปภาพมีขนาดใหญ่เกิน 5MB", value => (value && value.size <= 5000000)),
+                    .test("FILE_SIZE", "ไฟล์รูปภาพมีขนาดใหญ่เกิน 5MB", value => (value && (value.size || serviceList.service.bytes) <= 5000000)),
                 serviceList: Yup.array().of(Yup.object({
                     sub_service_name: Yup.string().required('กรุณากรอกชื่อรายการ'),
                     price_per_unit: Yup.string().required('กรุณากรอกค่าบริการ').matches(/\d/g, 'กรุณากรอกค่าบริการเป็นตัวเลข'),
@@ -64,14 +65,16 @@ const EditCreateServiceList = () => {
                 }))
             })}
             onSubmit={async (values) => {
-                console.log(values);
-                // formData.append('serviceName', (values.serviceName));
-                // formData.append('serviceCategory', (values.serviceCategory));
-                // formData.append('serviceImage', (values.serviceImage));
-                // formData.append('serviceList', JSON.stringify(values.serviceList));
+                formData.append('serviceName', (values.serviceName));
+                formData.append('serviceCategory', (values.serviceCategory));
+                formData.append('serviceImage', (values.serviceImage));
+                formData.append('serviceList', JSON.stringify(values.serviceList));
+                formData.append('serviceImageId', serviceList.service.public_id);
+                
+                console.log(formData.getAll('serviceImageId'));
                 // await axios.post('/service', formData, {
                 //     headers: { "Content-Type": "multipart/form-data" },
-                // })
+                // }
                 // navigate('/admin-dashboard/services')
             }}
         >
@@ -256,15 +259,16 @@ const EditCreateServiceList = () => {
                                                         name={`serviceList.${index}.unit_name`}
                                                         type="text"
                                                         w={'240px'} h={'44px'} mt='0'
+
                                                     />
                                                     <Button pos='relative' top='-20px' variant={'ghost'} color='gray.400' onClick={() => values.serviceList.length > 1 && remove(index)}>ลบรายการ</Button>
                                                 </Flex>
                                             ))}
                                             <Button variant={'secondary'} rightIcon={<Image src={plusIcon} />} mt='40px' px='25px'
                                                 onClick={() => push({
-                                                    name: '',
-                                                    price: '',
-                                                    unit: ''
+                                                    sub_service_name: '',
+                                                    price_per_unit: '',
+                                                    unit_name: ''
                                                 })}>
                                                 เพิ่มรายการ
                                             </Button>
