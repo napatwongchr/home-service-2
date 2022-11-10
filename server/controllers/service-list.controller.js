@@ -63,21 +63,14 @@ const serviceListController = {
             const serviceId = req.query.serviceId
             const serviceName = req.query.serviceName
 
-            const serviceQuery = `select service_id, 
-            service_name, 
-            service_category_name,
-            service_image_url, 
-            service.created_at, 
-            service.updated_at 
+            const serviceQuery = `select *
             from service
             inner join service_category
             on service_category.service_category_id = service.service_category_id
+            inner join service_image
+            on service.service_image_id = service_image.service_image_id
             `
-            const subServiceQueryById = `select sub_service_id, 
-            sub_service_name, 
-            unit_name, price_per_unit, 
-            created_at, 
-            updated_at 
+            const subServiceQueryById = `select *
             from sub_service where service_id = $1`
 
             //Qeury Service By ID
@@ -85,38 +78,44 @@ const serviceListController = {
 
                 let findService = await pool.query(`${serviceQuery} where service_id = $1`, [serviceId])
                 let findSubService = await pool.query(subServiceQueryById, [serviceId])
-
-                if (!findService.rows[0]) {
-                    return res.status(404).json({
-                        msg: "service not found"
-                    })
-                }
                 return res.status(200).json({
-                    data: {
-                        service: findService.rows[0],
-                        subService: findSubService.rows
-                    }
-                })
-                //Query Service By Name
-            } else if (serviceName) {
-                let findService = await pool.query(`${serviceQuery} where service_name like $1`, [serviceName + '%'])
-
-                if (!findService.rows[0]) {
-                    return res.status(404).json({
-                        msg: "service not found"
-                    })
-                }
-            } else if (Object.keys(req.query).length > 0) {
-                return res.status(400).json({
-                    msg: "invalid query input"
-                })
+                            data: {
+                                service: findService.rows[0],
+                                subService: findSubService.rows
+                            }
+                        })
             }
+            //     if (!findService.rows[0]) {
+            //         return res.status(404).json({
+            //             msg: "service not found"
+            //         })
+            //     }
+            //     return res.status(200).json({
+            //         data: {
+            //             service: findService.rows[0],
+            //             subService: findSubService.rows
+            //         }
+            //     })
+            //     //Query Service By Name
+            // } else if (serviceName) {
+            //     let findService = await pool.query(`${serviceQuery} where service_name like $1`, [serviceName + '%'])
 
-            //Get All Service
-            const findService = await pool.query(serviceQuery)
-            return res.status(200).json({
-                data: findService.rows
-            })
+            //     if (!findService.rows[0]) {
+            //         return res.status(404).json({
+            //             msg: "service not found"
+            //         })
+            //     }
+            // } else if (Object.keys(req.query).length > 0) {
+            //     return res.status(400).json({
+            //         msg: "invalid query input"
+            //     })
+            // }
+
+            // //Get All Service
+            // const findService = await pool.query(serviceQuery)
+            // return res.status(200).json({
+            //     data: findService.rows
+            // })
         } catch (err) {
             return res.status(400).json({
                 msg: "invalid input"
