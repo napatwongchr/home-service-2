@@ -8,6 +8,24 @@ const useServiceCategories = () => {
   const [serviceCategory, setServiceCategory] = useState([]);
   const params = useParams();
 
+  // not yet finished
+  // const getServiceCategories = async (input) => {
+  //   const { searchCategoryName } = input;
+  //   try {
+  //     const params = new URLSearchParams();
+  //     params.append("categoryName", searchCategoryName);
+  //     console.log(params.toString());
+
+  //     const results =
+  //       await axios.get`http://localhost:4000/service/category?${params.toString()}`;
+  //     setServiceCategories(results.data.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // ?${params.toString()}
+
   const getServiceCategories = async () => {
     try {
       const results = await axios.get(`http://localhost:4000/service/category`);
