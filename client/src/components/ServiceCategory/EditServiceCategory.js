@@ -56,6 +56,7 @@ const EditServiceCategory = () => {
 
   return (
     <Formik
+      enableReinitialize={true}
       initialValues={initialValues}
       validationSchema={Yup.object({
         categoryName: Yup.string().required("กรุณากรอกชื่อหมวดหมู่"),
