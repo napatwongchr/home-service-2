@@ -262,9 +262,9 @@ const EditCreateServiceList = () => {
                                             ))}
                                             <Button variant={'secondary'} rightIcon={<Image src={plusIcon} />} mt='40px' px='25px'
                                                 onClick={() => push({
-                                                    name: '',
-                                                    price: '',
-                                                    unit: ''
+                                                    sub_service_name: '',
+                                                    price_per_unit: '',
+                                                    unit_name: ''
                                                 })}>
                                                 เพิ่มรายการ
                                             </Button>

@@ -1,7 +1,7 @@
 import serviceRoute from "../routers/service.route.js";
 import { pool } from "../utils/db.js";
 import { cloudinaryUpload } from "../utils/upload.js";
-
+import { v2 as cloudinary } from "cloudinary";
 const serviceListController = {
     async createServiceList(req, res) {
         try {
@@ -65,7 +65,6 @@ const serviceListController = {
             })
         }
     },
-
     async getService(req, res) {
         try {
             //Get By ID
@@ -84,12 +83,10 @@ const serviceListController = {
             on service_image.service_image_id = service.service_image_id
             inner join service_category
             on service_category.service_category_id = service.service_category_id
+            inner join service_image
+            on service.service_image_id = service_image.service_image_id
             `
-            const subServiceQueryById = `select sub_service_id, 
-            sub_service_name, 
-            unit_name, price_per_unit, 
-            created_at, 
-            updated_at 
+            const subServiceQueryById = `select *
             from sub_service where service_id = $1`
 
             //Qeury Service By ID
@@ -192,6 +189,17 @@ const serviceListController = {
                 msg: "something wrong"
             })
         }
+    },
+
+
+    deleteService(req, res) {
+        cloudinary.uploader.destroy('home-service/file-uploading/toobhuxwa2lwadrhy4hk', {
+            resource_type: "image",
+            type: "private"
+        })
+            .then(result => console.log(result))
+
+
     }
 }
 
