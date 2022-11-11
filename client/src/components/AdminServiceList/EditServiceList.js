@@ -37,7 +37,7 @@ const EditCreateServiceList = () => {
             setSubServiceArr(serviceList.subService);
         }
     }, [serviceList]);
-
+    console.log(serviceList);
     const initialValues = {
         serviceName: serviceName,
         serviceCategory: serviceCategory,
