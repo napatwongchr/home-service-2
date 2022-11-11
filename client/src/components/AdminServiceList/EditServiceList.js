@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 import { Box, Button, Container, Divider, Flex, FormLabel, Image, Img, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure, } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import arrow from "../../asset/image/serviceListPage/dropdown.svg";
 import imageIcon from '../../asset/image/adminServiceList/imageIcon.svg';
 import bathIcon from '../../asset/image/adminServiceList/bathIcon.svg';
+=======
+import { Box, Button, Container, Flex, FormLabel, Image, Input, Menu, MenuButton, MenuItem, MenuList, Text, } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import arrow from "../../asset/image/serviceListPage/dropdown.svg";
+import imageIcon from '../../asset/image/adminServiceList/imageIcon.svg';
+>>>>>>> 18f643bb62cfbfe060ddd1ff78c39ec35ad0869b
 import plusIcon from '../../asset/image/adminDashboardPage/plusIcon.svg';
 import { Formik, Form, FieldArray, Field } from 'formik';
 import { MyFieldInput } from '../../utils/formInput';
@@ -348,8 +355,8 @@ const EditCreateServiceList = () => {
                                 </ModalContent>
                             </Modal>
                         </Container >
-                    </Form>
-                </Box>
+                    </Form >
+                </Box >
             )}
         </Formik >
     );
