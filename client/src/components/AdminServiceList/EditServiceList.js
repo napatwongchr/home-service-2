@@ -33,7 +33,7 @@ const EditCreateServiceList = () => {
         if (serviceList.service) {
             setServiceName(serviceList.service.service_name);
             setServiceCategory(serviceList.service.service_category_name);
-            setServiceImage(serviceList.service.service_image_url);
+            setServiceImage(serviceList.service.url);
             setSubServiceArr(serviceList.subService);
         }
     }, [serviceList]);
@@ -65,10 +65,10 @@ const EditCreateServiceList = () => {
             })}
             onSubmit={async (values) => {
                 console.log(values);
-                // formData.append('serviceName', (values.serviceName));
-                // formData.append('serviceCategory', (values.serviceCategory));
-                // formData.append('serviceImage', (values.serviceImage));
-                // formData.append('serviceList', JSON.stringify(values.serviceList));
+                formData.append('serviceName', (values.serviceName));
+                formData.append('serviceCategory', (values.serviceCategory));
+                formData.append('serviceImage', (values.serviceImage));
+                formData.append('serviceList', JSON.stringify(values.serviceList));
                 // await axios.post('/service', formData, {
                 //     headers: { "Content-Type": "multipart/form-data" },
                 // })
