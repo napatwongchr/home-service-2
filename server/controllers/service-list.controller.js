@@ -83,8 +83,8 @@ const serviceListController = {
             inner join service_image
             on service_image.service_image_id = service.service_image_id
             inner join service_category
-            on service_category.service_category_id = service.service_category_id
-            `
+            on service_category.service_category_id = service.service_category_id`
+
             const subServiceQueryById = `select sub_service_id, 
             sub_service_name, 
             unit_name, price_per_unit, 

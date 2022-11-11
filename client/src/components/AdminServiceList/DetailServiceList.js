@@ -146,14 +146,7 @@ const DetailServiceList = () => {
               <Text color={"gray.700"} w="205px">
                 รูปภาพ
               </Text>
-              {/* <Image
-                w="300px"
-                h="200px"
-                borderRadius="8px"
-                src={ล้างแอร์}
-                alt="ภาพล้างแอร์"
-              /> */}
-              {serviceImage}
+              <Image src={serviceImage} />
             </Flex>
 
             <Divider w="1356px" />
