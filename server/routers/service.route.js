@@ -9,6 +9,7 @@ const serviceRoute = Route();
 // Service
 serviceRoute.post('/', upload.single("serviceImage"), serviceListController.createServiceList);
 serviceRoute.get('/', serviceListController.getService);
+serviceRoute.put('/', serviceListController.updateService)
 
 // Service Category
 serviceRoute.get('/category', serviceCategoryController.getServiceCategory);

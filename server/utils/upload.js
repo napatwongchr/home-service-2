@@ -7,13 +7,20 @@ const cloudinaryUpload = async (file) => {
         folder: "home-service/file-uploading",
         type: "private",
     });
+
+
     fileUrl.push({
         url: result.secure_url,
         publicId: result.public_id,
+        bytes : result.bytes
     })
     await fs.unlink(file.path);
-
+    
     return fileUrl
 }
 
-export { cloudinaryUpload };
+const cloudinaryDestroy = async (public_id) =>{
+    await cloudinary.uploader.destroy(public_id)
+}
+
+export { cloudinaryUpload, cloudinaryDestroy };
