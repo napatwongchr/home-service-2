@@ -237,6 +237,7 @@ const DetailServiceList = () => {
         </Flex>
       </Flex>
     </Container>
+    
   );
 };
 

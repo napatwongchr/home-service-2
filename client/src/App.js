@@ -6,7 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import AdminDashboardPage from "./pages/Admin/AdminDashBoard";
 import AdminCreateService from "./pages/Admin/AdminCreateService";
 import AdminServiceListPage from "./pages/Admin/AdminServiceLists";
-import AdminDetailService from "./components/AdminServiceList/DetailServiceCategory";
+import AdminDetailService from "./pages/Admin/AdminDetailService";
 import CreateServiceCategory from "./components/ServiceCategory/CreateServiceCategory";
 import EditServiceCategory from "./components/ServiceCategory/EditServiceCategory";
 import DetailServiceCategory from "./components/ServiceCategory/DetailServiceCategory";
