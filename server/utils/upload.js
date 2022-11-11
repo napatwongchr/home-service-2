@@ -14,7 +14,7 @@ const cloudinaryUpload = async (file) => {
         bytes: result.bytes
     })
     await fs.unlink(file.path);
-
+    
     return fileUrl
 }
 
