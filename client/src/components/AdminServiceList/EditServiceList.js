@@ -17,7 +17,6 @@ import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
 
 const EditCreateServiceList = () => {
     const formData = new FormData();
-    const [serviceId, setServiceId] = useState('');
     const [serviceName, setServiceName] = useState('');
     const [serviceCategory, setServiceCategory] = useState('');
     const [serviceImage, setServiceImage] = useState('');
@@ -67,7 +66,7 @@ const EditCreateServiceList = () => {
                     .test("UNSELECTED", "กรุณาเลือกหมวดหมู่บริการ", value => (value && value !== 'เลือกหมวดหมู่')),
                 serviceImage: Yup.mixed()
                     .required('กรุณาใส่รูปบริการ')
-                    .test("FILE_SIZE", "ไฟล์รูปภาพมีขนาดใหญ่เกิน 5MB", value => (value && (value.size || serviceList.service.bytes) <= 5000000)),
+                    .test("FILE_SIZE", "ไฟล์รูปภาพมีขนาดใหญ่เกิน 5MB", value => (value && (value.size || serviceImageSize) <= 5000000)),
                 serviceList: Yup.array().of(Yup.object({
                     sub_service_name: Yup.string().required('กรุณากรอกชื่อรายการ'),
                     price_per_unit: Yup.string().required('กรุณากรอกค่าบริการ').matches(/\d/g, 'กรุณากรอกค่าบริการเป็นตัวเลข'),
