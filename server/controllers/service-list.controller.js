@@ -96,6 +96,12 @@ const serviceListController = {
 
                 let findService = await pool.query(`${serviceQuery} where service_id = $1`, [serviceId])
                 let findSubService = await pool.query(subServiceQueryById, [serviceId])
+
+                if (!findService.rows[0]) {
+                    return res.status(404).json({
+                        msg: "service not found"
+                    })
+                }
                 return res.status(200).json({
                     data: {
                         service: findService.rows[0],
@@ -103,18 +109,8 @@ const serviceListController = {
                     }
                 })
             }
-            if (!findService.rows[0]) {
-                return res.status(404).json({
-                    msg: "service not found"
-                })
-                return res.status(200).json({
-                    data: {
-                        service: findService.rows[0],
-                        subService: findSubService.rows
-                    }
-                })
-            }
-            //     //Query Service By Name
+
+            //Query Service By Name
             else if (serviceName) {
                 let findService = await pool.query(`${serviceQuery} where service_name like $1`, [serviceName + '%'])
 
@@ -129,7 +125,7 @@ const serviceListController = {
                 })
             }
 
-            // //Get All Service
+            // // //Get All Service
             const findService = await pool.query(serviceQuery)
             return res.status(200).json({
                 data: findService.rows
