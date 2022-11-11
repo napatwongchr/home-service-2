@@ -1,16 +1,16 @@
 import serviceRoute from "../routers/service.route.js";
 import { pool } from "../utils/db.js";
 import { cloudinaryUpload } from "../utils/upload.js";
-import { v2 as cloudinary } from "cloudinary";
+
 const serviceListController = {
     async createServiceList(req, res) {
         try {
+
             const serviceList = {
                 serviceName: req.body.serviceName,
                 serviceCategory: req.body.serviceCategory,
                 serviceSubList: req.body.serviceList
             }
-
 
             const serviceUrl = await cloudinaryUpload(req.file);
             serviceList['serviceImage'] = serviceUrl
@@ -19,7 +19,6 @@ const serviceListController = {
             // const serviceImageUrl = serviceList.serviceImage[0].url
             const serviceName = serviceList.serviceName
             const serviceCategory = serviceList.serviceCategory
-
             //Add Image to service_image table
             const addImage = await pool.query(`insert into service_image(public_id, url, bytes)
                 values($1, $2, $3) returning service_image_id
@@ -65,6 +64,7 @@ const serviceListController = {
             })
         }
     },
+
     async getService(req, res) {
         try {
             //Get By ID
@@ -83,10 +83,12 @@ const serviceListController = {
             on service_image.service_image_id = service.service_image_id
             inner join service_category
             on service_category.service_category_id = service.service_category_id
-            inner join service_image
-            on service.service_image_id = service_image.service_image_id
             `
-            const subServiceQueryById = `select *
+            const subServiceQueryById = `select sub_service_id, 
+            sub_service_name, 
+            unit_name, price_per_unit, 
+            created_at, 
+            updated_at 
             from sub_service where service_id = $1`
 
             //Qeury Service By ID
@@ -141,56 +143,79 @@ const serviceListController = {
 
     async updateService(req, res) {
         try {
-            const serviceId = req.query.serviceId
-            // const subServiceList = JSON.parse(req.body.serviceList)
-            const newSubServiceList = req.body.serviceList
+            // prepare  data before update
+            const serviceId = req.body.serviceId
+            const serviceList = {
+                serviceName: req.body.serviceName,
+                serviceCategory: req.body.serviceCategory,
+                serviceSubList: req.body.serviceList
+            }
+            const subServiceList = JSON.parse(serviceList.serviceSubList)
+            const oldSubServices = subServiceList.filter(item => item.sub_service_id)
+            const newSubServices = subServiceList.filter(item => !item.sub_service_id)
 
-            // const imageUrl = findServiceImageUrl.rows[0]
-            // await cloudinaryDestroy(public_id)
+            //  get sub service id from database
+            const oldSubServiceDB = await pool.query(`select sub_service_id 
+                  from sub_service 
+                  where service_id = $1`
+                , [serviceId])
+            const oldSubServiceDBArr = oldSubServiceDB.rows.map(item => item.sub_service_id);
 
-            //Find service category id
-            const findServiceCategory = await pool.query(`select service_category_id from service_category where service_category_name = $1`, [req.body.serviceCategory])
-            const serviceCategoryId = findServiceCategory.rows[0].service_category_id
+            // // update sub service old data
+            const updateOldServices = oldSubServices.filter(item => oldSubServiceDBArr.indexOf(item.sub_service_id) !== -1)
 
-            //Update Service Table
-            //Non image change
-            if (!Boolean(req.file)) {
-                // await pool.query(`update service
-                //     set service_category_id = $1,
-                //     service_name = $2,
-                //     updated_at = to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM')
-                //     where service_id = $3
-                // `, [serviceCategoryId, req.body.serviceName, serviceId])
+            updateOldServices.map(async subService => {
+                await pool.query(`update sub_service set sub_service_name = $1, unit_name = $2, price_per_unit = $3, updated_at = to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM') where sub_service_id = $4
+                `, [subService.sub_service_name, subService.unit_name, subService.price_per_unit, subService.sub_service_id])
+            })
 
-                //compare old sub service : new sub service
-                // const oldSubService = await pool.query(`select sub_service_id 
-                // from sub_service 
-                // where service_id = $1`
-                //     , [req.query.serviceId])
+            //  delete old service if not exist
+            const userOldSubServiceArr = subServiceList.map(item => item.sub_service_id);
+            const deleteOldServices = oldSubServiceDBArr.filter(item => userOldSubServiceArr.indexOf(item) === -1)
 
-                // const oldSubServiceArray = oldSubService.rows
-                // const newSubServiceArray = newSubServiceList
+            deleteOldServices.map(async subService => {
+                await pool.query(`delete from sub_service where sub_service_id = $1`, [subService])
+            })
 
-                // newSubServiceArray.map((newSub, index) => {
-                //     console.log(newSub)
-                //     console.log(oldSubService.rows)
-                // })
+            // insert new service to database
+            newSubServices.map(async subService => {
+                await pool.query(`insert into sub_service(service_id, sub_service_name, unit_name, price_per_unit, created_at, updated_at )
+                    values($1, $2, $3, $4,
+                            to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM'),
+                            to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM')
+                        )
+                `, [serviceId, subService.sub_service_name, subService.price_per_unit, subService.unit_name])
+            })
 
 
+            if (typeof req.body.serviceImage === 'string') {
+                serviceList['serviceImage'] = req.body.serviceImage
+            } else {
+                const idOldImage = await pool.query(`select service_image_id 
+                  from service 
+                  where service_id = $1`
+                    , [serviceId])
+                console.log(idOldImage.rows[0].service_image_id);
+                const publicIdOldImage = await pool.query(`select public_id 
+                  from service_image 
+                  where service_image_id = $1`
+                    , [idOldImage.rows[0].service_image_id])
 
-                return res.json({
-                    msg: "updated complete"
-                })
-
+                console.log(publicIdOldImage.rows[0].public_id);
+                // const serviceUrl = await cloudinaryUpload(req.file);
+                // serviceList['publicId'] = serviceUrl[0].publicId
+                // serviceList['url'] = serviceUrl[0].url
+                // serviceList['bytes'] = serviceUrl[0].bytes
             }
 
 
-            return res.status(200).json({
-                data: "image removed"
-            })
 
-        } catch (err) {
-            console.log(err)
+
+            return res.json({
+                msg: "updated complete"
+            })
+        }
+        catch (err) {
             return res.status(400).json({
                 msg: "something wrong"
             })

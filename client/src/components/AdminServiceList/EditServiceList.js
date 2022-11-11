@@ -16,9 +16,11 @@ import useAdminServiceLists from "../../hooks/useAdminServiceLists";
 
 const EditCreateServiceList = () => {
     const formData = new FormData();
+    const [serviceId, setServiceId] = useState('');
     const [serviceName, setServiceName] = useState('');
     const [serviceCategory, setServiceCategory] = useState('');
     const [serviceImage, setServiceImage] = useState('');
+    const [serviceImageSize, setServiceImageSize] = useState('');
     const [subServiceArr, setSubServiceArr] = useState([]);
     const { serviceCategories, getServiceCategories } = useServiceCategories()
     const { params, getServiceListById, serviceList } = useAdminServiceLists()
@@ -36,9 +38,11 @@ const EditCreateServiceList = () => {
             setServiceCategory(serviceList.service.service_category_name);
             setServiceImage(serviceList.service.url);
             setSubServiceArr(serviceList.subService);
+            setServiceImageSize(serviceList.service.bytes)
+            setServiceId(serviceList.service.service_id)
         }
     }, [serviceList]);
-    console.log(serviceList);
+    // console.log(serviceList);
     const initialValues = {
         serviceName: serviceName,
         serviceCategory: serviceCategory,
@@ -69,12 +73,10 @@ const EditCreateServiceList = () => {
                 formData.append('serviceCategory', (values.serviceCategory));
                 formData.append('serviceImage', (values.serviceImage));
                 formData.append('serviceList', JSON.stringify(values.serviceList));
-                formData.append('serviceImageId', serviceList.service.public_id);
-                
-                console.log(formData.getAll('serviceImageId'));
-                // await axios.post('/service', formData, {
-                //     headers: { "Content-Type": "multipart/form-data" },
-                // }
+
+                await axios.put('/service', formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                })
                 // navigate('/admin-dashboard/services')
             }}
         >
