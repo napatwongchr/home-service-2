@@ -9,7 +9,7 @@ const serviceRoute = Route();
 // Service
 serviceRoute.post('/', upload.single("serviceImage"), serviceListController.createServiceList);
 serviceRoute.get('/', serviceListController.getService);
-serviceRoute.delete('/', serviceListController.deleteService);
+// serviceRoute.delete('/', serviceListController.deleteService);
 
 // Service Category
 serviceRoute.get('/category', serviceCategoryController.getServiceCategory);
