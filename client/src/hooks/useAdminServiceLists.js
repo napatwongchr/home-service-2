@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "../api/axios";
 
 const useAdminServiceLists = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const useAdminServiceLists = () => {
 
   const getServiceLists = async () => {
     try {
-      const results = await axios.get(`http://localhost:4000/service`);
+      const results = await axios.get(`/service`);
       setServiceLists(results.data.data);
     } catch (error) {
       console.log(error);
@@ -18,9 +18,10 @@ const useAdminServiceLists = () => {
   };
 
   const getServiceListById = async (params) => {
+
     try {
       const result = await axios.get(
-        `http://localhost:4000/service?serviceId=${params.service_id}`
+        `/service?serviceId=${params.serviceId}`
       );
       setServiceList(result.data.data);
     } catch (error) {
@@ -30,8 +31,10 @@ const useAdminServiceLists = () => {
 
   const createServiceList = async (data) => {
     try {
-      await axios.post(`http://localhost:4000/service`, data);
-      navigate("/admin-dashboard");
+      await axios.post('/service', data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      navigate('/admin-dashboard/services')
     } catch (error) {
       console.log(error);
     }
@@ -39,26 +42,21 @@ const useAdminServiceLists = () => {
 
   const updateServiceListById = async (params, data) => {
     try {
-      await axios.put(
-        `http://localhost:4000/service?serviceId=${params.service_id}`,
-        data
-      );
-      navigate("/admin-dashboard");
+      await axios.put(`/service?serviceId=${params.serviceId}`, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      navigate('/admin-dashboard/services')
     } catch (error) {
       console.error(error);
     }
   };
 
-  const deleteServiceList = async (serviceid) => {
+  const deleteServiceList = async (params) => {
     try {
       await axios.delete(
-        `http://localhost:4000/service?serviceid=${serviceid}`
+        `/service?serviceId=${params.serviceId}`
       );
-      const newLists = serviceLists.filter((service) => {
-        return service.service_id !== serviceid;
-      });
-      setServiceLists(newLists);
-      navigate("/admin-dashboard");
+      navigate('/admin-dashboard/services')
     } catch (error) {
       console.error(error);
     }

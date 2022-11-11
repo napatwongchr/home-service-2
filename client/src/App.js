@@ -1,4 +1,4 @@
-import { Routes, Route, Router } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import ServiceList from "./pages/ServiceList";
@@ -10,6 +10,7 @@ import AdminDetailService from "./components/AdminServiceList/DetailServiceCateg
 import CreateServiceCategory from "./components/ServiceCategory/CreateServiceCategory";
 import EditServiceCategory from "./components/ServiceCategory/EditServiceCategory";
 import DetailServiceCategory from "./components/ServiceCategory/DetailServiceCategory";
+import AdminEditService from './pages/Admin/AdminEditService';
 
 function App() {
   return (
@@ -18,8 +19,11 @@ function App() {
       <Route path="/service-list" element={<ServiceList />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
+
       <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
-      <Route path="/admin-dashboard/service" element={<AdminServiceListPage />} />
+      <Route path="/admin-dashboard/services" element={<AdminServiceListPage />} />
+      <Route path="/admin-dashboard/service/edit/:serviceId" element={<AdminEditService />} />
+
       <Route path="/admin-detail/service/view/:serviceId" element={<AdminDetailService />} />
       <Route
         path="/admin-dashboard/service/create"
