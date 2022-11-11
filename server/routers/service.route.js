@@ -10,7 +10,7 @@ const serviceRoute = Route();
 serviceRoute.post('/', upload.single("serviceImage"), serviceListController.createServiceList);
 serviceRoute.get('/', serviceListController.getService);
 serviceRoute.put('/', upload.single("serviceImage"), serviceListController.updateService);
-// serviceRoute.delete('/', serviceListController.deleteService);
+serviceRoute.delete('/', serviceListController.deleteService);
 
 // Service Category
 serviceRoute.get('/category', serviceCategoryController.getServiceCategory);

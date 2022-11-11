@@ -18,4 +18,13 @@ const cloudinaryUpload = async (file) => {
     return fileUrl
 }
 
-export { cloudinaryUpload };
+const cloudinaryDelete = async (file) => {
+    const result = await cloudinary.uploader.destroy(file, {
+        resource_type: "image",
+        type: "private"
+    })
+
+    return result
+}
+
+export { cloudinaryUpload, cloudinaryDelete };

@@ -1,18 +1,19 @@
-import { Box, Button, Container, Flex, FormLabel, Image, Input, Menu, MenuButton, MenuItem, MenuList, Text, } from "@chakra-ui/react";
+import { Box, Button, Container, Divider, Flex, FormLabel, Image, Img, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure, } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import arrow from "../../asset/image/serviceListPage/dropdown.svg";
 import imageIcon from '../../asset/image/adminServiceList/imageIcon.svg';
+import bathIcon from '../../asset/image/adminServiceList/bathIcon.svg';
 import plusIcon from '../../asset/image/adminDashboardPage/plusIcon.svg';
 import { Formik, Form, FieldArray, Field } from 'formik';
 import { MyFieldInput } from '../../utils/formInput';
 import * as Yup from 'yup';
 import NavCreateService from "../AdminPage/NavCreateService";
 import errorIcon from '../../asset/image/errorIcon.svg'
-import axios from '../../api/axios'
 import UploadComponent from "../../utils/dragDropFile";
 import useServiceCategories from "../../hooks/useServiceCategories";
-import { useNavigate } from "react-router-dom";
 import useAdminServiceLists from "../../hooks/useAdminServiceLists";
+import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
+import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
 
 const EditCreateServiceList = () => {
     const formData = new FormData();
@@ -22,10 +23,13 @@ const EditCreateServiceList = () => {
     const [serviceImage, setServiceImage] = useState('');
     const [serviceImageSize, setServiceImageSize] = useState('');
     const [subServiceArr, setSubServiceArr] = useState([]);
-    const { serviceCategories, getServiceCategories } = useServiceCategories()
-    const { params, getServiceListById, serviceList } = useAdminServiceLists()
+    const [serviceCreatedAt, setServiceCreatedAt] = useState('');
+    const [serviceUpdatedAt, setServiceUpdatedAt] = useState('');
 
-    const navigate = useNavigate()
+    const { serviceCategories, getServiceCategories } = useServiceCategories()
+    const { params, getServiceListById, serviceList, updateServiceListById, deleteServiceList } = useAdminServiceLists()
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     useEffect(() => {
         getServiceListById(params)
@@ -39,10 +43,12 @@ const EditCreateServiceList = () => {
             setServiceImage(serviceList.service.url);
             setSubServiceArr(serviceList.subService);
             setServiceImageSize(serviceList.service.bytes)
-            setServiceId(serviceList.service.service_id)
+            setServiceCreatedAt(serviceList.service.created_at)
+            setServiceUpdatedAt(serviceList.service.updated_at)
+
         }
     }, [serviceList]);
-    // console.log(serviceList);
+
     const initialValues = {
         serviceName: serviceName,
         serviceCategory: serviceCategory,
@@ -73,20 +79,15 @@ const EditCreateServiceList = () => {
                 formData.append('serviceCategory', (values.serviceCategory));
                 formData.append('serviceImage', (values.serviceImage));
                 formData.append('serviceList', JSON.stringify(values.serviceList));
-
-                await axios.put('/service', formData, {
-                    headers: { "Content-Type": "multipart/form-data" },
-                })
-                // navigate('/admin-dashboard/services')
+                updateServiceListById(params, formData)
             }}
         >
-
-            {({ values, handleSubmit, setFieldValue, errors, touched, meta }) => (
+            {({ values, handleSubmit, setFieldValue, errors, touched }) => (
                 <Box w='100%' maxH='100%' overflow='hidden'>
                     <Form onSubmit={handleSubmit}>
-                        <NavCreateService submit='ยืนยัน'>เพิ่มบริการ</NavCreateService>
-                        <Container maxW='100%' p='40px' h='calc(100% - 3.25rem)' bg='gray.100'>
-                            <Flex bg='utility.white' px='24px' py='40px' border='1px' borderColor='gray.200' borderRadius='8px' flexDirection='column' gap='40px'>
+                        <NavCreateService submit='ยืนยัน' to='/admin-dashboard/services'>เพิ่มบริการ</NavCreateService>
+                        <Container maxW='100%' p='40px' minH='calc(100% - 3.25rem)' bg='gray.100'>
+                            <Flex bg='utility.white' px='24px' py='40px' mb='20px' border='1px' borderColor='gray.200' borderRadius='8px' flexDirection='column' gap='40px'>
                                 <Flex alignItems='start'>
                                     <FormLabel
                                         mt={'20px'}
@@ -232,11 +233,11 @@ const EditCreateServiceList = () => {
                                         </Flex>
                                     </Flex>
                                 </Flex>
-                                <hr />
+                                <Divider />
                                 <Text color={'gray.700'} textStyle={'h5'} mb='-30px'>รายการบริการย่อย</Text>
 
                                 <FieldArray name='serviceList'>
-                                    {({ insert, remove, push }) => (
+                                    {({ remove, push }) => (
                                         <div>
                                             {values.serviceList.map((item, index) => (
                                                 <Flex gap='10px' alignItems={'end'} key={index}>
@@ -263,7 +264,8 @@ const EditCreateServiceList = () => {
                                                         w={'240px'} h={'44px'} mt='0'
 
                                                     />
-                                                    <Button pos='relative' top='-20px' variant={'ghost'} color='gray.400' onClick={() => values.serviceList.length > 1 && remove(index)}>ลบรายการ</Button>
+                                                    <Img src={bathIcon} alt={bathIcon} pos='relative' top='-35px' left='-30px' />
+                                                    <Button pos='relative' top='-20px' variant={'ghost'} onClick={() => values.serviceList.length > 1 && remove(index)}>ลบรายการ</Button>
                                                 </Flex>
                                             ))}
                                             <Button variant={'secondary'} rightIcon={<Image src={plusIcon} />} mt='40px' px='25px'
@@ -277,16 +279,79 @@ const EditCreateServiceList = () => {
                                         </div>
                                     )}
                                 </FieldArray>
-
-
-
-
+                                <Divider />
+                                <Box className="info">
+                                    <Flex className="created-info" marginBottom={"2rem"}>
+                                        <Text textStyle="h5" marginRight="24px" width={"205px"}>
+                                            สร้างเมื่อ
+                                        </Text>
+                                        <Text className="created-at">
+                                            {serviceCreatedAt}
+                                        </Text>
+                                    </Flex>
+                                    <Flex className="edited-info">
+                                        <Text textStyle="h5" marginRight="24px" width={"205px"}>
+                                            แก้ไขล่าสุด
+                                        </Text>
+                                        <Text className="edited-at">
+                                            {serviceUpdatedAt}
+                                        </Text>
+                                    </Flex>
+                                </Box>
                             </Flex >
+                            <Button textStyle={'button'} variant='ghost' color='gray.600' leftIcon={<Image src={binIcon} alt='binIcon' />} pos={'absolute'} right='0' mx='24px' onClick={onOpen}>
+                                ลบหมวดหมู่
+                            </Button>
+                            <Modal isOpen={isOpen} onClose={onClose}>
+                                <ModalOverlay />
+                                <ModalContent
+                                    textAlign="center"
+                                    height="fit-content"
+                                    width="350px"
+                                    borderRadius={"16px"}
+                                >
+                                    <ModalHeader marginTop="1.5rem">
+                                        <Flex direction="column" alignItems={"center"}>
+                                            <Image
+                                                src={warningICon}
+                                                alt="warning icon"
+                                                width="30px"
+                                                marginBottom="10px"
+                                            />
+                                            <Text textStyle={"h2"} color="gray.950">
+                                                ยืนยันการลบรายการ?
+                                            </Text>
+                                        </Flex>
+                                    </ModalHeader>
+                                    <ModalBody maxH="fit-content" paddingTop="-15px">
+                                        <Text fontWeight={300}>
+                                            คุณต้องการลบรายการ '{serviceName}'
+                                            ใช่หรือไม่
+                                        </Text>
+                                    </ModalBody>
+                                    <ModalFooter alignSelf={"center"} paddingBottom={"2rem"}>
+                                        <Button
+                                            variant={'primary'}
+                                            mr={3}
+                                            onClick={() => {
+                                                deleteServiceList(params)
+                                            }}
+                                        >
+                                            ลบรายการ
+                                        </Button>
+                                        <Button
+                                            onClick={onClose}
+                                            variant="secondary"
+                                        >
+                                            ยกเลิก
+                                        </Button>
+                                    </ModalFooter>
+                                </ModalContent>
+                            </Modal>
                         </Container >
                     </Form>
                 </Box>
-            )
-            }
+            )}
         </Formik >
     );
 };

@@ -1,4 +1,4 @@
-import { Box, Button, Container, Flex, FormLabel, Image, Input, Menu, MenuButton, MenuItem, MenuList, Text, } from "@chakra-ui/react";
+import { Box, Button, Container, Flex, FormLabel, Image, Input, Menu, MenuButton, MenuItem, MenuList, Text, Img } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import arrow from "../../asset/image/serviceListPage/dropdown.svg";
 import imageIcon from '../../asset/image/adminServiceList/imageIcon.svg';
@@ -8,16 +8,17 @@ import { MyFieldInput } from '../../utils/formInput';
 import * as Yup from 'yup';
 import NavCreateService from "../AdminPage/NavCreateService";
 import errorIcon from '../../asset/image/errorIcon.svg'
-import axios from '../../api/axios'
 import UploadComponent from "../../utils/dragDropFile";
 import useServiceCategories from "../../hooks/useServiceCategories";
-import { useNavigate } from "react-router-dom";
+import bathIcon from '../../asset/image/adminServiceList/bathIcon.svg';
+import useAdminServiceLists from "../../hooks/useAdminServiceLists";
 
 const CreateServiceList = () => {
   const formData = new FormData();
   const [category, setCategory] = useState('เลือกหมวดหมู่');
-  const { serviceCategories, getServiceCategories } = useServiceCategories()
-  const navigate = useNavigate()
+  const { serviceCategories, getServiceCategories } = useServiceCategories();
+  const { createServiceList } = useAdminServiceLists();
+
   useEffect(() => {
     getServiceCategories();
   }, []);
@@ -57,10 +58,7 @@ const CreateServiceList = () => {
         formData.append('serviceCategory', (values.serviceCategory));
         formData.append('serviceImage', (values.serviceImage));
         formData.append('serviceList', JSON.stringify(values.serviceList));
-        await axios.post('/service', formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        })
-        navigate('/admin-dashboard/services')
+        createServiceList(formData)
       }}
     >
 
@@ -241,6 +239,7 @@ const CreateServiceList = () => {
                             type="text"
                             w={'240px'} h={'44px'} mt='0'
                           />
+                          <Img src={bathIcon} alt={bathIcon} pos='relative' top='-35px' left='-30px' />
                           <Button pos='relative' top='-20px' variant={'ghost'} color='gray.400' onClick={() => values.serviceList.length > 1 && remove(index)}>ลบรายการ</Button>
                         </Flex>
                       ))}
