@@ -35,9 +35,9 @@ const serviceListController = {
                 $1, $2, $3, 
                 now(),
                 now() 
-                ) returning service_id`, 
+                ) returning service_id`,
                 [serviceCategoryId, imageId, serviceName])
-            
+
             //Get Service ID
             const serviceId = addService.rows[0].service_id
 
@@ -64,13 +64,14 @@ const serviceListController = {
             })
         }
     },
-  async getService(req, res) {
-    try {
-      //Get By ID
-      const serviceId = req.query.serviceId;
-      const serviceName = req.query.serviceName;
 
-      const serviceQuery = `select service_id, 
+    async getService(req, res) {
+        try {
+            //Get By ID
+            const serviceId = req.query.serviceId
+            const serviceName = req.query.serviceName
+
+            const serviceQuery = `select service_id, 
             service_name, 
             service_category_name, 
             service_image.url,
@@ -81,27 +82,59 @@ const serviceListController = {
             inner join service_image
             on service_image.service_image_id = service.service_image_id
             inner join service_category
-            on service_category.service_category_id = service.service_category_id`;
+            on service_category.service_category_id = service.service_category_id`
 
-      const subServiceQueryById = `select sub_service_id, 
+            const subServiceQueryById = `select sub_service_id, 
             sub_service_name, 
             unit_name, price_per_unit, 
             created_at, 
             updated_at 
-            from sub_service where service_id = $1`;
+            from sub_service where service_id = $1`
 
-      //Qeury Service By ID
-      if (serviceId) {
-        let findService = await pool.query(
-          `${serviceQuery} where service_id = $1`,
-          [serviceId]
-        );
-        let findSubService = await pool.query(subServiceQueryById, [serviceId]);
+            //Qeury Service By ID
+            if (serviceId) {
 
-        if (!findService.rows[0]) {
-          return res.status(404).json({
-            msg: "service not found",
-          });
+                let findService = await pool.query(`${serviceQuery} where service_id = $1`, [serviceId])
+                let findSubService = await pool.query(subServiceQueryById, [serviceId])
+
+                if (!findService.rows[0]) {
+                    return res.status(404).json({
+                        msg: "service not found"
+                    })
+                }
+                return res.status(200).json({
+                    data: {
+                        service: findService.rows[0],
+                        subService: findSubService.rows
+                    }
+                })
+            }
+
+            //Query Service By Name
+            else if (serviceName) {
+                let findService = await pool.query(`${serviceQuery} where service_name like $1`, [serviceName + '%'])
+
+                if (!findService.rows[0]) {
+                    return res.status(404).json({
+                        msg: "service not found"
+                    })
+                }
+            } else if (Object.keys(req.query).length > 0) {
+                return res.status(400).json({
+                    msg: "invalid query input"
+                })
+            }
+
+            // // //Get All Service
+            const findService = await pool.query(serviceQuery)
+            return res.status(200).json({
+                data: findService.rows
+            })
+        } catch (err) {
+            console.log(err);
+            return res.status(400).json({
+                msg: "invalid input"
+            })
         }
     },
 
@@ -160,28 +193,19 @@ const serviceListController = {
                             now(),
                             now()
                         )
-                `,
-          [
-            serviceId,
-            subService.sub_service_name,
-            subService.price_per_unit,
-            subService.unit_name,
-          ]
-        );
-      });
+                `, [serviceId, subService.sub_service_name, subService.price_per_unit, subService.unit_name])
+            })
 
-      if (typeof req.body.serviceImage === "string") {
-        serviceList["serviceImage"] = req.body.serviceImage;
-      } else {
-        const idOldImage = await pool.query(
-          `select service_image_id 
+
+            if (typeof req.body.serviceImage === 'string') {
+                serviceList['serviceImage'] = req.body.serviceImage
+            } else {
+                const idOldImage = await pool.query(`select service_image_id 
                   from service 
-                  where service_id = $1`,
-          [serviceId]
-        );
+                  where service_id = $1`
+                    , [serviceId])
 
-        const publicIdOldImage = await pool.query(
-          `select public_id 
+                const publicIdOldImage = await pool.query(`select public_id 
                   from service_image 
                   where service_image_id = $1`
                     , [idOldImage.rows[0].service_image_id])
@@ -228,7 +252,6 @@ const serviceListController = {
             })
         }
     }
-  },
-};
+}
 
 export default serviceListController;
