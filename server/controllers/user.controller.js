@@ -46,9 +46,7 @@ const userController = {
             const removeSpace = splitedFullname.filter(item => item !== "")
             const firstName = removeSpace[0]
             const lastName = removeSpace[1]
-            let roles;
-
-            req.query = "admin" ? roles = "admin" : "customer"
+            const roles = "customer";
 
             //user = <recent user_id>
             const user = await pool.query(`insert into users(email, password)
@@ -112,7 +110,7 @@ const userController = {
                 },
                 process.env.SECRET_KEY,
                 {
-                    expiresIn: 1800000
+                    expiresIn: 180000
                 }
             )
 

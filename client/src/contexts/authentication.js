@@ -20,7 +20,6 @@ function AuthProvider(props) {
   // register the user
   const register = async (data) => {
     const response = await axios.post("/users/register", data);
-    if (response.data.msg === 'email already exists') return;
     navigate("/");
   };
 
