@@ -37,12 +37,14 @@ const ViewServiceCategory = () => {
   const [categoryName, setCategoryName] = useState("");
   const [categoryUniqueId, setCategoryUniqueId] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const [searchCategoryName, setSearchCategoryName] = useState("");
 
   useEffect(() => {
-    getServiceCategories({ serviceCategories, searchCategoryName });
-  }, [searchCategoryName]);
+    getServiceCategories({
+      serviceCategories,
+      searchCategoryName,
+    });
+  }, [searchCategoryName, deleteServiceCategory]);
 
   return (
     <Container maxW="100%" height="100%" bg="gray.100" padding={"0"}>
