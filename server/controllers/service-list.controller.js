@@ -153,7 +153,11 @@ const serviceListController = {
 
             // update data to service table
             const findServiceCategory = await pool.query(`select service_category_id from service_category where service_category_name = $1`, [serviceList.serviceCategory])
-            const updateService = await pool.query(`update service set service_name = $1, updated_at = to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM'), service_category_id = $2 where service_id = $3 returning *`, [serviceList.serviceName, findServiceCategory.rows[0].service_category_id, serviceId])
+            const updateService = await pool.query(`update service 
+            set service_name = $1, 
+            updated_at = now(), 
+            service_category_id = $2 
+            where service_id = $3 returning *`, [serviceList.serviceName, findServiceCategory.rows[0].service_category_id, serviceId])
 
             //  get sub service id from database
             const oldSubServiceDB = await pool.query(`select sub_service_id 
@@ -166,7 +170,11 @@ const serviceListController = {
             const updateOldServices = oldSubServices.filter(item => oldSubServiceDBArr.indexOf(item.sub_service_id) !== -1)
 
             updateOldServices.map(async subService => {
-                await pool.query(`update sub_service set sub_service_name = $1, unit_name = $2, price_per_unit = $3, updated_at = to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM') where sub_service_id = $4
+                await pool.query(`update sub_service 
+                set sub_service_name = $1, 
+                unit_name = $2, price_per_unit = $3, 
+                updated_at = now() 
+                where sub_service_id = $4
                 `, [subService.sub_service_name, subService.unit_name, subService.price_per_unit, subService.sub_service_id])
             })
 
@@ -182,8 +190,8 @@ const serviceListController = {
             newSubServices.map(async subService => {
                 await pool.query(`insert into sub_service(service_id, sub_service_name, unit_name, price_per_unit, created_at, updated_at )
                     values($1, $2, $3, $4,
-                            to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM'),
-                            to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM')
+                            now(),
+                            now()
                         )
                 `, [serviceId, subService.sub_service_name, subService.price_per_unit, subService.unit_name])
             })
@@ -220,6 +228,7 @@ const serviceListController = {
             })
         }
         catch (err) {
+            console.log(err)
             return res.status(400).json({
                 msg: "something wrong"
             })
