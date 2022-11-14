@@ -54,7 +54,7 @@ const LoginForm = () => {
                 })
               }
             ),
-          password: Yup.string().required("กรุณากรอกรหัสผ่าน")
+          password: Yup.string()
             .test('password in not valid', 'กรุณาตรวจสอบรหัสผ่านอีกครั้ง',
               function (value) {
                 return new Promise((resolve, reject) => {
@@ -73,7 +73,9 @@ const LoginForm = () => {
                     })
                 })
               }
-            ),
+            )
+            .required("กรุณากรอกรหัสผ่าน")
+          ,
         })}
         validateOnChange={false}
         onSubmit={(values) => {

@@ -26,11 +26,10 @@ const RegisterForm = () => {
                         fullname: Yup.string()
                             .required('กรุณากรอกชื่อ นามสกุล'),
                         phoneNumber: Yup.string()
-                            .required('กรุณากรอกเบอร์โทรศัพท์')
-                            .matches(/^[0-9]{10}$/, 'กรุณาตรวจสอบเบอร์โทรศัพท์'),
+                            .matches(/^[0-9]{10}$/, 'กรุณาตรวจสอบเบอร์โทรศัพท์')
+                            .required('กรุณากรอกเบอร์โทรศัพท์'),
                         email: Yup.string()
                             .email('กรุณาตรวจสอบอีเมลอีกครั้ง')
-                            .required('กรุณากรอกอีเมล')
                             .test('Unique Email', 'อีเมลนี้มีคนใช้แล้วกรุณาเปลี่ยนอีเมล',
                                 function (value) {
                                     return new Promise((resolve, reject) => {
@@ -47,15 +46,17 @@ const RegisterForm = () => {
                                             })
                                     })
                                 }
-                            ),
+                            )
+                            .required('กรุณากรอกอีเมล')
+                        ,
                         password: Yup.string()
-                            .required('กรุณากรอกรหัสผ่าน')
                             .min(16, 'รหัสผ่านต้องมีความยาวอย่างน้อย 16 ตัวอักษร')
-                            .matches(/^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d\W]{16,}$/, 'รหัสผ่านต้องมีตัวอักษรภาษาอังกฤกตัวเล็กและตัวใหญ่รวมอยู่ด้วย'),
+                            .matches(/^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d\W]{16,}$/, 'รหัสผ่านต้องมีตัวอักษรภาษาอังกฤกตัวเล็กและตัวใหญ่รวมอยู่ด้วย')
+                            .required('กรุณากรอกรหัสผ่าน')
+                        ,
                         acceptedTerms: Yup.boolean()
                             .oneOf([true], 'กรุณาอ่านรายละเอียด และยอมรับข้อตกลง'),
                     })}
-                    validateOnChange={false}
                     onSubmit={(values) => {
                         register(values);
                     }}
