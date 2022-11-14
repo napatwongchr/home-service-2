@@ -1,3 +1,4 @@
+import { List } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../api/axios";
@@ -5,12 +6,12 @@ import axios from "../api/axios";
 const useAdminServiceLists = () => {
   const navigate = useNavigate();
   const [serviceLists, setServiceLists] = useState([]);
-  const [serviceList, setServiceList] = useState([]);
+  const [serviceList, setServiceList] = useState('');
   const params = useParams();
 
   const getServiceLists = async () => {
     try {
-      const results = await axios.get(`/service`);
+      const results = await axios.get(`http://localhost:4000/service`);
       setServiceLists(results.data.data);
     } catch (error) {
       console.log(error);
@@ -48,9 +49,15 @@ const useAdminServiceLists = () => {
     }
   };
 
-  const deleteServiceList = async (params) => {
+  const deleteServiceList = async (serviceId) => {
     try {
-      await axios.delete(`/service?serviceId=${params.serviceId}`);
+      await axios.delete(
+        `http://localhost:4000/service?serviceId=${serviceId}`
+      );
+      const newLists = serviceLists.filter((list) => {
+        return List.service_id !== serviceId;
+      });
+      setServiceLists(newLists);
       navigate("/admin-dashboard/services");
     } catch (error) {
       console.error(error);
