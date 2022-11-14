@@ -9,12 +9,16 @@ const useServiceCategories = () => {
   const params = useParams();
 
   const getServiceCategories = async (input) => {
+    const { searchCategoryName } = input;
     try {
-      const params = new URLSearchParams();
-      params.append("categoryName", input.searchCategoryName);
-      const results = await axios.get(
-        `http://localhost:4000/service/category?${params.toString()}`
-      );
+      let results = await axios.get(`http://localhost:4000/service/category`);
+      if (searchCategoryName) {
+        const params = new URLSearchParams();
+        params.append("categoryName", searchCategoryName);
+        results = await axios.get(
+          `http://localhost:4000/service/category?${params.toString()}`
+        );
+      }
       setServiceCategories(results.data.data);
     } catch (error) {
       console.error(error);
