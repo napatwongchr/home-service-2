@@ -242,64 +242,6 @@ const serviceListController = {
                 msg: "something wrong"
             })
         }
-    },
-
-    async updateService ( req, res ) {
-        try{
-            const serviceId = req.query.serviceId
-            // const subServiceList = JSON.parse(req.body.serviceList)
-            const newSubServiceList = req.body.serviceList
-
-            // const imageUrl = findServiceImageUrl.rows[0]
-            // await cloudinaryDestroy(public_id)
-
-            //Find service category id
-            const findServiceCategory = await pool.query(`select service_category_id from service_category where service_category_name = $1`, [req.body.serviceCategory])
-            const serviceCategoryId = findServiceCategory.rows[0].service_category_id
-
-            //Update Service Table
-            //Non image change
-            if(!Boolean(req.file)){
-                await pool.query(`update service
-                    set service_category_id = $1,
-                    service_name = $2,
-                    updated_at = to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM')
-                    where service_id = $3
-                `, [ serviceCategoryId, req.body.serviceName, serviceId ])
-                
-                //compare old sub service : new sub service
-                const oldSubService = await pool.query(`select sub_service_id 
-                from sub_service 
-                where service_id = $1`
-                , [ req.query.serviceId ])
-
-                const oldSubServiceArray = oldSubService.rows
-                const newSubServiceArray = newSubServiceList
-
-                newSubServiceArray.map((newSub, index) => {
-                    console.log(newSub)
-                    console.log(oldSubService.rows)
-                })
-
-                
-
-                return res.json({
-                    msg : "updated complete"
-                })
-
-            }
-
-
-            return res.status(200).json({
-                data : "image removed"
-            })
-
-        } catch(err){
-            console.log(err)
-            return res.status(400).json({
-                msg : "something wrong"
-            })
-        }
     }
 }
 
