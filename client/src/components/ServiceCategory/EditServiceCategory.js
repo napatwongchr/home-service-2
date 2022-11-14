@@ -49,7 +49,6 @@ const EditServiceCategory = () => {
     }
   }, [serviceCategory]);
 
-  // ยัง set ไม่ได้
   const initialValues = {
     categoryName: categoryName,
   };
@@ -72,8 +71,8 @@ const EditServiceCategory = () => {
         }
       }}
     >
-      {({ values, handleSubmit, setFieldValue, errors, touched }) => (
-        <Container bg="#F3F4F6" maxW="100%" height="100vh" paddingLeft="0px">
+      {({ handleSubmit, setFieldValue, errors, touched }) => (
+        <Container bg="#F3F4F6" maxW="100%" height="100vh" padding="0px">
           <Form onSubmit={handleSubmit}>
             <Flex>
               <SideBar />

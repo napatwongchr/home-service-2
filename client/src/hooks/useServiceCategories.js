@@ -5,15 +5,23 @@ import { useNavigate, useParams } from "react-router-dom";
 const useServiceCategories = () => {
   const navigate = useNavigate();
   const [serviceCategories, setServiceCategories] = useState([]);
-  const [serviceCategory, setServiceCategory] = useState('');
+  const [serviceCategory, setServiceCategory] = useState("");
   const params = useParams();
 
-  const getServiceCategories = async () => {
+  const getServiceCategories = async (input) => {
+    const { searchCategoryName } = input;
     try {
-      const results = await axios.get(`http://localhost:4000/service/category`);
+      let results = await axios.get(`http://localhost:4000/service/category`);
+      if (searchCategoryName) {
+        const params = new URLSearchParams();
+        params.append("categoryName", searchCategoryName);
+        results = await axios.get(
+          `http://localhost:4000/service/category?${params.toString()}`
+        );
+      }
       setServiceCategories(results.data.data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -58,6 +66,7 @@ const useServiceCategories = () => {
         return category.service_category_id !== categoryId;
       });
       setServiceCategories(newCategories);
+      window.location.reload(false);
       navigate("/admin-dashboard");
     } catch (error) {
       console.error(error);

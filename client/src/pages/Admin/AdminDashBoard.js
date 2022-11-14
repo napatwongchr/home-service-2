@@ -10,7 +10,7 @@ const adminDashboardPage = () => {
       <Flex w="100vw">
         <SideBar />
         <Box w="100%" maxH="100%" overflow="hidden">
-          <NavDashBoard to='/admin-dashboard/category/create'>หมวดหมู่</NavDashBoard>
+          {/* <NavDashBoard to='/admin-dashboard/category/create'>หมวดหมู่</NavDashBoard> */}
           <ViewServiceCategory />
         </Box>
       </Flex>
