@@ -2,10 +2,11 @@ import Route from 'express'
 import serviceCategoryController from '../controllers/service-category.contoller.js';
 import serviceListController from '../controllers/service-list.controller.js';
 import multer from "multer";
+import { protect } from '../middlewares/authProtect.js';
 
 const upload = multer({ dest: 'uploads/' });
 const serviceRoute = Route();
-
+serviceRoute.use(protect)
 // Service
 serviceRoute.post('/', upload.single("serviceImage"), serviceListController.createServiceList);
 serviceRoute.get('/', serviceListController.getService);

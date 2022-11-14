@@ -3,6 +3,8 @@ import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import cloudinary from "cloudinary";
+import userRoute from './routers/user.route.js'
+import serviceRoute from './routers/service.route.js'
 
 dotenv.config()
 cloudinary.config({
@@ -12,8 +14,6 @@ cloudinary.config({
     secure: true,
 });
 
-import userRoute from './routers/user.route.js'
-import serviceRoute from './routers/service.route.js'
 
 const port = process.env.PORT || 4012
 
