@@ -69,7 +69,7 @@ const DetailServiceCategory = () => {
               width="12rem"
               marginRight="5rem"
             >
-              <Link to="/admin-dashboard/category/edit">
+              <Link to={`/admin-dashboard/category/edit/${serviceCategory.service_category_id}`}>
                 <Button width={"5.5rem"} onSubmit={{}}>
                   แก้ไข
                 </Button>

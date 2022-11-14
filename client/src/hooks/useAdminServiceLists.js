@@ -1,3 +1,4 @@
+import { List } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../api/axios";
@@ -5,12 +6,12 @@ import axios from "../api/axios";
 const useAdminServiceLists = () => {
   const navigate = useNavigate();
   const [serviceLists, setServiceLists] = useState([]);
-  const [serviceList, setServiceList] = useState([]);
+  const [serviceList, setServiceList] = useState('');
   const params = useParams();
 
   const getServiceLists = async () => {
     try {
-      const results = await axios.get(`/service`);
+      const results = await axios.get(`http://localhost:4000/service`);
       setServiceLists(results.data.data);
     } catch (error) {
       console.log(error);
@@ -18,10 +19,9 @@ const useAdminServiceLists = () => {
   };
 
   const getServiceListById = async (params) => {
-
     try {
       const result = await axios.get(
-        `/service?serviceId=${params.serviceId}`
+        `http://localhost:4000/service?serviceId=${params.serviceId}`
       );
       setServiceList(result.data.data);
     } catch (error) {
@@ -31,10 +31,8 @@ const useAdminServiceLists = () => {
 
   const createServiceList = async (data) => {
     try {
-      await axios.post('/service', data, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      navigate('/admin-dashboard/services')
+      await axios.post("http://localhost:4000/service", data);
+      navigate("/admin-dashboard/services");
     } catch (error) {
       console.log(error);
     }
@@ -42,21 +40,27 @@ const useAdminServiceLists = () => {
 
   const updateServiceListById = async (params, data) => {
     try {
-      await axios.put(`/service?serviceId=${params.serviceId}`, data, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      navigate('/admin-dashboard/services')
+      console.log(params.serviceId);
+      await axios.put(
+        `http://localhost:4000/service?serviceId=${params.serviceId}`,
+        data
+      );
+      navigate("/admin-dashboard/services");
     } catch (error) {
       console.error(error);
     }
   };
 
-  const deleteServiceList = async (params) => {
+  const deleteServiceList = async (serviceId) => {
     try {
       await axios.delete(
-        `/service?serviceId=${params.serviceId}`
+        `http://localhost:4000/service?serviceId=${serviceId}`
       );
-      navigate('/admin-dashboard/services')
+      const newLists = serviceLists.filter((list) => {
+        return List.service_id !== serviceId;
+      });
+      setServiceLists(newLists);
+      navigate("/admin-dashboard/services");
     } catch (error) {
       console.error(error);
     }

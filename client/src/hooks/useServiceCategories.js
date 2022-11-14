@@ -31,7 +31,7 @@ const useServiceCategories = () => {
   const createServiceCategory = async (data) => {
     try {
       await axios.post(`http://localhost:4000/service/category`, data);
-      navigate("/admin-dashboard");
+      navigate("/admin-dashboard/categories");
     } catch (error) {
       console.log(error);
     }
@@ -43,7 +43,7 @@ const useServiceCategories = () => {
         `http://localhost:4000/service/category?categoryId=${params.categoryId}`,
         data
       );
-      navigate("/admin-dashboard");
+      navigate("/admin-dashboard/categories");
     } catch (error) {
       console.error(error);
     }
@@ -58,7 +58,7 @@ const useServiceCategories = () => {
         return category.service_category_id !== categoryId;
       });
       setServiceCategories(newCategories);
-      navigate("/admin-dashboard");
+      navigate("/admin-dashboard/categories");
     } catch (error) {
       console.error(error);
     }
