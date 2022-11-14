@@ -38,26 +38,6 @@ const serviceCategoryController = {
   },
 
   async getServiceCategory(req, res) {
-    // const categoryName = req.query.categoryName || "";
-    // const categoryId = req.query.categoryId || "";
-    // let query = "";
-    // let values = [];
-
-    // if (categoryId) {
-    //   query = `select * from service_category where service_category_id = $1`;
-    //   values = [categoryId];
-    // } else if (categoryName) {
-    //   query = `select * from service_category where service_category_name ilike $1`;
-    //   values = [categoryName];
-    // } else {
-    //   query = `select * from service_category`;
-    // }
-
-    // const results = await pool.query(query, values);
-    // return res.json({
-    //   data: results.rows,
-    // });
-
     try {
       //find category by categoryId
       if (req.query.categoryId) {
