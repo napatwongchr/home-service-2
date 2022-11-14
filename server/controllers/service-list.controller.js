@@ -255,69 +255,49 @@ const serviceListController = {
         const publicIdOldImage = await pool.query(
           `select public_id 
                   from service_image 
-                  where service_image_id = $1`,
-          [idOldImage.rows[0].service_image_id]
-        );
+                  where service_image_id = $1`
+                    , [idOldImage.rows[0].service_image_id])
 
-        // delete image from cloundinary and delete from by id
-        const result = await cloudinaryDelete(
-          publicIdOldImage.rows[0].public_id
-        );
+                // delete image from cloundinary and delete from by id
+                const result = await cloudinaryDelete(publicIdOldImage.rows[0].public_id);
 
-        // upload new image to cloundinary
-        const serviceUrl = await cloudinaryUpload(req.file);
+                // upload new image to cloundinary
+                const serviceUrl = await cloudinaryUpload(req.file);
 
-        serviceList["publicId"] = serviceUrl[0].publicId;
-        serviceList["url"] = serviceUrl[0].url;
-        serviceList["bytes"] = serviceUrl[0].bytes;
+                serviceList['publicId'] = serviceUrl[0].publicId
+                serviceList['url'] = serviceUrl[0].url
+                serviceList['bytes'] = serviceUrl[0].bytes
 
-        const updateImageTable = await pool.query(
-          `update service_image set public_id = $1, url = $2, bytes = $3 where service_image_id = $4 RETURNING *`,
-          [
-            serviceList.publicId,
-            serviceList.url,
-            serviceList.bytes,
-            idOldImage.rows[0].service_image_id,
-          ]
-        );
-      }
+                const updateImageTable = await pool.query(`update service_image set public_id = $1, url = $2, bytes = $3 where service_image_id = $4 RETURNING *`, [serviceList.publicId, serviceList.url, serviceList.bytes, idOldImage.rows[0].service_image_id])
+            }
 
-      return res.json({
-        msg: "updated complete",
-      });
-    } catch (err) {
-      return res.status(400).json({
-        msg: "something wrong",
-      });
-    }
-  },
+            return res.json({
+                msg: "updated complete"
+            })
+        }
+        catch (err) {
+            return res.status(400).json({
+                msg: "something wrong"
+            })
+        }
+    },
 
-  async deleteService(req, res) {
-    try {
-      const serviceId = req.query.serviceId;
-      const deleteService = await pool.query(
-        `delete from service where service_id = $1 returning service_image_id`,
-        [serviceId]
-      );
-      const deleteSubService = await pool.query(
-        `delete from sub_service where service_id = $1`,
-        [serviceId]
-      );
-      const deleteImageFromDB = await pool.query(
-        `delete from service_image where service_image_id = $1 returning public_id`,
-        [deleteService.rows[0].service_image_id]
-      );
-      const deleteImageFromCloud = await cloudinaryDelete(
-        deleteImageFromDB.rows[0].public_id
-      );
+    async deleteService(req, res) {
+        try {
+            const serviceId = req.query.serviceId;
+            const deleteService = await pool.query(`delete from service where service_id = $1 returning service_image_id`, [serviceId])
+            const deleteSubService = await pool.query(`delete from sub_service where service_id = $1`, [serviceId])
+            const deleteImageFromDB = await pool.query(`delete from service_image where service_image_id = $1 returning public_id`, [deleteService.rows[0].service_image_id])
+            const deleteImageFromCloud = await cloudinaryDelete(deleteImageFromDB.rows[0].public_id)
 
-      return res.status(200).json({
-        msg: "service has been deleted",
-      });
-    } catch (err) {
-      return res.status(400).json({
-        msg: "something wrong",
-      });
+            return res.status(200).json({
+                msg: "service has been deleted"
+            })
+        } catch (err) {
+            return res.status(400).json({
+                msg: "something wrong"
+            })
+        }
     }
   },
 };
