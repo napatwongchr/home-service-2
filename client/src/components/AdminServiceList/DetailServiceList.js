@@ -13,6 +13,7 @@ import useAdminServiceLists from "../../hooks/useAdminServiceLists";
 import { useEffect, useState } from "react";
 
 const DetailServiceList = () => {
+  const [serviceId, setServiceId] = useState("");
   const [serviceName, setServiceName] = useState("");
   const [serviceCategory, setServiceCategory] = useState("");
   const [serviceImage, setServiceImage] = useState("");
@@ -27,6 +28,7 @@ const DetailServiceList = () => {
 
   useEffect(() => {
     if (serviceList.service) {
+      setServiceId(serviceList.service.service_id);
       setServiceName(serviceList.service.service_name);
       setServiceCategory(serviceList.service.service_category_name);
       setServiceImage(serviceList.service.url);
@@ -85,7 +87,7 @@ const DetailServiceList = () => {
               // width="12rem"
               // marginRight="5rem"
             >
-              <Link to="/admin-dashboard/service/edit">
+              <Link to={`/admin-dashboard/service/edit/${serviceId}`}>
                 <Button width={"5.5rem"} onSubmit={{}}>
                   แก้ไข
                 </Button>
