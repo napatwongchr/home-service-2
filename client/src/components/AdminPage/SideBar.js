@@ -18,7 +18,7 @@ const SideBar = () => {
                         <Text fontWeight='500' fontSize='20px' color='blue.600' pos='relative' top='1px'>HomeServices</Text>
                     </Box>
                 </Link>
-                <Link to='/admin-dashboard'>
+                <Link to='/admin-dashboard/categories'>
                     <Flex w='100%' h='54px' gap='20px' px='28px' alignItems='center' bg='blue.950' _hover={{ bg: 'blue.900' }}>
                         <Img src={categoryIcon} w='16px' />
                         <Text textStyle='h5' color='utility.white'>หมวดหมู่</Text>

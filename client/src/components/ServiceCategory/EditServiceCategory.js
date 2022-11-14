@@ -99,7 +99,7 @@ const EditServiceCategory = () => {
                     alignItems={"center"}
                     marginLeft="3rem"
                   >
-                    <Link to="/admin-dashboard">
+                    <Link to="/admin-dashboard/categories">
                       <Image src={arrow} marginRight="1.5rem" />
                     </Link>
 
@@ -120,7 +120,7 @@ const EditServiceCategory = () => {
                     width="12rem"
                     marginRight="5rem"
                   >
-                    <Link to="/admin-dashboard">
+                    <Link to="/admin-dashboard/categories">
                       <Button
                         bg="white"
                         color="blue.600"

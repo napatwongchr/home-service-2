@@ -67,7 +67,7 @@ const CreateServiceCategory = () => {
                     width="12rem"
                     marginRight="5rem"
                   >
-                    <Link to="/admin-dashboard">
+                    <Link to="/admin-dashboard/categories">
                       <Button
                         bg="white"
                         color="blue.600"

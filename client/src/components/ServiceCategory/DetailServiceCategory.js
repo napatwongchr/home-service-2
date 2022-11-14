@@ -48,7 +48,7 @@ const DetailServiceCategory = () => {
               alignItems={"center"}
               marginLeft="3rem"
             >
-              <Link to="/admin-dashboard">
+              <Link to="/admin-dashboard/categories">
                 <Image src={arrow} marginRight="1.5rem" />
               </Link>
 

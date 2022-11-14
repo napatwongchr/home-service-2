@@ -90,7 +90,7 @@ const NavComponent = () => {
                     </MenuItem>
                     {
                       user.role === 'admin' ?
-                        <Link to='/admin-dashboard'>
+                        <Link to='/admin-dashboard/categories'>
                           <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}>
                             <Image src={history} mr={"15px"} pos={'relative'} left={'-2px'} />
                             <Text textStyle={"b3"}>Admin Dashboard</Text>
