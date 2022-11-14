@@ -1,17 +1,25 @@
 import { Badge, Box, Button, Center, Container, Flex, Grid, Image, Text } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { serviceData } from '../../asset/model/serviceData';
 import priceTag from '../../asset/image/homePage/Group.svg'
 import filterCategory from '../../utils/filterCategory';
+import useAdminServiceLists from '../../hooks/useAdminServiceLists';
 const AllServiceSection = (props) => {
-    const { handleColorButton, handleColorText } = filterCategory
-    const { input, category, order, sliderValue } = props
+    const { handleColorButton, handleColorText } = filterCategory;
+    const { input, category, order, sliderValue } = props;
+    const { serviceArr, setServiceArr } = useState([])
+    const { getServiceLists, serviceLists } = useAdminServiceLists();
+    useEffect(() => {
+        getServiceLists()
+    }, [])
+
     return (
         <Container className='recommendService' maxW='100%' bg='gray.100' centerContent>
             <Flex>
                 <Center w='1440px' mt='80px' mb='121px'>
                     <Grid templateColumns='repeat(3, 1fr)' columnGap='37px' rowGap='48px'>
                         {
+
                             serviceData.map((item, index) => {
                                 return (
                                     <Box w='349px' h='369px' bg='utility.white' overflow='hidden' border='1px' borderColor='gray.300' borderRadius='8px' key={index}>

@@ -119,6 +119,7 @@ const SearchSection = (props) => {
               alignItems="center"
               pl="10px"
               mr="20px"
+              w="125px"
             >
               <Menu>
                 <Text fontSize="12px" ml="15px" color="gray.700" pos='relative' top={'6px'} zIndex={'10'} left={'2px'}>
