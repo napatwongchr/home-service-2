@@ -20,9 +20,9 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
 
-      <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
+      <Route path="/admin-dashboard/categories" element={<AdminDashboardPage />} />
       <Route path="/admin-dashboard/services" element={<AdminServiceListPage />} />
-      <Route path="/admin-detail/service/view/:serviceId" element={<AdminDetailService />} />
+      <Route path="/admin-dashboard/service/view/:serviceId" element={<AdminDetailService />} />
       <Route path="/admin-dashboard/service/edit/:serviceId" element={<AdminEditService />} />
       <Route
         path="/admin-dashboard/service/create"
