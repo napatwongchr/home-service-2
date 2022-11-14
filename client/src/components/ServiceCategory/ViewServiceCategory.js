@@ -34,7 +34,6 @@ const ViewServiceCategory = () => {
   const navigate = useNavigate();
   const { serviceCategories, getServiceCategories, deleteServiceCategory } =
     useServiceCategories();
-
   const [categoryName, setCategoryName] = useState("");
   const [categoryUniqueId, setCategoryUniqueId] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -42,8 +41,8 @@ const ViewServiceCategory = () => {
   const [searchCategoryName, setSearchCategoryName] = useState("");
 
   useEffect(() => {
-    getServiceCategories({ searchCategoryName });
-  }, [serviceCategories, searchCategoryName]);
+    getServiceCategories({ serviceCategories, searchCategoryName });
+  }, [searchCategoryName]);
 
   return (
     <Container maxW="100%" height="100%" bg="gray.100" padding={"0"}>

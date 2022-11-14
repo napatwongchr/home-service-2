@@ -18,11 +18,8 @@ const useAdminServiceLists = () => {
   };
 
   const getServiceListById = async (params) => {
-
     try {
-      const result = await axios.get(
-        `/service?serviceId=${params.serviceId}`
-      );
+      const result = await axios.get(`/service?serviceId=${params.serviceId}`);
       setServiceList(result.data.data);
     } catch (error) {
       console.log(error);
@@ -31,10 +28,10 @@ const useAdminServiceLists = () => {
 
   const createServiceList = async (data) => {
     try {
-      await axios.post('/service', data, {
+      await axios.post("/service", data, {
         headers: { "Content-Type": "multipart/form-data" },
-      })
-      navigate('/admin-dashboard/services')
+      });
+      navigate("/admin-dashboard/services");
     } catch (error) {
       console.log(error);
     }
@@ -44,8 +41,8 @@ const useAdminServiceLists = () => {
     try {
       await axios.put(`/service?serviceId=${params.serviceId}`, data, {
         headers: { "Content-Type": "multipart/form-data" },
-      })
-      navigate('/admin-dashboard/services')
+      });
+      navigate("/admin-dashboard/services");
     } catch (error) {
       console.error(error);
     }
@@ -53,10 +50,8 @@ const useAdminServiceLists = () => {
 
   const deleteServiceList = async (params) => {
     try {
-      await axios.delete(
-        `/service?serviceId=${params.serviceId}`
-      );
-      navigate('/admin-dashboard/services')
+      await axios.delete(`/service?serviceId=${params.serviceId}`);
+      navigate("/admin-dashboard/services");
     } catch (error) {
       console.error(error);
     }

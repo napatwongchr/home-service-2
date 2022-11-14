@@ -38,6 +38,26 @@ const serviceCategoryController = {
   },
 
   async getServiceCategory(req, res) {
+    // const categoryName = req.query.categoryName || "";
+    // const categoryId = req.query.categoryId || "";
+    // let query = "";
+    // let values = [];
+
+    // if (categoryId) {
+    //   query = `select * from service_category where service_category_id = $1`;
+    //   values = [categoryId];
+    // } else if (categoryName) {
+    //   query = `select * from service_category where service_category_name ilike $1`;
+    //   values = [categoryName];
+    // } else {
+    //   query = `select * from service_category`;
+    // }
+
+    // const results = await pool.query(query, values);
+    // return res.json({
+    //   data: results.rows,
+    // });
+
     try {
       //find category by categoryId
       if (req.query.categoryId) {
@@ -55,18 +75,18 @@ const serviceCategoryController = {
           data: findCategory.rows[0],
         });
       } else if (req.query.categoryName) {
-        let categoryName = req.query.categoryName;
+        let categoryName = `%${req.query.categoryName}%` || "";
         const findCategory = await pool.query(
-          `select * from service_category where service_category_name = $1`,
+          `select * from service_category where service_category_name ilike $1`,
           [categoryName]
         );
-        if (!Boolean(findCategory.rows[0])) {
-          return res.status(404).json({
-            msg: "category not found",
-          });
-        }
+        // if (!Boolean(findCategory.rows)) {
+        //   return res.status(404).json({
+        //     msg: "category not found",
+        //   });
+        // }
         return res.status(200).json({
-          data: findCategory.rows[0],
+          data: findCategory.rows,
         });
       } else if (Object.keys(req.query).length > 0) {
         return res.status(404).json({
