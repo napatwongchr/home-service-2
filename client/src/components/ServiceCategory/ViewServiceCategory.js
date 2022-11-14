@@ -32,6 +32,7 @@ import useServiceCategories from "../../hooks/useServiceCategories.js";
 
 const ViewServiceCategory = () => {
   const navigate = useNavigate();
+  const [test, setTest] = useState([])
   const { serviceCategories, getServiceCategories, deleteServiceCategory } =
     useServiceCategories();
   const [categoryName, setCategoryName] = useState("");
@@ -44,7 +45,7 @@ const ViewServiceCategory = () => {
       serviceCategories,
       searchCategoryName,
     });
-  }, [searchCategoryName, deleteServiceCategory]);
+  }, [serviceCategories]);
 
   return (
     <Container maxW="100%" height="100%" bg="gray.100" padding={"0"}>

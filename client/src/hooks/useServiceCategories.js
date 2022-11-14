@@ -66,6 +66,7 @@ const useServiceCategories = () => {
         return category.service_category_id !== categoryId;
       });
       setServiceCategories(newCategories);
+      window.location.reload(false);
       navigate("/admin-dashboard");
     } catch (error) {
       console.error(error);
