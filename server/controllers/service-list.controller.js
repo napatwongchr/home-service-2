@@ -1,4 +1,3 @@
-import serviceRoute from "../routers/service.route.js";
 import { pool } from "../utils/db.js";
 import { cloudinaryDelete, cloudinaryUpload } from "../utils/upload.js";
 
@@ -9,48 +8,48 @@ const serviceListController = {
             const serviceList = {
                 serviceName: req.body.serviceName,
                 serviceCategory: req.body.serviceCategory,
-                serviceSubList: req.body.serviceList
+                subService: req.body.serviceList
             }
 
+            const imageUrl = await cloudinaryUpload(req.file);
+            serviceList['serviceImage'] = imageUrl
 
-            const serviceUrl = await cloudinaryUpload(req.file);
-            serviceList['serviceImage'] = serviceUrl
-
-
-            // const serviceImageUrl = serviceList.serviceImage[0].url
             const serviceName = serviceList.serviceName
             const serviceCategory = serviceList.serviceCategory
-            //Add Image to service_image table
+            const image = serviceList.serviceImage
+
+            //Add Image
             const addImage = await pool.query(`insert into service_image(public_id, url, bytes)
                 values($1, $2, $3) returning service_image_id
-            `, [serviceUrl[0].publicId, serviceUrl[0].url, serviceUrl[0].bytes])
+            `, [image[0].publicId, image[0].url, image[0].bytes])
 
-            const recentImageId = addImage.rows[0].service_image_id
+            const imageId = addImage.rows[0].service_image_id
 
-            //Get service category id
+            //Get Category ID
             const findServiceCategory = await pool.query(`select service_category_id from service_category where service_category_name = $1`, [serviceCategory])
             const serviceCategoryId = findServiceCategory.rows[0]["service_category_id"]
 
+            //Add Service
             const addService = await pool.query(`insert into service(service_category_id, service_image_id, service_name, created_at, updated_at)
-                values (
-                    $1, $2, $3, 
-                    to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM'), 
-                    to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM') 
-                    ) returning service_id
-            `, [serviceCategoryId, recentImageId, serviceName])
+            values (
+                $1, $2, $3, 
+                now(),
+                now() 
+                ) returning service_id`, 
+                [serviceCategoryId, imageId, serviceName])
+            
+            //Get Service ID
+            const serviceId = addService.rows[0].service_id
 
-            const recentServiceId = addService.rows[0]["service_id"]
-
-
-            // Add to subService table
-            const subServiceListObject = JSON.parse(serviceList.serviceSubList)
-            subServiceListObject.map(async subService => {
+            // Add Sub Service
+            const subService = JSON.parse(serviceList.subService)
+            subService.map(async subService => {
                 await pool.query(`insert into sub_service(service_id, sub_service_name, unit_name, price_per_unit, created_at, updated_at )
                     values($1, $2, $3, $4,
-                            to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM'),
-                            to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM')
-                        )
-                `, [recentServiceId, subService.name, subService.unit, subService.price])
+                            now(),
+                            now()
+                        ) returning sub_service_id
+                `, [serviceId, subService.name, subService.unit, subService.price])
             })
 
             return res.json({
@@ -58,8 +57,8 @@ const serviceListController = {
             })
 
 
-
         } catch (err) {
+            console.log(err)
             return res.status(400).json({
                 msg: "invalid input"
             })
