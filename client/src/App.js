@@ -23,7 +23,7 @@ function App() {
       <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
       <Route path="/admin-dashboard/services" element={<AdminServiceListPage />} />
       <Route path="/admin-detail/service/view/:serviceId" element={<AdminDetailService />} />
-      <Route path="/admin-detail/service/edit/:serviceId" element={<AdminEditService />} />
+      <Route path="/admin-dashboard/service/edit/:serviceId" element={<AdminEditService />} />
       <Route
         path="/admin-dashboard/service/create"
         element={<AdminCreateService />}
