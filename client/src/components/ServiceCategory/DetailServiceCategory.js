@@ -22,7 +22,7 @@ const DetailServiceCategory = () => {
   }, []);
 
   return (
-    <Container bg="#F3F4F6" maxW="100%" height="100vh" paddingLeft="0px">
+    <Container bg="#F3F4F6" maxW="100%" height="100vh" padding="0px">
       <Flex>
         <SideBar />
         <Flex

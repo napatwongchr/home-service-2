@@ -11,7 +11,7 @@ const useAdminServiceLists = () => {
 
   const getServiceLists = async () => {
     try {
-      const results = await axios.get(`http://localhost:4000/service`);
+      const results = await axios.get(`/service`);
       setServiceLists(results.data.data);
     } catch (error) {
       console.log(error);
@@ -52,7 +52,7 @@ const useAdminServiceLists = () => {
   const deleteServiceList = async (serviceId) => {
     try {
       await axios.delete(
-        `http://localhost:4000/service?serviceId=${serviceId}`
+        `/service?serviceId=${serviceId}`
       );
       const newLists = serviceLists.filter((list) => {
         return List.service_id !== serviceId;

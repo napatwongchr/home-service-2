@@ -20,10 +20,9 @@ import SideBar from "../AdminPage/SideBar";
 import arrow from "../../asset/image/serviceCategory/left-arrow.svg";
 import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
 import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useServiceCategories from "../../hooks/useServiceCategories.js";
-
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import errorIcon from "../../asset/image/errorIcon.svg";
@@ -38,6 +37,7 @@ const EditServiceCategory = () => {
   } = useServiceCategories();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [categoryName, setCategoryName] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     getServiceCategoryById(params);
@@ -223,7 +223,10 @@ const EditServiceCategory = () => {
                 </Flex>
                 <Flex
                   className="delete-category"
-                  onClick={onOpen}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onOpen();
+                  }}
                   marginTop="1rem"
                   marginLeft="62rem"
                 >
@@ -269,6 +272,7 @@ const EditServiceCategory = () => {
                       deleteServiceCategory(
                         serviceCategory.service_category_id
                       );
+                      navigate("/admin-dashboard/categories");
                     }}
                   >
                     ลบรายการ

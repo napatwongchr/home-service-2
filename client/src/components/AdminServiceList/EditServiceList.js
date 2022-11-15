@@ -17,6 +17,7 @@ import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
 
 const EditCreateServiceList = () => {
     const formData = new FormData();
+    const [serviceId, setServiceId] = useState ('')
     const [serviceName, setServiceName] = useState('');
     const [serviceCategory, setServiceCategory] = useState('');
     const [serviceImage, setServiceImage] = useState('');
@@ -37,6 +38,7 @@ const EditCreateServiceList = () => {
 
     useEffect(() => {
         if (serviceList.service) {
+            setServiceId(serviceList.service.service_id)
             setServiceName(serviceList.service.service_name);
             setServiceCategory(serviceList.service.service_category_name);
             setServiceImage(serviceList.service.url);
@@ -299,7 +301,7 @@ const EditCreateServiceList = () => {
                                 </Box>
                             </Flex >
                             <Button textStyle={'button'} variant='ghost' color='gray.600' leftIcon={<Image src={binIcon} alt='binIcon' />} pos={'absolute'} right='0' mx='24px' onClick={onOpen}>
-                                ลบหมวดหมู่
+                                ลบบริการ
                             </Button>
                             <Modal isOpen={isOpen} onClose={onClose}>
                                 <ModalOverlay />
@@ -333,7 +335,7 @@ const EditCreateServiceList = () => {
                                             variant={'primary'}
                                             mr={3}
                                             onClick={() => {
-                                                deleteServiceList(params)
+                                                deleteServiceList(serviceId)
                                             }}
                                         >
                                             ลบรายการ
