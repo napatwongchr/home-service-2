@@ -1,6 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "../api/axios";
+// เปลี่ยน
 
 const useServiceCategories = () => {
   const navigate = useNavigate();
@@ -9,15 +10,13 @@ const useServiceCategories = () => {
   const params = useParams();
 
   const getServiceCategories = async (input) => {
-    const { searchCategoryName } = input;
     try {
-      let results = await axios.get(`http://localhost:4000/service/category`);
-      if (searchCategoryName) {
+      let results = await axios.get(`/service/category`);
+      if (input.searchCategoryName !== "") {
+        const { searchCategoryName } = input;
         const params = new URLSearchParams();
         params.append("categoryName", searchCategoryName);
-        results = await axios.get(
-          `http://localhost:4000/service/category?${params.toString()}`
-        );
+        results = await axios.get(`/service/category?${params.toString()}`);
       }
       setServiceCategories(results.data.data);
     } catch (error) {
@@ -28,7 +27,7 @@ const useServiceCategories = () => {
   const getServiceCategoryById = async (params) => {
     try {
       const result = await axios.get(
-        `http://localhost:4000/service/category?categoryId=${params.categoryId}`
+        `/service/category?categoryId=${params.categoryId}`
       );
       setServiceCategory(result.data.data);
     } catch (error) {
@@ -38,7 +37,7 @@ const useServiceCategories = () => {
 
   const createServiceCategory = async (data) => {
     try {
-      await axios.post(`http://localhost:4000/service/category`, data);
+      await axios.post(`/service/category`, data);
       navigate("/admin-dashboard");
     } catch (error) {
       console.log(error);
@@ -48,7 +47,7 @@ const useServiceCategories = () => {
   const updateServiceCategoryById = async (params, data) => {
     try {
       await axios.put(
-        `http://localhost:4000/service/category?categoryId=${params.categoryId}`,
+        `/service/category?categoryId=${params.categoryId}`,
         data
       );
       navigate("/admin-dashboard");
@@ -59,9 +58,7 @@ const useServiceCategories = () => {
 
   const deleteServiceCategory = async (categoryId) => {
     try {
-      await axios.delete(
-        `http://localhost:4000/service/category?categoryId=${categoryId}`
-      );
+      await axios.delete(`/service/category?categoryId=${categoryId}`);
       const newCategories = serviceCategories.filter((category) => {
         return category.service_category_id !== categoryId;
       });
