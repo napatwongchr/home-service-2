@@ -44,6 +44,7 @@ function App() {
               <Route path="*" element={<HomePage />} />
             </Routes>
           :
+          (
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/service-list" element={<ServiceList />} />
@@ -51,7 +52,8 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="*" element={<LoginPage />} />
           </Routes>
-      }
+          )
+       }
     </>
   );
 }

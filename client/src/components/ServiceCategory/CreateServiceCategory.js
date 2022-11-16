@@ -17,7 +17,6 @@ import errorIcon from "../../asset/image/errorIcon.svg";
 
 const CreateServiceCategory = () => {
   const { createServiceCategory } = useServiceCategories();
-
   const initialValues = {
     categoryName: "",
   };

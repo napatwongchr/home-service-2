@@ -42,7 +42,7 @@ const ViewServiceCategory = () => {
       serviceCategories,
       searchCategoryName,
     });
-  }, [serviceCategories]);
+  }, [searchCategoryName]);
 
   return (
     <Container maxW="100%" height="100%" bg="gray.100" padding={"0"}>
@@ -80,11 +80,9 @@ const ViewServiceCategory = () => {
               }}
             />
 
-            <Link to="/admin-dashboard/category/create">
-              <Button w="165px" h="44px">
-                เพิ่มหมวดหมู่
-              </Button>
-            </Link>
+            <Button w="165px" h="44px" onClick={() => { navigate(`/admin-dashboard/category/create`) }}>
+              เพิ่มหมวดหมู่
+            </Button>
           </Flex>
         </Flex>
 

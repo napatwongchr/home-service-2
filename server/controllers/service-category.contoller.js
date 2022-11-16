@@ -19,8 +19,8 @@ const serviceCategoryController = {
         `insert into service_category( service_category_name, created_at, updated_at )
             values (
                 $1,
-                to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM'),
-                to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM')
+                now(),
+                now()
             ) returning service_category_id
             `,
         [req.body.categoryName]
