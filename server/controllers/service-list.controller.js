@@ -66,7 +66,6 @@ const serviceListController = {
     async getService(req, res) {
         try {
             //Get By ID
-            console.log(req.query);
             const serviceId = req.query.serviceId
             const serviceName = req.query.searchInput
             const category = req.query.category;
@@ -81,6 +80,8 @@ const serviceListController = {
             service.service_category_id,
             service_category.service_category_name,
             service_image.service_image_id,
+            service.created_at,
+            service.updated_at,
             MIN(sub_service.price_per_unit), 
             MAX(sub_service.price_per_unit)
             from service
@@ -114,6 +115,7 @@ const serviceListController = {
                     ${groupBy}
                 `
                     , [serviceId])
+
                 let findSubService = await pool.query(`
                 ${subServiceQueryByServiceId}
                 `, [serviceId])
@@ -125,17 +127,22 @@ const serviceListController = {
                 }
 
                 //Set response format for Get service by Id
-                const service = findService.rows[0]
-                service.created_at = service.created_at.toLocaleString().split(', ').join(' ')
-                service.updated_at = service.updated_at.toLocaleString().split(', ').join(' ')
+                findService.rows[0].created_at = findService.rows[0].created_at.toLocaleString().split(', ').join(' ')
+                findService.rows[0].updated_at = findService.rows[0].updated_at.toLocaleString().split(', ').join(' ')
+                const subServiceById = findSubService.rows.map(subService => {
+                    subService.created_at = subService.created_at.toLocaleString().split(', ').join(' ')
+                    subService.updated_at = subService.updated_at.toLocaleString().split(', ').join(' ')
+                    return subService
+                })
 
                 return res.status(200).json({
                     data: {
                         service: findService.rows[0],
-                        subService: findSubService.rows
+                        subService: subServiceById
                     }
                 })
             }
+
 
             // query filter by user
             if (serviceName === 'undefined' && category === 'undefined' && sort === 'undefined' && !priceMin && !priceMax) {
@@ -260,11 +267,23 @@ const serviceListController = {
 
             const findService = await pool.query(serviceQuery)
             const findSubService = await pool.query(subServiceQuery)
+            //Set response format for service by filter
+            const service = findService.rows.map(service => {
+                service.created_at = service.created_at.toLocaleString().split(', ').join(' ')
+                service.updated_at = service.updated_at.toLocaleString().split(', ').join(' ')
+                return service
+            })
+            const subService = findSubService.rows.map(subService => {
+                subService.created_at = subService.created_at.toLocaleString().split(', ').join(' ')
+                subService.updated_at = subService.updated_at.toLocaleString().split(', ').join(' ')
+                return subService
+            })
+            
 
             return res.status(200).json({
                 data: {
-                    service: findService.rows,
-                    subService: findSubService.rows,
+                    service: service,
+                    subService: subService
                 }
             })
 
@@ -359,7 +378,7 @@ const serviceListController = {
 
                 const updateImageTable = await pool.query(`update service_image set public_id = $1, url = $2, bytes = $3 where service_image_id = $4 RETURNING *`, [serviceList.publicId, serviceList.url, serviceList.bytes, idOldImage.rows[0].service_image_id])
             }
-
+            
             return res.json({
                 msg: "updated complete"
             })
