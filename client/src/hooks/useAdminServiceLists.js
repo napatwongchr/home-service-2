@@ -11,7 +11,12 @@ const useAdminServiceLists = () => {
 
   const getServiceLists = async (params) => {
     try {
-      let results = await axios.get(`/service?searchInput=${params.input}&category=${params.category}&min=${params.sliderValue[0]}&max=${params.sliderValue[1]}`);;
+      let results;
+      if (params.priceTouched === true) {
+        results = await axios.get(`/service?searchInput=${params.input}&category=${params.category}&min=${params.sliderValue[0]}&max=${params.sliderValue[1]}&sort=${params.order}`);;
+      } else if (params.input !== '' || params.category) {
+        results = await axios.get(`/service?searchInput=${params.input}&category=${params.category}&sort=${params.order}`);;
+      }
       setServiceLists(results.data.data);
     } catch (error) {
       console.log(error);

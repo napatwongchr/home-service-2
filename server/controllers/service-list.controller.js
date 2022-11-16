@@ -55,7 +55,6 @@ const serviceListController = {
                 msg: "service has been created"
             })
 
-
         } catch (err) {
             console.log(err)
             return res.status(400).json({
@@ -65,12 +64,18 @@ const serviceListController = {
     },
 
     async getService(req, res) {
-        // const client = await pool.connect();
         try {
             //Get By ID
+            console.log(req.query);
             const serviceId = req.query.serviceId
-            const serviceQuery = `
-           select service.service_id,
+            const serviceName = req.query.searchInput
+            const category = req.query.category;
+            const priceMin = req.query.min;
+            const priceMax = req.query.max;
+            const sort = req.query.sort
+
+            let serviceQuery = `
+            select service.service_id,
             service.service_name,
             service_image.url,
             service.service_category_id,
@@ -100,14 +105,8 @@ const serviceListController = {
             from sub_service where service_id = $1`
 
             const groupBy = `group by service.service_id, service_image.service_image_id, service_category.service_category_name`
-            // // //Get All Service
-            let findService = await pool.query(`
-            ${serviceQuery}
-            group by service.service_id, service_image.service_image_id, service_category.service_category_name
-            `)
-            const findSubService = await pool.query(subServiceQuery)
 
-            //Qeury Service By ID
+            //Query Service By ID
             if (serviceId) {
                 let findService = await pool.query(serviceQuery + groupBy, [serviceId])
                 let findSubService = await pool.query(subServiceQueryById, [serviceId])
@@ -131,42 +130,129 @@ const serviceListController = {
                 })
             }
 
-            if (req.query.searchInput === '' && req.query.category === 'บริการทั้งหมด') {
-                return res.status(200).json({
-                    data: {
-                        service: findService.rows,
-                        subService: findSubService.rows,
+            // query filter by user
+            if (serviceName === 'undefined' && category === 'undefined' && sort === 'undefined' && !priceMin && !priceMax) {
+                serviceQuery += groupBy
+            }
+            else if (serviceName !== '') {
+                if (category === 'บริการทั้งหมด' && !priceMin && !priceMax && sort === 'บริการแนะนำ') {
+                    serviceQuery = `
+                    ${serviceQuery}
+                    where service_name ilike '%$serviceName%'
+                    `.replace('$serviceName', serviceName)
+                    serviceQuery += groupBy
+                } else if (category !== 'บริการทั้งหมด') {
+                    serviceQuery = `
+                    ${serviceQuery}
+                    where service_name ilike '%$serviceName%'
+                    and service_category_name ilike '$category'
+                    `.replace('$serviceName', serviceName).replace('$category', category)
+                    serviceQuery += groupBy
+                } else if (priceMin && priceMax) {
+                    serviceQuery = `
+                    ${serviceQuery}
+                    where service_name ilike '%$serviceName%'
+                    and price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                    `.replace('$serviceName', serviceName).replace('$priceMin', priceMin).replace('$priceMax', priceMax)
+                    serviceQuery += groupBy
+                } else if (sort !== 'บริการแนะนำ') {
+                    if (sort === 'ตามตัวอักษร (Ascending)') {
+                        serviceQuery = `
+                        ${serviceQuery}
+                        where service_name ilike '%$serviceName%'
+                        ${groupBy}
+                        order by service_name asc
+                        `.replace('$serviceName', serviceName)
+                    } else if (sort === 'ตามตัวอักษร (Descending)') {
+                        serviceQuery = `
+                        ${serviceQuery}
+                        where service_name ilike '%$serviceName%'
+                        ${groupBy}
+                        order by service_name desc
+                        `.replace('$serviceName', serviceName)
                     }
-                })
+                }
+            }
+            else if (category !== 'บริการทั้งหมด') {
+                if (serviceName === '' && !priceMin && !priceMax && sort === 'บริการแนะนำ') {
+                    serviceQuery = `
+                        ${serviceQuery}
+                        where service_category_name ilike '$category'
+                        `.replace('$category', category)
+                    serviceQuery += groupBy
+                } else if (priceMin && priceMax) {
+                    serviceQuery = `
+                    ${serviceQuery}
+                    where service_category_name ilike '$category'
+                    and price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                    `.replace('$category', category).replace('$priceMin', priceMin).replace('$priceMax', priceMax)
+                    serviceQuery += groupBy
+                }
+                else if (sort !== 'บริการแนะนำ') {
+                    if (sort === 'ตามตัวอักษร (Ascending)') {
+                        serviceQuery = `
+                        ${serviceQuery}
+                        where service_category_name ilike '$category'
+                        ${groupBy}
+                        order by service_name asc
+                        `.replace('$category', category)
+                    } else if (sort === 'ตามตัวอักษร (Descending)') {
+                        serviceQuery = `
+                        ${serviceQuery}
+                        where service_category_name ilike '$category'
+                        ${groupBy}
+                        order by service_name desc
+                        `.replace('$category', category)
+                    }
+                }
+            }
+            else if (priceMax && priceMin) {
+                if (serviceName === '' && category === 'บริการทั้งหมด' && sort === 'บริการแนะนำ') {
+                    serviceQuery = `
+                    ${serviceQuery}
+                    where price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                    `.replace('$priceMin', priceMin).replace('$priceMax', priceMax)
+                    serviceQuery += groupBy
+                }
+                else if (sort !== 'บริการแนะนำ') {
+                    if (sort === 'ตามตัวอักษร (Ascending)') {
+                        serviceQuery = `
+                        ${serviceQuery}
+                        where price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                        ${groupBy}
+                        order by service_name asc
+                        `.replace('$priceMin', priceMin).replace('$priceMax', priceMax)
+                    } else if (sort === 'ตามตัวอักษร (Descending)') {
+                        serviceQuery = `
+                        ${serviceQuery}
+                        where price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                        ${groupBy}
+                        order by service_name desc
+                        `.replace('$priceMin', priceMin).replace('$priceMax', priceMax)
+                    }
+                }
+            }
+            else if (sort !== 'บริการแนะนำ') {
+                if (sort === 'ตามตัวอักษร (Ascending)') {
+                    serviceQuery = `
+                        ${serviceQuery}
+                        ${groupBy}
+                        order by service_name asc
+                        `
+                } else if (sort === 'ตามตัวอักษร (Descending)') {
+                    serviceQuery = `
+                        ${serviceQuery}
+                        ${groupBy}
+                        order by service_name desc
+                        `
+                }
+            }
+            else {
+                serviceQuery += groupBy
             }
 
-            let serviceName = req.query.searchInput
-            let category = req.query.category;
-            let priceMin = req.query.min;
-            let priceMax = req.query.max;
-
-            if (serviceName && category !== 'บริการทั้งหมด') {
-                findService = await pool.query(`
-                    ${serviceQuery}
-                    where service_name ilike $1
-                    and service_category_name ilike $2
-                    ${groupBy}
-                    `, [serviceName, category]);
-            } else if (serviceName && category === 'บริการทั้งหมด') {
-                findService = await pool.query(`
-                    ${serviceQuery}
-                    where service_name ilike $1
-                    ${groupBy}
-                    `, [serviceName]);
-            } else if (category && serviceName === '') {
-                findService = await pool.query(`
-                    ${serviceQuery}
-                    where service_category_name ilike $1
-                    ${groupBy}
-                    `, [category]);
-            }
-
-
+            const findService = await pool.query(serviceQuery)
+            const findSubService = await pool.query(subServiceQuery)
 
             return res.status(200).json({
                 data: {
@@ -174,18 +260,12 @@ const serviceListController = {
                     subService: findSubService.rows,
                 }
             })
-            return res.status(200).json({
-                data: service
-            })
 
         } catch (err) {
             console.log(err);
             return res.status(400).json({
-                msg: "invalid input"
+                msg: "service not found"
             })
-        } finally {
-            // await client.release()
-            // await client.end()
         }
     },
 
@@ -246,7 +326,6 @@ const serviceListController = {
                         )
                 `, [serviceId, subService.sub_service_name, subService.price_per_unit, subService.unit_name, new Date(), new Date()])
             })
-
 
             if (typeof req.body.serviceImage === 'string') {
                 serviceList['serviceImage'] = req.body.serviceImage

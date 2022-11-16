@@ -24,7 +24,7 @@ import {
 } from "@chakra-ui/react";
 
 const SearchSection = (props) => {
-  const { input, setInput, category, setCategory, order, setOrder, sliderValue, setSliderValue } = props
+  const { input, setInput, category, setCategory, order, setOrder, sliderValue, setSliderValue, setPriceTouched } = props
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -152,7 +152,10 @@ const SearchSection = (props) => {
                             min={0}
                             max={5000}
                             step={20}
-                            onChangeEnd={(val) => setSliderValue(val)}
+                            onChangeEnd={(val) => {
+                              setSliderValue(val)
+                            }}
+                            onChange={() => setPriceTouched(true)}
                             justifyContent="space-between"
                             display="flex"
                           >

@@ -11,7 +11,7 @@ const useServiceCategories = () => {
   const getServiceCategories = async (input) => {
     try {
       let results;
-      if (input) {
+      if (input.searchCategoryName) {
         const { searchCategoryName } = input;
         const params = new URLSearchParams();
         params.append("categoryName", searchCategoryName);

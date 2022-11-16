@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
 import editIcon from "../../asset/image/serviceCategory/edit-icon.svg";
 import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";

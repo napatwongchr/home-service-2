@@ -11,12 +11,13 @@ const ServiceList = () => {
     const [category, setCategory] = useState('บริการทั้งหมด');
     const [order, setOrder] = useState('บริการแนะนำ')
     const [sliderValue, setSliderValue] = useState([0, 2000]);
+    const [priceTouched, setPriceTouched] = useState(false);
     return (
         <section className='serviceListPage'>
             <Nav />
             <BannerService />
-            <SearchSection input={input} setInput={setInput} category={category} setCategory={setCategory} order={order} setOrder={setOrder} sliderValue={sliderValue} setSliderValue={setSliderValue} />
-            <AllServiceSection input={input} category={category} order={order} sliderValue={sliderValue} />
+            <SearchSection input={input} setInput={setInput} category={category} setCategory={setCategory} order={order} setOrder={setOrder} sliderValue={sliderValue} setSliderValue={setSliderValue} setPriceTouched={setPriceTouched} priceTouched={priceTouched} />
+            <AllServiceSection input={input} category={category} order={order} sliderValue={sliderValue} priceTouched={priceTouched} />
             <Footer />
             <CopyRight />
         </section>

@@ -31,15 +31,14 @@ import useAdminServiceLists from "../../hooks/useAdminServiceLists.js";
 
 const AdminServiceList = () => {
   const navigate = useNavigate();
-  const { serviceLists, getServiceLists, params, deleteServiceList } =
+  const { serviceLists, getServiceLists, deleteServiceList } =
     useAdminServiceLists();
-  const [listSearch, setListSearch] = useState("");
   const [listName, setListName] = useState("");
   const [listUniqueId, setListUniqueId] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const priceTouched = false;
   useEffect(() => {
-    getServiceLists();
+    getServiceLists({ priceTouched });
   }, []);
 
   const { handleColorText, handleColorButton } = filterCategory;
