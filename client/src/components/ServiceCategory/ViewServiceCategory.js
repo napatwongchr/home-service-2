@@ -40,7 +40,6 @@ const ViewServiceCategory = () => {
 
   useEffect(() => {
     getServiceCategories({
-      serviceCategories,
       searchCategoryName,
     });
   }, [searchCategoryName]);

@@ -18,9 +18,9 @@ const CreateServiceList = () => {
   const [category, setCategory] = useState('เลือกหมวดหมู่');
   const { serviceCategories, getServiceCategories } = useServiceCategories();
   const { createServiceList } = useAdminServiceLists();
-
+  const searchCategoryName = ''
   useEffect(() => {
-    getServiceCategories();
+    getServiceCategories({ searchCategoryName });
   }, []);
 
   const initialValues = {

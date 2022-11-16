@@ -17,7 +17,7 @@ import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
 
 const EditCreateServiceList = () => {
     const formData = new FormData();
-    const [serviceId, setServiceId] = useState ('')
+    const [serviceId, setServiceId] = useState('')
     const [serviceName, setServiceName] = useState('');
     const [serviceCategory, setServiceCategory] = useState('');
     const [serviceImage, setServiceImage] = useState('');

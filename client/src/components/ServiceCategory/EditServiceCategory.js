@@ -39,7 +39,7 @@ const EditServiceCategory = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [categoryName, setCategoryName] = useState("");
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         getServiceCategoryById(params);
     }, []);

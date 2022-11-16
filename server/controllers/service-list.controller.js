@@ -108,8 +108,15 @@ const serviceListController = {
 
             //Query Service By ID
             if (serviceId) {
-                let findService = await pool.query(serviceQuery + groupBy, [serviceId])
-                let findSubService = await pool.query(subServiceQueryById, [serviceId])
+                let findService = await pool.query(`
+                    ${serviceQuery}
+                    where service.service_id = $1
+                    ${groupBy}
+                `
+                    , [serviceId])
+                let findSubService = await pool.query(`
+                ${subServiceQueryByServiceId}
+                `, [serviceId])
 
                 if (!findService.rows[0]) {
                     return res.status(404).json({

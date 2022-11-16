@@ -11,13 +11,20 @@ const useServiceCategories = () => {
   const getServiceCategories = async (input) => {
     try {
       let results;
-      if (input.searchCategoryName) {
-        const { searchCategoryName } = input;
-        const params = new URLSearchParams();
-        params.append("categoryName", searchCategoryName);
-        results = await axios.get(
-          `/service/category?${params.toString()}`
-        );
+      console.log(input);
+      if (input) {
+        if (input.searchCategoryName === '') {
+
+          results = await axios.get(`/service/category`);
+        }
+        else if (input.searchCategoryName !== '') {
+          const { searchCategoryName } = input;
+          const params = new URLSearchParams();
+          params.append("categoryName", searchCategoryName);
+          results = await axios.get(
+            `/service/category?${params.toString()}`
+          );
+        }
       } else {
         results = await axios.get(`/service/category`);
       }

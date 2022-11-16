@@ -56,6 +56,7 @@ const useAdminServiceLists = () => {
 
   const deleteServiceList = async (serviceId) => {
     try {
+      console.log(serviceId);
       await axios.delete(
         `/service?serviceId=${serviceId}`
       );
