@@ -25,7 +25,7 @@ function App() {
             <Route path="/service-list" element={<ServiceList />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
+            <Route path="/admin-dashboard/categories" element={<AdminDashboardPage />} />
             <Route
               path="/admin-dashboard/services"
               element={<AdminServiceListPage />}

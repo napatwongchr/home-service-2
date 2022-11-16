@@ -13,12 +13,10 @@ import useServiceCategories from "../../hooks/useServiceCategories";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "../../api/axios";
-
 import errorIcon from "../../asset/image/errorIcon.svg";
 
 const CreateServiceCategory = () => {
   const { createServiceCategory } = useServiceCategories();
-
   const initialValues = {
     categoryName: "",
   };
@@ -91,7 +89,7 @@ const CreateServiceCategory = () => {
                     width="12rem"
                     marginRight="5rem"
                   >
-                    <Link to="/admin-dashboard">
+                    <Link to="/admin-dashboard/categories">
                       <Button
                         bg="white"
                         color="blue.600"

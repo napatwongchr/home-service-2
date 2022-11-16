@@ -9,11 +9,12 @@ import {
 } from "@chakra-ui/react";
 import SideBar from "../AdminPage/SideBar";
 import arrow from "../../asset/image/serviceCategory/left-arrow.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useServiceCategories from "../../hooks/useServiceCategories";
 import { useEffect } from "react";
 
 const DetailServiceCategory = () => {
+  const navigate = useNavigate()
   const { serviceCategory, getServiceCategoryById, params } =
     useServiceCategories();
 
@@ -48,7 +49,7 @@ const DetailServiceCategory = () => {
               alignItems={"center"}
               marginLeft="3rem"
             >
-              <Link to="/admin-dashboard">
+              <Link to="/admin-dashboard/categories">
                 <Image src={arrow} marginRight="1.5rem" />
               </Link>
 
@@ -69,11 +70,9 @@ const DetailServiceCategory = () => {
               width="12rem"
               marginRight="5rem"
             >
-              <Link to="/admin-dashboard/category/edit">
-                <Button width={"5.5rem"} onSubmit={{}}>
-                  แก้ไข
-                </Button>
-              </Link>
+              <Button width={"5.5rem"} onClick={() => { navigate(`/admin-dashboard/category/edit/${serviceCategory.service_category_id}`) }}>
+                แก้ไข
+              </Button>
             </Flex>
           </Flex>
           <Flex
