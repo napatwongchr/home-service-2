@@ -25,6 +25,7 @@ import { useEffect, useState } from "react";
 import useServiceCategories from "../../hooks/useServiceCategories.js";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import axios from "../../api/axios";
 import errorIcon from "../../asset/image/errorIcon.svg";
 
 const EditServiceCategory = () => {
@@ -39,7 +40,7 @@ const EditServiceCategory = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [categoryName, setCategoryName] = useState("");
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         getServiceCategoryById(params);
     }, []);
@@ -57,9 +58,29 @@ const EditServiceCategory = () => {
     return (
         <Formik
             enableReinitialize={true}
+            validateOnChange={false}
             initialValues={initialValues}
             validationSchema={Yup.object({
-                categoryName: Yup.string().required("กรุณากรอกชื่อหมวดหมู่"),
+                categoryName: Yup.string().test(
+                    "Unique Category",
+                    "ชื่อหมวดหมู่นี้ถูกใช้งานแล้ว กรุณาเปลี่ยนชื่อหมวดหมู่",
+                    function (value) {
+                        return new Promise((resolve, reject) => {
+                            axios
+                                .get(`/service/category?categoryName=${value}`)
+                                .then((res) => {
+                                    if (res.data.data.length >= 1) {
+                                        resolve(false);
+                                    } else {
+                                        resolve(true);
+                                    }
+                                })
+                                .catch((error) => {
+                                    resolve(false);
+                                });
+                        });
+                    }
+                ).required("กรุณากรอกชื่อหมวดหมู่"),
             })}
             onSubmit={async (values) => {
                 const newCategoryName = values.categoryName;
@@ -78,31 +99,31 @@ const EditServiceCategory = () => {
                             <Flex
                                 className="create-service-field"
                                 direction="column"
-                                alignItems={"center"}
+                                alignItems="center"
                                 width="100vw"
                                 height="100vh"
                             >
                                 <Flex
                                     className="create-service-category-bar"
                                     bg="white"
-                                    borderBottom={"1px"}
+                                    borderBottom="1px"
                                     borderColor="gray.300"
                                     width="100%"
-                                    height={"80px"}
-                                    justify={"space-between"}
+                                    height="80px"
+                                    justify="space-between"
                                     alignItems="center"
                                 >
                                     <Flex
                                         className="left-side"
                                         direction="row"
-                                        alignItems={"center"}
+                                        alignItems="center"
                                         marginLeft="3rem"
                                     >
                                         <Link to="/admin-dashboard/categories">
                                             <Image src={arrow} marginRight="1.5rem" />
                                         </Link>
 
-                                        <Flex direction={"column"}>
+                                        <Flex direction="column">
                                             <Text textStyle="b4">หมวดหมู่</Text>
                                             <Text
                                                 className="category-name"
@@ -119,52 +140,51 @@ const EditServiceCategory = () => {
                                         width="12rem"
                                         marginRight="5rem"
                                     >
-                                        <Link to="/admin-dashboard">
-                                            <Button
-                                                bg="white"
-                                                color="blue.600"
-                                                border="1px"
-                                                borderColor="blue.600"
-                                                width={"5.5rem"}
-                                            >
-                                                ยกเลิก
-                                            </Button>
-                                        </Link>
-                                        <Button width={"5.5rem"} type="submit">
+                                        <Button
+                                            bg="white"
+                                            color="blue.600"
+                                            border="1px"
+                                            borderColor="blue.600"
+                                            width="5.5rem"
+                                            onClick={() => { navigate(`/admin-dashboard/categories`) }}
+                                        >
+                                            ยกเลิก
+                                        </Button>
+                                        <Button width="5.5rem" type="submit">
                                             ยืนยัน
                                         </Button>
                                     </Flex>
                                 </Flex>
                                 <Flex
                                     className="edit-service-input"
-                                    direction={"column"}
-                                    paddingLeft={"2rem"}
+                                    direction="column"
+                                    paddingLeft="2rem"
                                     justify="center"
-                                    alignItems={"left"}
+                                    alignItems="left"
                                     bg="white"
                                     border="1px"
                                     borderColor="gray.200"
-                                    borderRadius={"8px"}
-                                    width={"1120px"}
+                                    borderRadius="8px"
+                                    width="1120px"
                                     height="fit-content"
                                     padding="3.5rem"
                                     marginTop="4rem"
                                 >
-                                    <Flex direction={"row"}>
+                                    <Flex direction="row">
                                         <FormLabel>
                                             ชื่อหมวดหมู่
                                             <span style={{ color: "#C82438" }}>*</span>
                                         </FormLabel>
                                         {errors.categoryName && touched.categoryName ? (
-                                            <Flex flexDirection={"column"} pos="relative">
+                                            <Flex flexDirection="column" pos="relative">
                                                 <Field
                                                     as={Input}
                                                     variant="error"
                                                     id="categoryName"
                                                     name="categoryName"
                                                     type="text"
-                                                    w={"440px"}
-                                                    h={"44px"}
+                                                    width="440px"
+                                                    height="44px"
                                                     onChange={(e) =>
                                                         setFieldValue("categoryName", e.target.value)
                                                     }
@@ -173,50 +193,50 @@ const EditServiceCategory = () => {
                                                     src={errorIcon}
                                                     pos="absolute"
                                                     left="412px"
-                                                    bottom={"15px"}
-                                                    w={"14px"}
+                                                    bottom="15px"
+                                                    w="14px"
                                                 />
                                                 <Text
-                                                    textStyle={"b2"}
+                                                    textStyle="b2"
                                                     color="utility.red"
                                                     pos="absolute"
-                                                    bottom={"-30px"}
+                                                    bottom="-30px"
                                                 >
-                                                    {errors.categoryName}{" "}
+                                                    {errors.categoryName}
                                                 </Text>
                                             </Flex>
                                         ) : (
-                                            <Flex flexDirection={"column"}>
+                                            <Flex flexDirection="column">
                                                 <Field
                                                     as={Input}
                                                     id="categoryName"
                                                     name="categoryName"
                                                     type="text"
-                                                    w={"440px"}
-                                                    h={"44px"}
+                                                    w="440px"
+                                                    h="44px"
                                                     onChange={(e) =>
                                                         setFieldValue("categoryName", e.target.value)
                                                     }
                                                 />
                                             </Flex>
-                                        )}{" "}
+                                        )}
                                     </Flex>
-                                    <Divider padding={"2rem"} />
+                                    <Divider padding="2rem" />
                                     <Box className="info" marginTop="3rem">
-                                        <Flex className="created-info" marginBottom={"2rem"}>
-                                            <Text textStyle="h5" marginRight="5rem" width={"5rem"}>
+                                        <Flex className="created-info" marginBottom="2rem">
+                                            <Text textStyle="h5" marginRight="5rem" width="5rem">
                                                 สร้างเมื่อ
                                             </Text>
                                             <Text className="created-at">
-                                                {serviceCategory.created_at}{" "}
+                                                {serviceCategory.created_at}
                                             </Text>
                                         </Flex>
                                         <Flex className="edited-info">
-                                            <Text textStyle="h5" marginRight="5rem" width={"5rem"}>
+                                            <Text textStyle="h5" marginRight="5rem" width="5rem">
                                                 แก้ไขล่าสุด
                                             </Text>
                                             <Text className="edited-at">
-                                                {serviceCategory.updated_at}{" "}
+                                                {serviceCategory.updated_at}
                                             </Text>
                                         </Flex>
                                     </Box>
@@ -230,7 +250,7 @@ const EditServiceCategory = () => {
                                     marginTop="1rem"
                                     marginLeft="62rem"
                                 >
-                                    <Image src={binIcon} paddingRight={"1rem"} />
+                                    <Image src={binIcon} paddingRight="1rem" />
                                     <button style={{ textDecoration: "underline" }}>
                                         ลบหมวดหมู่
                                     </button>
@@ -243,17 +263,17 @@ const EditServiceCategory = () => {
                                 textAlign="center"
                                 height="fit-content"
                                 width="350px"
-                                borderRadius={"16px"}
+                                borderRadius="16px"
                             >
                                 <ModalHeader marginTop="1.5rem">
-                                    <Flex direction="column" alignItems={"center"}>
+                                    <Flex direction="column" alignItems="center">
                                         <Image
                                             src={warningICon}
                                             alt="warning icon"
                                             width="30px"
                                             marginBottom="10px"
                                         />
-                                        <Text textStyle={"h2"} color="gray.950">
+                                        <Text textStyle="h2" color="gray.950">
                                             ยืนยันการลบรายการ?
                                         </Text>
                                     </Flex>
@@ -264,7 +284,7 @@ const EditServiceCategory = () => {
                                         ใช่หรือไม่
                                     </Text>
                                 </ModalBody>
-                                <ModalFooter alignSelf={"center"} paddingBottom={"2rem"}>
+                                <ModalFooter alignSelf="center" paddingBottom="2rem">
                                     <Button
                                         colorScheme="blue"
                                         mr={3}
@@ -281,9 +301,9 @@ const EditServiceCategory = () => {
                                         onClick={onClose}
                                         variant="ghost"
                                         color="blue.600"
-                                        border={"1px"}
-                                        borderColor={"blue.600"}
-                                        textDecoration={"none"}
+                                        border="1px"
+                                        borderColor="blue.600"
+                                        textDecoration="none"
                                     >
                                         ยกเลิก
                                     </Button>
