@@ -95,7 +95,7 @@ const AdminServiceList = () => {
                     <button
                       onClick={() => {
                         navigate(
-                          `/admin-detail/service/view/${item.service_id}`
+                          `/admin-dashboard/service/view/${item.service_id}`
                         );
                       }}
                     >

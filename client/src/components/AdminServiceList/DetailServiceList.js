@@ -8,12 +8,12 @@ import {
   Box,
 } from "@chakra-ui/react";
 import arrow from "../../asset/image/serviceCategory/left-arrow.svg";
-import ล้างแอร์ from "../../asset/image/serviceImage/ล้างแอร์.png";
 import { Link } from "react-router-dom";
 import useAdminServiceLists from "../../hooks/useAdminServiceLists";
 import { useEffect, useState } from "react";
 
 const DetailServiceList = () => {
+  const [serviceId, setServiceId] = useState("");
   const [serviceName, setServiceName] = useState("");
   const [serviceCategory, setServiceCategory] = useState("");
   const [serviceImage, setServiceImage] = useState("");
@@ -28,6 +28,7 @@ const DetailServiceList = () => {
 
   useEffect(() => {
     if (serviceList.service) {
+      setServiceId(serviceList.service.service_id);
       setServiceName(serviceList.service.service_name);
       setServiceCategory(serviceList.service.service_category_name);
       setServiceImage(serviceList.service.url);
@@ -36,7 +37,6 @@ const DetailServiceList = () => {
       setServiceUpdateAt(serviceList.service.updated_at);
     }
   }, [serviceList]);
-  console.log(serviceList);
 
   return (
     <Container bg="#F3F4F6" maxW="100%" height={"100%"} padding="0">
@@ -65,7 +65,7 @@ const DetailServiceList = () => {
               alignItems={"center"}
               // marginLeft="3rem"
             >
-              <Link to="/admin-dashboard/service">
+              <Link to="/admin-dashboard/services">
                 <Image src={arrow} marginRight="1.5rem" />
               </Link>
 
@@ -86,7 +86,7 @@ const DetailServiceList = () => {
               // width="12rem"
               // marginRight="5rem"
             >
-              <Link to="/admin-dashboard/category/edit">
+              <Link to={`/admin-dashboard/service/edit/${serviceId}`}>
                 <Button width={"5.5rem"} onSubmit={{}}>
                   แก้ไข
                 </Button>

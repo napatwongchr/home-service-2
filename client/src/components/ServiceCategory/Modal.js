@@ -1,4 +1,4 @@
-import {
+/* import {
   Text,
   Flex,
   Image,
@@ -70,3 +70,4 @@ const AlertModal = (props) => {
 };
 
 export default AlertModal;
+ */

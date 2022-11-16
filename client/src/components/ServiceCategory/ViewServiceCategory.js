@@ -2,10 +2,8 @@ import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
 import editIcon from "../../asset/image/serviceCategory/edit-icon.svg";
 import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
 import searchIcon from "../../asset/image/adminDashboardPage/searchIcon.svg";
-
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 import {
   Text,
   Flex,
@@ -32,7 +30,6 @@ import useServiceCategories from "../../hooks/useServiceCategories.js";
 
 const ViewServiceCategory = () => {
   const navigate = useNavigate();
-  const [test, setTest] = useState([])
   const { serviceCategories, getServiceCategories, deleteServiceCategory } =
     useServiceCategories();
   const [categoryName, setCategoryName] = useState("");
@@ -45,7 +42,7 @@ const ViewServiceCategory = () => {
       serviceCategories,
       searchCategoryName,
     });
-  }, [serviceCategories]);
+  }, [searchCategoryName]);
 
   return (
     <Container maxW="100%" height="100%" bg="gray.100" padding={"0"}>
@@ -83,11 +80,9 @@ const ViewServiceCategory = () => {
               }}
             />
 
-            <Link to="/admin-dashboard/category/create">
-              <Button w="165px" h="44px">
-                เพิ่มหมวดหมู่
-              </Button>
-            </Link>
+            <Button w="165px" h="44px" onClick={() => { navigate(`/admin-dashboard/category/create`) }}>
+              เพิ่มหมวดหมู่
+            </Button>
           </Flex>
         </Flex>
 

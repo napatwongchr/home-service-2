@@ -12,11 +12,11 @@ import { Link } from "react-router-dom";
 import useServiceCategories from "../../hooks/useServiceCategories";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import axios from "../../api/axios";
 import errorIcon from "../../asset/image/errorIcon.svg";
 
 const CreateServiceCategory = () => {
   const { createServiceCategory } = useServiceCategories();
-
   const initialValues = {
     categoryName: "",
   };
@@ -24,8 +24,30 @@ const CreateServiceCategory = () => {
   return (
     <Formik
       initialValues={initialValues}
+      validateOnChange={false}
       validationSchema={Yup.object({
-        categoryName: Yup.string().required("กรุณากรอกชื่อหมวดหมู่"),
+        categoryName: Yup.string()
+          .test(
+            "Unique Category",
+            "ชื่อหมวดหมู่นี้ถูกใช้งานแล้ว กรุณาเปลี่ยนชื่อหมวดหมู่",
+            function (value) {
+              return new Promise((resolve, reject) => {
+                axios
+                  .get(`/service/category?categoryName=${value}`)
+                  .then((res) => {
+                    if (res.data.data.length >= 1) {
+                      resolve(false);
+                    } else {
+                      resolve(true);
+                    }
+                  })
+                  .catch((error) => {
+                    resolve(false);
+                  });
+              });
+            }
+          )
+          .required("กรุณากรอกชื่อหมวดหมู่"),
       })}
       onSubmit={async (values) => {
         const categoryName = values.categoryName;
@@ -36,8 +58,8 @@ const CreateServiceCategory = () => {
         }
       }}
     >
-      {({ values, handleSubmit, setFieldValue, errors, touched, meta }) => (
-        <Container bg="#F3F4F6" maxW="100%" height="100vh" paddingLeft="0px">
+      {({ handleSubmit, setFieldValue, errors, touched }) => (
+        <Container bg="#F3F4F6" maxW="100%" height="100vh" padding="0px">
           <Form onSubmit={handleSubmit}>
             <Flex>
               <SideBar />
@@ -67,7 +89,7 @@ const CreateServiceCategory = () => {
                     width="12rem"
                     marginRight="5rem"
                   >
-                    <Link to="/admin-dashboard">
+                    <Link to="/admin-dashboard/categories">
                       <Button
                         bg="white"
                         color="blue.600"
