@@ -9,7 +9,7 @@ const ServiceList = () => {
 
     const [input, setInput] = useState("");
     const [category, setCategory] = useState('บริการทั้งหมด');
-    const [order, setOrder] = useState('ตามตัวอักษร (Ascending)')
+    const [order, setOrder] = useState('บริการแนะนำ')
     const [sliderValue, setSliderValue] = useState([0, 2000]);
     return (
         <section className='serviceListPage'>

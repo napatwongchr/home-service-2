@@ -9,9 +9,9 @@ const useAdminServiceLists = () => {
   const [serviceList, setServiceList] = useState('');
   const params = useParams();
 
-  const getServiceLists = async () => {
+  const getServiceLists = async (params) => {
     try {
-      const results = await axios.get(`/service`);
+      let results = await axios.get(`/service?searchInput=${params.input}&category=${params.category}&min=${params.sliderValue[0]}&max=${params.sliderValue[1]}`);;
       setServiceLists(results.data.data);
     } catch (error) {
       console.log(error);

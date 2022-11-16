@@ -4,7 +4,6 @@ import { cloudinaryDelete, cloudinaryUpload } from "../utils/upload.js";
 const serviceListController = {
     async createServiceList(req, res) {
         try {
-
             const serviceList = {
                 serviceName: req.body.serviceName,
                 serviceCategory: req.body.serviceCategory,
@@ -66,22 +65,32 @@ const serviceListController = {
     },
 
     async getService(req, res) {
+        // const client = await pool.connect();
         try {
+            //Get By ID
             const serviceId = req.query.serviceId
-            const serviceName = req.query.serviceName
-
-            const serviceQuery = `select service_id, 
-            service_name,  
-            service_category_name, 
+            const serviceQuery = `
+           select service.service_id,
+            service.service_name,
             service_image.url,
-            service_image.bytes,
-            service.created_at, 
-            service.updated_at 
+            service.service_category_id,
+            service_category.service_category_name,
+            service_image.service_image_id,
+            MIN(sub_service.price_per_unit), 
+            MAX(sub_service.price_per_unit)
             from service
             inner join service_image
             on service_image.service_image_id = service.service_image_id
             inner join service_category
-            on service_category.service_category_id = service.service_category_id`
+            on service_category.service_category_id = service.service_category_id
+            inner join sub_service
+            on sub_service.service_id = service.service_id
+            `
+
+            const subServiceQuery = `select *
+            from sub_service
+            order by price_per_unit asc
+            `
 
             const subServiceQueryByServiceId = `select sub_service_id, 
             sub_service_name, 
@@ -90,11 +99,18 @@ const serviceListController = {
             updated_at 
             from sub_service where service_id = $1`
 
-            //Get Service By ID
-            if (serviceId) {
+            const groupBy = `group by service.service_id, service_image.service_image_id, service_category.service_category_name`
+            // // //Get All Service
+            let findService = await pool.query(`
+            ${serviceQuery}
+            group by service.service_id, service_image.service_image_id, service_category.service_category_name
+            `)
+            const findSubService = await pool.query(subServiceQuery)
 
-                let findService = await pool.query(`${serviceQuery} where service_id = $1`, [serviceId])
-                let findSubService = await pool.query(subServiceQueryByServiceId, [serviceId])
+            //Qeury Service By ID
+            if (serviceId) {
+                let findService = await pool.query(serviceQuery + groupBy, [serviceId])
+                let findSubService = await pool.query(subServiceQueryById, [serviceId])
 
                 if (!findService.rows[0]) {
                     return res.status(404).json({
@@ -115,40 +131,48 @@ const serviceListController = {
                 })
             }
 
-            //Get Service By Name
-            else if (serviceName) {
-                let findService = await pool.query(`${serviceQuery} where service_name like $1`, [serviceName + '%'])
-
-                if (!findService.rows[0]) {
-                    return res.status(404).json({
-                        msg: "service not found"
-                    })
-                }
-
-                //Set response format for service by name
-                const serviceByName = findService.rows.map(service => {
-                    service.created_at = service.created_at.toLocaleString().split(', ').join(' ')
-                    service.updated_at = service.updated_at.toLocaleString().split(', ').join(' ')
-                    return service
-                })
-
+            if (req.query.searchInput === '' && req.query.category === 'บริการทั้งหมด') {
                 return res.status(200).json({
-                    data : serviceByName
-                })
-            } else if (Object.keys(req.query).length > 0) {
-                return res.status(400).json({
-                    msg: "invalid query input"
+                    data: {
+                        service: findService.rows,
+                        subService: findSubService.rows,
+                    }
                 })
             }
 
-            // Get All Service
-            const findService = await pool.query(serviceQuery)
-            
-            //Set response format for all service
-            const service = findService.rows.map(service => {
-                service.created_at = service.created_at.toLocaleString().split(', ').join(' ')
-                service.updated_at = service.updated_at.toLocaleString().split(', ').join(' ')
-                return service;
+            let serviceName = req.query.searchInput
+            let category = req.query.category;
+            let priceMin = req.query.min;
+            let priceMax = req.query.max;
+
+            if (serviceName && category !== 'บริการทั้งหมด') {
+                findService = await pool.query(`
+                    ${serviceQuery}
+                    where service_name ilike $1
+                    and service_category_name ilike $2
+                    ${groupBy}
+                    `, [serviceName, category]);
+            } else if (serviceName && category === 'บริการทั้งหมด') {
+                findService = await pool.query(`
+                    ${serviceQuery}
+                    where service_name ilike $1
+                    ${groupBy}
+                    `, [serviceName]);
+            } else if (category && serviceName === '') {
+                findService = await pool.query(`
+                    ${serviceQuery}
+                    where service_category_name ilike $1
+                    ${groupBy}
+                    `, [category]);
+            }
+
+
+
+            return res.status(200).json({
+                data: {
+                    service: findService.rows,
+                    subService: findSubService.rows,
+                }
             })
             return res.status(200).json({
                 data: service
@@ -159,6 +183,9 @@ const serviceListController = {
             return res.status(400).json({
                 msg: "invalid input"
             })
+        } finally {
+            // await client.release()
+            // await client.end()
         }
     },
 
@@ -181,7 +208,7 @@ const serviceListController = {
             set service_name = $1, 
             updated_at = $2, 
             service_category_id = $3
-            where service_id = $4 returning *`, [serviceList.serviceName,new Date(), findServiceCategory.rows[0].service_category_id, serviceId])
+            where service_id = $4 returning *`, [serviceList.serviceName, new Date(), findServiceCategory.rows[0].service_category_id, serviceId])
 
             //  get sub service id from database
             const oldSubServiceDB = await pool.query(`select sub_service_id 
@@ -199,7 +226,7 @@ const serviceListController = {
                 unit_name = $2, price_per_unit = $3, 
                 updated_at = $4
                 where sub_service_id = $5
-                `, [subService.sub_service_name, subService.unit_name, subService.price_per_unit,new Date(), subService.sub_service_id])
+                `, [subService.sub_service_name, subService.unit_name, subService.price_per_unit, new Date(), subService.sub_service_id])
             })
 
             //  delete old service if not exist

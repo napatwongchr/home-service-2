@@ -40,7 +40,7 @@ const AdminServiceList = () => {
 
   useEffect(() => {
     getServiceLists();
-  }, [serviceLists]);
+  }, []);
 
   const { handleColorText, handleColorButton } = filterCategory;
   return (
@@ -87,7 +87,7 @@ const AdminServiceList = () => {
             </Tr>
           </Thead>
           <Tbody bg="#FFFFFF">
-            {serviceLists.map((item, index) => {
+            {serviceLists.service && serviceLists.service.map((item, index) => {
               return (
                 <Tr key={item.service_id} h={90}>
                   <Td textAlign={"center"}>{index + 1}</Td>
@@ -119,10 +119,10 @@ const AdminServiceList = () => {
                   <Td className="action-button">
                     <Flex justifyContent={"space-evenly"}>
                       <button className="delete-button" onClick={() => {
-                          setListName(`${item.service_name}`);
-                          setListUniqueId(`${item.service_id}  `);
-                          onOpen();
-                        }}>
+                        setListName(`${item.service_name}`);
+                        setListUniqueId(`${item.service_id}  `);
+                        onOpen();
+                      }}>
                         <Image src={binIcon} alt="bin icon" />
                         <Modal isOpen={isOpen} onClose={onClose}>
                           <ModalOverlay />
