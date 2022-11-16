@@ -28,6 +28,7 @@ import * as Yup from "yup";
 import errorIcon from "../../asset/image/errorIcon.svg";
 
 const EditServiceCategory = () => {
+
     const {
         serviceCategory,
         getServiceCategoryById,
@@ -38,7 +39,7 @@ const EditServiceCategory = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [categoryName, setCategoryName] = useState("");
     const navigate = useNavigate();
-
+    
     useEffect(() => {
         getServiceCategoryById(params);
     }, []);

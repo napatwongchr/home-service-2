@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import axios from "../api/axios";
-// เปลี่ยน
+import { useNavigate, useParams } from "react-router-dom";
 
 const useServiceCategories = () => {
   const navigate = useNavigate();
@@ -12,7 +11,7 @@ const useServiceCategories = () => {
   const getServiceCategories = async (input) => {
     try {
       let results = await axios.get(`/service/category`);
-      if (input.searchCategoryName !== "") {
+      if (input === "") {
         const { searchCategoryName } = input;
         const params = new URLSearchParams();
         params.append("categoryName", searchCategoryName);

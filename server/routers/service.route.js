@@ -6,7 +6,7 @@ import { protect } from '../middlewares/authProtect.js';
 
 const upload = multer({ dest: 'uploads/' });
 const serviceRoute = Route();
-serviceRoute.use(protect)
+// serviceRoute.use(protect)
 // Service
 serviceRoute.post('/', upload.single("serviceImage"), serviceListController.createServiceList);
 serviceRoute.get('/', serviceListController.getService);
