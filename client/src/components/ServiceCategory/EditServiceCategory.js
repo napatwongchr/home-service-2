@@ -28,6 +28,7 @@ import * as Yup from "yup";
 import errorIcon from "../../asset/image/errorIcon.svg";
 
 const EditServiceCategory = () => {
+
     const {
         serviceCategory,
         getServiceCategoryById,

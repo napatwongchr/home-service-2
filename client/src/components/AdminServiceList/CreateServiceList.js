@@ -18,9 +18,9 @@ const CreateServiceList = () => {
   const [category, setCategory] = useState('เลือกหมวดหมู่');
   const { serviceCategories, getServiceCategories } = useServiceCategories();
   const { createServiceList } = useAdminServiceLists();
-
+  const searchCategoryName = ''
   useEffect(() => {
-    getServiceCategories();
+    getServiceCategories({ searchCategoryName });
   }, []);
 
   const initialValues = {
@@ -239,7 +239,7 @@ const CreateServiceList = () => {
                             type="text"
                             w={'240px'} h={'44px'} mt='0'
                           />
-                          <Img src={bathIcon} alt={bathIcon} pos='relative' top='-35px' left='-30px' />
+                          <Img src={bathIcon} alt={bathIcon} pos='relative' top='-35px' left='-280px' />
                           <Button pos='relative' top='-20px' variant={'ghost'} color='gray.400' onClick={() => values.serviceList.length > 1 && remove(index)}>ลบรายการ</Button>
                         </Flex>
                       ))}

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../api/axios";
-// เปลี่ยน
 
 const useServiceCategories = () => {
   const navigate = useNavigate();
@@ -11,12 +10,23 @@ const useServiceCategories = () => {
 
   const getServiceCategories = async (input) => {
     try {
-      let results = await axios.get(`/service/category`);
-      if (input.searchCategoryName !== "") {
-        const { searchCategoryName } = input;
-        const params = new URLSearchParams();
-        params.append("categoryName", searchCategoryName);
-        results = await axios.get(`/service/category?${params.toString()}`);
+      let results;
+      console.log(input);
+      if (input) {
+        if (input.searchCategoryName === '') {
+
+          results = await axios.get(`/service/category`);
+        }
+        else if (input.searchCategoryName !== '') {
+          const { searchCategoryName } = input;
+          const params = new URLSearchParams();
+          params.append("categoryName", searchCategoryName);
+          results = await axios.get(
+            `/service/category?${params.toString()}`
+          );
+        }
+      } else {
+        results = await axios.get(`/service/category`);
       }
       setServiceCategories(results.data.data);
     } catch (error) {

@@ -37,7 +37,6 @@ const DetailServiceList = () => {
       setServiceUpdateAt(serviceList.service.updated_at);
     }
   }, [serviceList]);
-  console.log(serviceList);
 
   return (
     <Container bg="#F3F4F6" maxW="100%" height={"100%"} padding="0">
