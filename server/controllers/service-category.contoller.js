@@ -1,4 +1,3 @@
-import { query } from "express";
 import { pool } from "../utils/db.js";
 
 const serviceCategoryController = {
@@ -19,18 +18,19 @@ const serviceCategoryController = {
         `insert into service_category( service_category_name, created_at, updated_at )
             values (
                 $1,
-                to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM'),
-                to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM')
+                $2,
+                $3
             ) returning service_category_id
             `,
-        [req.body.categoryName]
+        [req.body.categoryName, new Date(), new Date()]
       );
 
       return res.status(201).json({
-        msg: "add service successfully",
+        msg: "add category successfully",
         data: serviceCategory.rows[0],
       });
     } catch (err) {
+      console.log(err)
       return res.status(400).json({
         msg: "invalid input",
       });
@@ -39,34 +39,41 @@ const serviceCategoryController = {
 
   async getServiceCategory(req, res) {
     try {
-      //find category by categoryId
+      //Get Category By ID
       if (req.query.categoryId) {
         let categoryId = req.query.categoryId;
-        const findCategory = await pool.query(
+        const findCategoryById = await pool.query(
           `select * from service_category where service_category_id = $1`,
           [categoryId]
         );
-        if (!Boolean(findCategory.rows[0])) {
+        if (!Boolean(findCategoryById.rows[0])) {
           return res.status(404).json({
             msg: "category not found",
           });
         }
+        //Set Response Format for Category By ID
+        const CategoryById = findCategoryById.rows[0]
+        CategoryById.created_at = CategoryById.created_at.toLocaleString().split(', ').join(' ')
+        CategoryById.updated_at = CategoryById.updated_at.toLocaleString().split(', ').join(' ')
         return res.status(200).json({
-          data: findCategory.rows[0],
+          data : CategoryById
         });
       } else if (req.query.categoryName) {
         let categoryName = `%${req.query.categoryName}%` || "";
-        const findCategory = await pool.query(
+        const findCategoryByName = await pool.query(
           `select * from service_category where service_category_name ilike $1`,
           [categoryName]
         );
-        // if (!Boolean(findCategory.rows)) {
-        //   return res.status(404).json({
-        //     msg: "category not found",
-        //   });
-        // }
+
+        //Set Response Format for Category By Name
+        const categoryByName = findCategoryByName.rows.map(category => {
+          category.created_at = category.created_at.toLocaleString().split(', ').join(' ')
+          category.updated_at = category.updated_at.toLocaleString().split(', ').join(' ')
+          return category
+        })
+
         return res.status(200).json({
-          data: findCategory.rows,
+          data : categoryByName
         });
       } else if (Object.keys(req.query).length > 0) {
         return res.status(404).json({
@@ -74,13 +81,21 @@ const serviceCategoryController = {
         });
       }
 
+      //Get All Service Category
       const allServiceCategory = await pool.query(
         `select * from service_category`
       );
+      //Set Response Format for get all category
+      const mapedCategory = allServiceCategory.rows.map(category=>{
+        category.created_at = category.created_at.toLocaleString().split(', ').join(' ')
+        category.updated_at = category.updated_at.toLocaleString().split(', ').join(' ')
+        return category
+      })
       return res.status(200).json({
-        data: allServiceCategory.rows,
+        data : mapedCategory
       });
     } catch (err) {
+      console.log(err)
       return res.status(400).json({
         msg: "invalid input",
       });
@@ -94,10 +109,10 @@ const serviceCategoryController = {
       await pool.query(
         `update service_category
                 set service_category_name = $1, 
-                updated_at = to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM')
-                where service_category_id = $2
+                updated_at = $2
+                where service_category_id = $3
             `,
-        [categoryName, categoryId]
+        [categoryName, new Date(), categoryId]
       );
 
       const getRecentupdate = await pool.query(
