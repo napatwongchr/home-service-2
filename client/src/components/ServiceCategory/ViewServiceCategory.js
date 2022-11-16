@@ -42,7 +42,7 @@ const ViewServiceCategory = () => {
       serviceCategories,
       searchCategoryName,
     });
-  }, [serviceCategories]);
+  }, [searchCategoryName]);
 
   return (
     <Container maxW="100%" height="100%" bg="gray.100" padding={"0"}>
