@@ -22,7 +22,7 @@ const DetailServiceCategory = () => {
   }, []);
 
   return (
-    <Container bg="#F3F4F6" maxW="100%" height="100vh" paddingLeft="0px">
+    <Container bg="#F3F4F6" maxW="100%" height="100vh" padding="0px">
       <Flex>
         <SideBar />
         <Flex
@@ -48,7 +48,7 @@ const DetailServiceCategory = () => {
               alignItems={"center"}
               marginLeft="3rem"
             >
-              <Link to="/admin-dashboard">
+              <Link to="/admin-dashboard/categories">
                 <Image src={arrow} marginRight="1.5rem" />
               </Link>
 
@@ -69,7 +69,7 @@ const DetailServiceCategory = () => {
               width="12rem"
               marginRight="5rem"
             >
-              <Link to="/admin-dashboard/category/edit">
+              <Link to={`/admin-dashboard/category/edit/${serviceCategory.service_category_id}`}>
                 <Button width={"5.5rem"} onSubmit={{}}>
                   แก้ไข
                 </Button>

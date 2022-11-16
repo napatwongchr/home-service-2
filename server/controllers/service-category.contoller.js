@@ -55,16 +55,16 @@ const serviceCategoryController = {
           data: findCategory.rows[0],
         });
       } else if (req.query.categoryName) {
-        let categoryName = `%${req.query.categoryName}%` || "";
+        let categoryName = `%${req.query.categoryName}%`;
         const findCategory = await pool.query(
           `select * from service_category where service_category_name ilike $1`,
           [categoryName]
         );
-        // if (!Boolean(findCategory.rows)) {
-        //   return res.status(404).json({
-        //     msg: "category not found",
-        //   });
-        // }
+        if (!Boolean(findCategory.rows)) {
+          return res.status(404).json({
+            msg: "category not found",
+          });
+        }
         return res.status(200).json({
           data: findCategory.rows,
         });

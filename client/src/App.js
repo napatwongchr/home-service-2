@@ -10,7 +10,7 @@ import AdminDetailService from "./pages/Admin/AdminDetailService";
 import CreateServiceCategory from "./components/ServiceCategory/CreateServiceCategory";
 import EditServiceCategory from "./components/ServiceCategory/EditServiceCategory";
 import DetailServiceCategory from "./components/ServiceCategory/DetailServiceCategory";
-import AdminEditService from './pages/Admin/AdminEditService';
+import AdminEditService from "./pages/Admin/AdminEditService";
 import { useAuth } from "./contexts/authentication";
 
 function App() {
@@ -20,15 +20,15 @@ function App() {
     <>
       {
         isAuthenticated ?
-          user.role === 'admin' ?
+          user.role === "admin" ?
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/service-list" element={<ServiceList />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
+              <Route path="/admin-dashboard/categories" element={<AdminDashboardPage />} />
               <Route path="/admin-dashboard/services" element={<AdminServiceListPage />} />
-              <Route path="/admin-detail/service/view/:serviceId" element={<AdminDetailService />} />
+              <Route path="/admin-dashboard/service/view/:serviceId" element={<AdminDetailService />} />
               <Route path="/admin-dashboard/service/edit/:serviceId" element={<AdminEditService />} />
               <Route path="/admin-dashboard/service/create" element={<AdminCreateService />} />
               <Route path="/admin-dashboard/category/create" element={<CreateServiceCategory />} />
