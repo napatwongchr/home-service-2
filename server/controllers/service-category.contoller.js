@@ -8,14 +8,13 @@ const serviceCategoryController = {
         [req.body.categoryName]
       );
       const hasCategory = Boolean(findCategory.rows[0]);
-
       if (hasCategory) {
         return res.status(403).json({
           msg: "this service has already exist",
         });
       }
       const serviceCategory = await pool.query(
-        `insert into service_category( service_category_name, created_at, updated_at )
+        `insert into service_category(service_category_name, created_at, updated_at )
             values (
                 $1,
                 $2,
@@ -56,7 +55,7 @@ const serviceCategoryController = {
         CategoryById.created_at = CategoryById.created_at.toLocaleString().split(', ').join(' ')
         CategoryById.updated_at = CategoryById.updated_at.toLocaleString().split(', ').join(' ')
         return res.status(200).json({
-          data : CategoryById
+          data: CategoryById
         });
       } else if (req.query.categoryName) {
         let categoryName = `%${req.query.categoryName}%` || "";
@@ -73,7 +72,7 @@ const serviceCategoryController = {
         })
 
         return res.status(200).json({
-          data : categoryByName
+          data: categoryByName
         });
       } else if (Object.keys(req.query).length > 0) {
         return res.status(404).json({
@@ -86,13 +85,13 @@ const serviceCategoryController = {
         `select * from service_category`
       );
       //Set Response Format for get all category
-      const mapedCategory = allServiceCategory.rows.map(category=>{
+      const mapedCategory = allServiceCategory.rows.map(category => {
         category.created_at = category.created_at.toLocaleString().split(', ').join(' ')
         category.updated_at = category.updated_at.toLocaleString().split(', ').join(' ')
         return category
       })
       return res.status(200).json({
-        data : mapedCategory
+        data: mapedCategory
       });
     } catch (err) {
       console.log(err)

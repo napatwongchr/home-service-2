@@ -4,7 +4,6 @@ import { cloudinaryDelete, cloudinaryUpload } from "../utils/upload.js";
 const serviceListController = {
     async createServiceList(req, res) {
         try {
-
             const serviceList = {
                 serviceName: req.body.serviceName,
                 serviceCategory: req.body.serviceCategory,
@@ -56,7 +55,6 @@ const serviceListController = {
                 msg: "service has been created"
             })
 
-
         } catch (err) {
             console.log(err)
             return res.status(400).json({
@@ -67,21 +65,39 @@ const serviceListController = {
 
     async getService(req, res) {
         try {
+            //Get By ID
             const serviceId = req.query.serviceId
-            const serviceName = req.query.serviceName
+            const serviceName = req.query.searchInput
+            const category = req.query.category;
+            const priceMin = req.query.min;
+            const priceMax = req.query.max;
+            const sort = req.query.sort
 
-            const serviceQuery = `select service_id, 
-            service_name,  
-            service_category_name, 
+            let serviceQuery = `
+            select service.service_id,
+            service.service_name,
             service_image.url,
+            service.service_category_id,
+            service_category.service_category_name,
+            service_image.service_image_id,
             service_image.bytes,
-            service.created_at, 
-            service.updated_at 
+            service.created_at,
+            service.updated_at,
+            MIN(sub_service.price_per_unit), 
+            MAX(sub_service.price_per_unit)
             from service
             inner join service_image
             on service_image.service_image_id = service.service_image_id
             inner join service_category
-            on service_category.service_category_id = service.service_category_id`
+            on service_category.service_category_id = service.service_category_id
+            inner join sub_service
+            on sub_service.service_id = service.service_id
+            `
+
+            const subServiceQuery = `select *
+            from sub_service
+            order by price_per_unit asc
+            `
 
             const subServiceQueryByServiceId = `select sub_service_id, 
             sub_service_name, 
@@ -90,11 +106,20 @@ const serviceListController = {
             updated_at 
             from sub_service where service_id = $1`
 
-            //Get Service By ID
-            if (serviceId) {
+            const groupBy = `group by service.service_id, service_image.service_image_id, service_category.service_category_name`
 
-                let findService = await pool.query(`${serviceQuery} where service_id = $1`, [serviceId])
-                let findSubService = await pool.query(subServiceQueryByServiceId, [serviceId])
+            //Query Service By ID
+            if (serviceId) {
+                let findService = await pool.query(`
+                    ${serviceQuery}
+                    where service.service_id = $1
+                    ${groupBy}
+                `
+                    , [serviceId])
+
+                let findSubService = await pool.query(`
+                ${subServiceQueryByServiceId}
+                `, [serviceId])
 
                 if (!findService.rows[0]) {
                     return res.status(404).json({
@@ -103,61 +128,170 @@ const serviceListController = {
                 }
 
                 //Set response format for Get service by Id
-                const service = findService.rows[0]
-                service.created_at = service.created_at.toLocaleString().split(', ').join(' ')
-                service.updated_at = service.updated_at.toLocaleString().split(', ').join(' ')
+                findService.rows[0].created_at = findService.rows[0].created_at.toLocaleString().split(', ').join(' ')
+                findService.rows[0].updated_at = findService.rows[0].updated_at.toLocaleString().split(', ').join(' ')
+                const subServiceById = findSubService.rows.map(subService => {
+                    subService.created_at = subService.created_at.toLocaleString().split(', ').join(' ')
+                    subService.updated_at = subService.updated_at.toLocaleString().split(', ').join(' ')
+                    return subService
+                })
 
                 return res.status(200).json({
                     data: {
                         service: findService.rows[0],
-                        subService: findSubService.rows
+                        subService: subServiceById
                     }
                 })
             }
 
-            //Get Service By Name
-            else if (serviceName) {
-                let findService = await pool.query(`${serviceQuery} where service_name like $1`, [serviceName + '%'])
 
-                if (!findService.rows[0]) {
-                    return res.status(404).json({
-                        msg: "service not found"
-                    })
+            // query filter by user
+            if (serviceName === 'undefined' && category === 'undefined' && sort === 'undefined' && !priceMin && !priceMax) {
+                serviceQuery += groupBy
+            }
+            else if (serviceName !== '') {
+                if (category === 'บริการทั้งหมด' && !priceMin && !priceMax && sort === 'บริการแนะนำ') {
+                    serviceQuery = `
+                    ${serviceQuery}
+                    where service_name ilike '%$serviceName%'
+                    `.replace('$serviceName', serviceName)
+                    serviceQuery += groupBy
+                } else if (category !== 'บริการทั้งหมด') {
+                    serviceQuery = `
+                    ${serviceQuery}
+                    where service_name ilike '%$serviceName%'
+                    and service_category_name ilike '$category'
+                    `.replace('$serviceName', serviceName).replace('$category', category)
+                    serviceQuery += groupBy
+                } else if (priceMin && priceMax) {
+                    serviceQuery = `
+                    ${serviceQuery}
+                    where service_name ilike '%$serviceName%'
+                    and price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                    `.replace('$serviceName', serviceName).replace('$priceMin', priceMin).replace('$priceMax', priceMax)
+                    serviceQuery += groupBy
+                } else if (sort !== 'บริการแนะนำ') {
+                    if (sort === 'ตามตัวอักษร (Ascending)') {
+                        serviceQuery = `
+                        ${serviceQuery}
+                        where service_name ilike '%$serviceName%'
+                        ${groupBy}
+                        order by service_name asc
+                        `.replace('$serviceName', serviceName)
+                    } else if (sort === 'ตามตัวอักษร (Descending)') {
+                        serviceQuery = `
+                        ${serviceQuery}
+                        where service_name ilike '%$serviceName%'
+                        ${groupBy}
+                        order by service_name desc
+                        `.replace('$serviceName', serviceName)
+                    }
                 }
-
-                //Set response format for service by name
-                const serviceByName = findService.rows.map(service => {
-                    service.created_at = service.created_at.toLocaleString().split(', ').join(' ')
-                    service.updated_at = service.updated_at.toLocaleString().split(', ').join(' ')
-                    return service
-                })
-
-                return res.status(200).json({
-                    data : serviceByName
-                })
-            } else if (Object.keys(req.query).length > 0) {
-                return res.status(400).json({
-                    msg: "invalid query input"
-                })
+            }
+            else if (category !== 'บริการทั้งหมด') {
+                if (serviceName === '' && !priceMin && !priceMax && sort === 'บริการแนะนำ') {
+                    serviceQuery = `
+                        ${serviceQuery}
+                        where service_category_name ilike '$category'
+                        `.replace('$category', category)
+                    serviceQuery += groupBy
+                } else if (priceMin && priceMax) {
+                    serviceQuery = `
+                    ${serviceQuery}
+                    where service_category_name ilike '$category'
+                    and price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                    `.replace('$category', category).replace('$priceMin', priceMin).replace('$priceMax', priceMax)
+                    serviceQuery += groupBy
+                }
+                else if (sort !== 'บริการแนะนำ') {
+                    if (sort === 'ตามตัวอักษร (Ascending)') {
+                        serviceQuery = `
+                        ${serviceQuery}
+                        where service_category_name ilike '$category'
+                        ${groupBy}
+                        order by service_name asc
+                        `.replace('$category', category)
+                    } else if (sort === 'ตามตัวอักษร (Descending)') {
+                        serviceQuery = `
+                        ${serviceQuery}
+                        where service_category_name ilike '$category'
+                        ${groupBy}
+                        order by service_name desc
+                        `.replace('$category', category)
+                    }
+                }
+            }
+            else if (priceMax && priceMin) {
+                if (serviceName === '' && category === 'บริการทั้งหมด' && sort === 'บริการแนะนำ') {
+                    serviceQuery = `
+                    ${serviceQuery}
+                    where price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                    `.replace('$priceMin', priceMin).replace('$priceMax', priceMax)
+                    serviceQuery += groupBy
+                }
+                else if (sort !== 'บริการแนะนำ') {
+                    if (sort === 'ตามตัวอักษร (Ascending)') {
+                        serviceQuery = `
+                        ${serviceQuery}
+                        where price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                        ${groupBy}
+                        order by service_name asc
+                        `.replace('$priceMin', priceMin).replace('$priceMax', priceMax)
+                    } else if (sort === 'ตามตัวอักษร (Descending)') {
+                        serviceQuery = `
+                        ${serviceQuery}
+                        where price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                        ${groupBy}
+                        order by service_name desc
+                        `.replace('$priceMin', priceMin).replace('$priceMax', priceMax)
+                    }
+                }
+            }
+            else if (sort !== 'บริการแนะนำ') {
+                if (sort === 'ตามตัวอักษร (Ascending)') {
+                    serviceQuery = `
+                        ${serviceQuery}
+                        ${groupBy}
+                        order by service_name asc
+                        `
+                } else if (sort === 'ตามตัวอักษร (Descending)') {
+                    serviceQuery = `
+                        ${serviceQuery}
+                        ${groupBy}
+                        order by service_name desc
+                        `
+                }
+            }
+            else {
+                serviceQuery += groupBy
             }
 
-            // Get All Service
             const findService = await pool.query(serviceQuery)
-            
-            //Set response format for all service
+            const findSubService = await pool.query(subServiceQuery)
+            //Set response format for service by filter
             const service = findService.rows.map(service => {
                 service.created_at = service.created_at.toLocaleString().split(', ').join(' ')
                 service.updated_at = service.updated_at.toLocaleString().split(', ').join(' ')
-                return service;
+                return service
             })
+            const subService = findSubService.rows.map(subService => {
+                subService.created_at = subService.created_at.toLocaleString().split(', ').join(' ')
+                subService.updated_at = subService.updated_at.toLocaleString().split(', ').join(' ')
+                return subService
+            })
+
+
             return res.status(200).json({
-                data: service
+                data: {
+                    service: service,
+                    subService: subService
+                }
             })
 
         } catch (err) {
             console.log(err);
             return res.status(400).json({
-                msg: "invalid input"
+                msg: "service not found"
             })
         }
     },
@@ -181,7 +315,7 @@ const serviceListController = {
             set service_name = $1, 
             updated_at = $2, 
             service_category_id = $3
-            where service_id = $4 returning *`, [serviceList.serviceName,new Date(), findServiceCategory.rows[0].service_category_id, serviceId])
+            where service_id = $4 returning *`, [serviceList.serviceName, new Date(), findServiceCategory.rows[0].service_category_id, serviceId])
 
             //  get sub service id from database
             const oldSubServiceDB = await pool.query(`select sub_service_id 
@@ -199,7 +333,7 @@ const serviceListController = {
                 unit_name = $2, price_per_unit = $3, 
                 updated_at = $4
                 where sub_service_id = $5
-                `, [subService.sub_service_name, subService.unit_name, subService.price_per_unit,new Date(), subService.sub_service_id])
+                `, [subService.sub_service_name, subService.unit_name, subService.price_per_unit, new Date(), subService.sub_service_id])
             })
 
             //  delete old service if not exist
@@ -219,7 +353,6 @@ const serviceListController = {
                         )
                 `, [serviceId, subService.sub_service_name, subService.price_per_unit, subService.unit_name, new Date(), new Date()])
             })
-
 
             if (typeof req.body.serviceImage === 'string') {
                 serviceList['serviceImage'] = req.body.serviceImage

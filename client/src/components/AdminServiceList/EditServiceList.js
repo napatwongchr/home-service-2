@@ -17,7 +17,7 @@ import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
 
 const EditCreateServiceList = () => {
     const formData = new FormData();
-    const [serviceId, setServiceId] = useState ('')
+    const [serviceId, setServiceId] = useState('')
     const [serviceName, setServiceName] = useState('');
     const [serviceCategory, setServiceCategory] = useState('');
     const [serviceImage, setServiceImage] = useState('');
@@ -265,7 +265,7 @@ const EditCreateServiceList = () => {
                                                         w={'240px'} h={'44px'} mt='0'
 
                                                     />
-                                                    <Img src={bathIcon} alt={bathIcon} pos='relative' top='-35px' left='-30px' />
+                                                    <Img src={bathIcon} alt={bathIcon} pos='relative' top='-35px' left='-280px' />
                                                     <Button pos='relative' top='-20px' variant={'ghost'} onClick={() => values.serviceList.length > 1 && remove(index)}>ลบรายการ</Button>
                                                 </Flex>
                                             ))}

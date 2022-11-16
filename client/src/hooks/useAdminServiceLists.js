@@ -9,9 +9,14 @@ const useAdminServiceLists = () => {
   const [serviceList, setServiceList] = useState('');
   const params = useParams();
 
-  const getServiceLists = async () => {
+  const getServiceLists = async (params) => {
     try {
-      const results = await axios.get(`/service`);
+      let results;
+      if (params.priceTouched === true) {
+        results = await axios.get(`/service?searchInput=${params.input}&category=${params.category}&min=${params.sliderValue[0]}&max=${params.sliderValue[1]}&sort=${params.order}`);;
+      } else if (params.input !== '' || params.category) {
+        results = await axios.get(`/service?searchInput=${params.input}&category=${params.category}&sort=${params.order}`);;
+      }
       setServiceLists(results.data.data);
     } catch (error) {
       console.log(error);
@@ -51,6 +56,7 @@ const useAdminServiceLists = () => {
 
   const deleteServiceList = async (serviceId) => {
     try {
+      console.log(serviceId);
       await axios.delete(
         `/service?serviceId=${serviceId}`
       );
