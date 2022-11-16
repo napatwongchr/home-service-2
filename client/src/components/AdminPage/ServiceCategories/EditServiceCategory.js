@@ -16,17 +16,17 @@ import {
     useDisclosure,
     Box,
 } from "@chakra-ui/react";
-import SideBar from "../AdminPage/SideBar";
-import arrow from "../../asset/image/serviceCategory/left-arrow.svg";
-import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
-import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
+import SideBar from "../SideBar";
+import arrow from "../../../asset/image/serviceCategory/left-arrow.svg";
+import binIcon from "../../../asset/image/serviceCategory/bin-icon.svg";
+import warningICon from "../../../asset/image/serviceCategory/warning-icon.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import useServiceCategories from "../../hooks/useServiceCategories.js";
+import useServiceCategories from "../../../hooks/useServiceCategories.js";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import axios from "../../api/axios";
-import errorIcon from "../../asset/image/errorIcon.svg";
+import axios from "../../../api/axios";
+import errorIcon from "../../../asset/image/errorIcon.svg";
 
 const EditServiceCategory = () => {
 

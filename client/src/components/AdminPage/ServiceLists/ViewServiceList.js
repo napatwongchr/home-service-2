@@ -1,7 +1,7 @@
-import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
-import editIcon from "../../asset/image/serviceCategory/edit-icon.svg";
-import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
-import { useNavigate, Link } from "react-router-dom";
+import binIcon from "../../../asset/image/serviceCategory/bin-icon.svg";
+import editIcon from "../../../asset/image/serviceCategory/edit-icon.svg";
+import warningICon from "../../../asset/image/serviceCategory/warning-icon.svg";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
   Container,
@@ -26,8 +26,8 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React from "react";
-import filterCategory from "../../utils/filterCategory";
-import useAdminServiceLists from "../../hooks/useAdminServiceLists.js";
+import filterCategory from "../../../utils/filterCategory";
+import useAdminServiceLists from "../../../hooks/useAdminServiceLists.js";
 
 const AdminServiceList = () => {
   const navigate = useNavigate();

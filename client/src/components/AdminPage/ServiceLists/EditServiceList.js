@@ -1,19 +1,19 @@
 import { Box, Button, Container, Divider, Flex, FormLabel, Image, Img, Input, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure, } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import arrow from "../../asset/image/serviceListPage/dropdown.svg";
-import imageIcon from '../../asset/image/adminServiceList/imageIcon.svg';
-import bathIcon from '../../asset/image/adminServiceList/bathIcon.svg';
-import plusIcon from '../../asset/image/adminDashboardPage/plusIcon.svg';
+import arrow from "../../../asset/image/serviceListPage/dropdown.svg";
+import imageIcon from '../../../asset/image/adminServiceList/imageIcon.svg';
+import bathIcon from '../../../asset/image/adminServiceList/bathIcon.svg';
+import plusIcon from '../../../asset/image/adminDashboardPage/plusIcon.svg';
 import { Formik, Form, FieldArray, Field } from 'formik';
-import { MyFieldInput } from '../../utils/formInput';
+import { MyFieldInput } from '../../../utils/formInput';
 import * as Yup from 'yup';
-import NavCreateService from "../AdminPage/NavCreateService";
-import errorIcon from '../../asset/image/errorIcon.svg'
-import UploadComponent from "../../utils/dragDropFile";
-import useServiceCategories from "../../hooks/useServiceCategories";
-import useAdminServiceLists from "../../hooks/useAdminServiceLists";
-import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
-import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
+import NavCreateService from "../NavCreateService";
+import errorIcon from '../../../asset/image/errorIcon.svg'
+import UploadComponent from "../../../utils/dragDropFile";
+import useServiceCategories from "../../../hooks/useServiceCategories";
+import useAdminServiceLists from "../../../hooks/useAdminServiceLists";
+import binIcon from "../../../asset/image/serviceCategory/bin-icon.svg";
+import warningICon from "../../../asset/image/serviceCategory/warning-icon.svg";
 
 const EditCreateServiceList = () => {
     const formData = new FormData();
@@ -336,6 +336,7 @@ const EditCreateServiceList = () => {
                                             mr={3}
                                             onClick={() => {
                                                 deleteServiceList(serviceId)
+                                                // console.log(serviceId);
                                             }}
                                         >
                                             ลบรายการ

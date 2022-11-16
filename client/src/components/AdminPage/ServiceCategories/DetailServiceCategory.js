@@ -7,10 +7,10 @@ import {
   Divider,
   Box,
 } from "@chakra-ui/react";
-import SideBar from "../AdminPage/SideBar";
-import arrow from "../../asset/image/serviceCategory/left-arrow.svg";
+import SideBar from "../SideBar";
+import arrow from "../../../asset/image/serviceCategory/left-arrow.svg";
 import { Link, useNavigate } from "react-router-dom";
-import useServiceCategories from "../../hooks/useServiceCategories";
+import useServiceCategories from "../../../hooks/useServiceCategories";
 import { useEffect } from "react";
 
 const DetailServiceCategory = () => {

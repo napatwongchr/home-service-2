@@ -7,9 +7,9 @@ import AdminDashboardPage from "./pages/Admin/AdminDashBoard";
 import AdminCreateService from "./pages/Admin/AdminCreateService";
 import AdminServiceListPage from "./pages/Admin/AdminServiceLists";
 import AdminDetailService from "./pages/Admin/AdminDetailService";
-import CreateServiceCategory from "./components/ServiceCategory/CreateServiceCategory";
-import EditServiceCategory from "./components/ServiceCategory/EditServiceCategory";
-import DetailServiceCategory from "./components/ServiceCategory/DetailServiceCategory";
+import CreateServiceCategory from "./components/AdminPage/ServiceCategories/CreateServiceCategory";
+import EditServiceCategory from "./components/AdminPage/ServiceCategories/EditServiceCategory";
+import DetailServiceCategory from "./components/AdminPage/ServiceCategories/DetailServiceCategory";
 import AdminEditService from "./pages/Admin/AdminEditService";
 import { useAuth } from "./contexts/authentication";
 
@@ -44,14 +44,14 @@ function App() {
               <Route path="*" element={<HomePage />} />
             </Routes>
           : (
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/service-list" element={<ServiceList />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="*" element={<LoginPage />} />
-        </Routes>
-      )}
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/service-list" element={<ServiceList />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="*" element={<LoginPage />} />
+            </Routes>
+          )}
     </>
   );
 }

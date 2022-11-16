@@ -56,15 +56,17 @@ const useAdminServiceLists = () => {
 
   const deleteServiceList = async (serviceId) => {
     try {
-      console.log(serviceId);
       await axios.delete(
         `/service?serviceId=${serviceId}`
       );
-      const newLists = serviceLists.filter((list) => {
-        return List.service_id !== serviceId;
-      });
-      setServiceLists(newLists);
+      if (serviceLists.service) {
+        const newLists = serviceLists.service.filter((list) => {
+          return list.service_id !== serviceId;
+        });
+        setServiceLists(newLists);
+      }
       navigate("/admin-dashboard/services");
+      window.location.reload(false);
     } catch (error) {
       console.error(error);
     }

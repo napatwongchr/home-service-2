@@ -7,9 +7,9 @@ import {
   Divider,
   Box,
 } from "@chakra-ui/react";
-import arrow from "../../asset/image/serviceCategory/left-arrow.svg";
+import arrow from "../../../asset/image/serviceCategory/left-arrow.svg";
 import { Link } from "react-router-dom";
-import useAdminServiceLists from "../../hooks/useAdminServiceLists";
+import useAdminServiceLists from "../../../hooks/useAdminServiceLists";
 import { useEffect, useState } from "react";
 
 const DetailServiceList = () => {
@@ -63,7 +63,7 @@ const DetailServiceList = () => {
               className="left-side"
               direction="row"
               alignItems={"center"}
-              // marginLeft="3rem"
+            // marginLeft="3rem"
             >
               <Link to="/admin-dashboard/services">
                 <Image src={arrow} marginRight="1.5rem" />
@@ -83,8 +83,8 @@ const DetailServiceList = () => {
             <Flex
               className="button-group"
               justifyContent="space-between"
-              // width="12rem"
-              // marginRight="5rem"
+            // width="12rem"
+            // marginRight="5rem"
             >
               <Link to={`/admin-dashboard/service/edit/${serviceId}`}>
                 <Button width={"5.5rem"} onSubmit={{}}>
@@ -93,7 +93,7 @@ const DetailServiceList = () => {
               </Link>
             </Flex>
           </Flex>
-          
+
           <Flex
             className="edit-service-input"
             direction={"column"}
@@ -237,7 +237,7 @@ const DetailServiceList = () => {
         </Flex>
       </Flex>
     </Container>
-    
+
   );
 };
 
