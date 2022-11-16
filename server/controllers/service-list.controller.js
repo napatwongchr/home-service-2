@@ -80,6 +80,7 @@ const serviceListController = {
             service.service_category_id,
             service_category.service_category_name,
             service_image.service_image_id,
+            service_image.bytes,
             service.created_at,
             service.updated_at,
             MIN(sub_service.price_per_unit), 
@@ -278,7 +279,7 @@ const serviceListController = {
                 subService.updated_at = subService.updated_at.toLocaleString().split(', ').join(' ')
                 return subService
             })
-            
+
 
             return res.status(200).json({
                 data: {
@@ -378,7 +379,7 @@ const serviceListController = {
 
                 const updateImageTable = await pool.query(`update service_image set public_id = $1, url = $2, bytes = $3 where service_image_id = $4 RETURNING *`, [serviceList.publicId, serviceList.url, serviceList.bytes, idOldImage.rows[0].service_image_id])
             }
-            
+
             return res.json({
                 msg: "updated complete"
             })
