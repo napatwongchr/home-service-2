@@ -6,6 +6,7 @@ import {
   Button,
   Divider,
   Box,
+  Spinner,
 } from "@chakra-ui/react";
 import arrow from "../../../asset/image/serviceCategory/left-arrow.svg";
 import { Link } from "react-router-dom";
@@ -20,7 +21,8 @@ const DetailServiceList = () => {
   const [subServiceArr, setSubServiceArr] = useState([]);
   const [serviceCreateAt, setServiceCreateAt] = useState("");
   const [serviceUpdateAt, setServiceUpdateAt] = useState("");
-  const { serviceList, getServiceListById, params } = useAdminServiceLists();
+  const { serviceList, getServiceListById, params, loading } =
+    useAdminServiceLists();
 
   useEffect(() => {
     getServiceListById(params);
@@ -39,7 +41,13 @@ const DetailServiceList = () => {
   }, [serviceList]);
 
   return (
-    <Container bg="#F3F4F6" maxW="100%" height={"100vh"} padding="0">
+    <Container
+      bg="#F3F4F6"
+      maxW="100%"
+      height={"100vh"}
+      padding="0"
+      overflow={"scroll"}
+    >
       <Flex
         className="create-service-field"
         direction="column"
@@ -88,13 +96,13 @@ const DetailServiceList = () => {
             </Link>
           </Flex>
         </Flex>
-        <Box w='100%' px='40px'>
-          <Flex
-            className="edit-service-input"
-            direction={"column"}
+        {serviceList.service && !loading ? (
+          <Box w="100%" h="100%" px="40px">
+            <Flex
+              className="edit-service-input"
+              direction={"column"}
               paddingLeft="2rem"
               justify="center"
-              alignItems="left"
               bg="white"
               border="1px"
               borderColor="gray.200"
@@ -103,127 +111,147 @@ const DetailServiceList = () => {
               height="fit-content"
               padding="3rem 2rem 3rem 2rem"
               marginY="40px"
+            >
+              <Flex direction={"row"} fontStyle={"h5"} marginBottom="32px">
+                <Text color={"gray.700"} w="205px">
+                  ชื่อบริการ
+                </Text>
+                <Text
+                  className="category-name"
+                  textStyle="b1"
+                  color={"utility.black"}
+                >
+                  {serviceName}
+                </Text>
+              </Flex>
+
+              <Flex direction={"row"} fontStyle={"h5"} marginBottom="50px">
+                <Text color={"gray.700"} w="205px">
+                  หมวดหมู่
+                </Text>
+                <Text
+                  className="category-name"
+                  textStyle="b1"
+                  color={"utility.black"}
+                >
+                  {serviceCategory}
+                </Text>
+              </Flex>
+
+              <Flex direction={"row"} fontStyle={"h5"} marginBottom="40px">
+                <Text color={"gray.700"} w="205px">
+                  รูปภาพ
+                </Text>
+                <Image src={serviceImage} maxW="440px" />
+              </Flex>
+
+              <Divider w="100%" />
+
+              <Box marginTop="40px">
+                <Flex direction={"column"}>
+                  <Text color={"gray.700"} textStyle={"h5"} marginBottom="40px">
+                    รายการบริการย่อย
+                  </Text>
+                  {subServiceArr.map((item, index) => {
+                    return (
+                      <Flex
+                        direction={"row"}
+                        gap="10px"
+                        alignItems={"end"}
+                        color="#646C80"
+                        marginBottom="32px"
+                        key={index}
+                      >
+                        <Flex direction={"column"}>
+                          <Text marginBottom="4px" w="488px">
+                            ชื่อรายการ
+                          </Text>
+                          <Text textStyle="b1" color={"utility.black"}>
+                            {item.sub_service_name}
+                          </Text>
+                        </Flex>
+                        <Flex direction={"column"}>
+                          <Text marginBottom="4px" w="252px">
+                            หน่วยการบริการ
+                          </Text>
+                          <Text textStyle="b1" color={"utility.black"}>
+                            {item.unit_name}
+                          </Text>
+                        </Flex>
+                        <Flex direction={"column"}>
+                          <Text marginBottom="4px" w="240px">
+                            ค่าบริการ / 1 หน่วย
+                          </Text>
+                          <Text textStyle="b1" color={"utility.black"}>
+                            {item.price_per_unit}
+                          </Text>
+                        </Flex>
+                      </Flex>
+                    );
+                  })}
+                </Flex>
+              </Box>
+
+              <Divider w="1356px" />
+
+              <Box className="info" marginTop="3rem">
+                <Flex className="created-info" marginBottom={"2rem"}>
+                  <Text
+                    textStyle="h5"
+                    marginRight="5rem"
+                    width={"5rem"}
+                    color={"gray.700"}
+                  >
+                    สร้างเมื่อ
+                  </Text>
+                  <Text
+                    className="created-at"
+                    textStyle="b1"
+                    color={"utility.black"}
+                  >
+                    {serviceCreateAt}
+                  </Text>
+                </Flex>
+                <Flex className="edited-info">
+                  <Text
+                    textStyle="h5"
+                    marginRight="5rem"
+                    width={"5rem"}
+                    color={"gray.700"}
+                  >
+                    แก้ไขล่าสุด
+                  </Text>
+                  <Text
+                    className="edited-at"
+                    textStyle="b1"
+                    color={"utility.black"}
+                  >
+                    {serviceUpdateAt}
+                  </Text>
+                </Flex>
+              </Box>
+            </Flex>
+          </Box>
+        ) : (
+          <Container
+            maxW="100%"
+            minH="calc(100vh - 97px)"
+            p="40px"
+            bg="gray.100"
+            display="flex"
+            flexDirection={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
           >
-            <Flex direction={"row"} fontStyle={"h5"} marginBottom="32px">
-              <Text color={"gray.700"} w="205px">
-                ชื่อบริการ
-              </Text>
-              <Text
-                className="category-name"
-                textStyle="b1"
-                color={"utility.black"}
-              >
-                {serviceName}
-              </Text>
-            </Flex>
-
-            <Flex direction={"row"} fontStyle={"h5"} marginBottom="50px">
-              <Text color={"gray.700"} w="205px">
-                หมวดหมู่
-              </Text>
-              <Text
-                className="category-name"
-                textStyle="b1"
-                color={"utility.black"}
-              >
-                {serviceCategory}
-              </Text>
-            </Flex>
-
-            <Flex direction={"row"} fontStyle={"h5"} marginBottom="40px">
-              <Text color={"gray.700"} w="205px">
-                รูปภาพ
-              </Text>
-              <Image src={serviceImage} maxW="440px" />
-            </Flex>
-
-            <Divider w="100%" />
-
-            <Box marginTop="40px">
-              <Flex direction={"column"}>
-                <Text color={"gray.700"} textStyle={"h5"} marginBottom="40px">
-                  รายการบริการย่อย
-                </Text>
-                {subServiceArr.map((item, index) => {
-                  return (
-                    <Flex
-                      direction={"row"}
-                      gap="10px"
-                      alignItems={"end"}
-                      color="#646C80"
-                      marginBottom="32px"
-                      key={index}
-                    >
-                      <Flex direction={"column"}>
-                        <Text marginBottom="4px" w="488px">
-                          ชื่อรายการ
-                        </Text>
-                        <Text textStyle="b1" color={"utility.black"}>
-                          {item.sub_service_name}
-                        </Text>
-                      </Flex>
-                      <Flex direction={"column"}>
-                        <Text marginBottom="4px" w="252px">
-                          หน่วยการบริการ
-                        </Text>
-                        <Text textStyle="b1" color={"utility.black"}>
-                          {item.unit_name}
-                        </Text>
-                      </Flex>
-                      <Flex direction={"column"}>
-                        <Text marginBottom="4px" w="240px">
-                          ค่าบริการ / 1 หน่วย
-                        </Text>
-                        <Text textStyle="b1" color={"utility.black"}>
-                          {item.price_per_unit}
-                        </Text>
-                      </Flex>
-                    </Flex>
-                  );
-                })}
-              </Flex>
-            </Box>
-
-            <Divider w="1356px" />
-
-            <Box className="info" marginTop="3rem">
-              <Flex className="created-info" marginBottom={"2rem"}>
-                <Text
-                  textStyle="h5"
-                  marginRight="5rem"
-                  width={"5rem"}
-                  color={"gray.700"}
-                >
-                  สร้างเมื่อ
-                </Text>
-                <Text
-                  className="created-at"
-                  textStyle="b1"
-                  color={"utility.black"}
-                >
-                  {serviceCreateAt}
-                </Text>
-              </Flex>
-              <Flex className="edited-info">
-                <Text
-                  textStyle="h5"
-                  marginRight="5rem"
-                  width={"5rem"}
-                  color={"gray.700"}
-                >
-                  แก้ไขล่าสุด
-                </Text>
-                <Text
-                  className="edited-at"
-                  textStyle="b1"
-                  color={"utility.black"}
-                >
-                  {serviceUpdateAt}
-                </Text>
-              </Flex>
-            </Box>
-          </Flex>
-        </Box>
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="blue.500"
+              size="xl"
+            />
+          </Container>
+        )}
       </Flex>
     </Container>
   );
