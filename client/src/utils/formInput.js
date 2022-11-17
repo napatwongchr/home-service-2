@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, useField } from 'formik';
 import { Flex, Text, Input, FormLabel, Image, Checkbox, Box } from '@chakra-ui/react';
-import errorIcon from '../asset/image/errorIcon.svg'
+import errorIcon from '../assets/image/errorIcon.svg'
 const MyTextInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     return (

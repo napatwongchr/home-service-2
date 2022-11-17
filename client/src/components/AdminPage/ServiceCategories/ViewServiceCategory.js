@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import binIcon from "../../../asset/image/serviceCategory/bin-icon.svg";
-import editIcon from "../../../asset/image/serviceCategory/edit-icon.svg";
-import warningICon from "../../../asset/image/serviceCategory/warning-icon.svg";
-import searchIcon from "../../../asset/image/adminDashboardPage/searchIcon.svg";
-import whitePlusIcon from "../../../asset/image/adminDashboardPage/whitePlusIcon.svg";
+import binIcon from "../../../assets/image/serviceCategory/bin-icon.svg";
+import editIcon from "../../../assets/image/serviceCategory/edit-icon.svg";
+import warningICon from "../../../assets/image/serviceCategory/warning-icon.svg";
+import searchIcon from "../../../assets/image/adminDashboardPage/searchIcon.svg";
+import whitePlusIcon from "../../../assets/image/adminDashboardPage/whitePlusIcon.svg";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {

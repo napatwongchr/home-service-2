@@ -8,7 +8,7 @@ import {
   Box,
   Spinner,
 } from "@chakra-ui/react";
-import arrow from "../../../asset/image/serviceCategory/left-arrow.svg";
+import arrow from "../../../assets/image/serviceCategory/left-arrow.svg";
 import { Link } from "react-router-dom";
 import useAdminServiceLists from "../../../hooks/useAdminServiceLists";
 import { useEffect, useState } from "react";

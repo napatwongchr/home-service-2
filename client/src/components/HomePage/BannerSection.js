@@ -6,7 +6,7 @@ import {
   Container
 } from "@chakra-ui/react";
 import React from "react";
-import bigbro from "../../asset/image/homePage/browithblueshirt.svg";
+import bigbro from "../../assets/image/homePage/browithblueshirt.svg";
 
 const Banner = () => {
   return (

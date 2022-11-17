@@ -12,7 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import priceTag from "../../asset/image/homePage/Group.svg";
+import priceTag from "../../assets/image/homePage/Group.svg";
 import filterCategory from "../../utils/filterCategory";
 import useAdminServiceLists from "../../hooks/useAdminServiceLists";
 const AllServiceSection = (props) => {

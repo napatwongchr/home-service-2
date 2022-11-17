@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text, Container, Image } from "@chakra-ui/react";
-import house from "../../asset/image/homePage/house1.svg";
+import house from "../../assets/image/homePage/house1.svg";
 
 const Quote = () => {
   return (

@@ -1,6 +1,6 @@
 import { Container, Text, Box, Flex, Center } from "@chakra-ui/react";
 import React from "react";
-import bannerCoverImage from "../../asset/image/serviceListPage/WeService.jpg";
+import bannerCoverImage from "../../assets/image/serviceListPage/WeService.jpg";
 
 const BannerService = () => {
   return (

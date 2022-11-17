@@ -1,7 +1,7 @@
 import { Flex, Box, Image, Text, Container } from "@chakra-ui/react";
-import houseLogo from "../../asset/image/homePage/house-logo.svg";
-import phoneLogo from "../../asset/image/homePage/phone-logo.svg";
-import mailLogo from "../../asset/image/homePage/mail-logo.svg";
+import houseLogo from "../../assets/image/homePage/house-logo.svg";
+import phoneLogo from "../../assets/image/homePage/phone-logo.svg";
+import mailLogo from "../../assets/image/homePage/mail-logo.svg";
 
 const Footer = () => {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import { Flex, Text, Container, Image } from "@chakra-ui/react";
-import male from "../../asset/image/homePage/male.svg";
-import house from "../../asset/image/homePage/house1.svg";
+import male from "../../assets/image/homePage/male.svg";
+import house from "../../assets/image/homePage/house1.svg";
 
 const ContactSection = () => {
   return (

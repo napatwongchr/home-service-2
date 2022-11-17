@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import arrow from "../../asset/image/serviceListPage/dropdown.svg";
-import glass from "../../asset/image/serviceListPage/magnifying-glass.svg";
+import arrow from "../../assets/image/serviceListPage/dropdown.svg";
+import glass from "../../assets/image/serviceListPage/magnifying-glass.svg";
 import {
   Container,
   Box,

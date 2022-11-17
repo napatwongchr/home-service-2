@@ -1,8 +1,8 @@
 import { Button, Flex, Image, Img, Input, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import React from "react";
-import searchIcon from "../../asset/image/adminDashboardPage/searchIcon.svg";
-import whitePlusIcon from "../../asset/image/adminDashboardPage/whitePlusIcon.svg";
+import searchIcon from "../../assets/image/adminDashboardPage/searchIcon.svg";
+import whitePlusIcon from "../../assets/image/adminDashboardPage/whitePlusIcon.svg";
 
 const NavDashBoard = (props) => {
   return (

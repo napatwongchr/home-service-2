@@ -1,10 +1,10 @@
 import { Box, Container, Flex, Img, Text } from "@chakra-ui/react";
 import React from "react";
-import house from "../../asset/image/homePage/house-logo.svg";
-import logoutIcon from "../../asset/image/homePage/logoutPic.svg";
-import categoryIcon from "../../asset/image/adminDashboardPage/categoryIcon.svg";
-import serviceIcon from "../../asset/image/adminDashboardPage/serviceIcon.svg";
-import codeIcon from "../../asset/image/adminDashboardPage/codeIcon.svg";
+import house from "../../assets/image/homePage/house-logo.svg";
+import logoutIcon from "../../assets/image/homePage/logoutPic.svg";
+import categoryIcon from "../../assets/image/adminDashboardPage/categoryIcon.svg";
+import serviceIcon from "../../assets/image/adminDashboardPage/serviceIcon.svg";
+import codeIcon from "../../assets/image/adminDashboardPage/codeIcon.svg";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication";
 const SideBar = () => {

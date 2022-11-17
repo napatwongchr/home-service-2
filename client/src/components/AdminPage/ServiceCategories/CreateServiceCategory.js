@@ -13,7 +13,7 @@ import useServiceCategories from "../../../hooks/useServiceCategories";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "../../../api/axios";
-import errorIcon from "../../../asset/image/errorIcon.svg";
+import errorIcon from "../../../assets/image/errorIcon.svg";
 
 const CreateServiceCategory = () => {
   const { createServiceCategory } = useServiceCategories();

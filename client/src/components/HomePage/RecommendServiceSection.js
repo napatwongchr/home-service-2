@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
-import priceTag from "../../asset/image/homePage/Group.svg";
+import priceTag from "../../assets/image/homePage/Group.svg";
 const RecommendServiceSection = () => {
   return (
     <Container
@@ -40,7 +40,7 @@ const RecommendServiceSection = () => {
               borderRadius="8px"
             >
               <Image
-                src={require("../../asset/image/serviceImage/ทำความสะอาดทั่วไป.png")}
+                src={require("../../assets/image/serviceImage/ทำความสะอาดทั่วไป.png")}
                 alt="ทำความสะอาดทั่วไป"
                 h="200px"
                 w="100%"
@@ -88,7 +88,7 @@ const RecommendServiceSection = () => {
               borderRadius="8px"
             >
               <Image
-                src={require("../../asset/image/serviceImage/ล้างแอร์.png")}
+                src={require("../../assets/image/serviceImage/ล้างแอร์.png")}
                 alt={null}
                 h="200px"
                 w="100%"
@@ -136,7 +136,7 @@ const RecommendServiceSection = () => {
               borderRadius="8px"
             >
               <Image
-                src={require("../../asset/image/serviceImage/ซ่อมเครื่องซักผ้า.png")}
+                src={require("../../assets/image/serviceImage/ซ่อมเครื่องซักผ้า.png")}
                 alt={null}
                 h="200px"
                 w="100%"

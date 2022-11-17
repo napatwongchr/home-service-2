@@ -1,6 +1,6 @@
-import binIcon from "../../asset/image/serviceCategory/bin-icon.svg";
-import editIcon from "../../asset/image/serviceCategory/edit-icon.svg";
-import warningICon from "../../asset/image/serviceCategory/warning-icon.svg";
+import binIcon from "../../assets/image/serviceCategory/bin-icon.svg";
+import editIcon from "../../assets/image/serviceCategory/edit-icon.svg";
+import warningICon from "../../assets/image/serviceCategory/warning-icon.svg";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {

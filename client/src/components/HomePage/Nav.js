@@ -1,13 +1,13 @@
 import { Flex, Box, Button, Image, Text, Container, MenuItem, MenuList, Menu, MenuButton, Avatar } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication";
-import notification from "../../asset/image/homePage/notification.svg";
-import userPrc from "../../asset/image/homePage/user.svg";
-import order from "../../asset/image/homePage/order.svg";
-import history from "../../asset/image/homePage/history.svg";
-import houseLogo from "../../asset/image/homePage/house-logo.svg";
-import logoutPic from "../../asset/image/homePage/logoutPic.svg";
-import bell from "../../asset/image/homePage/bell.svg";
+import notification from "../../assets/image/homePage/notification.svg";
+import userPrc from "../../assets/image/homePage/user.svg";
+import order from "../../assets/image/homePage/order.svg";
+import history from "../../assets/image/homePage/history.svg";
+import houseLogo from "../../assets/image/homePage/house-logo.svg";
+import logoutPic from "../../assets/image/homePage/logoutPic.svg";
+import bell from "../../assets/image/homePage/bell.svg";
 import { useState } from "react";
 const NavComponent = () => {
   const { isAuthenticated, logout } = useAuth();
