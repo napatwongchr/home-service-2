@@ -63,7 +63,7 @@ const DetailServiceList = () => {
               className="left-side"
               direction="row"
               alignItems={"center"}
-            // marginLeft="3rem"
+              // marginLeft="3rem"
             >
               <Link to="/admin-dashboard/services">
                 <Image src={arrow} marginRight="1.5rem" />
@@ -83,8 +83,8 @@ const DetailServiceList = () => {
             <Flex
               className="button-group"
               justifyContent="space-between"
-            // width="12rem"
-            // marginRight="5rem"
+              // width="12rem"
+              // marginRight="5rem"
             >
               <Link to={`/admin-dashboard/service/edit/${serviceId}`}>
                 <Button width={"5.5rem"} onSubmit={{}}>
@@ -237,7 +237,6 @@ const DetailServiceList = () => {
         </Flex>
       </Flex>
     </Container>
-
   );
 };
 

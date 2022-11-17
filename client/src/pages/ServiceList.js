@@ -5,8 +5,8 @@ import CopyRight from '../components/HomePage/CopyRight';
 import BannerService from '../components/ServiceList/BannerService'
 import SearchSection from '../components/ServiceList/SearchComponent';
 import AllServiceSection from '../components/ServiceList/AllServiceSection'
+import Quote from '../components/ServiceList/Quote';
 const ServiceList = () => {
-
     const [input, setInput] = useState("");
     const [category, setCategory] = useState('บริการทั้งหมด');
     const [order, setOrder] = useState('บริการแนะนำ')
@@ -18,6 +18,7 @@ const ServiceList = () => {
             <BannerService />
             <SearchSection input={input} setInput={setInput} category={category} setCategory={setCategory} order={order} setOrder={setOrder} sliderValue={sliderValue} setSliderValue={setSliderValue} setPriceTouched={setPriceTouched} priceTouched={priceTouched} />
             <AllServiceSection input={input} category={category} order={order} sliderValue={sliderValue} priceTouched={priceTouched} />
+            <Quote />
             <Footer />
             <CopyRight />
         </section>

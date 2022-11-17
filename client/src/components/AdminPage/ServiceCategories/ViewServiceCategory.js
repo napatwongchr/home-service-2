@@ -80,7 +80,13 @@ const ViewServiceCategory = () => {
               }}
             />
 
-            <Button w="165px" h="44px" onClick={() => { navigate(`/admin-dashboard/category/create`) }}>
+            <Button
+              w="165px"
+              h="44px"
+              onClick={() => {
+                navigate(`/admin-dashboard/category/create`);
+              }}
+            >
               เพิ่มหมวดหมู่
             </Button>
           </Flex>

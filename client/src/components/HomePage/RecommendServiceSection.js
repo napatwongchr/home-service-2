@@ -2,10 +2,8 @@ import {
   Badge,
   Box,
   Button,
-  Center,
   Container,
   Flex,
-  Grid,
   Image,
   Text,
 } from "@chakra-ui/react";
@@ -16,20 +14,22 @@ const RecommendServiceSection = () => {
   return (
     <Container
       className="recommendService"
-      maxW="100%"
+      maxW="100vw"
       bg="gray.100"
       centerContent
     >
-      <Flex>
-        <Center w="1440px" mb="42px" mt="80px">
-          <Text textStyle="h1" color="blue.950">
-            บริการยอดฮิตของเรา
-          </Text>
-        </Center>
-      </Flex>
-      <Flex>
-        <Center w="1440px">
-          <Grid templateColumns="repeat(3, 1fr)" gap="37px">
+      <Container maxW="1440px">
+        <Text
+          textStyle="h1"
+          color="blue.950"
+          mb="42px"
+          mt="80px"
+          textAlign={"center"}
+        >
+          บริการยอดฮิตของเรา
+        </Text>
+        <Box w="100%">
+          <Flex gap="37px" justifyContent={"center"}>
             <Box
               w="349px"
               h="369px"
@@ -70,9 +70,9 @@ const RecommendServiceSection = () => {
               <Button
                 textStyle="button"
                 color="blue.600"
-                variant='ghost'
+                variant="ghost"
                 px={0}
-                bottom={'5px'}
+                bottom={"5px"}
                 mx="24px"
               >
                 เลือกบริการ
@@ -118,9 +118,9 @@ const RecommendServiceSection = () => {
               <Button
                 textStyle="button"
                 color="blue.600"
-                variant='ghost'
+                variant="ghost"
                 px={0}
-                bottom={'5px'}
+                bottom={"5px"}
                 mx="24px"
               >
                 เลือกบริการ
@@ -166,19 +166,17 @@ const RecommendServiceSection = () => {
               <Button
                 textStyle="button"
                 color="blue.600"
-                variant='ghost'
+                variant="ghost"
                 px={0}
-                bottom={'5px'}
+                bottom={"5px"}
                 mx="24px"
               >
                 เลือกบริการ
               </Button>
             </Box>
-          </Grid>
-        </Center>
-      </Flex>
-      <Flex>
-        <Center w="1440px">
+          </Flex>
+        </Box>
+        <Flex justifyContent={"center"}>
           <Link to={"/service-list"}>
             <Button
               role="click"
@@ -187,13 +185,13 @@ const RecommendServiceSection = () => {
               py="10px"
               mt="70px"
               mb="175px"
-              variant='primary'
+              variant="primary"
             >
               ดูบริการทั้งหมด
             </Button>
           </Link>
-        </Center>
-      </Flex>
+        </Flex>
+      </Container>
     </Container>
   );
 };

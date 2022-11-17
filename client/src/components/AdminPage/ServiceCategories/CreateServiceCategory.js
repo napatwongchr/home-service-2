@@ -90,10 +90,7 @@ const CreateServiceCategory = () => {
                     marginRight="5rem"
                   >
                     <Link to="/admin-dashboard/categories">
-                      <Button
-                        width={"5.5rem"}
-                        variant='secondary'
-                      >
+                      <Button width={"5.5rem"} variant="secondary">
                         ยกเลิก
                       </Button>
                     </Link>
