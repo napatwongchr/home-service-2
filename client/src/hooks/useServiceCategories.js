@@ -6,6 +6,7 @@ const useServiceCategories = () => {
   const navigate = useNavigate();
   const [serviceCategories, setServiceCategories] = useState([]);
   const [serviceCategory, setServiceCategory] = useState("");
+  const [loading, setLoading] = useState(true);
   const params = useParams();
 
   const getServiceCategories = async (input) => {
@@ -28,6 +29,7 @@ const useServiceCategories = () => {
         results = await axios.get(`/service/category`);
       }
       setServiceCategories(results.data.data);
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -88,6 +90,7 @@ const useServiceCategories = () => {
     createServiceCategory,
     updateServiceCategoryById,
     deleteServiceCategory,
+    loading
   };
 };
 
