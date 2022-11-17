@@ -7,14 +7,14 @@ import {
   Divider,
   Box,
 } from "@chakra-ui/react";
-import SideBar from "../AdminPage/SideBar";
-import arrow from "../../asset/image/serviceCategory/left-arrow.svg";
+import SideBar from "../SideBar";
+import arrow from "../../../asset/image/serviceCategory/left-arrow.svg";
 import { Link, useNavigate } from "react-router-dom";
-import useServiceCategories from "../../hooks/useServiceCategories";
+import useServiceCategories from "../../../hooks/useServiceCategories";
 import { useEffect } from "react";
 
 const DetailServiceCategory = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { serviceCategory, getServiceCategoryById, params } =
     useServiceCategories();
 
@@ -70,7 +70,14 @@ const DetailServiceCategory = () => {
               width="12rem"
               marginRight="5rem"
             >
-              <Button width={"5.5rem"} onClick={() => { navigate(`/admin-dashboard/category/edit/${serviceCategory.service_category_id}`) }}>
+              <Button
+                width={"5.5rem"}
+                onClick={() => {
+                  navigate(
+                    `/admin-dashboard/category/edit/${serviceCategory.service_category_id}`
+                  );
+                }}
+              >
                 แก้ไข
               </Button>
             </Flex>

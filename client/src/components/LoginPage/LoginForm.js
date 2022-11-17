@@ -18,7 +18,7 @@ import axios from "../../api/axios.js";
 
 const LoginForm = () => {
   const { login } = useAuth();
-  const [checkEmail, setCheckEmail] = useState('')
+  const [checkEmail, setCheckEmail] = useState("");
   return (
     <Container
       maxW={"100%"}
@@ -29,53 +29,58 @@ const LoginForm = () => {
     >
       <Formik
         initialValues={{
-          email: '',
+          email: "",
           password: "",
         }}
         validationSchema={Yup.object({
           email: Yup.string()
             .required("กรุณากรอกอีเมล")
-            .email('กรุณาตรวจสอบอีเมลอีกครั้ง')
-            .test('Email not found', 'กรุณาตรวจสอบอีเมลอีกครั้ง',
+            .email("กรุณาตรวจสอบอีเมลอีกครั้ง")
+            .test(
+              "Email not found",
+              "กรุณาตรวจสอบอีเมลอีกครั้ง",
               function (value) {
                 return new Promise((resolve, reject) => {
-                  axios.get(`/users?email=${value}`)
+                  axios
+                    .get(`/users?email=${value}`)
                     .then((res) => {
                       if (res.data.data) {
-                        setCheckEmail(value)
-                        resolve(true)
+                        setCheckEmail(value);
+                        resolve(true);
                       } else {
                         resolve(false);
                       }
                     })
                     .catch((error) => {
                       resolve(false);
-                    })
-                })
+                    });
+                });
               }
             ),
           password: Yup.string()
-            .test('password in not valid', 'กรุณาตรวจสอบรหัสผ่านอีกครั้ง',
+            .test(
+              "password in not valid",
+              "กรุณาตรวจสอบรหัสผ่านอีกครั้ง",
               function (value) {
                 return new Promise((resolve, reject) => {
-                  axios.get(`/users?password=${value}&email=${checkEmail}`)
+                  axios
+                    .get(`/users?password=${value}&email=${checkEmail}`)
                     .then((res) => {
                       if (res.data.msg === "email is blank") {
-                        resolve(true)
+                        resolve(true);
                       } else if (res.data.msg === "password is invalid") {
-                        resolve(false)
+                        resolve(false);
                       } else if (res.data.msg === "success") {
-                        resolve(true)
+                        resolve(true);
                       }
                     })
                     .catch((error) => {
                       resolve(false);
-                    })
-                })
+                    });
+                });
               }
             )
-            .required("กรุณากรอกรหัสผ่าน")
-          ,
+            .required("กรุณากรอกรหัสผ่าน"),
         })}
         validateOnChange={false}
         onSubmit={(values) => {
@@ -104,7 +109,8 @@ const LoginForm = () => {
               type="email"
               placeholder="กรุณากรอกอีเมล"
               autoComplete="username"
-              w={'440px'} h={'44px'}
+              w={"440px"}
+              h={"44px"}
             />
 
             <MyTextInput
@@ -114,7 +120,8 @@ const LoginForm = () => {
               type="password"
               placeholder="กรุณากรอกรหัสผ่าน"
               autoComplete="current-password"
-              w={'440px'} h={'44px'}
+              w={"440px"}
+              h={"44px"}
             />
             <Button
               type="submit"
@@ -148,20 +155,14 @@ const LoginForm = () => {
               </Button> */}
             <Text align={"center"} marginTop="2rem">
               ยังไม่มีบัญชีผู้ใช้ HomeService?{" "}
-              <Button
-                variant='ghost'
-                p={0}
-                fontWeight={"600"}
-              >
-                <Link href="/register">
-                  ลงทะเบียน
-                </Link>
+              <Button variant="ghost" p={0} fontWeight={"600"}>
+                <Link href="/register">ลงทะเบียน</Link>
               </Button>
             </Text>
           </Flex>
         </Form>
       </Formik>
-    </Container >
+    </Container>
   );
 };
 

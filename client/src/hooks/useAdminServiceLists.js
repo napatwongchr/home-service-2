@@ -1,4 +1,3 @@
-import { List } from "@chakra-ui/react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../api/axios";
@@ -7,6 +6,7 @@ const useAdminServiceLists = () => {
   const navigate = useNavigate();
   const [serviceLists, setServiceLists] = useState([]);
   const [serviceList, setServiceList] = useState('');
+  const [loading, setLoading] = useState(true)
   const params = useParams();
 
   const getServiceLists = async (params) => {
@@ -18,6 +18,7 @@ const useAdminServiceLists = () => {
         results = await axios.get(`/service?searchInput=${params.input}&category=${params.category}&sort=${params.order}`);;
       }
       setServiceLists(results.data.data);
+      setLoading(false)
     } catch (error) {
       console.log(error);
     }
@@ -56,15 +57,17 @@ const useAdminServiceLists = () => {
 
   const deleteServiceList = async (serviceId) => {
     try {
-      console.log(serviceId);
       await axios.delete(
         `/service?serviceId=${serviceId}`
       );
-      const newLists = serviceLists.filter((list) => {
-        return List.service_id !== serviceId;
-      });
-      setServiceLists(newLists);
+      if (serviceLists.service) {
+        const newLists = serviceLists.service.filter((list) => {
+          return list.service_id !== serviceId;
+        });
+        setServiceLists(newLists);
+      }
       navigate("/admin-dashboard/services");
+      window.location.reload(false);
     } catch (error) {
       console.error(error);
     }
@@ -79,6 +82,7 @@ const useAdminServiceLists = () => {
     createServiceList,
     updateServiceListById,
     deleteServiceList,
+    loading
   };
 };
 

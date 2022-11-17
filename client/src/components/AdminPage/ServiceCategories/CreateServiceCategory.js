@@ -7,13 +7,13 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
-import SideBar from "../AdminPage/SideBar";
+import SideBar from "../SideBar";
 import { Link } from "react-router-dom";
-import useServiceCategories from "../../hooks/useServiceCategories";
+import useServiceCategories from "../../../hooks/useServiceCategories";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import axios from "../../api/axios";
-import errorIcon from "../../asset/image/errorIcon.svg";
+import axios from "../../../api/axios";
+import errorIcon from "../../../asset/image/errorIcon.svg";
 
 const CreateServiceCategory = () => {
   const { createServiceCategory } = useServiceCategories();
@@ -90,13 +90,7 @@ const CreateServiceCategory = () => {
                     marginRight="5rem"
                   >
                     <Link to="/admin-dashboard/categories">
-                      <Button
-                        bg="white"
-                        color="blue.600"
-                        border="1px"
-                        borderColor="blue.600"
-                        width={"5.5rem"}
-                      >
+                      <Button width={"5.5rem"} variant="secondary">
                         ยกเลิก
                       </Button>
                     </Link>

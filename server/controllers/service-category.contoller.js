@@ -4,7 +4,10 @@ const serviceCategoryController = {
   async createServiceCategory(req, res) {
     try {
       const findCategory = await pool.query(
-        `select * from service_category where service_category_name = $1`,
+        `
+        select * from service_category 
+        where service_category_name = $1
+        `,
         [req.body.categoryName]
       );
       const hasCategory = Boolean(findCategory.rows[0]);
@@ -29,7 +32,7 @@ const serviceCategoryController = {
         data: serviceCategory.rows[0],
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       return res.status(400).json({
         msg: "invalid input",
       });
@@ -42,7 +45,10 @@ const serviceCategoryController = {
       if (req.query.categoryId) {
         let categoryId = req.query.categoryId;
         const findCategoryById = await pool.query(
-          `select * from service_category where service_category_id = $1`,
+          `
+          select * from service_category 
+          where service_category_id = $1
+          `,
           [categoryId]
         );
         if (!Boolean(findCategoryById.rows[0])) {
@@ -51,28 +57,43 @@ const serviceCategoryController = {
           });
         }
         //Set Response Format for Category By ID
-        const CategoryById = findCategoryById.rows[0]
-        CategoryById.created_at = CategoryById.created_at.toLocaleString().split(', ').join(' ')
-        CategoryById.updated_at = CategoryById.updated_at.toLocaleString().split(', ').join(' ')
+        const CategoryById = findCategoryById.rows[0];
+        CategoryById.created_at = CategoryById.created_at
+          .toLocaleString()
+          .split(", ")
+          .join(" ");
+        CategoryById.updated_at = CategoryById.updated_at
+          .toLocaleString()
+          .split(", ")
+          .join(" ");
         return res.status(200).json({
-          data: CategoryById
+          data: CategoryById,
         });
       } else if (req.query.categoryName) {
         let categoryName = `%${req.query.categoryName}%` || "";
         const findCategoryByName = await pool.query(
-          `select * from service_category where service_category_name ilike $1`,
+          `
+          select * from service_category
+          where service_category_name ilike $1
+          `,
           [categoryName]
         );
 
         //Set Response Format for Category By Name
-        const categoryByName = findCategoryByName.rows.map(category => {
-          category.created_at = category.created_at.toLocaleString().split(', ').join(' ')
-          category.updated_at = category.updated_at.toLocaleString().split(', ').join(' ')
-          return category
-        })
+        const categoryByName = findCategoryByName.rows.map((category) => {
+          category.created_at = category.created_at
+            .toLocaleString()
+            .split(", ")
+            .join(" ");
+          category.updated_at = category.updated_at
+            .toLocaleString()
+            .split(", ")
+            .join(" ");
+          return category;
+        });
 
         return res.status(200).json({
-          data: categoryByName
+          data: categoryByName,
         });
       } else if (Object.keys(req.query).length > 0) {
         return res.status(404).json({
@@ -85,16 +106,22 @@ const serviceCategoryController = {
         `select * from service_category`
       );
       //Set Response Format for get all category
-      const mapedCategory = allServiceCategory.rows.map(category => {
-        category.created_at = category.created_at.toLocaleString().split(', ').join(' ')
-        category.updated_at = category.updated_at.toLocaleString().split(', ').join(' ')
-        return category
-      })
+      const mapedCategory = allServiceCategory.rows.map((category) => {
+        category.created_at = category.created_at
+          .toLocaleString()
+          .split(", ")
+          .join(" ");
+        category.updated_at = category.updated_at
+          .toLocaleString()
+          .split(", ")
+          .join(" ");
+        return category;
+      });
       return res.status(200).json({
-        data: mapedCategory
+        data: mapedCategory,
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       return res.status(400).json({
         msg: "invalid input",
       });
@@ -106,16 +133,20 @@ const serviceCategoryController = {
       let categoryId = req.query.categoryId;
       let categoryName = req.body.categoryName;
       await pool.query(
-        `update service_category
-                set service_category_name = $1, 
-                updated_at = $2
-                where service_category_id = $3
+        `
+        update service_category
+        set service_category_name = $1, 
+        updated_at = $2
+        where service_category_id = $3
             `,
         [categoryName, new Date(), categoryId]
       );
 
       const getRecentupdate = await pool.query(
-        `select * from service_category where service_category_id = $1`,
+        `
+        select * from service_category
+        where service_category_id = $1
+        `,
         [categoryId]
       );
 
@@ -132,7 +163,10 @@ const serviceCategoryController = {
 
   async deleteServiceCategory(req, res) {
     await pool.query(
-      `delete from service_category where service_category_id = $1`,
+      `
+      delete from service_category
+      where service_category_id = $1
+      `,
       [req.query.categoryId]
     );
     return res.status(202).json({

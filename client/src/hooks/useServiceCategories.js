@@ -11,7 +11,6 @@ const useServiceCategories = () => {
   const getServiceCategories = async (input) => {
     try {
       let results;
-      console.log(input);
       if (input) {
         if (input.searchCategoryName === '') {
 

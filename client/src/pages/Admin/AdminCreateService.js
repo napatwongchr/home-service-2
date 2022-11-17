@@ -1,7 +1,7 @@
 import { Container, Flex } from '@chakra-ui/react';
 import React from 'react';
 import SideBar from '../../components/AdminPage/SideBar';
-import CreateServiceList from '../../components/AdminServiceList/CreateServiceList';
+import CreateServiceList from '../../components/AdminPage/ServiceLists/CreateServiceList';
 
 const AdminCreateService = () => {
     return (

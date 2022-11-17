@@ -1,8 +1,7 @@
 import { Container, Flex, Box } from "@chakra-ui/react";
 import React from "react";
-import NavDashBoard from "../../components/AdminPage/NavDashboard";
 import SideBar from "../../components/AdminPage/SideBar";
-import ViewServiceCategory from "../../components/ServiceCategory/ViewServiceCategory";
+import ViewServiceCategory from "../../components/AdminPage/ServiceCategories/ViewServiceCategory";
 
 const adminDashboardPage = () => {
   return (
@@ -10,7 +9,6 @@ const adminDashboardPage = () => {
       <Flex w="100vw">
         <SideBar />
         <Box w="100%" maxH="100%" overflow="hidden">
-          {/* <NavDashBoard to='/admin-dashboard/category/create'>หมวดหมู่</NavDashBoard> */}
           <ViewServiceCategory />
         </Box>
       </Flex>
