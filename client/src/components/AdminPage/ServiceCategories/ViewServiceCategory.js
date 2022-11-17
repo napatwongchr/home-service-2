@@ -57,7 +57,7 @@ const ViewServiceCategory = () => {
         borderColor="gray.300"
         justifyContent="space-between"
         alignItems="center"
-        px="5rem"
+        px="2rem"
       >
         <Text textStyle="h2" color="utility.black">
           หมวดหมู่
@@ -133,6 +133,7 @@ const ViewServiceCategory = () => {
                   </Th>
                   <Th
                     fontWeight="400"
+                    width="10rem"
                     textAlign="center"
                     textTransform="none"
                     textColor="gray.700"
@@ -171,8 +172,9 @@ const ViewServiceCategory = () => {
                       <Td className="created-at">{item.created_at}</Td>
                       <Td className="edited-at">{item.updated_at}</Td>
                       <Td className="action-button">
-                        <Flex justifyContent="space-evenly">
+                        <Flex justifyContent="center">
                           <button
+                            style={{ marginRight: "1.5rem" }}
                             className="delete-button"
                             onClick={() => {
                               setCategoryName(`${item.service_category_name}`);

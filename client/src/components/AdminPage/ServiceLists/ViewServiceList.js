@@ -70,19 +70,20 @@ const AdminServiceList = () => {
                   fontSize={"14px"}
                   lineHeight="21px"
                   textAlign={"center"}
+                  textColor={"gray.700"}
                 >
                   ลำดับ
                 </Th>
-                <Th fontWeight="400" fontSize="14px" lineHeight="21px">
+                <Th fontWeight="400" fontSize="14px" lineHeight="21px" textColor={"gray.700"}>
                   ชื่อบริการ
                 </Th>
-                <Th fontWeight="400" fontSize="14px" lineHeight="21px">
+                <Th fontWeight="400" fontSize="14px" lineHeight="21px" textColor={"gray.700"}>
                   ชื่อหมวดหมู่
                 </Th>
-                <Th fontWeight="400" fontSize="14px" lineHeight="21px">
+                <Th fontWeight="400" fontSize="14px" lineHeight="21px" textColor={"gray.700"}>
                   สร้างเมื่อ
                 </Th>
-                <Th fontWeight="400" fontSize="14px" lineHeight="21px">
+                <Th fontWeight="400" fontSize="14px" lineHeight="21px" textColor={"gray.700"}>
                   แก้ไขล่าสุด
                 </Th>
                 <Th
@@ -91,6 +92,7 @@ const AdminServiceList = () => {
                   textTransform="none"
                   fontSize="14px"
                   lineHeight="21px"
+                  textColor={"gray.700"}
                 >
                   Action
                 </Th>
@@ -99,10 +101,11 @@ const AdminServiceList = () => {
             <Tbody bg="#FFFFFF">
               {serviceLists.service.map((item, index) => {
                 return (
-                  <Tr key={item.service_id} h={90}>
+                  <Tr key={item.service_id} h={90} textStyle="b2" >
                     <Td textAlign={"center"}>{index + 1}</Td>
                     <Td>
                       <button
+                        style={{ fontWeight: "300" }}
                         onClick={() => {
                           navigate(
                             `/admin-dashboard/service/view/${item.service_id}`
@@ -132,7 +135,7 @@ const AdminServiceList = () => {
                           className="delete-button"
                           onClick={() => {
                             setListName(`${item.service_name}`);
-                            setListUniqueId(`${item.service_id}  `);
+                            setListUniqueId(`${item.service_id}`);
                             onOpen();
                           }}
                         >
