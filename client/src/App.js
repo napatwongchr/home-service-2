@@ -1,56 +1,86 @@
-import { Button, Text } from "@chakra-ui/react";
+import { Routes, Route } from "react-router-dom";
+import RegisterPage from "./pages/RegisterPage";
+import HomePage from "./pages/HomePage";
+import ServiceList from "./pages/ServiceList";
+import LoginPage from "./pages/LoginPage";
+import AdminDashboardPage from "./pages/Admin/AdminDashBoard";
+import AdminCreateService from "./pages/Admin/AdminCreateService";
+import AdminServiceListPage from "./pages/Admin/AdminServiceLists";
+import AdminDetailService from "./pages/Admin/AdminDetailService";
+import AdminCreateCategoryPage from "./pages/Admin/AdminCreateCategory";
+import AdminEditCategoryPage from "./pages/Admin/AdminEditCategory";
+import AdminDetailCategoryPage from "./pages/Admin/AdminDetailCategory";
+import AdminEditService from "./pages/Admin/AdminEditService";
+import { useAuth } from "./contexts/authentication";
 
 function App() {
+  const { isAuthenticated } = useAuth();
+  const user = JSON.parse(window.localStorage.getItem("user"));
   return (
-    <div className="App">
-      <Text textStyle='h1'>Heading 1</Text>
-      <Text textStyle='h2'>Heading 2</Text>
-      <Text textStyle='h3'>Heading 3</Text>
-      <Text textStyle='h4'>Heading 4</Text>
-      <Text textStyle='h5'>Heading 5</Text>
-      <Text textStyle='b2'>Heading 1</Text>
-      <Text textStyle='b3'>Heading 2</Text>
-      <Text textStyle='b4'>Heading 3</Text>
-      <Text textStyle='button'>Heading 3</Text>
-      <div>
-        <Button bg='blue.100'></Button>
-        <Button bg='blue.200'></Button>
-        <Button bg='blue.300'></Button>
-        <Button bg='blue.400'></Button>
-        <Button bg='blue.500'></Button>
-        <Button bg='blue.600'></Button>
-        <Button bg='blue.700'></Button>
-        <Button bg='blue.800'></Button>
-        <Button bg='blue.900'></Button>
-        <Button bg='blue.950'></Button>
-      </div>
-      <div>
-        <Button bg='gray.100'></Button>
-        <Button bg='gray.200'></Button>
-        <Button bg='gray.300'></Button>
-        <Button bg='gray.400'></Button>
-        <Button bg='gray.500'></Button>
-        <Button bg='gray.600'></Button>
-        <Button bg='gray.700'></Button>
-        <Button bg='gray.800'></Button>
-        <Button bg='gray.900'></Button>
-        <Button bg='gray.950'></Button>
-      </div>
-      <div>
-        <Button bg='purple.100'></Button>
-        <Button bg='purple.900'></Button>
-        <Button bg='yellow.100'></Button>
-        <Button bg='yellow.900'></Button>
-        <Button bg='green.100'></Button>
-        <Button bg='green.900'></Button>
-      </div>
-      <div>
-        <Button bg='utility.black'></Button>
-        <Button bg='utility.white'></Button>
-        <Button bg='utility.red'></Button>
-        <Button bg='utility.bg'></Button>
-      </div>
-    </div>
+    <>
+      {isAuthenticated ? (
+        user.role === "admin" ? (
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/service-list" element={<ServiceList />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/admin-dashboard/categories"
+              element={<AdminDashboardPage />}
+            />
+            <Route
+              path="/admin-dashboard/services"
+              element={<AdminServiceListPage />}
+            />
+            <Route
+              path="/admin-dashboard/service/view/:serviceId"
+              element={<AdminDetailService />}
+            />
+            <Route
+              path="/admin-dashboard/service/edit/:serviceId"
+              element={<AdminEditService />}
+            />
+            <Route
+              path="/admin-dashboard/service/create"
+              element={<AdminCreateService />}
+            />
+            <Route
+              path="/admin-dashboard/category/create"
+              element={<AdminCreateCategoryPage />}
+            />
+            <Route
+              path="/admin-dashboard/category/edit/:categoryId"
+              element={<AdminEditCategoryPage />}
+            />
+            <Route
+              path="/admin-dashboard/category/view/:categoryId"
+              element={<AdminDetailCategoryPage />}
+            />
+            <Route
+              path="*"
+              element={<AdminDashboardPage />}
+            />
+          </Routes>
+        ) : (
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/service-list" element={<ServiceList />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="*" element={<HomePage />} />
+          </Routes>
+        )
+      ) : (
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/service-list" element={<ServiceList />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<LoginPage />} />
+        </Routes>
+      )}
+    </>
   );
 }
 

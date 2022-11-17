@@ -1,19 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
-import { ChakraProvider } from '@chakra-ui/react';
-import theme from './theme.js';
-import './index.css'
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "./utils/theme/theme.js";
+import "./index.css";
+import { AuthProvider } from "./contexts/authentication";
+import { BrowserRouter } from "react-router-dom";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import jwtInterceptor from "./utils/jwtInterceptor";
+
+jwtInterceptor();
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <App />
-    </ChakraProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <ChakraProvider theme={theme}>
+          <App />
+        </ChakraProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
