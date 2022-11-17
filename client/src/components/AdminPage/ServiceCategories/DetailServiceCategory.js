@@ -42,7 +42,6 @@ const DetailServiceCategory = () => {
             alignItems="center"
           >
             <Flex
-
               className="left-side"
               direction="row"
               alignItems="center"
@@ -51,7 +50,7 @@ const DetailServiceCategory = () => {
               <Link to="/admin-dashboard/categories">
                 <Image src={arrow} marginRight="1.5rem" />
               </Link>
-              <Flex direction="column" >
+              <Flex direction="column">
                 <Text textStyle="b4">หมวดหมู่</Text>
                 <Text
                   className="category-name"
@@ -78,49 +77,65 @@ const DetailServiceCategory = () => {
               แก้ไข
             </Button>
           </Flex>
-          <Flex
-            className="edit-service-box"
-            direction="column"
-            paddingLeft="2rem"
-            justify="center"
-            alignItems="left"
-            bg="white"
-            border="1px"
-            borderColor="gray.200"
-            borderRadius="8px"
-            width="90%"
-            height="fit-content"
-            padding="3rem 2rem 3rem 2rem"
-            marginTop="4rem"
-          >
-            <Flex direction="row" padding="1rem 0 1rem 0">
-              <Text textStyle="h5" textColor="gray.700" marginRight="10rem">
-                ชื่อหมวดหมู่
-              </Text>
-              <Text
-                className="category-name"
-                textStyle="b1"
-                color="utility.black"
-              >
-                {serviceCategory.service_category_name}
-              </Text>
+          <Box w='100%' px='40px'>
+            <Flex
+              className="edit-service-box"
+              direction="column"
+              paddingLeft="2rem"
+              justify="center"
+              alignItems="left"
+              bg="white"
+              border="1px"
+              borderColor="gray.200"
+              borderRadius="8px"
+              width="100%"
+              height="fit-content"
+              padding="3rem 2rem 3rem 2rem"
+              marginTop="4rem"
+            >
+              <Flex direction="row" padding="1rem 0 1rem 0">
+                <Text textStyle="h5" textColor="gray.700" marginRight="10rem">
+                  ชื่อหมวดหมู่
+                </Text>
+                <Text
+                  className="category-name"
+                  textStyle="b1"
+                  color="utility.black"
+                >
+                  {serviceCategory.service_category_name}
+                </Text>
+              </Flex>
+              <Divider padding="1rem" w="95.5%" borderColor="gray.300" />
+              <Box className="info" margin="3rem 0 1.3rem 0">
+                <Flex className="created-info" marginBottom="2rem">
+                  <Text
+                    textStyle="h5"
+                    textColor="gray.700"
+                    marginRight="10rem"
+                    width="5rem"
+                  >
+                    สร้างเมื่อ
+                  </Text>
+                  <Text className="created-at" textColor="gray.900">
+                    {serviceCategory.created_at}
+                  </Text>
+                </Flex>
+                <Flex className="edited-info">
+                  <Text
+                    textStyle="h5"
+                    textColor="gray.700"
+                    marginRight="10rem"
+                    width="5rem"
+                  >
+                    แก้ไขล่าสุด
+                  </Text>
+                  <Text className="edited-at" textColor="gray.900">
+                    {serviceCategory.updated_at}
+                  </Text>
+                </Flex>
+              </Box>
             </Flex>
-            <Divider padding="1rem" w="95.5%" borderColor="gray.300" />
-            <Box className="info" margin="3rem 0 1.3rem 0" >
-              <Flex className="created-info" marginBottom="2rem">
-                <Text textStyle="h5" textColor="gray.700" marginRight="10rem" width="5rem">
-                  สร้างเมื่อ
-                </Text>
-                <Text className="created-at" textColor="gray.900">{serviceCategory.created_at}</Text>
-              </Flex>
-              <Flex className="edited-info">
-                <Text textStyle="h5" textColor="gray.700" marginRight="10rem" width="5rem">
-                  แก้ไขล่าสุด
-                </Text>
-                <Text className="edited-at" textColor="gray.900">{serviceCategory.updated_at}</Text>
-              </Flex>
-            </Box>
-          </Flex>
+          </Box>
         </Flex>
       </Flex>
     </Container>

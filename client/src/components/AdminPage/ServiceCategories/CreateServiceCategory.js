@@ -6,6 +6,7 @@ import {
   FormLabel,
   Button,
   Input,
+  Box,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import useServiceCategories from "../../../hooks/useServiceCategories";
@@ -60,9 +61,7 @@ const CreateServiceCategory = () => {
       {({ handleSubmit, setFieldValue, errors, touched }) => (
         <Container bg="#F3F4F6" maxW="100%" height="100vh" padding="0px">
           <Form onSubmit={handleSubmit}>
-            <Flex
-
-            >
+            <Flex>
               <Flex
                 className="create-service-field"
                 direction="column"
@@ -99,71 +98,72 @@ const CreateServiceCategory = () => {
                     </Button>
                   </Flex>
                 </Flex>
-                <Flex
-                  className="create-service-input"
-                  direction="row"
-                  justify="left"
-                  paddingLeft="2rem"
-                  alignItems="center"
-                  bg="white"
-                  border="1px"
-                  borderColor="gray.200"
-                  borderRadius="8px"
-                  width="90%"
-                  height="fit-content"
-                  padding="3rem"
-                  marginTop="4rem"
-                >
-                  <FormLabel marginRight="10rem">
-                    ชื่อหมวดหมู่ <span style={{ color: "#C82438" }}> * </span>
-                  </FormLabel>
-                  {errors.categoryName && touched.categoryName ? (
-                    <Flex flexDirection="column" pos="relative"
-                    >
-                      <Field
-                        as={Input}
-                        variant="error"
-                        id="categoryName"
-                        name="categoryName"
-                        type="text"
-                        w="440px"
-                        h="44px"
-                        onChange={(e) =>
-                          setFieldValue("categoryName", e.target.value)
-                        }
-                      />
-                      <Image
-                        src={errorIcon}
-                        pos="absolute"
-                        left="412px"
-                        bottom="15px"
-                        w="14px"
-                      />
-                      <Text
-                        textStyle="b2"
-                        color="utility.red"
-                        pos="absolute"
-                        bottom="-30px"
-                      >
-                        {errors.categoryName}
-                      </Text>
-                    </Flex>
-                  ) : (
-                    <Flex flexDirection="column">
-                      <Field
-                        as={Input}
-                        id="categoryName"
-                        name="categoryName"
-                        type="text"
-                        w="440px"
-                        h="44px"
-                        onChange={(e) =>
-                          setFieldValue("categoryName", e.target.value)
-                        }
-                      />
-                    </Flex>
-                  )}
-                </Flex>
+                <Box w="100%" px='40px'>
+                  <Flex
+                    className="create-service-input"
+                    direction="row"
+                    justify="left"
+                    paddingLeft="2rem"
+                    alignItems="center"
+                    bg="white"
+                    border="1px"
+                    borderColor="gray.200"
+                    borderRadius="8px"
+                    width="100%"
+                    height="fit-content"
+                    padding="3rem"
+                    marginTop="4rem"
+                  >
+                    <FormLabel marginRight="10rem">
+                      ชื่อหมวดหมู่ <span style={{ color: "#C82438" }}> * </span>
+                    </FormLabel>
+                    {errors.categoryName && touched.categoryName ? (
+                      <Flex flexDirection="column" pos="relative">
+                        <Field
+                          as={Input}
+                          variant="error"
+                          id="categoryName"
+                          name="categoryName"
+                          type="text"
+                          w="440px"
+                          h="44px"
+                          onChange={(e) =>
+                            setFieldValue("categoryName", e.target.value)
+                          }
+                        />
+                        <Image
+                          src={errorIcon}
+                          pos="absolute"
+                          left="412px"
+                          bottom="15px"
+                          w="14px"
+                        />
+                        <Text
+                          textStyle="b2"
+                          color="utility.red"
+                          pos="absolute"
+                          bottom="-30px"
+                        >
+                          {errors.categoryName}
+                        </Text>
+                      </Flex>
+                    ) : (
+                      <Flex flexDirection="column">
+                        <Field
+                          as={Input}
+                          id="categoryName"
+                          name="categoryName"
+                          type="text"
+                          w="440px"
+                          h="44px"
+                          onChange={(e) =>
+                            setFieldValue("categoryName", e.target.value)
+                          }
+                        />
+                      </Flex>
+                    )}
+                  </Flex>
+                </Box>
               </Flex>
             </Flex>
           </Form>
