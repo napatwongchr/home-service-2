@@ -130,15 +130,15 @@ const EditCreateServiceList = () => {
               เพิ่มบริการ
             </NavCreateService>
             {serviceList.service &&
-            serviceList.subService &&
-            !loading &&
-            !submitButton ? (
+              serviceList.subService &&
+              !loading &&
+              !submitButton ? (
               <Container
                 maxW="100%"
                 minH="100vh"
                 p="40px"
-                bg="gray.100"
                 display="flex"
+                bg="gray.100"
                 flexDirection={"column"}
                 justifyContent={"start"}
                 alignItems={"center"}
@@ -183,7 +183,6 @@ const EditCreateServiceList = () => {
                           type="text"
                           w={"440px"}
                           h={"44px"}
-                          value={serviceName}
                           onChange={(e) =>
                             setFieldValue("serviceName", e.target.value)
                           }
@@ -208,6 +207,7 @@ const EditCreateServiceList = () => {
                       <Flex flexDirection={"column"}>
                         <Field
                           as={Input}
+                          textColor="utility.black"
                           id="serviceName"
                           name="serviceName"
                           type="text"

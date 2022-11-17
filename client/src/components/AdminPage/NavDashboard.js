@@ -29,6 +29,7 @@ const NavDashBoard = (props) => {
         />
         <Input
           borderRadius="8px"
+          textStyle="b2"
           placeholder={`ค้นหา${props.children}...`}
           w="350px"
           h="44px"
