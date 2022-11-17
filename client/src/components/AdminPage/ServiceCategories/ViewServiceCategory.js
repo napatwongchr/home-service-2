@@ -28,12 +28,13 @@ import {
   useDisclosure,
   Container,
   Box,
+  Spinner
 } from "@chakra-ui/react";
 import useServiceCategories from "../../../hooks/useServiceCategories.js";
 
 const ViewServiceCategory = () => {
   const navigate = useNavigate();
-  const { serviceCategories, getServiceCategories, deleteServiceCategory } =
+  const { serviceCategories, getServiceCategories, deleteServiceCategory, loading } =
     useServiceCategories();
   const [categoryName, setCategoryName] = useState("");
   const [categoryUniqueId, setCategoryUniqueId] = useState();
@@ -47,55 +48,55 @@ const ViewServiceCategory = () => {
   }, [searchCategoryName]);
 
   return (
-    <Container maxW="100%" height="100%" bg="#F3F4F6" padding="0">
-      <Flex direction="column" alignItems={"center"} maxW="100vw" h="100%">
-        <Flex
-          h="80px"
-          w="100%"
-          bg="utility.white"
-          borderBottom="1px"
-          borderColor="gray.300"
-          justifyContent="space-between"
-          alignItems="center"
-          px="5rem"
-        >
-          <Text textStyle="h2" color="utility.black">
-            หมวดหมู่
-          </Text>
-          <Flex pos="relative" gap="24px">
-            <Image
-              src={searchIcon}
-              zIndex={2}
-              pos="absolute"
-              left="19px"
-              top="13px"
-            />
-            <Input
-              borderRadius="8px"
-              placeholder="ค้นหาหมวดหมู่..."
-              textStyle="b2"
-              w="350px"
-              h="44px"
-              pl="50px"
-              value={searchCategoryName}
-              onChange={(e) => {
-                setSearchCategoryName(e.target.value);
-              }}
-            />
+    <Container maxW="100%" height="100%" bg="#F3F4F6" padding="0" >
+      <Flex
+        h="80px"
+        w="100%"
+        bg="utility.white"
+        borderBottom="1px"
+        borderColor="gray.300"
+        justifyContent="space-between"
+        alignItems="center"
+        px="5rem"
+      >
+        <Text textStyle="h2" color="utility.black">
+          หมวดหมู่
+        </Text>
+        <Flex pos="relative" gap="24px">
+          <Image
+            src={searchIcon}
+            zIndex={2}
+            pos="absolute"
+            left="19px"
+            top="13px"
+          />
+          <Input
+            borderRadius="8px"
+            placeholder="ค้นหาหมวดหมู่..."
+            textStyle="b2"
+            w="350px"
+            h="44px"
+            pl="50px"
+            value={searchCategoryName}
+            onChange={(e) => {
+              setSearchCategoryName(e.target.value);
+            }}
+          />
 
-            <Button
-              w="165px"
-              h="44px"
-              fontWeight="500"
-              onClick={() => {
-                navigate(`/admin-dashboard/category/create`);
-              }}
-              rightIcon={<Image src={whitePlusIcon} alt="plus icon" />}
-            >
-              เพิ่มหมวดหมู่
-            </Button>
-          </Flex>
+          <Button
+            w="165px"
+            h="44px"
+            fontWeight="500"
+            onClick={() => {
+              navigate(`/admin-dashboard/category/create`);
+            }}
+            rightIcon={<Image src={whitePlusIcon} alt="plus icon" />}
+          >
+            เพิ่มหมวดหมู่
+          </Button>
         </Flex>
+      </Flex>
+      {serviceCategories && !loading ? (
         <Box width="100%" px="40px">
           <TableContainer
             width="100%"
@@ -262,7 +263,17 @@ const ViewServiceCategory = () => {
             </Table>
           </TableContainer>
         </Box>
-      </Flex>
+      ) : (
+        <Flex width="100%" height="100%" justify="center" align="center" >
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        </Flex>
+      )}
     </Container>
   );
 };
