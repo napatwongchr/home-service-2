@@ -115,6 +115,7 @@ const CreateServiceList = () => {
                   borderRadius="8px"
                   flexDirection="column"
                   gap="40px"
+                  w="100%"
                 >
                   <Flex alignItems="start">
                     <FormLabel
