@@ -467,8 +467,8 @@ const serviceListController = {
           [
             serviceId,
             subService.sub_service_name,
-            subService.price_per_unit,
             subService.unit_name,
+            subService.price_per_unit,
             new Date(),
             new Date(),
           ]

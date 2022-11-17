@@ -24,6 +24,7 @@ import {
   ModalBody,
   Button,
   useDisclosure,
+  Spinner,
 } from "@chakra-ui/react";
 import React from "react";
 import filterCategory from "../../../utils/filterCategory";
@@ -31,7 +32,7 @@ import useAdminServiceLists from "../../../hooks/useAdminServiceLists.js";
 
 const AdminServiceList = () => {
   const navigate = useNavigate();
-  const { serviceLists, getServiceLists, deleteServiceList } =
+  const { serviceLists, getServiceLists, deleteServiceList, loading } =
     useAdminServiceLists();
   const [listName, setListName] = useState("");
   const [listUniqueId, setListUniqueId] = useState();
@@ -43,51 +44,60 @@ const AdminServiceList = () => {
 
   const { handleColorText, handleColorButton } = filterCategory;
   return (
-    <Container maxW="100%" p="40px" h="calc(100% - 3.25rem)" bg="gray.100">
-      <TableContainer
-        maxW="100%"
-        border={"1px"}
-        borderColor="gray.200"
-        borderRadius="10px"
-        bg="utility.white"
-      >
-        <Table variant="simple">
-          <Thead>
-            <Tr bg={"gray.100"}>
-              <Th
-                fontWeight="400"
-                fontSize={"14px"}
-                lineHeight="21px"
-                textAlign={"center"}
-              >
-                ลำดับ
-              </Th>
-              <Th fontWeight="400" fontSize="14px" lineHeight="21px">
-                ชื่อบริการ
-              </Th>
-              <Th fontWeight="400" fontSize="14px" lineHeight="21px">
-                ชื่อหมวดหมู่
-              </Th>
-              <Th fontWeight="400" fontSize="14px" lineHeight="21px">
-                สร้างเมื่อ
-              </Th>
-              <Th fontWeight="400" fontSize="14px" lineHeight="21px">
-                แก้ไขล่าสุด
-              </Th>
-              <Th
-                fontWeight="400"
-                textAlign="center"
-                textTransform="none"
-                fontSize="14px"
-                lineHeight="21px"
-              >
-                Action
-              </Th>
-            </Tr>
-          </Thead>
-          <Tbody bg="#FFFFFF">
-            {serviceLists.service &&
-              serviceLists.service.map((item, index) => {
+    <Container
+      maxW="100%"
+      p="40px"
+      h="calc(100vh - 80px)"
+      overflow={"scroll"}
+      bg="gray.100"
+      display={'flex'}
+      justifyContent='center'
+      alignItems={!loading ? 'start' : 'center'}
+    >
+      {serviceLists.service && !loading ? (
+        <TableContainer
+          w="100%"
+          border={"1px"}
+          borderColor="gray.200"
+          borderRadius="10px"
+          bg="utility.white"
+        >
+          <Table variant="simple">
+            <Thead>
+              <Tr bg={"gray.100"}>
+                <Th
+                  fontWeight="400"
+                  fontSize={"14px"}
+                  lineHeight="21px"
+                  textAlign={"center"}
+                >
+                  ลำดับ
+                </Th>
+                <Th fontWeight="400" fontSize="14px" lineHeight="21px">
+                  ชื่อบริการ
+                </Th>
+                <Th fontWeight="400" fontSize="14px" lineHeight="21px">
+                  ชื่อหมวดหมู่
+                </Th>
+                <Th fontWeight="400" fontSize="14px" lineHeight="21px">
+                  สร้างเมื่อ
+                </Th>
+                <Th fontWeight="400" fontSize="14px" lineHeight="21px">
+                  แก้ไขล่าสุด
+                </Th>
+                <Th
+                  fontWeight="400"
+                  textAlign="center"
+                  textTransform="none"
+                  fontSize="14px"
+                  lineHeight="21px"
+                >
+                  Action
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody bg="#FFFFFF">
+              {serviceLists.service.map((item, index) => {
                 return (
                   <Tr key={item.service_id} h={90}>
                     <Td textAlign={"center"}>{index + 1}</Td>
@@ -194,9 +204,18 @@ const AdminServiceList = () => {
                   </Tr>
                 );
               })}
-          </Tbody>
-        </Table>
-      </TableContainer>
+            </Tbody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
+      )}
     </Container>
   );
 };

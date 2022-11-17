@@ -63,7 +63,7 @@ const DetailServiceCategory = () => {
             </Flex>
 
             <Button
-              marginRight="5rem"
+              marginRight="40px"
               width="112px"
               height="44px"
               fontWeight="500"

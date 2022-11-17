@@ -82,7 +82,6 @@ const LoginForm = () => {
             )
             .required("กรุณากรอกรหัสผ่าน"),
         })}
-        validateOnChange={false}
         onSubmit={(values) => {
           login(values);
         }}

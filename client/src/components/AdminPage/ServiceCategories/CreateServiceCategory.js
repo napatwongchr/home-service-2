@@ -86,7 +86,7 @@ const CreateServiceCategory = () => {
                     className="button-group"
                     justifyContent="space-between"
                     width="12rem"
-                    marginRight="5rem"
+                    marginRight="40px"
                   >
                     <Link to="/admin-dashboard/categories">
                       <Button width={"5.5rem"} variant="secondary">

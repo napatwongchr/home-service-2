@@ -5,8 +5,8 @@ import EditServiceList from '../../components/AdminPage/ServiceLists/EditService
 
 const AdminEditService = () => {
     return (
-        <Container className='adminDashboardPage' centerContent>
-            <Flex w='100vw'>
+        <Container className='adminEditService' centerContent>
+            <Flex w='100vw' h='100vh'>
                 <SideBar />
                 <EditServiceList />
             </Flex>

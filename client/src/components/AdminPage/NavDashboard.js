@@ -1,8 +1,11 @@
-import { Button, Flex, Img, Input, Text } from "@chakra-ui/react";
+import { Button, Flex, Image, Img, Input, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import React from "react";
 import searchIcon from "../../asset/image/adminDashboardPage/searchIcon.svg";
+import whitePlusIcon from "../../asset/image/adminDashboardPage/whitePlusIcon.svg";
+
 const NavDashBoard = (props) => {
+  const {searchCategoryName, setSearchCategoryName} = props
   return (
     <Flex
       h="80px"
@@ -31,10 +34,23 @@ const NavDashBoard = (props) => {
           w="350px"
           h="44px"
           pl="50px"
+          onChange={(e) => setSearchCategoryName(e.target.value)}
+          value={searchCategoryName}
         />
 
         <Link to={props.to}>
-          <Button w="165px" h="44px">
+          <Button
+            w="165px"
+            h="44px"
+            rightIcon={
+              <Image
+                src={whitePlusIcon}
+                alt="plus icon"
+                pos={"relative"}
+                top="-1px"
+              />
+            }
+          >
             เพิ่ม{props.children}
           </Button>
         </Link>

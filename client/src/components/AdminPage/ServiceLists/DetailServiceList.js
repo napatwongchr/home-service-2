@@ -39,84 +39,72 @@ const DetailServiceList = () => {
   }, [serviceList]);
 
   return (
-    <Container bg="#F3F4F6" maxW="100%" height={"100%"} padding="0">
-      <Flex>
+    <Container bg="#F3F4F6" maxW="100%" height={"100vh"} padding="0">
+      <Flex
+        className="create-service-field"
+        direction="column"
+        alignItems={"start"}
+      >
         <Flex
-          className="create-service-field"
-          direction="column"
-          alignItems={"center"}
+          className="create-service-bar"
+          bg="white"
+          borderBottom={"1px"}
+          borderColor="gray.300"
           width="100%"
-          height="100%"
+          height={"80px"}
+          justify={"space-between"}
+          padding="2rem"
+          alignItems="center"
         >
           <Flex
-            className="create-service-bar"
-            bg="white"
-            borderBottom={"1px"}
-            borderColor="gray.300"
-            width="100%"
-            height={"80px"}
-            justify={"space-between"}
-            padding="2rem"
-            alignItems="center"
+            className="left-side"
+            direction="row"
+            alignItems={"center"}
+            // marginLeft="3rem"
           >
-            <Flex
-              className="left-side"
-              direction="row"
-              alignItems={"center"}
-              // marginLeft="3rem"
-            >
-              <Link to="/admin-dashboard/services">
-                <Image src={arrow} marginRight="1.5rem" />
-              </Link>
+            <Link to="/admin-dashboard/services">
+              <Image src={arrow} marginRight="1.5rem" />
+            </Link>
 
-              <Flex direction={"column"}>
-                <Text textStyle="b4">บริการ</Text>
-                <Text
-                  className="category-name"
-                  textStyle="h2"
-                  color="utility.black"
-                >
-                  {serviceName}
-                </Text>
-              </Flex>
-            </Flex>
-            <Flex
-              className="button-group"
-              justifyContent="space-between"
-              // width="12rem"
-              // marginRight="5rem"
-            >
-              <Link to={`/admin-dashboard/service/edit/${serviceId}`}>
-                <Button width={"5.5rem"} onSubmit={{}}>
-                  แก้ไข
-                </Button>
-              </Link>
+            <Flex direction={"column"}>
+              <Text textStyle="b4">บริการ</Text>
+              <Text
+                className="category-name"
+                textStyle="h2"
+                color="utility.black"
+              >
+                {serviceName}
+              </Text>
             </Flex>
           </Flex>
-
+          <Flex
+            className="button-group"
+            justifyContent="space-between"
+            // width="12rem"
+            // marginRight="5rem"
+          >
+            <Link to={`/admin-dashboard/service/edit/${serviceId}`}>
+              <Button width={"5.5rem"}>แก้ไข</Button>
+            </Link>
+          </Flex>
+        </Flex>
+        <Box w='100%' px='40px'>
           <Flex
             className="edit-service-input"
             direction={"column"}
-            paddingLeft={"2rem"}
-            paddingRight={"2rem"}
-            paddingTop="26px"
-            paddingBottom="26px"
-            alignItems={"left"}
-            border="1px"
-            bg="white"
-            borderColor="gray.200"
-            borderRadius={"8px"}
-            height="fit=content"
-            marginTop="-40px"
-            sx={{ transform: "scale(0.8)" }}
-            w="1420px"
+              paddingLeft="2rem"
+              justify="center"
+              alignItems="left"
+              bg="white"
+              border="1px"
+              borderColor="gray.200"
+              borderRadius="8px"
+              width="100%"
+              height="fit-content"
+              padding="3rem 2rem 3rem 2rem"
+              marginY="40px"
           >
-            <Flex
-              direction={"row"}
-              fontStyle={"h5"}
-              marginBottom="32px"
-              w={1120}
-            >
+            <Flex direction={"row"} fontStyle={"h5"} marginBottom="32px">
               <Text color={"gray.700"} w="205px">
                 ชื่อบริการ
               </Text>
@@ -146,10 +134,10 @@ const DetailServiceList = () => {
               <Text color={"gray.700"} w="205px">
                 รูปภาพ
               </Text>
-              <Image src={serviceImage} />
+              <Image src={serviceImage} maxW="440px" />
             </Flex>
 
-            <Divider w="1356px" />
+            <Divider w="100%" />
 
             <Box marginTop="40px">
               <Flex direction={"column"}>
@@ -164,6 +152,7 @@ const DetailServiceList = () => {
                       alignItems={"end"}
                       color="#646C80"
                       marginBottom="32px"
+                      key={index}
                     >
                       <Flex direction={"column"}>
                         <Text marginBottom="4px" w="488px">
@@ -234,7 +223,7 @@ const DetailServiceList = () => {
               </Flex>
             </Box>
           </Flex>
-        </Flex>
+        </Box>
       </Flex>
     </Container>
   );

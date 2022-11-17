@@ -5,20 +5,24 @@ import axios from "../api/axios";
 const useAdminServiceLists = () => {
   const navigate = useNavigate();
   const [serviceLists, setServiceLists] = useState([]);
-  const [serviceList, setServiceList] = useState('');
-  const [loading, setLoading] = useState(true)
+  const [serviceList, setServiceList] = useState("");
+  const [loading, setLoading] = useState(true);
   const params = useParams();
 
   const getServiceLists = async (params) => {
     try {
       let results;
       if (params.priceTouched === true) {
-        results = await axios.get(`/service?searchInput=${params.input}&category=${params.category}&min=${params.sliderValue[0]}&max=${params.sliderValue[1]}&sort=${params.order}`);;
-      } else if (params.input !== '' || params.category) {
-        results = await axios.get(`/service?searchInput=${params.input}&category=${params.category}&sort=${params.order}`);;
+        results = await axios.get(
+          `/service?searchInput=${params.input}&category=${params.category}&min=${params.sliderValue[0]}&max=${params.sliderValue[1]}&sort=${params.order}`
+        );
+      } else if (params.input !== "" || params.category) {
+        results = await axios.get(
+          `/service?searchInput=${params.input}&category=${params.category}&sort=${params.order}`
+        );
       }
       setServiceLists(results.data.data);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -28,6 +32,7 @@ const useAdminServiceLists = () => {
     try {
       const result = await axios.get(`/service?serviceId=${params.serviceId}`);
       setServiceList(result.data.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -57,9 +62,7 @@ const useAdminServiceLists = () => {
 
   const deleteServiceList = async (serviceId) => {
     try {
-      await axios.delete(
-        `/service?serviceId=${serviceId}`
-      );
+      await axios.delete(`/service?serviceId=${serviceId}`);
       if (serviceLists.service) {
         const newLists = serviceLists.service.filter((list) => {
           return list.service_id !== serviceId;
@@ -82,7 +85,7 @@ const useAdminServiceLists = () => {
     createServiceList,
     updateServiceListById,
     deleteServiceList,
-    loading
+    loading,
   };
 };
 

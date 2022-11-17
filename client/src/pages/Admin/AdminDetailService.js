@@ -1,4 +1,4 @@
-import { Container, Flex, Box } from "@chakra-ui/react";
+import { Container, Flex } from "@chakra-ui/react";
 import React from "react";
 import SideBar from "../../components/AdminPage/SideBar";
 import DetailServiceList from "../../components/AdminPage/ServiceLists/DetailServiceList";
@@ -6,11 +6,9 @@ import DetailServiceList from "../../components/AdminPage/ServiceLists/DetailSer
 const AdminDetailServicePage = () => {
   return (
     <Container className="adminDashboardPage" centerContent>
-      <Flex w="100vw">
+      <Flex w="100vw" h="100vh">
         <SideBar />
-        <Box w="100%" maxH="100%" overflow="hidden">
-          <DetailServiceList />
-        </Box>
+        <DetailServiceList />
       </Flex>
     </Container>
   );
