@@ -107,9 +107,9 @@ const AdminServiceList = () => {
                         borderRadius="8px"
                         px="10px"
                         py="4px"
-                        bg={handleColorButton(item.type)}
+                        bg={handleColorButton(item.service_category_name)}
                       >
-                        <Text textStyle="b4" color={handleColorText(item.type)}>
+                        <Text textStyle="b4" color={handleColorText(item.service_category_name)}>
                           {item.service_category_name}
                         </Text>
                       </Badge>
