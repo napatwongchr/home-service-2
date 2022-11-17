@@ -45,6 +45,7 @@ function AuthProvider(props) {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       if (user.exp * 1000 < Date.now()) {
+        alert("หมดเวลาเข้าสู่ระบบกรุณาล็อกอินอีกครั้ง")
         logout();
       }
     }

@@ -13,6 +13,7 @@ const ContactSection = () => {
       centerContent
       px={0}
       overflow="hidden"
+      pos='relative'
     >
       <Container maxW="1440px" p="0">
         <Flex w="100%">
@@ -49,15 +50,16 @@ const ContactSection = () => {
               ติดต่อมาที่อีเมล: job@homeservices.co
             </Text>
           </Flex>
+        </Flex>
           <Image
             className="house-pic"
             alt="house"
             src={house}
-            pos="relative"
-            top={"5px"}
+            pos="absolute"
+            top={"22px"}
+            right='0'
             sx={{ mixBlendMode: "screen" }}
           />
-        </Flex>
       </Container>
     </Container>
   );
