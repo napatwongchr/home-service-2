@@ -7,7 +7,6 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
-import SideBar from "../SideBar";
 import { Link } from "react-router-dom";
 import useServiceCategories from "../../../hooks/useServiceCategories";
 import { Formik, Form, Field } from "formik";
@@ -61,23 +60,24 @@ const CreateServiceCategory = () => {
       {({ handleSubmit, setFieldValue, errors, touched }) => (
         <Container bg="#F3F4F6" maxW="100%" height="100vh" padding="0px">
           <Form onSubmit={handleSubmit}>
-            <Flex>
-              <SideBar />
+            <Flex
+
+            >
               <Flex
                 className="create-service-field"
                 direction="column"
-                alignItems={"center"}
+                alignItems="center"
                 width="100vw"
                 height="100vh"
               >
                 <Flex
                   className="create-service-category-bar"
                   bg="white"
-                  borderBottom={"1px"}
+                  borderBottom="1px"
                   borderColor="gray.300"
                   width="100%"
-                  height={"80px"}
-                  justify={"space-between"}
+                  height="80px"
+                  justify="space-between"
                   alignItems="center"
                 >
                   <Text textStyle="h2" marginLeft="3rem" color="utility.black">
@@ -101,32 +101,33 @@ const CreateServiceCategory = () => {
                 </Flex>
                 <Flex
                   className="create-service-input"
-                  direction={"row"}
+                  direction="row"
                   justify="left"
-                  paddingLeft={"2rem"}
-                  alignItems={"center"}
+                  paddingLeft="2rem"
+                  alignItems="center"
                   bg="white"
                   border="1px"
                   borderColor="gray.200"
-                  borderRadius={"8px"}
-                  width={"1120px"}
+                  borderRadius="8px"
+                  width="90%"
                   height="fit-content"
-                  padding={"3rem"}
+                  padding="3rem"
                   marginTop="4rem"
                 >
-                  <FormLabel>
+                  <FormLabel marginRight="10rem">
                     ชื่อหมวดหมู่ <span style={{ color: "#C82438" }}> * </span>
                   </FormLabel>
                   {errors.categoryName && touched.categoryName ? (
-                    <Flex flexDirection={"column"} pos="relative">
+                    <Flex flexDirection="column" pos="relative"
+                    >
                       <Field
                         as={Input}
                         variant="error"
                         id="categoryName"
                         name="categoryName"
                         type="text"
-                        w={"440px"}
-                        h={"44px"}
+                        w="440px"
+                        h="44px"
                         onChange={(e) =>
                           setFieldValue("categoryName", e.target.value)
                         }
@@ -135,27 +136,27 @@ const CreateServiceCategory = () => {
                         src={errorIcon}
                         pos="absolute"
                         left="412px"
-                        bottom={"15px"}
-                        w={"14px"}
+                        bottom="15px"
+                        w="14px"
                       />
                       <Text
-                        textStyle={"b2"}
+                        textStyle="b2"
                         color="utility.red"
                         pos="absolute"
-                        bottom={"-30px"}
+                        bottom="-30px"
                       >
                         {errors.categoryName}
                       </Text>
                     </Flex>
                   ) : (
-                    <Flex flexDirection={"column"}>
+                    <Flex flexDirection="column">
                       <Field
                         as={Input}
                         id="categoryName"
                         name="categoryName"
                         type="text"
-                        w={"440px"}
-                        h={"44px"}
+                        w="440px"
+                        h="44px"
                         onChange={(e) =>
                           setFieldValue("categoryName", e.target.value)
                         }
