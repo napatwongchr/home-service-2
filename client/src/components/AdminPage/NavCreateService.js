@@ -22,20 +22,9 @@ const NavCreateService = (props) => {
             ยกเลิก
           </Button>
         </Link>
-        {!props.submitButton ? (
-          <Button
-            variant="primary"
-            w="112px"
-            h="44px"
-            type="submit"
-          >
-            {props.submit}
-          </Button>
-        ) : (
-          <Button isLoading w="112px" h="44px" spinnerPlacement="start">
-            {props.submit}
-          </Button>
-        )}
+        <Button variant="primary" w="112px" h="44px" type="submit">
+          {props.submit}
+        </Button>
       </Flex>
     </Flex>
   );
