@@ -19,10 +19,9 @@ const AllServiceSection = (props) => {
   const { handleColorButton, handleColorText } = filterCategory;
   const { input, category, order, sliderValue, priceTouched, loading } = props;
   const { getServiceLists, serviceLists } = useAdminServiceLists();
-
   useEffect(() => {
     getServiceLists({ input, category, order, sliderValue, priceTouched });
-  }, [input, category, sliderValue, order, priceTouched]);
+  },[props.submitButton]);
 
   return (
     <Container
