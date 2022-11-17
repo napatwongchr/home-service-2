@@ -24,7 +24,17 @@ import {
 } from "@chakra-ui/react";
 
 const SearchSection = (props) => {
-  const { input, setInput, category, setCategory, order, setOrder, sliderValue, setSliderValue, setPriceTouched } = props
+  const {
+    input,
+    setInput,
+    category,
+    setCategory,
+    order,
+    setOrder,
+    sliderValue,
+    setSliderValue,
+    setPriceTouched,
+  } = props;
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -36,13 +46,13 @@ const SearchSection = (props) => {
       borderColor="gray.100"
       centerContent
     >
-      <Container maxW='1440px' h="100%">
+      <Container maxW="1440px" h="100%">
         <Stack
           direction="row"
           justify="space-evenly"
           alignItems="center"
           h="100%"
-          w='100%px'
+          w="100%px"
         >
           <Box className="search-input">
             <Flex align="center">
@@ -61,7 +71,7 @@ const SearchSection = (props) => {
                   border="1px"
                   borderRadius="8px"
                   borderColor="gray.300"
-                  _focus={{ borderColor: 'blue.600' }}
+                  _focus={{ borderColor: "blue.600" }}
                 />
               </InputGroup>
             </Flex>
@@ -71,44 +81,81 @@ const SearchSection = (props) => {
             <Flex alignItems="center">
               <Box className="category" mr="20px">
                 <Menu>
-                  <Text fontSize="12px" ml="15px" color="gray.700" pos='relative' top={'6px'} zIndex={'10'} left={'2px'}>
+                  <Text
+                    fontSize="12px"
+                    ml="15px"
+                    color="gray.700"
+                    pos="relative"
+                    top={"6px"}
+                    zIndex={"10"}
+                    left={"2px"}
+                  >
                     หมวดหมู่บริการ
                   </Text>
 
                   <Menu>
-                    <MenuButton as={Button} variant='dropdown' w='150px' textAlign='left' rightIcon={<Image src={arrow} />} onClick={() => setToggle(false)}>
+                    <MenuButton
+                      as={Button}
+                      variant="dropdown"
+                      w="150px"
+                      textAlign="left"
+                      rightIcon={<Image src={arrow} />}
+                      onClick={() => setToggle(false)}
+                    >
                       {category}
                     </MenuButton>
                     <MenuList
                       minW="0px"
-                      w='180px'
+                      w="180px"
                       py="6px"
                       borderRadius={8}
-                      bg={'utility.white'}
-                      boxShadow={'lg'}
-                      border='none'
-                      textStyle={'b3'}
+                      bg={"utility.white"}
+                      boxShadow={"lg"}
+                      border="none"
+                      textStyle={"b3"}
                     >
-                      <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
-                        color={category === 'บริการทั้งหมด' ? 'blue.700' : null}
+                      <MenuItem
+                        px={"14px"}
+                        _hover={{ bg: "gray.100" }}
+                        color={category === "บริการทั้งหมด" ? "blue.700" : null}
                         onClick={() => {
-                          setCategory('บริการทั้งหมด')
-                        }}>บริการทั้งหมด</MenuItem>
-                      <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
-                        color={category === 'บริการทั่วไป' ? 'blue.700' : null}
+                          setCategory("บริการทั้งหมด");
+                        }}
+                      >
+                        บริการทั้งหมด
+                      </MenuItem>
+                      <MenuItem
+                        px={"14px"}
+                        _hover={{ bg: "gray.100" }}
+                        color={category === "บริการทั่วไป" ? "blue.700" : null}
                         onClick={() => {
-                          setCategory('บริการทั่วไป')
-                        }}>บริการทั่วไป</MenuItem>
-                      <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
-                        color={category === 'บริการห้องครัว' ? 'blue.700' : null}
+                          setCategory("บริการทั่วไป");
+                        }}
+                      >
+                        บริการทั่วไป
+                      </MenuItem>
+                      <MenuItem
+                        px={"14px"}
+                        _hover={{ bg: "gray.100" }}
+                        color={
+                          category === "บริการห้องครัว" ? "blue.700" : null
+                        }
                         onClick={() => {
-                          setCategory('บริการห้องครัว')
-                        }}>บริการห้องครัว</MenuItem>
-                      <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
-                        color={category === 'บริการห้องน้ำ' ? 'blue.700' : null}
+                          setCategory("บริการห้องครัว");
+                        }}
+                      >
+                        บริการห้องครัว
+                      </MenuItem>
+                      <MenuItem
+                        px={"14px"}
+                        _hover={{ bg: "gray.100" }}
+                        color={category === "บริการห้องน้ำ" ? "blue.700" : null}
                         onClick={() => {
-                          setCategory('บริการห้องน้ำ')
-                        }}>บริการห้องน้ำ</MenuItem>
+                          setCategory("บริการห้องน้ำ");
+                        }}
+                      >
+                        บริการห้องน้ำ
+                      </MenuItem>
                     </MenuList>
                   </Menu>
                 </Menu>
@@ -123,18 +170,41 @@ const SearchSection = (props) => {
                 w="140px"
               >
                 <Menu>
-                  <Text fontSize="12px" ml="15px" color="gray.700" pos='relative' top={'6px'} zIndex={'10'} left={'2px'}>
+                  <Text
+                    fontSize="12px"
+                    ml="15px"
+                    color="gray.700"
+                    pos="relative"
+                    top={"6px"}
+                    zIndex={"10"}
+                    left={"2px"}
+                  >
                     ราคา
                   </Text>
                   <Menu>
-                    <MenuButton as={Button} variant='dropdown' w='100%' textAlign='left' rightIcon={<Image src={arrow} />}
+                    <MenuButton
+                      as={Button}
+                      variant="dropdown"
+                      w="100%"
+                      textAlign="left"
+                      rightIcon={<Image src={arrow} />}
                       onClick={() => {
-                        setToggle(!toggle)
-                      }}>
+                        setToggle(!toggle);
+                      }}
+                    >
                       {sliderValue[0]}-{sliderValue[1]}฿
                     </MenuButton>
-                    {toggle &&
-                      <Container height="120px" width="250px" padding="10px" borderRadius={8} bg={'utility.white'} pos='absolute' boxShadow={'lg'} top={410}>
+                    {toggle && (
+                      <Container
+                        height="120px"
+                        width="250px"
+                        padding="10px"
+                        borderRadius={8}
+                        bg={"utility.white"}
+                        pos="absolute"
+                        boxShadow={"lg"}
+                        top={410}
+                      >
                         <MenuItem
                           _hover={{
                             background: "none",
@@ -154,7 +224,7 @@ const SearchSection = (props) => {
                               max={5000}
                               step={20}
                               onChangeEnd={(val) => {
-                                setSliderValue(val)
+                                setSliderValue(val);
                               }}
                               onChange={() => setPriceTouched(true)}
                               justifyContent="space-between"
@@ -164,11 +234,19 @@ const SearchSection = (props) => {
                                 <RangeSliderFilledTrack bg="blue.500" />
                               </RangeSliderTrack>
 
-                              <RangeSliderThumb boxSize={4} index={0} bg="blue.700" />
+                              <RangeSliderThumb
+                                boxSize={4}
+                                index={0}
+                                bg="blue.700"
+                              />
                               <Text marginTop="1rem" color="blue.700">
                                 {sliderValue[0]}
                               </Text>
-                              <RangeSliderThumb boxSize={4} index={1} bg="blue.700" />
+                              <RangeSliderThumb
+                                boxSize={4}
+                                index={1}
+                                bg="blue.700"
+                              />
                               <Text marginTop="1rem" color="blue.700">
                                 {sliderValue[1]}
                               </Text>
@@ -176,69 +254,119 @@ const SearchSection = (props) => {
                           </Stack>
                         </MenuItem>
                       </Container>
-                    }
+                    )}
                   </Menu>
                 </Menu>
-
               </Box>
-              <Box className="sort-by"
+              <Box
+                className="sort-by"
                 borderLeft="1px"
                 borderColor="gray.300"
                 alignItems="center"
                 pl="10px"
                 w="250px"
-                mr="10px">
+                mr="10px"
+              >
                 <Menu>
-                  <Text fontSize="12px" ml="15px" color="gray.700" pos='relative' top={'6px'} zIndex={'10'} left={'2px'}>
+                  <Text
+                    fontSize="12px"
+                    ml="15px"
+                    color="gray.700"
+                    pos="relative"
+                    top={"6px"}
+                    zIndex={"10"}
+                    left={"2px"}
+                  >
                     เรียงตาม
                   </Text>
 
                   <Menu>
-                    <MenuButton as={Button} variant='dropdown' w='100%' textAlign='left' rightIcon={<Image src={arrow} />} onClick={() => setToggle(false)}>
+                    <MenuButton
+                      as={Button}
+                      variant="dropdown"
+                      w="100%"
+                      textAlign="left"
+                      rightIcon={<Image src={arrow} />}
+                      onClick={() => setToggle(false)}
+                    >
                       {order}
                     </MenuButton>
                     <MenuList
                       minW="0px"
-                      w='100%'
+                      w="100%"
                       py="6px"
                       borderRadius={8}
-                      bg={'utility.white'}
-                      boxShadow={'lg'}
-                      border='none'
-                      textStyle={'b3'}
+                      bg={"utility.white"}
+                      boxShadow={"lg"}
+                      border="none"
+                      textStyle={"b3"}
                     >
-                      <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
-                        color={order === 'บริการแนะนำ' ? 'blue.700' : null}
+                      <MenuItem
+                        px={"14px"}
+                        _hover={{ bg: "gray.100" }}
+                        color={order === "บริการแนะนำ" ? "blue.700" : null}
                         onClick={() => {
-                          setOrder('บริการแนะนำ')
-                        }}>บริการแนะนำ</MenuItem>
-                      <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
-                        color={order === 'บริการยอดนิยม' ? 'blue.700' : null}
+                          setOrder("บริการแนะนำ");
+                        }}
+                      >
+                        บริการแนะนำ
+                      </MenuItem>
+                      <MenuItem
+                        px={"14px"}
+                        _hover={{ bg: "gray.100" }}
+                        color={order === "บริการยอดนิยม" ? "blue.700" : null}
                         onClick={() => {
-                          setOrder('บริการยอดนิยม')
-                        }}>บริการยอดนิยม</MenuItem>
-                      <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
-                        color={order === 'ตามตัวอักษร (Ascending)' ? 'blue.700' : null}
+                          setOrder("บริการยอดนิยม");
+                        }}
+                      >
+                        บริการยอดนิยม
+                      </MenuItem>
+                      <MenuItem
+                        px={"14px"}
+                        _hover={{ bg: "gray.100" }}
+                        color={
+                          order === "ตามตัวอักษร (Ascending)"
+                            ? "blue.700"
+                            : null
+                        }
                         onClick={() => {
-                          setOrder('ตามตัวอักษร (Ascending)')
-                        }}>ตามตัวอักษร (Ascending)</MenuItem>
-                      <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}
-                        color={order === 'ตามตัวอักษร (Descending' ? 'blue.700' : null}
+                          setOrder("ตามตัวอักษร (Ascending)");
+                        }}
+                      >
+                        ตามตัวอักษร (Ascending)
+                      </MenuItem>
+                      <MenuItem
+                        px={"14px"}
+                        _hover={{ bg: "gray.100" }}
+                        color={
+                          order === "ตามตัวอักษร (Descending"
+                            ? "blue.700"
+                            : null
+                        }
                         onClick={() => {
-                          setOrder('ตามตัวอักษร (Descending)')
-                        }}>ตามตัวอักษร (Descending)</MenuItem>
+                          setOrder("ตามตัวอักษร (Descending)");
+                        }}
+                      >
+                        ตามตัวอักษร (Descending)
+                      </MenuItem>
                     </MenuList>
                   </Menu>
                 </Menu>
               </Box>
-              <Button textStyle="h5" w="5rem">
+              <Button
+                textStyle="h5"
+                w="5rem"
+                onClick={() =>
+                  props.setSubmitButton(!props.submitButton)
+                }
+              >
                 ค้นหา
               </Button>
             </Flex>
           </Box>
-        </Stack >
+        </Stack>
       </Container>
-    </Container >
+    </Container>
   );
 };
 
