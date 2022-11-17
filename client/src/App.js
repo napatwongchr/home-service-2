@@ -57,6 +57,10 @@ function App() {
               path="/admin-dashboard/category/view/:categoryId"
               element={<AdminDetailCategoryPage />}
             />
+            <Route
+              path="*"
+              element={<AdminDashboardPage />}
+            />
           </Routes>
         ) : (
           <Routes>
