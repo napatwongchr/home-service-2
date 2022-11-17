@@ -147,6 +147,7 @@ const AdminServiceList = () => {
                               height="250px"
                               width="fit-content"
                               borderRadius={"16px"}
+                              marginTop="15rem"
                             >
                               <ModalHeader marginTop="1.5rem">
                                 <Flex direction="column" alignItems={"center"}>
