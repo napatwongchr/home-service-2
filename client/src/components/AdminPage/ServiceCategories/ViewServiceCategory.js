@@ -48,7 +48,7 @@ const ViewServiceCategory = () => {
   }, [searchCategoryName]);
 
   return (
-    <Container maxW="100%" height="100%" bg="#F3F4F6" padding="0" >
+    <Container maxW="100%" h="calc(100vh)" bg="#F3F4F6" padding="0" overflow={"scroll"}>
       <Flex
         h="80px"
         w="100%"
@@ -97,7 +97,7 @@ const ViewServiceCategory = () => {
         </Flex>
       </Flex>
       {serviceCategories && !loading ? (
-        <Box width="100%" px="40px">
+        <Box width="100%" px="40px"  >
           <TableContainer
             width="100%"
             border="1px"
