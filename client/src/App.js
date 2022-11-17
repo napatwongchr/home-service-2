@@ -7,9 +7,9 @@ import AdminDashboardPage from "./pages/Admin/AdminDashBoard";
 import AdminCreateService from "./pages/Admin/AdminCreateService";
 import AdminServiceListPage from "./pages/Admin/AdminServiceLists";
 import AdminDetailService from "./pages/Admin/AdminDetailService";
-import CreateServiceCategory from "./components/AdminPage/ServiceCategories/CreateServiceCategory";
-import EditServiceCategory from "./components/AdminPage/ServiceCategories/EditServiceCategory";
-import DetailServiceCategory from "./components/AdminPage/ServiceCategories/DetailServiceCategory";
+import AdminCreateCategoryPage from "./pages/Admin/AdminCreateCategory";
+import AdminEditCategoryPage from "./pages/Admin/AdminEditCategory";
+import AdminDetailCategoryPage from "./pages/Admin/AdminDetailCategory";
 import AdminEditService from "./pages/Admin/AdminEditService";
 import { useAuth } from "./contexts/authentication";
 
@@ -47,15 +47,15 @@ function App() {
             />
             <Route
               path="/admin-dashboard/category/create"
-              element={<CreateServiceCategory />}
+              element={<AdminCreateCategoryPage />}
             />
             <Route
               path="/admin-dashboard/category/edit/:categoryId"
-              element={<EditServiceCategory />}
+              element={<AdminEditCategoryPage />}
             />
             <Route
               path="/admin-dashboard/category/view/:categoryId"
-              element={<DetailServiceCategory />}
+              element={<AdminDetailCategoryPage />}
             />
           </Routes>
         ) : (

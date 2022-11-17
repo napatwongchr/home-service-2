@@ -16,7 +16,6 @@ import {
   useDisclosure,
   Box,
 } from "@chakra-ui/react";
-import SideBar from "../SideBar";
 import arrow from "../../../asset/image/serviceCategory/left-arrow.svg";
 import binIcon from "../../../asset/image/serviceCategory/bin-icon.svg";
 import warningICon from "../../../asset/image/serviceCategory/warning-icon.svg";
@@ -96,7 +95,6 @@ const EditServiceCategory = () => {
         <Container bg="#F3F4F6" maxW="100%" height="100vh" padding="0px">
           <Form onSubmit={handleSubmit}>
             <Flex>
-              <SideBar />
               <Flex
                 className="create-service-field"
                 direction="column"
@@ -123,7 +121,6 @@ const EditServiceCategory = () => {
                     <Link to="/admin-dashboard/categories">
                       <Image src={arrow} marginRight="1.5rem" />
                     </Link>
-
                     <Flex direction="column">
                       <Text textStyle="b4">หมวดหมู่</Text>
                       <Text
@@ -135,129 +132,139 @@ const EditServiceCategory = () => {
                       </Text>
                     </Flex>
                   </Flex>
-                  <Flex
-                    className="button-group"
-                    justifyContent="space-between"
-                    width="12rem"
-                    marginRight="5rem"
-                  >
+                  <Flex className="button-group" marginRight="40px" gap="20px">
                     <Button
                       bg="white"
-                      color="blue.600"
-                      border="1px"
-                      borderColor="blue.600"
-                      width="5.5rem"
+                      variant="secondary"
+                      width="112px"
+                      height="44px"
                       onClick={() => {
-                        navigate(`/admin-dashboard/categories`);
+                        navigate(
+                          `/admin-dashboard/category/view/${serviceCategory.service_category_id}`
+                        );
                       }}
                     >
                       ยกเลิก
                     </Button>
-                    <Button width="5.5rem" type="submit">
+                    <Button
+                      variant="primary"
+                      width="112px"
+                      height="44px"
+                      type="submit"
+                    >
                       ยืนยัน
                     </Button>
                   </Flex>
                 </Flex>
-                <Flex
-                  className="edit-service-input"
-                  direction="column"
-                  paddingLeft="2rem"
-                  justify="center"
-                  alignItems="left"
-                  bg="white"
-                  border="1px"
-                  borderColor="gray.200"
-                  borderRadius="8px"
-                  width="1120px"
-                  height="fit-content"
-                  padding="3.5rem"
-                  marginTop="4rem"
-                >
-                  <Flex direction="row">
-                    <FormLabel>
-                      ชื่อหมวดหมู่
-                      <span style={{ color: "#C82438" }}>*</span>
-                    </FormLabel>
-                    {errors.categoryName && touched.categoryName ? (
-                      <Flex flexDirection="column" pos="relative">
-                        <Field
-                          as={Input}
-                          variant="error"
-                          id="categoryName"
-                          name="categoryName"
-                          type="text"
-                          width="440px"
-                          height="44px"
-                          onChange={(e) =>
-                            setFieldValue("categoryName", e.target.value)
-                          }
-                        />
-                        <Image
-                          src={errorIcon}
-                          pos="absolute"
-                          left="412px"
-                          bottom="15px"
-                          w="14px"
-                        />
-                        <Text
-                          textStyle="b2"
-                          color="utility.red"
-                          pos="absolute"
-                          bottom="-30px"
-                        >
-                          {errors.categoryName}
+                <Box w="100%" px="40px">
+                  <Flex
+                    className="edit-service-box"
+                    direction="column"
+                    justify="center"
+                    bg="white"
+                    border="1px"
+                    borderColor="gray.200"
+                    borderRadius="8px"
+                    width="100%"
+                    height="fit-content"
+                    padding="3rem 2rem 3rem 2rem"
+                    marginTop="4rem"
+                  >
+                    <Flex direction="row" alignItems="center">
+                      <FormLabel marginRight="10rem">
+                        ชื่อหมวดหมู่
+                        <span style={{ color: "#C82438" }}>*</span>
+                      </FormLabel>
+                      {errors.categoryName && touched.categoryName ? (
+                        <Flex flexDirection="column" pos="relative">
+                          <Field
+                            as={Input}
+                            textColor="utility.red"
+                            variant="error"
+                            id="categoryName"
+                            name="categoryName"
+                            type="text"
+                            width="440px"
+                            height="44px"
+                            onChange={(e) =>
+                              setFieldValue("categoryName", e.target.value)
+                            }
+                          />
+                          <Image
+                            src={errorIcon}
+                            pos="absolute"
+                            left="412px"
+                            bottom="15px"
+                            w="14px"
+                          />
+                          <Text
+                            textStyle="b2"
+                            color="utility.red"
+                            pos="absolute"
+                            bottom="-30px"
+                          >
+                            {errors.categoryName}
+                          </Text>
+                        </Flex>
+                      ) : (
+                        <Flex flexDirection="column">
+                          <Field
+                            as={Input}
+                            textColor="utility.black"
+                            id="categoryName"
+                            name="categoryName"
+                            type="text"
+                            w="440px"
+                            h="44px"
+                            onChange={(e) =>
+                              setFieldValue("categoryName", e.target.value)
+                            }
+                          />
+                        </Flex>
+                      )}
+                    </Flex>
+                    <Divider
+                      padding="1.5rem"
+                      w="95.5%"
+                      borderColor="gray.300"
+                    />
+                    <Box className="info" marginTop="3rem">
+                      <Flex className="created-info" marginBottom="2rem">
+                        <Text textStyle="h5" marginRight="10rem" width="5rem">
+                          สร้างเมื่อ
+                        </Text>
+                        <Text className="created-at" textColor="gray.900">
+                          {serviceCategory.created_at}
                         </Text>
                       </Flex>
-                    ) : (
-                      <Flex flexDirection="column">
-                        <Field
-                          as={Input}
-                          id="categoryName"
-                          name="categoryName"
-                          type="text"
-                          w="440px"
-                          h="44px"
-                          onChange={(e) =>
-                            setFieldValue("categoryName", e.target.value)
-                          }
-                        />
+                      <Flex className="edited-info">
+                        <Text textStyle="h5" marginRight="10rem" width="5rem">
+                          แก้ไขล่าสุด
+                        </Text>
+                        <Text className="edited-at" textColor="gray.900">
+                          {serviceCategory.updated_at}
+                        </Text>
                       </Flex>
-                    )}
+                    </Box>
                   </Flex>
-                  <Divider padding="2rem" />
-                  <Box className="info" marginTop="3rem">
-                    <Flex className="created-info" marginBottom="2rem">
-                      <Text textStyle="h5" marginRight="5rem" width="5rem">
-                        สร้างเมื่อ
-                      </Text>
-                      <Text className="created-at">
-                        {serviceCategory.created_at}
-                      </Text>
-                    </Flex>
-                    <Flex className="edited-info">
-                      <Text textStyle="h5" marginRight="5rem" width="5rem">
-                        แก้ไขล่าสุด
-                      </Text>
-                      <Text className="edited-at">
-                        {serviceCategory.updated_at}
-                      </Text>
-                    </Flex>
-                  </Box>
-                </Flex>
-                <Flex
-                  className="delete-category"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onOpen();
-                  }}
-                  marginTop="1rem"
-                  marginLeft="62rem"
-                >
-                  <Image src={binIcon} paddingRight="1rem" />
-                  <button style={{ textDecoration: "underline" }}>
-                    ลบหมวดหมู่
-                  </button>
-                </Flex>
+                  <Flex
+                    className="delete-category"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onOpen();
+                    }}
+                    marginTop="1.5rem"
+                    marginLeft="82%"
+                    textColor="gray.600"
+                    fontWeight="600"
+                    justifyContent={"end"}
+                  >
+                    <Image src={binIcon} paddingRight="10px" />
+                    <button style={{ textDecoration: "underline" }}>
+                      ลบหมวดหมู่
+                    </button>
+                  </Flex>
+                </Box>
               </Flex>
             </Flex>
             <Modal isOpen={isOpen} onClose={onClose}>
@@ -267,6 +274,7 @@ const EditServiceCategory = () => {
                 height="fit-content"
                 width="350px"
                 borderRadius="16px"
+                marginTop="15rem"
               >
                 <ModalHeader marginTop="1.5rem">
                   <Flex direction="column" alignItems="center">
@@ -282,15 +290,18 @@ const EditServiceCategory = () => {
                   </Flex>
                 </ModalHeader>
                 <ModalBody maxH="fit-content" paddingTop="-15px">
-                  <Text fontWeight={300}>
+                  <Text fontWeight="300">
                     คุณต้องการลบรายการ '{serviceCategory.service_category_name}'
+                    <br />
                     ใช่หรือไม่
                   </Text>
                 </ModalBody>
-                <ModalFooter alignSelf="center" paddingBottom="2rem">
+                <ModalFooter alignSelf="center" paddingBottom="2.5rem">
                   <Button
-                    colorScheme="blue"
-                    mr={3}
+                    width="112px"
+                    height="44px"
+                    fontWeight="500"
+                    marginRight="15px"
                     onClick={() => {
                       deleteServiceCategory(
                         serviceCategory.service_category_id
@@ -302,11 +313,10 @@ const EditServiceCategory = () => {
                   </Button>
                   <Button
                     onClick={onClose}
-                    variant="ghost"
-                    color="blue.600"
-                    border="1px"
-                    borderColor="blue.600"
-                    textDecoration="none"
+                    variant="secondary"
+                    width="112px"
+                    height="44px"
+                    fontWeight="500"
                   >
                     ยกเลิก
                   </Button>
