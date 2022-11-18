@@ -310,7 +310,7 @@ const CreateServiceList = () => {
                         <Text color={"utility.red"}>*</Text>
                       </Flex>
                     </FormLabel>
-                    <Flex flexDirection={"column"}>
+                    <Flex flexDirection={"column"} pos='relative'>
                       <UploadComponent setFieldValue={setFieldValue} />
 
                       {values.serviceImage ? (
