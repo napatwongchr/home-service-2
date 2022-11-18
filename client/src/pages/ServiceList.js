@@ -9,7 +9,7 @@ import Quote from "../components/ServiceList/Quote";
 const ServiceList = () => {
   const [input, setInput] = useState("");
   const [category, setCategory] = useState("บริการทั้งหมด");
-  const [order, setOrder] = useState("บริการแนะนำ");
+  const [order, setOrder] = useState("ตามตัวอักษร (Ascending)");
   const [sliderValue, setSliderValue] = useState([0, 2000]);
   const [priceTouched, setPriceTouched] = useState(false);
   const [submitButton, setSubmitButton] = useState(false);
@@ -48,3 +48,4 @@ const ServiceList = () => {
 };
 
 export default ServiceList;
+                        

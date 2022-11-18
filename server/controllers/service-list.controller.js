@@ -180,7 +180,6 @@ const serviceListController = {
           },
         });
       }
-
       // query filter by user
       if (
         serviceName === "undefined" &&
@@ -190,6 +189,97 @@ const serviceListController = {
         !priceMax
       ) {
         serviceQuery += groupBy;
+      } else if (
+        category !== "บริการทั้งหมด" &&
+        priceMin &&
+        priceMax &&
+        sort !== "บริการแนะนำ"
+      ) {
+        if (sort === "ตามตัวอักษร (Ascending)") {
+          serviceQuery = `
+                        ${serviceQuery}
+                        where service_name ilike '%$serviceName%'
+                        and service_category_name ilike '$category'
+                        and price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                        ${groupBy}
+                        order by service_name collate "th-x-icu" asc
+                        `
+            .replace("$serviceName", serviceName)
+            .replace("$category", category)
+            .replace("$priceMin", priceMin)
+            .replace("$priceMax", priceMax);
+        } else if (sort === "ตามตัวอักษร (Descending)") {
+          serviceQuery = `
+                        ${serviceQuery}
+                        where service_name ilike '%$serviceName%'
+                        and service_category_name ilike '$category'
+                        and price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                        ${groupBy}
+                        order by service_name collate "th-x-icu" desc
+                        `
+            .replace("$serviceName", serviceName)
+            .replace("$category", category)
+            .replace("$priceMin", priceMin)
+            .replace("$priceMax", priceMax);
+        }
+      } else if (category !== "บริการทั้งหมด" && priceMin && priceMax) {
+        serviceQuery = `
+                    ${serviceQuery}
+                    where service_name ilike '%$serviceName%'
+                    and service_category_name ilike '$category'
+                    and price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                    `
+          .replace("$serviceName", serviceName)
+          .replace("$category", category)
+          .replace("$priceMin", priceMin)
+          .replace("$priceMax", priceMax);
+        serviceQuery += groupBy;
+      } else if (category !== "บริการทั้งหมด" && sort !== "บริการแนะนำ") {
+        if (sort === "ตามตัวอักษร (Ascending)") {
+          serviceQuery = `
+                        ${serviceQuery}
+                        where service_name ilike '%$serviceName%'
+                        and service_category_name ilike '$category'
+                        ${groupBy}
+                        order by service_name collate "th-x-icu" asc
+                        `
+            .replace("$serviceName", serviceName)
+            .replace("$category", category);
+        } else if (sort === "ตามตัวอักษร (Descending)") {
+          serviceQuery = `
+                        ${serviceQuery}
+                        where service_name ilike '%$serviceName%'
+                        and service_category_name ilike '$category'
+                        ${groupBy}
+                        order by service_name collate "th-x-icu" desc
+                        `
+            .replace("$serviceName", serviceName)
+            .replace("$category", category);
+        }
+      } else if (priceMin && priceMax && sort !== "บริการแนะนำ") {
+        if (sort === "ตามตัวอักษร (Ascending)") {
+          serviceQuery = `
+                        ${serviceQuery}
+                        where service_name ilike '%$serviceName%'
+                        and price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                        ${groupBy}
+                        order by service_name collate "th-x-icu" asc
+                        `
+            .replace("$serviceName", serviceName)
+            .replace("$priceMin", priceMin)
+            .replace("$priceMax", priceMax);
+        } else if (sort === "ตามตัวอักษร (Descending)") {
+          serviceQuery = `
+                        ${serviceQuery}
+                        where service_name ilike '%$serviceName%'
+                        and price_per_unit >= $priceMin and price_per_unit <= $priceMax
+                        ${groupBy}
+                        order by service_name collate "th-x-icu" desc
+                        `
+            .replace("$serviceName", serviceName)
+            .replace("$priceMin", priceMin)
+            .replace("$priceMax", priceMax);
+        }
       } else if (serviceName !== "") {
         if (
           category === "บริการทั้งหมด" &&
@@ -227,16 +317,18 @@ const serviceListController = {
                         ${serviceQuery}
                         where service_name ilike '%$serviceName%'
                         ${groupBy}
-                        order by service_name asc
+                        order by service_name collate "th-x-icu" asc
                         `.replace("$serviceName", serviceName);
           } else if (sort === "ตามตัวอักษร (Descending)") {
             serviceQuery = `
                         ${serviceQuery}
                         where service_name ilike '%$serviceName%'
                         ${groupBy}
-                        order by service_name desc
+                        order by service_name collate "th-x-icu" desc
                         `.replace("$serviceName", serviceName);
-          }
+          }else{
+          serviceQuery += groupBy;
+        }
         }
       } else if (category !== "บริการทั้งหมด") {
         if (
@@ -266,16 +358,18 @@ const serviceListController = {
                         ${serviceQuery}
                         where service_category_name ilike '$category'
                         ${groupBy}
-                        order by service_name asc
+                        order by service_name collate "th-x-icu" asc
                         `.replace("$category", category);
           } else if (sort === "ตามตัวอักษร (Descending)") {
             serviceQuery = `
                         ${serviceQuery}
                         where service_category_name ilike '$category'
                         ${groupBy}
-                        order by service_name desc
+                        order by service_name collate "th-x-icu" desc
                         `.replace("$category", category);
-          }
+          }else{
+          serviceQuery += groupBy;
+        }
         }
       } else if (priceMax && priceMin) {
         if (
@@ -296,7 +390,7 @@ const serviceListController = {
                         ${serviceQuery}
                         where price_per_unit >= $priceMin and price_per_unit <= $priceMax
                         ${groupBy}
-                        order by service_name asc
+                        order by service_name collate "th-x-icu" asc
                         `
               .replace("$priceMin", priceMin)
               .replace("$priceMax", priceMax);
@@ -305,25 +399,29 @@ const serviceListController = {
                         ${serviceQuery}
                         where price_per_unit >= $priceMin and price_per_unit <= $priceMax
                         ${groupBy}
-                        order by service_name desc
+                        order by service_name collate "th-x-icu" desc
                         `
               .replace("$priceMin", priceMin)
               .replace("$priceMax", priceMax);
-          }
+          }else{
+          serviceQuery += groupBy;
+        }
         }
       } else if (sort !== "บริการแนะนำ") {
         if (sort === "ตามตัวอักษร (Ascending)") {
           serviceQuery = `
                         ${serviceQuery}
                         ${groupBy}
-                        order by service_name asc
+                        order by service_name collate "th-x-icu" asc
                         `;
         } else if (sort === "ตามตัวอักษร (Descending)") {
           serviceQuery = `
                         ${serviceQuery}
                         ${groupBy}
-                        order by service_name desc
+                        order by service_name collate "th-x-icu" desc
                         `;
+        }else{
+          serviceQuery += groupBy;
         }
       } else {
         serviceQuery += groupBy;
