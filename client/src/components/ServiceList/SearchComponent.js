@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import arrow from "../../assets/image/serviceListPage/dropdown.svg";
 import glass from "../../assets/image/serviceListPage/magnifying-glass.svg";
@@ -22,6 +22,7 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
 } from "@chakra-ui/react";
+import useServiceCategories from "../../hooks/useServiceCategories";
 
 const SearchSection = (props) => {
   const {
@@ -36,6 +37,12 @@ const SearchSection = (props) => {
     setPriceTouched,
   } = props;
   const [toggle, setToggle] = useState(false);
+  const { serviceCategories, getServiceCategories } = useServiceCategories();
+  const searchCategoryName = "";
+  
+ useEffect(() => {
+    getServiceCategories({ searchCategoryName });
+  }, []);
 
   return (
     <Container
@@ -124,38 +131,24 @@ const SearchSection = (props) => {
                       >
                         บริการทั้งหมด
                       </MenuItem>
+                      {
+                        serviceCategories && serviceCategories.map(item => {
+                          return (
                       <MenuItem
+                        key={item.service_category_id}
                         px={"14px"}
                         _hover={{ bg: "gray.100" }}
                         color={category === "บริการทั่วไป" ? "blue.700" : null}
                         onClick={() => {
-                          setCategory("บริการทั่วไป");
+                          setCategory(item.service_category_name);
                         }}
                       >
-                        บริการทั่วไป
+                        {item.service_category_name}
                       </MenuItem>
-                      <MenuItem
-                        px={"14px"}
-                        _hover={{ bg: "gray.100" }}
-                        color={
-                          category === "บริการห้องครัว" ? "blue.700" : null
-                        }
-                        onClick={() => {
-                          setCategory("บริการห้องครัว");
-                        }}
-                      >
-                        บริการห้องครัว
-                      </MenuItem>
-                      <MenuItem
-                        px={"14px"}
-                        _hover={{ bg: "gray.100" }}
-                        color={category === "บริการห้องน้ำ" ? "blue.700" : null}
-                        onClick={() => {
-                          setCategory("บริการห้องน้ำ");
-                        }}
-                      >
-                        บริการห้องน้ำ
-                      </MenuItem>
+
+                          )
+                        })
+                      }
                     </MenuList>
                   </Menu>
                 </Menu>
@@ -301,7 +294,7 @@ const SearchSection = (props) => {
                       border="none"
                       textStyle={"b3"}
                     >
-                      <MenuItem
+                      {/* <MenuItem
                         px={"14px"}
                         _hover={{ bg: "gray.100" }}
                         color={order === "บริการแนะนำ" ? "blue.700" : null}
@@ -320,7 +313,7 @@ const SearchSection = (props) => {
                         }}
                       >
                         บริการยอดนิยม
-                      </MenuItem>
+                      </MenuItem> */}
                       <MenuItem
                         px={"14px"}
                         _hover={{ bg: "gray.100" }}
