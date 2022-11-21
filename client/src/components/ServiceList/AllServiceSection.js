@@ -15,13 +15,15 @@ import React, { useEffect } from "react";
 import priceTag from "../../assets/image/homePage/Group.svg";
 import filterCategory from "../../utils/filterCategory";
 import useAdminServiceLists from "../../hooks/useAdminServiceLists";
+import { useNavigate } from "react-router-dom";
 const AllServiceSection = (props) => {
+  const navigate = useNavigate();
   const { handleColorButton, handleColorText } = filterCategory;
   const { input, category, order, sliderValue, priceTouched, loading } = props;
   const { getServiceLists, serviceLists } = useAdminServiceLists();
   useEffect(() => {
     getServiceLists({ input, category, order, sliderValue, priceTouched });
-  },[props.submitButton]);
+  }, [props.submitButton]);
 
   return (
     <Container
@@ -97,6 +99,11 @@ const AllServiceSection = (props) => {
                       px={0}
                       bottom={"5px"}
                       mx="24px"
+                      onClick={() => {
+                        navigate(
+                          `/service/${item.service_id}`
+                        );
+                      }}
                     >
                       เลือกบริการ
                     </Button>

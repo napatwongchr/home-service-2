@@ -2,7 +2,7 @@ import { Container, Text, Box, Flex, Center } from "@chakra-ui/react";
 import React from "react";
 import bannerCoverImage from "../../assets/image/serviceListPage/WeService.jpg";
 
-const BannerService = () => {
+const BannerService = (props) => {
   return (
     <Container
       className="bannerService"
@@ -18,9 +18,12 @@ const BannerService = () => {
           h="240px"
           bgSize="100%"
           objectFit={'contain'}
-          bgImage={bannerCoverImage}
+          bgImage={props.url || bannerCoverImage}
           bgPosition="center"
         >
+          {props ? 
+          null
+           :
           <Box>
             <Center>
               <Text
@@ -54,6 +57,7 @@ const BannerService = () => {
               </Text>
             </Center>
           </Box>
+          }
         </Box>
       </Flex>
     </Container>
