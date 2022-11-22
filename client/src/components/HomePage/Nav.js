@@ -1,8 +1,8 @@
 import { Flex, Box, Button, Image, Text, Container, MenuItem, MenuList, Menu, MenuButton, Avatar } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication";
 import notification from "../../assets/image/homePage/notification.svg";
-import userPrc from "../../assets/image/homePage/user.svg";
+// import userPrc from "../../assets/image/homePage/user.svg";
 import order from "../../assets/image/homePage/order.svg";
 import history from "../../assets/image/homePage/history.svg";
 import houseLogo from "../../assets/image/homePage/house-logo.svg";
@@ -13,6 +13,7 @@ const NavComponent = () => {
   const { isAuthenticated, logout } = useAuth();
   const user = JSON.parse(window.localStorage.getItem("user"));
   const [toggle, setToggle] = useState(false);
+  const navigator = useNavigate()
 
   return (
     <Container
@@ -21,8 +22,11 @@ const NavComponent = () => {
       bg={"utility.white"}
       boxShadow={"lg"}
       centerContent
+      pos='sticky'
+      top='0'
+      zIndex={'200'}
     >
-      <Container maxW='1440px' px='200px'>
+      <Container maxW='1440px' px='160px'>
         <Flex
           alignItems="center"
           height="80px"
@@ -76,18 +80,18 @@ const NavComponent = () => {
                       border='none'
                       textStyle={'b3'}
                     >
-                      <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}>
+                      {/* <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}>
                         <Image src={userPrc} mr={"15px"} />
                         <Text textStyle={"b3"}>ข้อมูลผู้ใช้งาน</Text>
-                      </MenuItem>
-                      <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}>
+                      </MenuItem> */}
+                      <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }} onClick={() => navigator(`/order-history/${user.id}`)}>
                         <Image src={order} mr={"15px"} />
                         <Text textStyle={"b3"}>รายการคำสั่งซ่อม</Text>
                       </MenuItem>
-                      <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}>
+                      {/* <MenuItem px={'14px'} _hover={{ bg: 'gray.100' }}>
                         <Image src={history} mr={"15px"} pos={'relative'} left={'-2px'} />
                         <Text textStyle={"b3"}>ประวัติการซ่อม</Text>
-                      </MenuItem>
+                      </MenuItem> */}
                       {
                         user.role === 'admin' ?
                           <Link to='/admin-dashboard/categories'>

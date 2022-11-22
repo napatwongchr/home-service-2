@@ -12,6 +12,7 @@ import AdminEditCategoryPage from "./pages/Admin/AdminEditCategory";
 import AdminDetailCategoryPage from "./pages/Admin/AdminDetailCategory";
 import AdminEditService from "./pages/Admin/AdminEditService";
 import { useAuth } from "./contexts/authentication";
+import OrderHistory from "./pages/OrderHistory.js";
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -25,6 +26,7 @@ function App() {
             <Route path="/service-list" element={<ServiceList />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/order-history/:userId" element={<OrderHistory />} />
             <Route
               path="/admin-dashboard/categories"
               element={<AdminDashboardPage />}
@@ -68,6 +70,7 @@ function App() {
             <Route path="/service-list" element={<ServiceList />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/order-history/:userId" element={<OrderHistory />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
         )
