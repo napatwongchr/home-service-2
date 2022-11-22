@@ -18,7 +18,7 @@ import ServiceDetailPage from "./pages/ServiceDetailPage";
 function App() {
   const { isAuthenticated } = useAuth();
   const user = JSON.parse(window.localStorage.getItem("user"));
-  
+  console.log(isAuthenticated);
   return (
     <>
       {isAuthenticated ? (
@@ -42,7 +42,7 @@ function App() {
               path="/admin-dashboard/service/view/:serviceId"
               element={<AdminDetailService />}
             />
-            <Route
+            < Route
               path="/admin-dashboard/service/edit/:serviceId"
               element={<AdminEditService />}
             />
@@ -71,7 +71,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/order-history/:userId" element={<OrderHistory />} />
             <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
-
+            <Route path="/order-history/:userId" element={<OrderHistory />} />
             <Route path="*" element={<HomePage />} />
           </Routes>
         )
@@ -81,7 +81,6 @@ function App() {
           <Route path="/service-list" element={<ServiceList />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
           <Route path="*" element={<LoginPage />} />
         </Routes>
       )}
