@@ -18,7 +18,7 @@ import ServiceDetailPage from "./pages/ServiceDetailPage";
 function App() {
   const { isAuthenticated } = useAuth();
   const user = JSON.parse(window.localStorage.getItem("user"));
-  console.log(isAuthenticated);
+
   return (
     <>
       {isAuthenticated ? (
@@ -82,6 +82,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<LoginPage />} />
+          <Route path="/service-list/select" element={<ServiceDetailPage />} />
         </Routes>
       )}
     </>
