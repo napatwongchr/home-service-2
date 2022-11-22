@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import NavComponent from "../HomePage/Nav";
 import useAdminServiceLists from "../../hooks/useAdminServiceLists";
 import { Container, Divider, Flex, Icon, Img, Spinner, Text } from "@chakra-ui/react";
@@ -7,10 +7,14 @@ import BannerService from "../ServiceList/BannerService";
 import addOnListIcon from "../../assets/image/serviceDetail/addOnList.svg";
 import informationIcon from "../../assets/image/serviceDetail/information.svg";
 import paymentIcon from "../../assets/image/serviceDetail/payment.svg";
+import AddOnList from "./AddOn";
 
 const ServiceDetail = () => {
   const { serviceList, getServiceListById, params, loading } =
     useAdminServiceLists();
+
+    let [ subService, setSubService ] = useState([])
+
 
   useEffect(() => {
     getServiceListById(params);
@@ -71,6 +75,7 @@ const ServiceDetail = () => {
             <Divider  w='50%'/>
               </Flex>
             </Flex>
+            <AddOnList subService={subService} setSubService={setSubService} serviceList={serviceList}/>
           </Container>
         </Container>
       ) : (
