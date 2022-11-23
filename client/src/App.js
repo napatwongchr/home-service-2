@@ -71,7 +71,6 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/order-history/:userId" element={<OrderHistory />} />
             <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
-            {/* <Route path="/order-history/:userId" element={<OrderHistory />} /> */}
             <Route path="*" element={<HomePage />} />
           </Routes>
         )
