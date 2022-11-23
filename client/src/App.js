@@ -12,7 +12,7 @@ import AdminEditCategoryPage from "./pages/Admin/AdminEditCategory";
 import AdminDetailCategoryPage from "./pages/Admin/AdminDetailCategory";
 import AdminEditService from "./pages/Admin/AdminEditService";
 import { useAuth } from "./contexts/authentication";
-import OrderHistory from "./pages/OrderHistory.js";
+// import OrderHistory from "./pages/OrderHistory.js";
 import ServiceDetailPage from "./pages/ServiceDetailPage";
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
             <Route path="/service-list" element={<ServiceList />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/order-history/:userId" element={<OrderHistory />} />
+            {/* <Route path="/order-history/:userId" element={<OrderHistory />} /> */}
             <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
             <Route
               path="/admin-dashboard/categories"
@@ -70,7 +70,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
-            <Route path="/order-history/:userId" element={<OrderHistory />} />
+            {/* <Route path="/order-history/:userId" element={<OrderHistory />} /> */}
             <Route path="*" element={<HomePage />} />
           </Routes>
         )

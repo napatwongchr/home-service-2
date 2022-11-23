@@ -71,7 +71,7 @@ const OrderInformation = () => {
                             value={pickDate}
                             onChange={(date, dateString) => {
                                 setPickDate(date, dateString)
-                                // console.log(date, dateString)
+                                console.log(date, dateString)
                             }}
                             disabledDate={disabledDate}
                             placeholder="กรุณาเลือกวันที่"
@@ -87,7 +87,7 @@ const OrderInformation = () => {
                             value={pickTime}
                             onChange={(time, timeString) => {
                                 setPickTime(time, timeString)
-                                // console.log(time, timeString)
+                                console.log(time, timeString)
                             }}
                             showNow={false}
                             disabledTime={disabledDateTime}
