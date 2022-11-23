@@ -4,6 +4,7 @@ const Summary = (props) =>{
 
     const { subService, setSubService, serviceList } = props
     
+    
     return (
         <>
             <Flex bgColor="utility.white" h="400px" borderRadius="8px" p="2rem" direction="column">
@@ -23,9 +24,12 @@ const Summary = (props) =>{
                     {/* Total */}
                     <Flex justifyContent="space-between">
                         <Text textColor="gray.700" >รวม</Text>
-                        <Text textColor="utility.black" fontWeight="600">{subService.reduse( (acc, cur) =>{
-
-                        } )}฿</Text>
+                        <Text textColor="utility.black" fontWeight="600">
+                            {
+                                subService.length > 1 ? subService.reduce((acc, cur) => { return acc.sub_total_price + cur.sub_total_price }) : 
+                                subService.map( subService => subService.sub_total_price )
+                            }
+                        </Text>
                     </Flex>
 
                 </Flex>
