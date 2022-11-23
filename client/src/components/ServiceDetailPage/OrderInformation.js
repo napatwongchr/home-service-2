@@ -10,24 +10,25 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useState } from 'react'
 import styled from "styled-components";
+import "../ServiceDetailPage/OrderInformation.css"
 
 // styling suggestion box
 const StyledContainer = styled.div`
    .suggestion-container {
-     border: 1px solid;
      border-radius: 8px;
-     border-color: #CCD0D7;
      overflow: hidden;
      margin-top: 1rem;
      position: absolute;
      background-color: white;
      z-index: 1;
+     box-shadow: 2px 2px 24px rgba(23, 51, 106, 0.12);
+
    }
    .address-option {
      cursor: pointer;
-     padding: 5px;
+     padding: 10px;
      &:hover {
-       background-color: #CCD0D7;
+       background-color: #EFEFF2;
      }
    }
  `
@@ -68,6 +69,7 @@ const OrderInformation = (props) => {
         return current && current < dayjs().add(-1, 'day');
     };
 
+
     const disabledDateTime = () => ({ disabledHours: () => [1, 2, 3, 4, 5, 19, 20, 21, 22, 23, 0] });
 
 
@@ -82,6 +84,7 @@ const OrderInformation = (props) => {
                             <span style={{ color: "#C82438" }}>*</span>
                         </Text>
                         <DatePicker
+                            className="picker"
                             format="DD MMMM YYYY"
                             value={pickDate}
                             onChange={(date, dateString) => {
@@ -89,7 +92,7 @@ const OrderInformation = (props) => {
                             }}
                             disabledDate={disabledDate}
                             placeholder="กรุณาเลือกวันที่"
-                            style={{ width: "331px", height: "44px", fontFamily: "Prompt", borderRadius: "8px" }}
+                            style={{ width: "331px", height: "44px", fontFamily: "Prompt", fontSize: "16px", borderRadius: "8px" }}
                         />
                     </Flex>
                     <Flex className="time-picker" direction="column">
@@ -134,15 +137,7 @@ const OrderInformation = (props) => {
                                     <Text marginBottom="0.5rem">แขวง / ตำบล<span style={{ color: "#C82438" }}>*</span></Text>
                                     <ThailandAddressTypeahead.SubdistrictInput
                                         placeholder="เลือกแขวง / ตำบล"
-                                        style={{
-                                            width: "331px",
-                                            height: "44px",
-                                            fontFamily: "inherit",
-                                            borderRadius: "8px",
-                                            border: "1px solid",
-                                            borderColor: "#CCD0D7",
-                                            paddingLeft: "1rem",
-                                        }}
+                                        className="address-input"
                                     />
                                 </Flex>
                             </Flex>
@@ -150,31 +145,17 @@ const OrderInformation = (props) => {
                                 <Flex className="เขต / อำเภอ" marginRight="1.5rem" direction="column" >
                                     <Text marginBottom="0.5rem">เขต / อำเภอ<span style={{ color: "#C82438" }}>*</span></Text>
                                     <ThailandAddressTypeahead.DistrictInput
+                                        className="address-input"
                                         placeholder="เลือกเขต / อำเภอ"
-                                        style={{
-                                            width: "331px",
-                                            height: "44px",
-                                            fontFamily: "inherit",
-                                            borderRadius: "8px",
-                                            border: "1px solid",
-                                            borderColor: "#CCD0D7",
-                                            paddingLeft: "1rem",
-                                        }}
+
                                     />
                                 </Flex>
                                 <Flex className="จังหวัด" direction="column" >
                                     <Text marginBottom="0.5rem">จังหวัด<span style={{ color: "#C82438" }}>*</span></Text>
                                     <ThailandAddressTypeahead.ProvinceInput
+                                        className="address-input"
                                         placeholder="เลือกจังหวัด"
-                                        style={{
-                                            width: "331px",
-                                            height: "44px",
-                                            fontFamily: "inherit",
-                                            borderRadius: "8px",
-                                            border: "1px solid",
-                                            borderColor: "#CCD0D7",
-                                            paddingLeft: "1rem",
-                                        }}
+
                                     />
                                 </Flex>
                             </Flex>
