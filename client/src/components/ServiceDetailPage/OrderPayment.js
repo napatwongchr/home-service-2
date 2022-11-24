@@ -62,22 +62,20 @@ const OrderPayment = () => {
       initialValues={{
         cardNo: cardNumber,
         nameOnCard: "",
-        expiredDate: "",
+        expiredDate: cardExp,
         cvcCVV: "",
       }}
       validationSchema={Yup.object({
         cardNo: Yup.string()
-          .min(19, "กรุณาตรวจสอบเลขบัตรเคตดิต")
+          .min(19, "กรุณาตรวจสอบเลขบัตรเคตดิตอีกครั้ง")
           .required("กรุณากรอกหมายเลขบัตรเครดิต"),
         nameOnCard: Yup.string().required("กรุณากรอกชื่อบนบัตร"),
         expiredDate: Yup.string()
-          // .max(4, "เลข เดือน/ปี ต้องมีความยาวไม่เกิน 4 ตัว")
-          // .matches(/^[0-9]{4}$/, "กรุณากรอก เดือน/ปี ตามลำดับ")
-          .required("กรุณากรอก เดือน/ปี ตามลำดับ"),
-
+          .required("กรุณากรอก เดือน/ปี ตามลำดับ")
+          .min(5, "กรุณาตรวจสอบวันหมดอายุของบัตรอีกครั้ง")
+          ,
         cvcCVV: Yup.string()
-          .max(3, "เลข CVC/CVV ต้องมีความยาวไม่เกิน 3 ตัว")
-          .matches(/^[0-9]{3}$/, "กรุณากรอก CVC/CVV ค่ะ")
+          .matches(/^[0-9]{3}$/, "กรุณาตรวจสอบ CVC/CVV อีกครั้ง")
           .required("กรุณากรอก CVC/CVV ค่ะ"),
       })}
     >
