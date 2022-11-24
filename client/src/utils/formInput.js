@@ -28,13 +28,13 @@ const MyTextInput = ({ label, ...props }) => {
               <Text color={"utility.red"}>*</Text>
             </Flex>
           </FormLabel>
-          <Box pos="relative">
+          <Box pos="relative" w='100%'>
             <Input variant={"error"} {...field} {...props} />
             <Image
               src={errorIcon}
               pos="absolute"
               top="13px"
-              left="412px"
+              right="20px"
               bottom={"29px"}
               w={"14px"}
             />

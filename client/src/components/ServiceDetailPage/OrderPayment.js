@@ -18,40 +18,61 @@ const OrderPayment = () => {
 
     for (let i = 0, len = match.length; i < len; i += 4) {
       parts.push(match.substring(i, i + 4));
-      console.log("part :" + parts);
     }
 
     if (parts.length) {
-      console.log("Add space");
       return parts.join(" ");
     } else {
       return str;
     }
   };
 
+  const handleCardNumber = (e) => {
+    if (e.target.value.length < 20) {
+      setCardNumber(e.target.value);
+    }
+  };
+
   const addSlash = (str) => {
-    return;
+    let v = str.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+    let matches = v.match(/\d{2,4}/g);
+    let match = (matches && matches[0]) || "";
+    let parts = [];
+
+    for (let i = 0, len = match.length; i < len; i += 2) {
+      parts.push(match.substring(i, i + 2));
+    }
+
+    if (parts.length) {
+      return parts.join("/");
+    } else {
+      return str;
+    }
+  };
+
+  const handleCardExp = (e) => {
+    if (e.target.value.length < 6) {
+      setCardExp(e.target.value);
+    }
   };
 
   return (
     <Formik
+      enableReinitialize={true}
       initialValues={{
-        cardNo: "",
+        cardNo: cardNumber,
         nameOnCard: "",
         expiredDate: "",
         cvcCVV: "",
       }}
       validationSchema={Yup.object({
         cardNo: Yup.string()
-          .max(12, "เลขบัตรเครดิตต้องมีความยาวไม่เกิน 12 ตัว")
-          .matches(/^[0-9]{12}$/, "กรุณากรอกหมายเลขบัตรเครดิต")
+          .min(19, "กรุณาตรวจสอบเลขบัตรเคตดิต")
           .required("กรุณากรอกหมายเลขบัตรเครดิต"),
-
         nameOnCard: Yup.string().required("กรุณากรอกชื่อบนบัตร"),
-
         expiredDate: Yup.string()
-          .max(4, "เลข เดือน/ปี ต้องมีความยาวไม่เกิน 4 ตัว")
-          .matches(/^[0-9]{4}$/, "กรุณากรอก เดือน/ปี ตามลำดับ")
+          // .max(4, "เลข เดือน/ปี ต้องมีความยาวไม่เกิน 4 ตัว")
+          // .matches(/^[0-9]{4}$/, "กรุณากรอก เดือน/ปี ตามลำดับ")
           .required("กรุณากรอก เดือน/ปี ตามลำดับ"),
 
         cvcCVV: Yup.string()
@@ -136,10 +157,9 @@ const OrderPayment = () => {
                   label="หมายเลขบัตรเครดิต"
                   id="cardNo"
                   name="cardNo"
-                  // type="number"
                   placeholder="กรุณากรอกหมายเลขบัตรเครดิต"
                   value={addGaps(cardNumber)}
-                  onChange={(e) => setCardNumber(e.target.value)}
+                  onChange={(e) => handleCardNumber(e)}
                 />
               </Flex>
 
@@ -158,7 +178,7 @@ const OrderPayment = () => {
               </Flex>
 
               <Flex
-                className="expired date & CVC/CVV"
+                className="expired date CVC/CVV"
                 flexDirection={"row"}
                 mb={"20px"}
               >
@@ -172,10 +192,10 @@ const OrderPayment = () => {
                     label="ชื่อบนบัตร"
                     id="expiredDate"
                     name="expiredDate"
-                    type="number"
+                    // type="number"
                     placeholder="MM/YY"
                     value={addSlash(cardExp)}
-                    onChange={(e) => setCardExp(e.target.value)}
+                    onChange={(e) => handleCardExp(e)}
                     // regex="{/\d/, /\d/, '/', /\d/, /\d/}"
                   />
                 </Flex>
