@@ -1,4 +1,4 @@
-import { Box, Text, Flex, Button, Image, Container } from "@chakra-ui/react";
+import { Box, Text, Flex, Button, Image, Container, Divider } from "@chakra-ui/react";
 import { useEffect } from "react";
 import priceTag from "../../assets/image/homePage/priceTag.svg";
 
@@ -44,64 +44,69 @@ const AddOnList = (props) => {
     );
   };
 
+
   return (
     <Container maxW="735px" p={0}>
-      <Box bg="utility.white" borderRadius="8px" p="2rem" w="735px">
-        <Text textStyle="h3" textColor="gray.700">
+      <Box bg="utility.white" borderRadius="8px" p="2rem" w="735px" border="1px solid"
+        borderColor="#D8D8D8">
+        <Text textStyle="h3" textColor="gray.700" >
           เลือกรายการบริการ{props.serviceList.service.service_name}
         </Text>
-        {subService.map((subService, index) => {
+        {subService.map((subServiceObj, index) => {
           return (
-            <Flex
+            <Flex direction={"column"}
               key={index}
-              justifyContent="space-between"
-              borderBottom="2px"
-              borderBottomColor="gray.300"
-              mt="2.5rem"
-              mb="2rem"
-              pb="2rem"
             >
-              <Flex direction="column">
-                <Text textStyle="h3" textColor="utility.black">
-                  {subService.sub_service_name}
-                </Text>
-                <Flex gap="10px">
-                  <Image src={priceTag} w="13" />
-                  <Text textColor="gray.700">
-                    {subService.price_per_unit} ฿ / {subService.unit_name}
+              {index !== 0 ? (
+                <Divider color='gray.300' width="98%" />
+              ) : null}
+
+              <Flex
+                justifyContent="space-between"
+                mt="2.5rem"
+                pb="2rem"
+              >
+                <Flex direction="column">
+                  <Text textStyle="h3" textColor="utility.black" fontWeight="500">
+                    {subServiceObj.sub_service_name}
                   </Text>
+                  <Flex gap="10px">
+                    <Image src={priceTag} w="13" />
+                    <Text textColor="gray.700">
+                      {subServiceObj.price_per_unit} ฿ / {subServiceObj.unit_name}
+                    </Text>
+                  </Flex>
+                </Flex>
+
+                <Flex
+                  alignItems="center"
+                  justifyContent="space-between"
+                  w="150px"
+                >
+                  <Button
+                    variant="secondary"
+                    fontSize="4xl"
+                    fontWeight="hairline"
+                    onClick={() => {
+                      handleDecrese(subServiceObj.sub_service_id);
+                    }}
+                  >
+                    -
+                  </Button>
+                  <Text textStyle="h5">{subServiceObj.count}</Text>
+                  <Button
+                    variant="secondary"
+                    fontSize="4xl"
+                    fontWeight="hairline"
+                    onClick={() => {
+                      handleIncrese(subServiceObj.sub_service_id);
+                    }}
+                  >
+                    +
+                  </Button>
                 </Flex>
               </Flex>
 
-              <Flex
-                alignItems="center"
-                justifyContent="space-between"
-                w="150px"
-              >
-                <Button
-                  variant="secondary"
-                  fontSize="4xl"
-                  fontWeight="hairline"
-                  onClick={() => {
-                    handleDecrese(subService.sub_service_id);
-                  }}
-                >
-                  -
-                </Button>
-
-                <Text textStyle="h5">{subService.count}</Text>
-
-                <Button
-                  variant="secondary"
-                  fontSize="4xl"
-                  fontWeight="hairline"
-                  onClick={() => {
-                    handleIncrese(subService.sub_service_id);
-                  }}
-                >
-                  +
-                </Button>
-              </Flex>
             </Flex>
           );
         })}

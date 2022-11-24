@@ -8,9 +8,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import priceTag from "../../assets/image/homePage/Group.svg";
 const RecommendServiceSection = () => {
+  const navigate = useNavigate();
+
   return (
     <Container
       className="recommendService"
@@ -163,7 +165,7 @@ const RecommendServiceSection = () => {
                   ค่าบริการประมาณ 500.00 ฿
                 </Text>
               </Flex>
-              <Button 
+              <Button
                 textStyle="button"
                 color="blue.600"
                 variant="ghost"

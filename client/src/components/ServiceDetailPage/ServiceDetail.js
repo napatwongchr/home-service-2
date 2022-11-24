@@ -27,20 +27,22 @@ import {
   ThailandAddressValue,
 } from "react-thailand-address-typeahead";
 import Footer from "./Footer";
+import { useNavigate } from "react-router-dom";
 const ServiceDetail = () => {
   const { serviceList, getServiceListById, params, loading } =
     useAdminServiceLists();
   const [subService, setSubService] = useState([]);
   const [page, setPage] = useState(1);
-
   const [pickDate, setPickDate] = useState(null);
   const [pickTime, setPickTime] = useState(null);
 
   // value of address - home address คือช่องที่อยู่ / address ที่ได้มาจะเป็น object มี 4 keys (district, postalCode, province, subdistrict)
   const [homeAddress, setHomeAddress] = useState("");
+
   // value of additional text
   const [additionalText, setAdditionalText] = useState("");
-  const [ summaryAddress, setSummaryAddress ] = useState(null)
+  const [summaryAddress, setSummaryAddress] = useState(null)
+  const navigate = useNavigate();
 
   useEffect(() => {
     getServiceListById(params);
@@ -64,7 +66,7 @@ const ServiceDetail = () => {
               border="1px"
               borderColor="gray.200"
             >
-              <Text textStyle={"h5"}>บริการของเรา</Text>
+              <Text textStyle={"h5"} cursor="pointer" onClick={() => { navigate(`/service-list`) }}>บริการของเรา</Text>
               <Icon as={ChevronRightIcon} />
               <Text textStyle={"h1"} color="blue.600">
                 {serviceList.service.service_name}
@@ -100,8 +102,8 @@ const ServiceDetail = () => {
                     page === 1
                       ? informationIcon
                       : page === 2
-                      ? informationProcessIcon
-                      : informationSuccessIcon
+                        ? informationProcessIcon
+                        : informationSuccessIcon
                   }
                   alt="informationIcon"
                   h="40px"
@@ -157,28 +159,24 @@ const ServiceDetail = () => {
                 </>
               ) : page === 2 ? (
                 <>
-                  
-                    <OrderInformation
-                      pickDate={pickDate}
-                      setPickDate={setPickDate}
-                      pickTime={pickTime}
-                      setPickTime={setPickTime}
-                      // setAddress={setAddress}
-                      summaryAddress={summaryAddress}
-                      setSummaryAddress={setSummaryAddress}
-                      setHomeAddress={setHomeAddress}
-                      additionalText={additionalText}
-                      setAdditionalText={setAdditionalText}
-                      ThailandAddressTypeahead={ThailandAddressTypeahead}
-                      ThailandAddressValue={ThailandAddressValue}
-                    />
-
+                  <OrderInformation
+                    pickDate={pickDate}
+                    setPickDate={setPickDate}
+                    pickTime={pickTime}
+                    setPickTime={setPickTime}
+                    summaryAddress={summaryAddress}
+                    setSummaryAddress={setSummaryAddress}
+                    setHomeAddress={setHomeAddress}
+                    additionalText={additionalText}
+                    setAdditionalText={setAdditionalText}
+                    ThailandAddressTypeahead={ThailandAddressTypeahead}
+                    ThailandAddressValue={ThailandAddressValue}
+                  />
                   <Summary
                     subService={subService}
                     pickDate={pickDate}
                     pickTime={pickTime}
                     homeAddress={homeAddress}
-                    // address={address}
                     summaryAddress={summaryAddress}
                     additionalText={additionalText}
                   />
