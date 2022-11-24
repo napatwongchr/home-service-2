@@ -21,6 +21,7 @@ import paymentIcon from "../../assets/image/serviceDetail/payment.svg";
 import paymentProcessIcon from "../../assets/image/serviceDetail/paymentProcess.svg";
 import AddOnList from "./AddOn";
 import OrderInformation from "./OrderInformation";
+import OrderPayment from "./OrderPayment";
 import Footer from "./Footer";
 const ServiceDetail = () => {
   const { serviceList, getServiceListById, params, loading } =
@@ -132,6 +133,8 @@ const ServiceDetail = () => {
             />
           ) : page === 2 ? (
             <OrderInformation />
+          ) : page === 3 ? (
+            <OrderPayment/>
           ) : null}
 
           <Footer setPage={setPage} page={page}>

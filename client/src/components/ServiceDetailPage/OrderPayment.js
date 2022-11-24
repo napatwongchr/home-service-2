@@ -4,33 +4,35 @@ import { Formik, Form } from "formik";
 import { MyTextInput } from "../../utils/formInput";
 import * as Yup from "yup";
 import React from "react";
-// import { useState } from "react";
+import { useState } from "react";
 
 const OrderPayment = () => {
   // const [payment, setpayment] = useState("");
-  const addGaps = (str, gapNo) => {
-    let newStr = " ";
-    let len = str.length;
-    for (let i = 0; i < len; i++) {
-      newStr = newStr + str[i];
-      while (newStr.length % (gapNo + 1) === 0) {
-        newStr = newStr + " ";
-      }
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardExp, setCardExp] = useState("");
+  const addGaps = (str) => {
+    let v = str.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+    let matches = v.match(/\d{4,16}/g);
+    let match = (matches && matches[0]) || "";
+    let parts = [];
+
+    for (let i = 0, len = match.length; i < len; i += 4) {
+      parts.push(match.substring(i, i + 4));
+      console.log("part :" + parts);
     }
-    return newStr.trim(" ");
+
+    if (parts.length) {
+      console.log("Add space");
+      return parts.join(" ");
+    } else {
+      return str;
+    }
   };
 
   const addSlash = (str) => {
-    let newStr = "";
-    let len = str.length;
-    for (let i = 0; i < len; i++) {
-      newStr = newStr + str[i];
-      while (newStr.length % 2 === 0) {
-        newStr = newStr + "/";
-      }
-    }
-    return newStr.substr(0, newStr.length - 1);
+    return;
   };
+
   return (
     <Formik
       initialValues={{
@@ -134,9 +136,10 @@ const OrderPayment = () => {
                   label="หมายเลขบัตรเครดิต"
                   id="cardNo"
                   name="cardNo"
-                  type="number"
+                  // type="number"
                   placeholder="กรุณากรอกหมายเลขบัตรเครดิต"
-                  value={addGaps("cardOn", 4)}
+                  value={addGaps(cardNumber)}
+                  onChange={(e) => setCardNumber(e.target.value)}
                 />
               </Flex>
 
@@ -171,7 +174,8 @@ const OrderPayment = () => {
                     name="expiredDate"
                     type="number"
                     placeholder="MM/YY"
-                    value={addSlash("expiredDate", 4)}
+                    value={addSlash(cardExp)}
+                    onChange={(e) => setCardExp(e.target.value)}
                     // regex="{/\d/, /\d/, '/', /\d/, /\d/}"
                   />
                 </Flex>
