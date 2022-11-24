@@ -83,7 +83,7 @@ const ServiceDetail = () => {
               bg="utility.white"
               borderRadius="8px"
               border="1px"
-              borderColor="gray.200"
+              borderColor="gray.300"
               pos="relative"
             >
               <Flex flexDirection={"column"} gap="12px" zIndex={"2"}>

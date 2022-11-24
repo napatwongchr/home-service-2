@@ -14,6 +14,8 @@ const Summary = (props) => {
         direction="column"
         w="350px"
         h="fit-content"
+        position="sticky"
+        top="110px"
       >
         <Text textColor="gray.700" textStyle="h3">
           สรุปรายการ
@@ -69,10 +71,10 @@ const Summary = (props) => {
             </>
           ) : null}
           {homeAddress || summaryAddress ? (<>
-            <Flex justifyContent="space-between" direction="column" width="inherit" overflowWrap={"break-word"} >
+            <Flex justifyContent="space-between" direction="column" width="inherit" overflowWrap={"break-word"}>
               <Flex direction="row" textAlign="right" color="utility.black" fontWeight="400" gap="1rem">
                 <Text fontWeight="300px" color="gray.700" whiteSpace="nowrap" >สถานที่</Text>
-                <Text >
+                <Text>
                   {homeAddress ? `${homeAddress} ` : ""}
                   {summaryAddress ? `${summaryAddress.subdistrict} ${summaryAddress.district} ${summaryAddress.province}` : ""}
                 </Text>
@@ -93,10 +95,8 @@ const Summary = (props) => {
           <Text textColor="utility.black" fontWeight="600" fontSize="1rem">
             {subService.length > 1
               ? subService.reduce((acc, cur) => {
-                // console.log("acc.sub_total_price: ", acc.sub_total_price);
-                // console.log("cur.sub_total_price: ", cur.sub_total_price);
-                return acc.sub_total_price + cur.sub_total_price;
-              })
+                return acc + cur.sub_total_price
+              }, 0)
               : subService.map((subService) => subService.sub_total_price)} ฿
           </Text>
         </Flex>

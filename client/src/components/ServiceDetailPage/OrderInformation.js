@@ -1,6 +1,7 @@
 import {
     Container,
     Text,
+    Textarea,
     Flex,
     Input,
     FormLabel
@@ -75,7 +76,7 @@ const OrderInformation = (props) => {
 
     return (
         <Container maxW="735px" p={0}>
-            <Flex direction="column" bg="utility.white" textStyle="h5" textColor="gray.900" width="100%" height="fit-content" py="1rem" border="1px" borderColor="gray.200" borderRadius="8px">
+            <Flex direction="column" bg="utility.white" textStyle="h5" textColor="gray.900" width="100%" height="fit-content" py="1rem" border="1px" borderColor="gray.300" borderRadius="8px">
                 <Text textStyle="h3" textColor="gray.700" paddingLeft="1.5rem" paddingTop="1rem">กรอกข้อมูลบริการ</Text>
                 <Flex className="picker" direction="row" py="2rem" >
                     <Flex className="date-picker" px="1.5rem" direction="column">
@@ -174,7 +175,7 @@ const OrderInformation = (props) => {
                         marginBottom="0.5rem">
                         ระบุข้อมูลเพิ่มเติม
                     </FormLabel>
-                    <Input
+                    <Textarea
                         type="text"
                         id="additional-text"
                         value={additionalText}

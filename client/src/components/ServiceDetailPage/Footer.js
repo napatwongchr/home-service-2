@@ -10,6 +10,9 @@ const Footer = (props) => {
       pos="fixed"
       bottom={0}
       centerContent
+      border="1px"
+      borderColor="gray.300"
+      zIndex={1}
     >
       <Container
         maxW="1440px"

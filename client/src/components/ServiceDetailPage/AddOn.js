@@ -48,7 +48,7 @@ const AddOnList = (props) => {
   return (
     <Container maxW="735px" p={0}>
       <Box bg="utility.white" borderRadius="8px" p="2rem" w="735px" border="1px solid"
-        borderColor="#D8D8D8">
+        borderColor="gray.300">
         <Text textStyle="h3" textColor="gray.700" >
           เลือกรายการบริการ{props.serviceList.service.service_name}
         </Text>
