@@ -65,7 +65,7 @@ const OrderInformation = (props) => {
 
 
     return (
-        <Container maxW="1440px" px="200px" minH="calc(100vh - 320px)" my='32px'>
+        <Container maxW="735px" p={0}>
             <Flex direction="column" bg="utility.white" textStyle="h5" textColor="gray.900" width="100%" height="fit-content" py="1rem" border="1px" borderColor="gray.200" borderRadius="8px">
                 <Text textStyle="h3" textColor="gray.700" paddingLeft="1.5rem" paddingTop="1rem">กรอกข้อมูลบริการ</Text>
                 <Flex className="picker" direction="row" py="2rem" >

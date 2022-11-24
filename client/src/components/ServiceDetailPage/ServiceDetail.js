@@ -20,9 +20,12 @@ import informationSuccessIcon from "../../assets/image/serviceDetail/information
 import paymentIcon from "../../assets/image/serviceDetail/payment.svg";
 import paymentProcessIcon from "../../assets/image/serviceDetail/paymentProcess.svg";
 import AddOnList from "./AddOn";
-import Summary from "./Summary"
+import Summary from "./Summary";
 import OrderInformation from "./OrderInformation";
-import { ThailandAddressTypeahead, ThailandAddressValue } from "react-thailand-address-typeahead";
+import {
+  ThailandAddressTypeahead,
+  ThailandAddressValue,
+} from "react-thailand-address-typeahead";
 import Footer from "./Footer";
 const ServiceDetail = () => {
   const { serviceList, getServiceListById, params, loading } =
@@ -34,7 +37,7 @@ const ServiceDetail = () => {
   const [pickTime, setPickTime] = useState(null);
 
   const [homeAddress, setHomeAddress] = useState("");
-  const [address, setAddress] = useState(ThailandAddressValue.empty())
+  const [address, setAddress] = useState(ThailandAddressValue.empty());
 
   useEffect(() => {
     getServiceListById(params);
@@ -45,7 +48,7 @@ const ServiceDetail = () => {
       {serviceList.service && !loading ? (
         <Container maxW="100%" minH="calc(100vh)" p="0" bg="gray.100">
           <BannerService url={serviceList.service.url} />
-          <Container maxW="1440px" px="200px" pos="relative">
+          <Container maxW="1440px" px="160px" pos="relative">
             <Flex
               px="32px"
               py="20px"
@@ -132,30 +135,46 @@ const ServiceDetail = () => {
               </Flex>
             </Flex>
           </Container>
-          {page === 1 ? (
-            <>
-              <Flex maxW="1440px" px="200px" pos="relative">
-                <AddOnList
-                  subService={subService}
-                  setSubService={setSubService}
-                  serviceList={serviceList}
-                />
-                
-                  <Summary 
+          <Container
+            maxW="1440px"
+            px="160px"
+            minH="calc(100vh - 320px)"
+            my="32px"
+          >
+            <Flex gap="35px">
+              {page === 1 ? (
+                <>
+                  <AddOnList
                     subService={subService}
+                    setSubService={setSubService}
+                    serviceList={serviceList}
                   />
-              </Flex>
 
-            </>
-            
-          ) : page === 2 ? (
-            <Flex>
-              <ThailandAddressTypeahead>
-                <OrderInformation pickDate={pickDate} setPickDate={setPickDate} pickTime={pickTime} setPickTime={setPickTime} setAddress={setAddress} setHomeAddress={setHomeAddress}/>
-              </ThailandAddressTypeahead>
-              <Summary subService={subService} pickDate={pickDate} pickTime={pickTime} homeAddress={homeAddress} address={address}/>
+                  <Summary subService={subService} />
+                </>
+              ) : page === 2 ? (
+                <>
+                  <ThailandAddressTypeahead>
+                    <OrderInformation
+                      pickDate={pickDate}
+                      setPickDate={setPickDate}
+                      pickTime={pickTime}
+                      setPickTime={setPickTime}
+                      setAddress={setAddress}
+                      setHomeAddress={setHomeAddress}
+                    />
+                  </ThailandAddressTypeahead>
+                  <Summary
+                    subService={subService}
+                    pickDate={pickDate}
+                    pickTime={pickTime}
+                    homeAddress={homeAddress}
+                    address={address}
+                  />
+                </>
+              ) : null}
             </Flex>
-          ) : null}
+          </Container>
 
           <Footer setPage={setPage} page={page}>
             ดำเนินการต่อ
