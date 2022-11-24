@@ -3,10 +3,34 @@ import creditCard from "../.././assets/image/serviceDetail/creditCard.svg";
 import { Formik, Form } from "formik";
 import { MyTextInput } from "../../utils/formInput";
 import * as Yup from "yup";
+import React from "react";
 // import { useState } from "react";
 
 const OrderPayment = () => {
   // const [payment, setpayment] = useState("");
+  const addGaps = (str, gapNo) => {
+    let newStr = " ";
+    let len = str.length;
+    for (let i = 0; i < len; i++) {
+      newStr = newStr + str[i];
+      while (newStr.length % (gapNo + 1) === 0) {
+        newStr = newStr + " ";
+      }
+    }
+    return newStr.trim(" ");
+  };
+
+  const addSlash = (str) => {
+    let newStr = "";
+    let len = str.length;
+    for (let i = 0; i < len; i++) {
+      newStr = newStr + str[i];
+      while (newStr.length % 2 === 0) {
+        newStr = newStr + "/";
+      }
+    }
+    return newStr.substr(0, newStr.length - 1);
+  };
   return (
     <Formik
       initialValues={{
@@ -112,6 +136,7 @@ const OrderPayment = () => {
                   name="cardNo"
                   type="number"
                   placeholder="กรุณากรอกหมายเลขบัตรเครดิต"
+                  value={addGaps("cardOn", 4)}
                 />
               </Flex>
 
@@ -146,6 +171,8 @@ const OrderPayment = () => {
                     name="expiredDate"
                     type="number"
                     placeholder="MM/YY"
+                    value={addSlash("expiredDate", 4)}
+                    // regex="{/\d/, /\d/, '/', /\d/, /\d/}"
                   />
                 </Flex>
 
