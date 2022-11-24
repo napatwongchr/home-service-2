@@ -65,7 +65,7 @@ const OrderPayment = () => {
       setCardCVC(str);
     }
   };
-  
+
   return (
     <Formik
       enableReinitialize={true}
@@ -80,6 +80,7 @@ const OrderPayment = () => {
           .min(16, "กรุณาตรวจสอบเลขบัตรเคตดิตอีกครั้ง")
           .required("กรุณากรอกหมายเลขบัตรเครดิต"),
         nameOnCard: Yup.string().required("กรุณากรอกชื่อบนบัตร"),
+
         expiredDate: Yup.string()
           .required("กรุณากรอก เดือน/ปี ตามลำดับ")
           .min(4, "กรุณาตรวจสอบวันหมดอายุของบัตรอีกครั้ง"),
