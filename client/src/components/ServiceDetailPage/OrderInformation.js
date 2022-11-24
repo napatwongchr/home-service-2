@@ -8,7 +8,6 @@ import {
 import { DatePicker, TimePicker } from 'antd';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { ThailandAddressTypeahead, ThailandAddressValue } from "react-thailand-address-typeahead";
 import { useState } from 'react'
 import styled from "styled-components";
 
@@ -45,16 +44,24 @@ const OrderInformation = (props) => {
         setPickTime,
         homeAddress,
         setHomeAddress,
-        address,
-        setAddress
+        setSummaryAddress,
+        additionalText,
+        setAdditionalText,
+        ThailandAddressTypeahead,
+        ThailandAddressValue
      } = props
 
     // value of address - home address คือช่องที่อยู่ / address ที่ได้มาจะเป็น object มี 4 keys (district, postalCode, province, subdistrict)
-    // const [homeAddress, setHomeAddress] = useState("");
-    // const [address, setAddress] = useState(ThailandAddressValue.empty())
+    const [address, setAddress] = useState(ThailandAddressValue.empty())
 
-    // value of additional text
-    const [additionalText, setAdditionalText] = useState("");
+    const handleSetAaddress = (address) =>{
+        setSummaryAddress({
+            district : address.district,
+            postalCode : address.postalCode,
+            province : address.province,
+            subdistrict : address.subdistrict
+        })
+    }
 
     // disable days / times
     const disabledDate = (current) => {
@@ -79,7 +86,6 @@ const OrderInformation = (props) => {
                             value={pickDate}
                             onChange={(date, dateString) => {
                                 setPickDate(date, dateString)
-                                console.log(date, dateString)
                             }}
                             disabledDate={disabledDate}
                             placeholder="กรุณาเลือกวันที่"
@@ -95,7 +101,6 @@ const OrderInformation = (props) => {
                             value={pickTime}
                             onChange={(time, timeString) => {
                                 setPickTime(time, timeString)
-                                console.log(time, timeString)
                             }}
                             showNow={false}
                             disabledTime={disabledDateTime}
@@ -111,7 +116,7 @@ const OrderInformation = (props) => {
                             onValueChange={
                                 (address) => {
                                     setAddress(address)
-                                    // console.log(address)
+                                    handleSetAaddress(address)
                                 }}>
                             <Flex px="1.5rem" alignItems="center" marginBottom="2rem">
                                 <Flex className="ที่อยู่" marginRight="1.5rem" direction="column" >

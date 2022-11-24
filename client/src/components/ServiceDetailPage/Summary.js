@@ -1,7 +1,7 @@
 import { Container, Flex, Text } from "@chakra-ui/react";
 
 const Summary = (props) => {
-  const { subService, pickDate, pickTime, homeAddress, address } = props;
+  const { subService, pickDate, pickTime, homeAddress, summaryAddress, additionalText } = props;
 
   return (
     <Container p="0" w='100%'>
@@ -60,11 +60,13 @@ const Summary = (props) => {
           </Flex>
           <Flex justifyContent="space-between" gap={"2rem"}>
             <Text>สถานที่</Text>
-            <Text fontWeight="500">
-              {homeAddress ? `${homeAddress} ${address.subdistrict}` : ""}
-              <br />
-              {address ? `${address.district} ${address.province}` : ""}
-            </Text>
+            <Flex direction="column" textAlign="right">
+                <Text fontWeight="500">
+                    {homeAddress ? `${homeAddress} ` : ""}
+                    {summaryAddress ? `${summaryAddress.subdistrict} ${summaryAddress.district} ${summaryAddress.province}` : ""}
+                </Text>
+                <Text>{additionalText}</Text>
+            </Flex>
           </Flex>
         </Flex>
 

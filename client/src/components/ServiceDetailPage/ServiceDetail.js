@@ -36,8 +36,11 @@ const ServiceDetail = () => {
   const [pickDate, setPickDate] = useState(null);
   const [pickTime, setPickTime] = useState(null);
 
+  // value of address - home address คือช่องที่อยู่ / address ที่ได้มาจะเป็น object มี 4 keys (district, postalCode, province, subdistrict)
   const [homeAddress, setHomeAddress] = useState("");
-  const [address, setAddress] = useState(ThailandAddressValue.empty());
+  // value of additional text
+  const [additionalText, setAdditionalText] = useState("");
+  const [ summaryAddress, setSummaryAddress ] = useState(null)
 
   useEffect(() => {
     getServiceListById(params);
@@ -154,22 +157,30 @@ const ServiceDetail = () => {
                 </>
               ) : page === 2 ? (
                 <>
-                  <ThailandAddressTypeahead>
+                  
                     <OrderInformation
                       pickDate={pickDate}
                       setPickDate={setPickDate}
                       pickTime={pickTime}
                       setPickTime={setPickTime}
-                      setAddress={setAddress}
+                      // setAddress={setAddress}
+                      summaryAddress={summaryAddress}
+                      setSummaryAddress={setSummaryAddress}
                       setHomeAddress={setHomeAddress}
+                      additionalText={additionalText}
+                      setAdditionalText={setAdditionalText}
+                      ThailandAddressTypeahead={ThailandAddressTypeahead}
+                      ThailandAddressValue={ThailandAddressValue}
                     />
-                  </ThailandAddressTypeahead>
+
                   <Summary
                     subService={subService}
                     pickDate={pickDate}
                     pickTime={pickTime}
                     homeAddress={homeAddress}
-                    address={address}
+                    // address={address}
+                    summaryAddress={summaryAddress}
+                    additionalText={additionalText}
                   />
                 </>
               ) : null}
