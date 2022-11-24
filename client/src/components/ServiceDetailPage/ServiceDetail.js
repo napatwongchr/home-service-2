@@ -20,13 +20,21 @@ import informationSuccessIcon from "../../assets/image/serviceDetail/information
 import paymentIcon from "../../assets/image/serviceDetail/payment.svg";
 import paymentProcessIcon from "../../assets/image/serviceDetail/paymentProcess.svg";
 import AddOnList from "./AddOn";
+import Summary from "./Summary"
 import OrderInformation from "./OrderInformation";
+import { ThailandAddressTypeahead, ThailandAddressValue } from "react-thailand-address-typeahead";
 import Footer from "./Footer";
 const ServiceDetail = () => {
   const { serviceList, getServiceListById, params, loading } =
     useAdminServiceLists();
   const [subService, setSubService] = useState([]);
   const [page, setPage] = useState(1);
+
+  const [pickDate, setPickDate] = useState(null);
+  const [pickTime, setPickTime] = useState(null);
+
+  const [homeAddress, setHomeAddress] = useState("");
+  const [address, setAddress] = useState(ThailandAddressValue.empty())
 
   useEffect(() => {
     getServiceListById(params);
@@ -125,13 +133,28 @@ const ServiceDetail = () => {
             </Flex>
           </Container>
           {page === 1 ? (
-            <AddOnList
-              subService={subService}
-              setSubService={setSubService}
-              serviceList={serviceList}
-            />
+            <>
+              <Flex maxW="1440px" px="200px" pos="relative">
+                <AddOnList
+                  subService={subService}
+                  setSubService={setSubService}
+                  serviceList={serviceList}
+                />
+                
+                  <Summary 
+                    subService={subService}
+                  />
+              </Flex>
+
+            </>
+            
           ) : page === 2 ? (
-            <OrderInformation />
+            <Flex>
+              <ThailandAddressTypeahead>
+                <OrderInformation pickDate={pickDate} setPickDate={setPickDate} pickTime={pickTime} setPickTime={setPickTime} setAddress={setAddress} setHomeAddress={setHomeAddress}/>
+              </ThailandAddressTypeahead>
+              <Summary subService={subService} pickDate={pickDate} pickTime={pickTime} homeAddress={homeAddress} address={address}/>
+            </Flex>
           ) : null}
 
           <Footer setPage={setPage} page={page}>

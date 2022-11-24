@@ -1,4 +1,4 @@
-import { Box, Text, Flex, Button, Image } from "@chakra-ui/react";
+import { Box, Text, Flex, Button, Image, Container } from "@chakra-ui/react";
 import { useEffect } from "react";
 import priceTag from "../../assets/image/homePage/priceTag.svg";
 

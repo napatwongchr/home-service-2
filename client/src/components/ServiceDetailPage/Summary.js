@@ -1,13 +1,14 @@
-import { Flex, Text, Box } from "@chakra-ui/react"
+import { Flex, Text } from "@chakra-ui/react"
 
 const Summary = (props) =>{
 
-    const { subService, setSubService, serviceList } = props
+    const { subService, pickDate, pickTime, homeAddress, address } = props
+    
     
     
     return (
         <>
-            <Flex bgColor="utility.white" h="400px" borderRadius="8px" p="2rem" direction="column">
+            <Flex bgColor="utility.white" borderRadius="8px" p="2rem" direction="column" w="350px" h="fit-content">
                 <Text textColor="gray.700" textStyle="h3">สรุปรายการ</Text>
 
                 {/* AddOnList */}
@@ -20,9 +21,51 @@ const Summary = (props) =>{
                             </Flex>
                         )
                     })}
-                    
-                    {/* Total */}
+
+                </Flex>
+
+                {/* OrderInfomation */}
+                <Flex borderBottom="1px" pb="1rem" direction="column" mt="1rem">
                     <Flex justifyContent="space-between">
+                        <Text>วันที่</Text>
+                        <Text>
+                            {
+                                pickDate ?
+                                pickDate.$d.toLocaleDateString('th-TH', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric'
+                                }) 
+                                : ""
+                            }
+                        </Text>
+                    </Flex>
+                    <Flex justifyContent="space-between">
+                        <Text>เวลา</Text>
+                        <Text>
+                            {
+                                pickTime ?
+                                `${pickTime.$d.toLocaleTimeString('th', { hour : '2-digit', minute : '2-digit' })} น.`
+                                : ""
+                            }
+                        </Text>
+                    </Flex>
+                    <Flex justifyContent="space-between" gap={"2rem"}>
+                        <Text>สถานที่</Text>
+                        <Text fontWeight="500">
+                            { 
+                                homeAddress ? `${homeAddress} ${address.subdistrict}` : ""
+                            }
+                            <br/>
+                            {
+                                address ? `${address.district} ${address.province}` : ""
+                            }
+                        </Text>
+                    </Flex>
+                </Flex>
+
+                {/* Total */}
+                <Flex justifyContent="space-between" mt="1rem">
                         <Text textColor="gray.700" >รวม</Text>
                         <Text textColor="utility.black" fontWeight="600">
                             {
@@ -30,11 +73,7 @@ const Summary = (props) =>{
                                 subService.map( subService => subService.sub_total_price )
                             }
                         </Text>
-                    </Flex>
-
                 </Flex>
-
-                
             </Flex>
         </>
     )

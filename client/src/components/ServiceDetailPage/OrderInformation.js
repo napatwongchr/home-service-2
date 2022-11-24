@@ -34,16 +34,24 @@ const StyledContainer = styled.div`
  `
 
 
-const OrderInformation = () => {
+const OrderInformation = (props) => {
     dayjs.extend(customParseFormat);
 
     // value of date & time picker
-    const [pickDate, setPickDate] = useState(null);
-    const [pickTime, setPickTime] = useState(null);
+    const { 
+        pickDate, 
+        setPickDate,
+        pickTime,
+        setPickTime,
+        homeAddress,
+        setHomeAddress,
+        address,
+        setAddress
+     } = props
 
     // value of address - home address คือช่องที่อยู่ / address ที่ได้มาจะเป็น object มี 4 keys (district, postalCode, province, subdistrict)
-    const [homeAddress, setHomeAddress] = useState("");
-    const [address, setAddress] = useState(ThailandAddressValue.empty())
+    // const [homeAddress, setHomeAddress] = useState("");
+    // const [address, setAddress] = useState(ThailandAddressValue.empty())
 
     // value of additional text
     const [additionalText, setAdditionalText] = useState("");
