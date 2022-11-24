@@ -43,6 +43,7 @@ export const Input = defineStyleConfig({
     },
     error: {
       field: {
+        color: "gray.700",
         border: "1px",
         borderColor: "utility.red",
       },
