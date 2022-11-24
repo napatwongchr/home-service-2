@@ -26,6 +26,7 @@ import {
   ThailandAddressTypeahead,
   ThailandAddressValue,
 } from "react-thailand-address-typeahead";
+import OrderPayment from "./OrderPayment";
 import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 const ServiceDetail = () => {
@@ -41,7 +42,7 @@ const ServiceDetail = () => {
 
   // value of additional text
   const [additionalText, setAdditionalText] = useState("");
-  const [summaryAddress, setSummaryAddress] = useState(null)
+  const [summaryAddress, setSummaryAddress] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,7 +67,15 @@ const ServiceDetail = () => {
               border="1px"
               borderColor="gray.200"
             >
-              <Text textStyle={"h5"} cursor="pointer" onClick={() => { navigate(`/service-list`) }}>บริการของเรา</Text>
+              <Text
+                textStyle={"h5"}
+                cursor="pointer"
+                onClick={() => {
+                  navigate(`/service-list`);
+                }}
+              >
+                บริการของเรา
+              </Text>
               <Icon as={ChevronRightIcon} />
               <Text textStyle={"h1"} color="blue.600">
                 {serviceList.service.service_name}
@@ -102,8 +111,8 @@ const ServiceDetail = () => {
                     page === 1
                       ? informationIcon
                       : page === 2
-                        ? informationProcessIcon
-                        : informationSuccessIcon
+                      ? informationProcessIcon
+                      : informationSuccessIcon
                   }
                   alt="informationIcon"
                   h="40px"
@@ -181,6 +190,8 @@ const ServiceDetail = () => {
                     additionalText={additionalText}
                   />
                 </>
+              ) : page === 3 ? (
+                <OrderPayment />
               ) : null}
             </Flex>
           </Container>
