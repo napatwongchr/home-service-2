@@ -10,6 +10,7 @@ const OrderPayment = () => {
   // const [payment, setpayment] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [cardExp, setCardExp] = useState("");
+  const [cardCVC, setCardCVC] = useState("");
   const addGaps = (str) => {
     let v = str.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
     let matches = v.match(/\d{4,16}/g);
@@ -56,6 +57,29 @@ const OrderPayment = () => {
     }
   };
 
+  const hideCVC = (str) => {
+    let v = str.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+    let matches = v.match(/\d{3}/g);
+    let match = (matches && matches[0]) || "";
+    let parts = [];
+
+    for (let i = 0, len = match.length; i < len; i += 3) {
+      parts.push(match.substring(i, i + 3));
+    }
+
+    if (parts.length) {
+      return parts.join("");
+    } else {
+      return str;
+    }
+  };
+
+  const handleCardCVC = (e) => {
+    if (e.target.value.length < 4) {
+      setCardCVC(e.target.value);
+    }
+  };
+
   return (
     <Formik
       enableReinitialize={true}
@@ -63,17 +87,20 @@ const OrderPayment = () => {
         cardNo: cardNumber,
         nameOnCard: "",
         expiredDate: cardExp,
-        cvcCVV: "",
+        cvcCVV: cardCVC,
       }}
       validationSchema={Yup.object({
         cardNo: Yup.string()
           .min(19, "กรุณาตรวจสอบเลขบัตรเคตดิตอีกครั้ง")
-          .required("กรุณากรอกหมายเลขบัตรเครดิต"),
+          .required("กรุณากรอกหมายเลขบัตรเครดิต")
+          .matches(/^[0-9]{20}$/, "on"),
+
         nameOnCard: Yup.string().required("กรุณากรอกชื่อบนบัตร"),
+
         expiredDate: Yup.string()
           .required("กรุณากรอก เดือน/ปี ตามลำดับ")
-          .min(5, "กรุณาตรวจสอบวันหมดอายุของบัตรอีกครั้ง")
-          ,
+          .min(5, "กรุณาตรวจสอบวันหมดอายุของบัตรอีกครั้ง"),
+
         cvcCVV: Yup.string()
           .matches(/^[0-9]{3}$/, "กรุณาตรวจสอบ CVC/CVV อีกครั้ง")
           .required("กรุณากรอก CVC/CVV ค่ะ"),
@@ -205,6 +232,14 @@ const OrderPayment = () => {
                     name="cvcCVV"
                     type="password"
                     placeholder="xxx"
+                    value={hideCVC(cardCVC)}
+                    onChange={(e) => handleCardCVC(e)}
+                    onKeypress={(e) => {
+                      console.log(e.target.value.match);
+                      if (!e.target.value.match(/^[0-9]/)) {
+                        alert("No");
+                      }
+                    }}
                   />
                 </Flex>
               </Flex>
