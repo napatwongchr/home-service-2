@@ -7,7 +7,6 @@ import React from "react";
 import { useState } from "react";
 
 const OrderPayment = () => {
-  // const [payment, setpayment] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [cardExp, setCardExp] = useState("");
   const [cardCVC, setCardCVC] = useState("");
@@ -104,15 +103,11 @@ const OrderPayment = () => {
           flexDirection={"row"}
           px="0"
           justifyContent={"center"}
-          // alignItems={"center"}
         >
           <Form>
             <Flex
-              // maxW="100%"
               w="735px"
-              // minH="calc(100vh)"
               h="598px"
-              // p="40px"
               bg="utility.white"
               display="flex"
               flexDirection={"column"}
@@ -121,15 +116,10 @@ const OrderPayment = () => {
               color="gray.300"
               pt="24px"
               px="24px"
-              // justifyContent={"center"}
-              // alignItems={"center"}
             >
               <Flex mb="22px">
                 <Text
-                  //   fontStyle={"h3"}
-                  fontWeight="400"
-                  fontSize={"20px"}
-                  lineHeight="30px"
+                  textStyles={"h3"}
                   textAlign={"center"}
                   textColor={"gray.700"}
                 >
@@ -200,11 +190,9 @@ const OrderPayment = () => {
                     label="วันหมดอายุ"
                     id="expiredDate"
                     name="expiredDate"
-                    // type="number"
                     placeholder="MM/YY"
                     value={addSlash(cardExp)}
                     onChange={(e) => handleCardExp(e)}
-                    // regex="{/\d/, /\d/, '/', /\d/, /\d/}"
                   />
                 </Flex>
 
