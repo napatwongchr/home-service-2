@@ -5,6 +5,7 @@ import cors from "cors";
 import cloudinary from "cloudinary";
 import userRoute from "./routers/user.route.js";
 import serviceRoute from "./routers/service.route.js";
+import orderRoute from "./routers/order.route.js";
 
 dotenv.config();
 cloudinary.config({
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 });
 app.use("/users", userRoute);
 app.use("/service", serviceRoute);
+app.use("/order", orderRoute);
 
 app.listen(port, () => {
   console.log(`server is running on port ${port}`);
