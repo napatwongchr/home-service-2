@@ -44,7 +44,6 @@ const ServiceDetail = () => {
   const [additionalText, setAdditionalText] = useState("");
   const [summaryAddress, setSummaryAddress] = useState(null);
   const navigate = useNavigate();
-
   useEffect(() => {
     getServiceListById(params);
   }, []);
@@ -111,8 +110,8 @@ const ServiceDetail = () => {
                     page === 1
                       ? informationIcon
                       : page === 2
-                      ? informationProcessIcon
-                      : informationSuccessIcon
+                        ? informationProcessIcon
+                        : informationSuccessIcon
                   }
                   alt="informationIcon"
                   h="40px"
@@ -152,10 +151,9 @@ const ServiceDetail = () => {
           <Container
             maxW="1440px"
             px="160px"
-            minH="calc(100vh - 320px)"
             my="32px"
           >
-            <Flex gap="35px">
+            <Flex gap="35px" h='100%'>
               {page === 1 ? (
                 <>
                   <AddOnList
@@ -191,12 +189,22 @@ const ServiceDetail = () => {
                   />
                 </>
               ) : page === 3 ? (
-                <OrderPayment />
+                <>
+                  <OrderPayment />
+                  <Summary
+                    subService={subService}
+                    pickDate={pickDate}
+                    pickTime={pickTime}
+                    homeAddress={homeAddress}
+                    summaryAddress={summaryAddress}
+                    additionalText={additionalText}
+                  />
+                </>
               ) : null}
             </Flex>
           </Container>
 
-          <Footer setPage={setPage} page={page}>
+          <Footer setPage={setPage} page={page} subService={subService}>
             ดำเนินการต่อ
           </Footer>
         </Container>

@@ -16,13 +16,21 @@ export const Button = defineStyleConfig({
       color: "utility.white",
       _hover: {
         bg: "blue.500",
+         _disabled: {
+        _hover: {
+          bg:'gray.900'
+        },
+      },
       },
       _active: {
         bg: "blue.800",
       },
       _disabled: {
-        bg: "gray.300",
+        bg: "gray.900",
         color: "gray.100",
+        _hover: {
+          bg:'red'
+        },
       },
       _loading: {
         bg: "blue.600",

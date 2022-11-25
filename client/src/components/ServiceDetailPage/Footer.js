@@ -1,7 +1,12 @@
 import { Button, Container, Flex } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { useState } from "react";
 const Footer = (props) => {
-  const { setPage, page } = props;
+  const { setPage, page, subService} = props;
+  const [disable, setDisable] = useState(true)
+  subService.map(item => {
+    console.log(item);
+  })
   return (
     <Container
       maxW={"100vw"}
@@ -10,7 +15,7 @@ const Footer = (props) => {
       pos="fixed"
       bottom={0}
       centerContent
-      border="1px"
+      borderTop="1px"
       borderColor="gray.300"
       zIndex={1}
     >
@@ -35,7 +40,8 @@ const Footer = (props) => {
           ย้อนกลับ
         </Button>
         <Button
-          variant="primary"
+          variant={"primary"}
+          // disabled={disable ? true : false}
           px="40px"
           py="20px"
           rightIcon={<ChevronRightIcon />}

@@ -5,6 +5,7 @@ import { MyTextInput } from "../../utils/formInput";
 import * as Yup from "yup";
 import React from "react";
 import { useState } from "react";
+import { Divider } from "antd";
 
 const OrderPayment = () => {
   const [cardNumber, setCardNumber] = useState("");
@@ -96,43 +97,11 @@ const OrderPayment = () => {
           .required("กรุณากรอก CVC/CVV อีกครัง"),
       })}
     >
-      <Container
-        className="payment box"
-        maxW="100%"
-        minH="calc(100vh)"
-        pt="45px"
-        px="0"
-        bg="gray.100"
-      >
-        <Container
-          maxW="100%"
-          minH="calc(100vh)"
-          display={"flex"}
-          flexDirection={"row"}
-          px="0"
-          justifyContent={"center"}
-        >
+      <Container maxW="735px" p={0}>
           <Form>
-            <Flex
-              w="735px"
-              h="598px"
-              bg="utility.white"
-              display="flex"
-              flexDirection={"column"}
-              borderRadius="8px"
-              border="1px"
-              color="gray.300"
-              pt="24px"
-              px="24px"
-            >
+            <Flex direction="column" bg="utility.white" textStyle="h5" textColor="gray.900" width="100%" height="fit-content" p="32px" border="1px" borderColor="gray.200" borderRadius="8px">
               <Flex mb="22px">
-                <Text
-                  textStyles={"h3"}
-                  textAlign={"center"}
-                  textColor={"gray.700"}
-                >
-                  ชำระเงิน
-                </Text>
+                <Text textStyle="h3" textColor="gray.700">ชำระเงิน</Text>
               </Flex>
 
               <Center className="payment type" mb={"20px"}>
@@ -158,7 +127,7 @@ const OrderPayment = () => {
                 </Button>
               </Center>
 
-              <Flex className="card no." flexDirection={"column"} w={"686px"}>
+              <Flex className="card no." flexDirection={"column"}>
                 <MyTextInput
                   label="หมายเลขบัตรเครดิต"
                   id="cardNo"
@@ -172,7 +141,6 @@ const OrderPayment = () => {
               <Flex
                 className="name on card"
                 flexDirection={"column"}
-                w={"686px"}
               >
                 <MyTextInput
                   label="ชื่อบนบัตร"
@@ -187,13 +155,12 @@ const OrderPayment = () => {
               <Flex
                 className="expired date CVC/CVV"
                 flexDirection={"row"}
-                mb={"20px"}
+                justifyContent='space-between'
               >
                 <Flex
                   className="expired date"
                   flexDirection={"column"}
-                  mr="24px"
-                  w="331px"
+                  w='49%'
                 >
                   <MyTextInput
                     label="วันหมดอายุ"
@@ -205,7 +172,7 @@ const OrderPayment = () => {
                   />
                 </Flex>
 
-                <Flex className="CVC/CVV" flexDirection={"column"} w="331px">
+                <Flex className="CVC/CVV" flexDirection={"column"} w='49%'>
                   <MyTextInput
                     label="รหัส CVC / CVV"
                     id="cvcCVV"
@@ -217,12 +184,9 @@ const OrderPayment = () => {
                   />
                 </Flex>
               </Flex>
-
-              <hr w="735px" />
             </Flex>
           </Form>
         </Container>
-      </Container>
     </Formik>
   );
 };
