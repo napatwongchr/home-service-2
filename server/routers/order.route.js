@@ -1,6 +1,8 @@
-import orderController from "../controllers/order.controller";
-import  Route from "express";
+import orderController from "../controllers/order.controller.js";
+import Route from "express";
 
-const orderRoute = Route()
+const orderRoute = Route();
 
-orderRoute.get("/" orderController.)
+orderRoute.post("/", orderController.createOrder);
+
+export default orderRoute;
