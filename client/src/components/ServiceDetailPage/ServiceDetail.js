@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import NavComponent from "../HomePage/Nav";
 import useAdminServiceLists from "../../hooks/useAdminServiceLists";
 import {
+  Button,
   Container,
   Divider,
   Flex,
@@ -10,7 +11,7 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
-import { ChevronRightIcon } from "@chakra-ui/icons";
+import { ChevronRightIcon, CheckCircleIcon } from "@chakra-ui/icons";
 import BannerService from "../ServiceList/BannerService";
 import addOnListIcon from "../../assets/image/serviceDetail/addOnList.svg";
 import addOnListIconSuccess from "../../assets/image/serviceDetail/addOnListSucess.svg";
@@ -36,6 +37,11 @@ const ServiceDetail = () => {
   const [page, setPage] = useState(1);
   const [pickDate, setPickDate] = useState(null);
   const [pickTime, setPickTime] = useState(null);
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardName, setCardName] = useState("");
+  const [cardExp, setCardExp] = useState("");
+  const [cardCVC, setCardCVC] = useState("");
+  const [status, setStatus] = useState(false);
 
   // value of address - home address คือช่องที่อยู่ / address ที่ได้มาจะเป็น object มี 4 keys (district, postalCode, province, subdistrict)
   const [homeAddress, setHomeAddress] = useState("");
@@ -50,7 +56,154 @@ const ServiceDetail = () => {
   return (
     <>
       <NavComponent />
-      {serviceList.service && !loading ? (
+
+      {status ? (
+        <Container
+          maxW={"100%"}
+          minH="calc(100vh - 80px)"
+          bg="gray.100"
+          py={"52px"}
+          centerContent
+        >
+          <Flex
+            flexDirection={"column"}
+            w={614}
+            h={"100%"}
+            bg="utility.white"
+            borderRadius={"8px"}
+            py="50px"
+            px="60px"
+            justify="center"
+            alignItems={"center"}
+            gap="20px"
+          >
+            <CheckCircleIcon boxSize={"64px"} color="green.900" />
+            <Text textStyle={"h1"} color="gray.950">
+              ชำระเงินเรียบร้อย !
+            </Text>
+            <Flex
+              pb="1rem"
+              direction="column"
+              mt="1rem"
+              gap="1rem"
+              whiteSpace="nowrap"
+              w="100%"
+            >
+              {subService.map((subService, index) => {
+                return (
+                  <Flex
+                    key={index}
+                    alignItems="center"
+                    justify="space-between"
+                    fontSize="14px"
+                    textColor="utility.black"
+                    fontWeight={'500'}
+                  >
+                    <Text>{subService.sub_service_name}</Text>
+                    <Text>{subService.count} รายการ</Text>
+                  </Flex>
+                );
+              })}
+            </Flex>
+            <Divider color="gray.200" />
+            <Flex
+              justifyContent="space-between"
+              w="100%"
+              fontSize="14px"
+              textColor="utility.black"
+            >
+              <Text fontWeight="300px" color="gray.700">
+                วันที่
+              </Text>
+              <Text color="utility.black" fontWeight="500">
+                {pickDate
+                  ? pickDate.$d.toLocaleDateString("th-TH", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })
+                  : ""}
+              </Text>
+            </Flex>
+            <Flex
+              justifyContent="space-between"
+              w="100%"
+              fontSize="14px"
+              textColor="utility.black"
+            >
+              <Text fontWeight="300px" color="gray.700">
+                เวลา
+              </Text>
+              <Text color="utility.black" fontWeight="500">
+                {pickTime
+                  ? `${pickTime.$d.toLocaleTimeString("th", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })} น.`
+                  : ""}
+              </Text>
+            </Flex>
+            <Flex
+              justifyContent="space-between"
+              direction="column"
+              w="100%"
+              fontSize="14px"
+              textColor="utility.black"
+              overflowWrap={"break-word"}
+            >
+              <Flex
+                direction="row"
+                textAlign="right"
+                color="utility.black"
+                fontWeight="500"
+                gap="1rem"
+                justifyContent={'space-between'}
+              >
+                <Text fontWeight="300px" color="gray.700" whiteSpace="nowrap">
+                  สถานที่
+                </Text>
+                <Text>
+                  {homeAddress ? `${homeAddress} ` : ""}
+                  {summaryAddress
+                    ? `${summaryAddress.subdistrict} ${summaryAddress.district} ${summaryAddress.province}`
+                    : ""}
+                </Text>
+              </Flex>
+              {additionalText ? (
+                <Flex
+                  justifyContent="space-between"
+                  mt="0.5rem"
+                  textAlign="right"
+                  color="utility.black"
+                >
+                  <Text fontWeight="300px" color="gray.700" whiteSpace="nowrap">
+                    หมายเหตุ
+                  </Text>
+                  <Text width="75%">{additionalText}</Text>
+                </Flex>
+              ) : null}
+            </Flex>
+            <Divider color="gray.300" mt="10px" />
+            {/* Total */}
+            <Flex justifyContent="space-between" mt="1rem" w="100%">
+              <Text textColor="gray.700" fontSize="1rem" fontWeight="500">
+                รวม
+              </Text>
+              <Text textColor="utility.black" fontWeight="600" fontSize="1rem">
+                {subService.length > 1
+                  ? subService.reduce((acc, cur) => {
+                      return acc + cur.sub_total_price;
+                    }, 0)
+                  : subService.map(
+                      (subService) => subService.sub_total_price
+                    )}{" "}
+                ฿
+              </Text>
+            </Flex>
+            <Button w='100%' mt='10px'>เช็ครายการซ่อม</Button>
+          </Flex>
+        </Container>
+      ) : serviceList.service && !loading ? (
         <Container maxW="100%" minH="calc(100vh)" p="0" bg="gray.100">
           <BannerService url={serviceList.service.url} />
           <Container maxW="1440px" px="160px" pos="relative">
@@ -110,8 +263,8 @@ const ServiceDetail = () => {
                     page === 1
                       ? informationIcon
                       : page === 2
-                        ? informationProcessIcon
-                        : informationSuccessIcon
+                      ? informationProcessIcon
+                      : informationSuccessIcon
                   }
                   alt="informationIcon"
                   h="40px"
@@ -148,12 +301,8 @@ const ServiceDetail = () => {
               </Flex>
             </Flex>
           </Container>
-          <Container
-            maxW="1440px"
-            px="160px"
-            my="32px"
-          >
-            <Flex gap="35px" h='100%'>
+          <Container maxW="1440px" px="160px" my="32px">
+            <Flex gap="35px" h="100%">
               {page === 1 ? (
                 <>
                   <AddOnList
@@ -190,7 +339,16 @@ const ServiceDetail = () => {
                 </>
               ) : page === 3 ? (
                 <>
-                  <OrderPayment />
+                  <OrderPayment
+                    setCardNumber={setCardNumber}
+                    cardNumber={cardNumber}
+                    setCardName={setCardName}
+                    cardName={cardName}
+                    setCardExp={setCardExp}
+                    cardExp={cardExp}
+                    setCardCVC={setCardCVC}
+                    cardCVC={cardCVC}
+                  />
                   <Summary
                     subService={subService}
                     pickDate={pickDate}
@@ -204,8 +362,17 @@ const ServiceDetail = () => {
             </Flex>
           </Container>
 
-          <Footer setPage={setPage} page={page} subService={subService}>
-            ดำเนินการต่อ
+          <Footer
+            setPage={setPage}
+            page={page}
+            subService={subService}
+            pickDate={pickDate}
+            pickTime={pickTime}
+            homeAddress={homeAddress}
+            summaryAddress={summaryAddress}
+            setStatus={setStatus}
+          >
+            {page === 3 ? "ยืนยันการชำระเงิน" : "ดำเนินการต่อ"}
           </Footer>
         </Container>
       ) : (

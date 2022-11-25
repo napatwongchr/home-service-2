@@ -1,12 +1,44 @@
 import { Button, Container, Flex } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const Footer = (props) => {
-  const { setPage, page, subService} = props;
-  const [disable, setDisable] = useState(true)
-  subService.map(item => {
-    console.log(item);
-  })
+  const {
+    setPage,
+    page,
+    subService,
+    pickDate,
+    pickTime,
+    homeAddress,
+    summaryAddress,
+    setStatus
+  } = props;
+  const [disable, setDisable] = useState(true);
+  useEffect(() => {
+    subService.map((item) => {
+      if (
+        item.count !== 0 &&
+        pickDate &&
+        pickTime &&
+        homeAddress &&
+        summaryAddress
+      ) {
+        if (
+          summaryAddress.district === "" ||
+          summaryAddress.province === "" ||
+          summaryAddress.subdistrict === ""
+        ) {
+          setDisable(true);
+        } else {
+          setDisable(false);
+        }
+      } else if (item.count !== 0) {
+        setDisable(false);
+      } else {
+        setDisable(true);
+      }
+    });
+  }, [subService, pickDate, pickTime, homeAddress, summaryAddress]);
+
   return (
     <Container
       maxW={"100vw"}
@@ -48,6 +80,9 @@ const Footer = (props) => {
           onClick={() => {
             if (page < 3) {
               setPage(page + 1);
+              setDisable(true);
+            }else{
+              setStatus(true)
             }
           }}
         >

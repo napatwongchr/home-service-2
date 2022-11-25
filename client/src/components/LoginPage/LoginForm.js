@@ -22,7 +22,7 @@ const LoginForm = () => {
   return (
     <Container
       maxW={"100%"}
-      minH="calc(100vh - 97px)"
+      minH="calc(100vh - 80px)"
       bg="gray.100"
       py={"52px"}
       centerContent
