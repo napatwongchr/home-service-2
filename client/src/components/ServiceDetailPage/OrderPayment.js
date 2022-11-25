@@ -102,7 +102,7 @@ const OrderPayment = (props) => {
           .required("กรุณากรอก CVC/CVV อีกครัง"),
       })}
     >
-      <Container maxW="735px" p={0}>
+      <Container maxW="735px" p={0} mb='100px'>
         <Form>
           <Flex
             direction="column"

@@ -85,7 +85,7 @@ const OrderInformation = (props) => {
   const disabledDateTime = () => ({ disabledHours: () => [...ranged] });
 
   return (
-    <Container maxW="735px" p={0}>
+    <Container maxW="735px" p={0} mb='100px'>
       <Flex
         direction="column"
         bg="utility.white"

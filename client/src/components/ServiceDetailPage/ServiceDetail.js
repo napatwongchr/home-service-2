@@ -204,7 +204,7 @@ const ServiceDetail = () => {
           </Flex>
         </Container>
       ) : serviceList.service && !loading ? (
-        <Container maxW="100%" minH="calc(100vh)" p="0" bg="gray.100">
+        <Container maxW="100%" minH="calc(100vh - 90px)" p="0" bg="gray.100">
           <BannerService url={serviceList.service.url} />
           <Container maxW="1440px" px="160px" pos="relative">
             <Flex
@@ -302,7 +302,7 @@ const ServiceDetail = () => {
             </Flex>
           </Container>
           <Container maxW="1440px" px="160px" my="32px">
-            <Flex gap="35px" h="100%">
+            <Flex gap="35px" h="100%" mt='20px'>
               {page === 1 ? (
                 <>
                   <AddOnList
