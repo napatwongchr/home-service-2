@@ -8,6 +8,7 @@ import { useState } from "react";
 
 const OrderPayment = () => {
   const [cardNumber, setCardNumber] = useState("");
+  const [cardName, setCardName] = useState("");
   const [cardExp, setCardExp] = useState("");
   const [cardCVC, setCardCVC] = useState("");
   const addGaps = (str) => {
@@ -31,6 +32,13 @@ const OrderPayment = () => {
     const str = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
     if (str.length < 17) {
       setCardNumber(str);
+    }
+  };
+
+  const handleCardName = (e) => {
+    const str = e.target.value.replace(/\s+/g, " ");
+    if (str.length < 120) {
+      setCardName(str);
     }
   };
 
@@ -70,7 +78,7 @@ const OrderPayment = () => {
       enableReinitialize={true}
       initialValues={{
         cardNo: cardNumber,
-        nameOnCard: "",
+        nameOnCard: cardName,
         expiredDate: cardExp,
         cvcCVV: cardCVC,
       }}
@@ -170,8 +178,9 @@ const OrderPayment = () => {
                   label="ชื่อบนบัตร"
                   id="nameOnCard"
                   name="nameOnCard"
-                  type="text"
                   placeholder="กรุณากรอกชื่อบนบัตร"
+                  value={cardName}
+                  onChange={(e) => handleCardName(e)}
                 />
               </Flex>
 
