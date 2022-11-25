@@ -1,0 +1,27 @@
+.address-input {
+  width: 331px;
+  height: 44px;
+  font-family: inherit;
+  border-radius: 8px;
+  border: 1px solid;
+  border-color: #ccd0d7;
+  padding-left: 1rem;
+}
+
+.address-input::placeholder {
+  color: #646c80;
+}
+
+.address-input:focus {
+  outline: none !important;
+  border: 1px solid #336df2;
+}
+
+.ant-picker-input input::placeholder {
+  color: #646c80 !important;
+  font-size: 1rem;
+}
+
+.ant-picker:hover {
+  outline: none !important;
+}

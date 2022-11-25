@@ -20,13 +20,29 @@ import informationSuccessIcon from "../../assets/image/serviceDetail/information
 import paymentIcon from "../../assets/image/serviceDetail/payment.svg";
 import paymentProcessIcon from "../../assets/image/serviceDetail/paymentProcess.svg";
 import AddOnList from "./AddOn";
+import Summary from "./Summary";
 import OrderInformation from "./OrderInformation";
+import {
+  ThailandAddressTypeahead,
+  ThailandAddressValue,
+} from "react-thailand-address-typeahead";
 import Footer from "./Footer";
+import { useNavigate } from "react-router-dom";
 const ServiceDetail = () => {
   const { serviceList, getServiceListById, params, loading } =
     useAdminServiceLists();
   const [subService, setSubService] = useState([]);
   const [page, setPage] = useState(1);
+  const [pickDate, setPickDate] = useState(null);
+  const [pickTime, setPickTime] = useState(null);
+
+  // value of address - home address คือช่องที่อยู่ / address ที่ได้มาจะเป็น object มี 4 keys (district, postalCode, province, subdistrict)
+  const [homeAddress, setHomeAddress] = useState("");
+
+  // value of additional text
+  const [additionalText, setAdditionalText] = useState("");
+  const [summaryAddress, setSummaryAddress] = useState(null)
+  const navigate = useNavigate();
 
   useEffect(() => {
     getServiceListById(params);
@@ -37,7 +53,7 @@ const ServiceDetail = () => {
       {serviceList.service && !loading ? (
         <Container maxW="100%" minH="calc(100vh)" p="0" bg="gray.100">
           <BannerService url={serviceList.service.url} />
-          <Container maxW="1440px" px="200px" pos="relative">
+          <Container maxW="1440px" px="160px" pos="relative">
             <Flex
               px="32px"
               py="20px"
@@ -50,7 +66,7 @@ const ServiceDetail = () => {
               border="1px"
               borderColor="gray.200"
             >
-              <Text textStyle={"h5"}>บริการของเรา</Text>
+              <Text textStyle={"h5"} cursor="pointer" onClick={() => { navigate(`/service-list`) }}>บริการของเรา</Text>
               <Icon as={ChevronRightIcon} />
               <Text textStyle={"h1"} color="blue.600">
                 {serviceList.service.service_name}
@@ -67,7 +83,7 @@ const ServiceDetail = () => {
               bg="utility.white"
               borderRadius="8px"
               border="1px"
-              borderColor="gray.200"
+              borderColor="gray.300"
               pos="relative"
             >
               <Flex flexDirection={"column"} gap="12px" zIndex={"2"}>
@@ -86,8 +102,8 @@ const ServiceDetail = () => {
                     page === 1
                       ? informationIcon
                       : page === 2
-                      ? informationProcessIcon
-                      : informationSuccessIcon
+                        ? informationProcessIcon
+                        : informationSuccessIcon
                   }
                   alt="informationIcon"
                   h="40px"
@@ -124,15 +140,50 @@ const ServiceDetail = () => {
               </Flex>
             </Flex>
           </Container>
-          {page === 1 ? (
-            <AddOnList
-              subService={subService}
-              setSubService={setSubService}
-              serviceList={serviceList}
-            />
-          ) : page === 2 ? (
-            <OrderInformation />
-          ) : null}
+          <Container
+            maxW="1440px"
+            px="160px"
+            minH="calc(100vh - 320px)"
+            my="32px"
+          >
+            <Flex gap="35px">
+              {page === 1 ? (
+                <>
+                  <AddOnList
+                    subService={subService}
+                    setSubService={setSubService}
+                    serviceList={serviceList}
+                  />
+
+                  <Summary subService={subService} />
+                </>
+              ) : page === 2 ? (
+                <>
+                  <OrderInformation
+                    pickDate={pickDate}
+                    setPickDate={setPickDate}
+                    pickTime={pickTime}
+                    setPickTime={setPickTime}
+                    summaryAddress={summaryAddress}
+                    setSummaryAddress={setSummaryAddress}
+                    setHomeAddress={setHomeAddress}
+                    additionalText={additionalText}
+                    setAdditionalText={setAdditionalText}
+                    ThailandAddressTypeahead={ThailandAddressTypeahead}
+                    ThailandAddressValue={ThailandAddressValue}
+                  />
+                  <Summary
+                    subService={subService}
+                    pickDate={pickDate}
+                    pickTime={pickTime}
+                    homeAddress={homeAddress}
+                    summaryAddress={summaryAddress}
+                    additionalText={additionalText}
+                  />
+                </>
+              ) : null}
+            </Flex>
+          </Container>
 
           <Footer setPage={setPage} page={page}>
             ดำเนินการต่อ
