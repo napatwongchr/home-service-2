@@ -10,6 +10,7 @@ const OrderPayment = () => {
   // const [payment, setpayment] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [cardExp, setCardExp] = useState("");
+  const [cardCVC, setCardCVC] = useState("");
   const addGaps = (str) => {
     let v = str.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
     let matches = v.match(/\d{4,16}/g);
@@ -28,8 +29,9 @@ const OrderPayment = () => {
   };
 
   const handleCardNumber = (e) => {
-    if (e.target.value.length < 20) {
-      setCardNumber(e.target.value);
+    const str = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+    if (str.length < 17) {
+      setCardNumber(str);
     }
   };
 
@@ -51,11 +53,19 @@ const OrderPayment = () => {
   };
 
   const handleCardExp = (e) => {
-    if (e.target.value.length < 6) {
-      setCardExp(e.target.value);
+    const str = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+    if (str.length < 5) {
+      setCardExp(str);
     }
   };
 
+  const handleCardCVC = (e) => {
+    const str = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+    if (str.length < 4) {
+      setCardCVC(str);
+    }
+  };
+  
   return (
     <Formik
       enableReinitialize={true}
@@ -63,20 +73,19 @@ const OrderPayment = () => {
         cardNo: cardNumber,
         nameOnCard: "",
         expiredDate: cardExp,
-        cvcCVV: "",
+        cvcCVV: cardCVC,
       }}
       validationSchema={Yup.object({
         cardNo: Yup.string()
-          .min(19, "กรุณาตรวจสอบเลขบัตรเคตดิตอีกครั้ง")
+          .min(16, "กรุณาตรวจสอบเลขบัตรเคตดิตอีกครั้ง")
           .required("กรุณากรอกหมายเลขบัตรเครดิต"),
         nameOnCard: Yup.string().required("กรุณากรอกชื่อบนบัตร"),
         expiredDate: Yup.string()
           .required("กรุณากรอก เดือน/ปี ตามลำดับ")
-          .min(5, "กรุณาตรวจสอบวันหมดอายุของบัตรอีกครั้ง")
-          ,
+          .min(4, "กรุณาตรวจสอบวันหมดอายุของบัตรอีกครั้ง"),
         cvcCVV: Yup.string()
-          .matches(/^[0-9]{3}$/, "กรุณาตรวจสอบ CVC/CVV อีกครั้ง")
-          .required("กรุณากรอก CVC/CVV ค่ะ"),
+          .min(3, "กรุณาตรวจสอบเลข CVC/CVV อีกครั้ง")
+          .required("กรุณากรอก CVC/CVV อีกครัง"),
       })}
     >
       <Container
@@ -205,6 +214,8 @@ const OrderPayment = () => {
                     name="cvcCVV"
                     type="password"
                     placeholder="xxx"
+                    value={cardCVC}
+                    onChange={(e) => handleCardCVC(e)}
                   />
                 </Flex>
               </Flex>
