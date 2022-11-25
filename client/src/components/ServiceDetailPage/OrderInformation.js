@@ -34,13 +34,12 @@ const StyledContainer = styled.div`
    }
  `
 
-
 const OrderInformation = (props) => {
     dayjs.extend(customParseFormat);
 
     // value of date & time picker
-    const { 
-        pickDate, 
+    const {
+        pickDate,
         setPickDate,
         pickTime,
         setPickTime,
@@ -51,32 +50,46 @@ const OrderInformation = (props) => {
         setAdditionalText,
         ThailandAddressTypeahead,
         ThailandAddressValue
-     } = props
+    } = props
 
     // value of address - home address คือช่องที่อยู่ / address ที่ได้มาจะเป็น object มี 4 keys (district, postalCode, province, subdistrict)
     const [address, setAddress] = useState(ThailandAddressValue.empty())
 
-    const handleSetAaddress = (address) =>{
+    const handleSetAaddress = (address) => {
         setSummaryAddress({
-            district : address.district,
-            postalCode : address.postalCode,
-            province : address.province,
-            subdistrict : address.subdistrict
+            district: address.district,
+            postalCode: address.postalCode,
+            province: address.province,
+            subdistrict: address.subdistrict
         })
     }
 
-    // disable days / times
+
+    // disable days
     const disabledDate = (current) => {
         return current && current < dayjs().add(-1, 'day');
     };
 
+    // find disable times
+    var toArray = require('dayjs/plugin/toArray')
+    dayjs.extend(toArray)
+    let ranged = []
+    const findDisableTime = () => {
+        let now = dayjs().startOf('hour').add(1, 'hour').toArray()
+        for (let i = now[3]; i >= 1; i--) {
+            ranged.push(now[3] -= 1)
+        }
+        return ranged
+    }
 
-    const disabledDateTime = () => ({ disabledHours: () => [1, 2, 3, 4, 5, 19, 20, 21, 22, 23, 0] });
+    findDisableTime()
+
+    const disabledDateTime = () => ({ disabledHours: () => [...ranged] });
 
 
     return (
         <Container maxW="735px" p={0}>
-            <Flex direction="column" bg="utility.white" textStyle="h5" textColor="gray.900" width="100%" height="fit-content" py="1rem" border="1px" borderColor="gray.300" borderRadius="8px">
+            <Flex direction="column" bg="utility.white" textStyle="h5" textColor="gray.900" width="100%" height="fit-content" py="1rem" border="1px" borderColor="gray.200" borderRadius="8px">
                 <Text textStyle="h3" textColor="gray.700" paddingLeft="1.5rem" paddingTop="1rem">กรอกข้อมูลบริการ</Text>
                 <Flex className="picker" direction="row" py="2rem" >
                     <Flex className="date-picker" px="1.5rem" direction="column">
