@@ -16,7 +16,7 @@ const Footer = (props) => {
   useEffect(() => {
     subService.map((item) => {
       if (
-        item.count !== 0 &&
+        page === 2 &&
         pickDate &&
         pickTime &&
         homeAddress &&
@@ -31,7 +31,7 @@ const Footer = (props) => {
         } else {
           setDisable(false);
         }
-      } else if (item.count !== 0) {
+      } else if (page === 1 && item.count !== 0) {
         setDisable(false);
       } else {
         setDisable(true);
@@ -73,7 +73,7 @@ const Footer = (props) => {
         </Button>
         <Button
           variant={"primary"}
-          // disabled={disable ? true : false}
+          disabled={disable ? true : false}
           px="40px"
           py="20px"
           rightIcon={<ChevronRightIcon />}
