@@ -197,7 +197,7 @@ const OrderPayment = () => {
                   w="331px"
                 >
                   <MyTextInput
-                    label="ชื่อบนบัตร"
+                    label="วันหมดอายุ"
                     id="expiredDate"
                     name="expiredDate"
                     // type="number"
