@@ -76,8 +76,9 @@ const OrderInformation = (props) => {
     let ranged = []
     const findDisableTime = () => {
         let now = dayjs().startOf('hour').add(1, 'hour').toArray()
-        for (let i = now[3]; i >= 1; i--) {
-            ranged.push(now[3] -= 1)
+        console.log(now);
+        for (let i = now[3]; i >= 0; i--) {
+            ranged.push(i)
         }
         return ranged
     }
@@ -95,7 +96,7 @@ const OrderInformation = (props) => {
                     <Flex className="date-picker" px="1.5rem" direction="column">
                         <Text marginBottom="0.5rem">
                             วันที่สะดวกใช้บริการ
-                            <span style={{ color: "#C82438" }}>*</span>
+                            <span style={{ color: "#646C80" }}>*</span>
                         </Text>
                         <DatePicker
                             className="picker"
@@ -106,12 +107,12 @@ const OrderInformation = (props) => {
                             }}
                             disabledDate={disabledDate}
                             placeholder="กรุณาเลือกวันที่"
-                            style={{ width: "331px", height: "44px", fontFamily: "Prompt", fontSize: "16px", borderRadius: "8px" }}
+                            style={{ width: "331px", height: "44px", fontFamily: "Prompt", fontSize: "16px", borderRadius: "8px",  }}
                         />
                     </Flex>
                     <Flex className="time-picker" direction="column">
                         <Text marginBottom="0.5rem">
-                            เวลาที่สะดวกใช้บริการ<span style={{ color: "#C82438" }}>*</span>
+                            เวลาที่สะดวกใช้บริการ<span style={{ color: "#646C80" }}>*</span>
                         </Text>
                         <TimePicker defaultValue={dayjs().add(1, 'hour')}
                             format="HH:mm"
@@ -137,7 +138,7 @@ const OrderInformation = (props) => {
                                 }}>
                             <Flex px="1.5rem" alignItems="center" marginBottom="2rem">
                                 <Flex className="ที่อยู่" marginRight="1.5rem" direction="column" >
-                                    <FormLabel htmlFor="home-address" marginBottom="0.5rem">ที่อยู่<span style={{ color: "#C82438" }}>*</span></FormLabel>
+                                    <FormLabel htmlFor="home-address" marginBottom="0.5rem">ที่อยู่<span style={{ color: "#646C80" }}>*</span></FormLabel>
                                     <Input
                                         id="home-address"
                                         value={homeAddress}
@@ -148,7 +149,7 @@ const OrderInformation = (props) => {
                                         placeholder="กรุณากรอกที่อยู่" />
                                 </Flex>
                                 <Flex className="ตำบล" direction="column">
-                                    <Text marginBottom="0.5rem">แขวง / ตำบล<span style={{ color: "#C82438" }}>*</span></Text>
+                                    <Text marginBottom="0.5rem">แขวง / ตำบล<span style={{ color: "#646C80" }}>*</span></Text>
                                     <ThailandAddressTypeahead.SubdistrictInput
                                         placeholder="เลือกแขวง / ตำบล"
                                         className="address-input"
@@ -157,7 +158,7 @@ const OrderInformation = (props) => {
                             </Flex>
                             <Flex px="1.5rem" alignItems="center" >
                                 <Flex className="เขต / อำเภอ" marginRight="1.5rem" direction="column" >
-                                    <Text marginBottom="0.5rem">เขต / อำเภอ<span style={{ color: "#C82438" }}>*</span></Text>
+                                    <Text marginBottom="0.5rem">เขต / อำเภอ<span style={{ color: "#646C80" }}>*</span></Text>
                                     <ThailandAddressTypeahead.DistrictInput
                                         className="address-input"
                                         placeholder="เลือกเขต / อำเภอ"
@@ -165,7 +166,7 @@ const OrderInformation = (props) => {
                                     />
                                 </Flex>
                                 <Flex className="จังหวัด" direction="column" >
-                                    <Text marginBottom="0.5rem">จังหวัด<span style={{ color: "#C82438" }}>*</span></Text>
+                                    <Text marginBottom="0.5rem">จังหวัด<span style={{ color: "#646C80" }}>*</span></Text>
                                     <ThailandAddressTypeahead.ProvinceInput
                                         className="address-input"
                                         placeholder="เลือกจังหวัด"
@@ -190,6 +191,7 @@ const OrderInformation = (props) => {
                     </FormLabel>
                     <Textarea
                         type="text"
+                        color='gray.700'
                         id="additional-text"
                         value={additionalText}
                         onChange={(e) => { setAdditionalText(e.target.value) }}
