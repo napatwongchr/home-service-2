@@ -14,7 +14,7 @@ import {
 import { ChevronRightIcon, CheckCircleIcon } from "@chakra-ui/icons";
 import BannerService from "../ServiceList/BannerService";
 import addOnListIcon from "../../assets/image/serviceDetail/addOnList.svg";
-import addOnListIconSuccess from "../../assets/image/serviceDetail/addOnListSucess.svg";
+import addOnListIconSuccess from "../../assets/image/serviceDetail/addOnListSuccess.svg";
 import informationIcon from "../../assets/image/serviceDetail/information.svg";
 import informationProcessIcon from "../../assets/image/serviceDetail/informationProcess.svg";
 import informationSuccessIcon from "../../assets/image/serviceDetail/informationSuccess.svg";
@@ -25,7 +25,6 @@ import Summary from "./Summary";
 import OrderInformation from "./OrderInformation";
 import {
   ThailandAddressTypeahead,
-  ThailandAddressValue,
 } from "react-thailand-address-typeahead";
 import OrderPayment from "./OrderPayment";
 import Footer from "./Footer";
@@ -33,22 +32,19 @@ import { useNavigate } from "react-router-dom";
 const ServiceDetail = () => {
   const { serviceList, getServiceListById, params, loading } =
     useAdminServiceLists();
-  const [subService, setSubService] = useState([]);
   const [page, setPage] = useState(1);
-  const [pickDate, setPickDate] = useState(null);
-  const [pickTime, setPickTime] = useState(null);
-  const [cardNumber, setCardNumber] = useState("");
-  const [cardName, setCardName] = useState("");
-  const [cardExp, setCardExp] = useState("");
-  const [cardCVC, setCardCVC] = useState("");
   const [status, setStatus] = useState(false);
-
-  // value of address - home address คือช่องที่อยู่ / address ที่ได้มาจะเป็น object มี 4 keys (district, postalCode, province, subdistrict)
-  const [homeAddress, setHomeAddress] = useState("");
-
-  // value of additional text
-  const [additionalText, setAdditionalText] = useState("");
-  const [summaryAddress, setSummaryAddress] = useState(null);
+  const [summary, setSummary] = useState({
+    data: {
+      address: {
+        homeAddress: "",
+        district: "",
+        postalCode: "",
+        province: "",
+        subdistrict: "",
+      }
+    }
+  })
   const navigate = useNavigate();
   useEffect(() => {
     getServiceListById(params);
@@ -89,7 +85,7 @@ const ServiceDetail = () => {
               whiteSpace="nowrap"
               w="100%"
             >
-              {subService.map((subService, index) => {
+              {summary.data.subServices && summary.data.subServices.map((subService, index) => {
                 return (
                   <Flex
                     key={index}
@@ -116,13 +112,7 @@ const ServiceDetail = () => {
                 วันที่
               </Text>
               <Text color="utility.black" fontWeight="500">
-                {pickDate
-                  ? pickDate.$d.toLocaleDateString("th-TH", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })
-                  : ""}
+                {summary.data.date}
               </Text>
             </Flex>
             <Flex
@@ -135,12 +125,7 @@ const ServiceDetail = () => {
                 เวลา
               </Text>
               <Text color="utility.black" fontWeight="500">
-                {pickTime
-                  ? `${pickTime.$d.toLocaleTimeString("th", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })} น.`
-                  : ""}
+                {summary.data.time} น.
               </Text>
             </Flex>
             <Flex
@@ -163,13 +148,13 @@ const ServiceDetail = () => {
                   สถานที่
                 </Text>
                 <Text>
-                  {homeAddress ? `${homeAddress} ` : ""}
-                  {summaryAddress
-                    ? `${summaryAddress.subdistrict} ${summaryAddress.district} ${summaryAddress.province}`
-                    : ""}
+                  {`${summary.data.address.homeAddress} `}
+                  {`${summary.data.address.subdistrict} `}
+                  {`${summary.data.address.district} `}
+                  {`${summary.data.address.province} `}
                 </Text>
               </Flex>
-              {additionalText ? (
+              {summary.data.additionalText ? (
                 <Flex
                   justifyContent="space-between"
                   mt="0.5rem"
@@ -179,7 +164,7 @@ const ServiceDetail = () => {
                   <Text fontWeight="300px" color="gray.700" whiteSpace="nowrap">
                     หมายเหตุ
                   </Text>
-                  <Text width="75%">{additionalText}</Text>
+                  <Text width="75%">{summary.data.additionalText}</Text>
                 </Flex>
               ) : null}
             </Flex>
@@ -190,14 +175,7 @@ const ServiceDetail = () => {
                 รวม
               </Text>
               <Text textColor="utility.black" fontWeight="600" fontSize="1rem">
-                {subService.length > 1
-                  ? subService.reduce((acc, cur) => {
-                      return acc + cur.sub_total_price;
-                    }, 0)
-                  : subService.map(
-                      (subService) => subService.sub_total_price
-                    )}{" "}
-                ฿
+                {summary.data.total_price} ฿
               </Text>
             </Flex>
             <Button w='100%' mt='10px'>เช็ครายการซ่อม</Button>
@@ -263,8 +241,8 @@ const ServiceDetail = () => {
                     page === 1
                       ? informationIcon
                       : page === 2
-                      ? informationProcessIcon
-                      : informationSuccessIcon
+                        ? informationProcessIcon
+                        : informationSuccessIcon
                   }
                   alt="informationIcon"
                   h="40px"
@@ -306,70 +284,37 @@ const ServiceDetail = () => {
               {page === 1 ? (
                 <>
                   <AddOnList
-                    subService={subService}
-                    setSubService={setSubService}
                     serviceList={serviceList}
+                    setSummary={setSummary}
+                    summary={summary}
                   />
 
-                  <Summary subService={subService} />
                 </>
               ) : page === 2 ? (
                 <>
                   <OrderInformation
-                    pickDate={pickDate}
-                    setPickDate={setPickDate}
-                    pickTime={pickTime}
-                    setPickTime={setPickTime}
-                    summaryAddress={summaryAddress}
-                    setSummaryAddress={setSummaryAddress}
-                    setHomeAddress={setHomeAddress}
-                    additionalText={additionalText}
-                    setAdditionalText={setAdditionalText}
+                    summary={summary}
+                    setSummary={setSummary}
                     ThailandAddressTypeahead={ThailandAddressTypeahead}
-                    ThailandAddressValue={ThailandAddressValue}
-                  />
-                  <Summary
-                    subService={subService}
-                    pickDate={pickDate}
-                    pickTime={pickTime}
-                    homeAddress={homeAddress}
-                    summaryAddress={summaryAddress}
-                    additionalText={additionalText}
                   />
                 </>
               ) : page === 3 ? (
                 <>
                   <OrderPayment
-                    setCardNumber={setCardNumber}
-                    cardNumber={cardNumber}
-                    setCardName={setCardName}
-                    cardName={cardName}
-                    setCardExp={setCardExp}
-                    cardExp={cardExp}
-                    setCardCVC={setCardCVC}
-                    cardCVC={cardCVC}
-                  />
-                  <Summary
-                    subService={subService}
-                    pickDate={pickDate}
-                    pickTime={pickTime}
-                    homeAddress={homeAddress}
-                    summaryAddress={summaryAddress}
-                    additionalText={additionalText}
+                    setSummary={setSummary}
+                    summary={summary}
                   />
                 </>
               ) : null}
+              <Summary summary={summary} />
             </Flex>
           </Container>
 
           <Footer
             setPage={setPage}
             page={page}
-            subService={subService}
-            pickDate={pickDate}
-            pickTime={pickTime}
-            homeAddress={homeAddress}
-            summaryAddress={summaryAddress}
+            serviceList={serviceList}
+            summary={summary}
             setStatus={setStatus}
           >
             {page === 3 ? "ยืนยันการชำระเงิน" : "ดำเนินการต่อ"}

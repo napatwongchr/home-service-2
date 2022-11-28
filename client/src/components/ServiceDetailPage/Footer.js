@@ -1,43 +1,56 @@
 import { Button, Container, Flex } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
+import axios from "../../api/axios";
 const Footer = (props) => {
+  const user = JSON.parse(window.localStorage.getItem("user"));
   const {
     setPage,
     page,
-    subService,
-    pickDate,
-    pickTime,
-    homeAddress,
-    summaryAddress,
-    setStatus
+    setStatus,
+    summary,
+    serviceList
   } = props;
   const [disable, setDisable] = useState(true);
-  useEffect(() => {
-    subService.map((item) => {
-      if (
-        page === 2 &&
-        pickDate &&
-        pickTime &&
-        homeAddress &&
-        summaryAddress
-      ) {
-        if (
-          summaryAddress.district === "" ||
-          summaryAddress.province === "" ||
-          summaryAddress.subdistrict === ""
-        ) {
-          setDisable(true);
-        } else {
-          setDisable(false);
-        }
-      } else if (page === 1 && item.count !== 0) {
-        setDisable(false);
+
+  const validationForm = () => {
+    if (page === 1) {
+      if (summary.data.total_price !== 0) {
+        setDisable(false)
       } else {
-        setDisable(true);
+        setDisable(true)
       }
-    });
-  }, [subService, pickDate, pickTime, homeAddress, summaryAddress]);
+    }
+
+    if (page === 2) {
+      if (summary.data.date && summary.data.date !== '' && summary.data.time && summary.data.time !== '' && summary.data.time !== 'undefined' && summary.data.address.homeAddress && summary.data.address.homeAddress !== '' && summary.data.address.district && summary.data.address.district !== '' && summary.data.address.province && summary.data.address.province !== '' && summary.data.address.subdistrict && summary.data.address.subdistrict !== '') {
+        setDisable(false)
+      } else {
+        setDisable(true)
+      }
+    }
+    if (page === 3) {
+      if (summary.data?.payment?.cardNumber && summary.data?.payment?.cardNumber.length === 16 && summary.data?.payment?.cardName && summary.data?.payment?.cardName !== '' && summary.data?.payment?.cardExp && summary.data?.payment?.cardExp.length === 4 && summary.data?.payment?.cardCVC && summary.data?.payment?.cardCVC.length === 3) {
+        setDisable(false)
+      } else {
+        setDisable(true)
+      }
+    }
+  }
+
+  const handleSubmit = async (data) => {
+    try {
+      data.userId = user.id
+      data.serviceId = serviceList.service.service_id
+      await axios.post("/orders", data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    validationForm()
+  }, [summary])
 
   return (
     <Container
@@ -81,8 +94,11 @@ const Footer = (props) => {
             if (page < 3) {
               setPage(page + 1);
               setDisable(true);
-            }else{
-              setStatus(true)
+            } else if (page === 3) {
+              handleSubmit(summary.data)
+            }
+            else {
+              setStatus(true);
             }
           }}
         >
