@@ -1,8 +1,7 @@
 import { Container, Flex, Text, Divider } from "@chakra-ui/react";
 
 const Summary = (props) => {
-  const { subService, pickDate, pickTime, homeAddress, summaryAddress, additionalText } = props;
-
+  const { summary } = props;
   return (
     <Container p="0" w='100%'>
       <Flex
@@ -23,7 +22,7 @@ const Summary = (props) => {
 
         {/* AddOnList */}
         <Flex pb="1rem" direction="column" mt="1rem" gap="1rem" w="18.5rem" whiteSpace="nowrap">
-          {subService.map((subService, index) => {
+          {summary?.data.subServices && summary.data.subServices.map((subService, index) => {
             return (
               <Flex key={index} gap="2rem" alignItems="center" justify="space-between" >
                 <Text textColor="utility.black" fontSize="14px">
@@ -38,51 +37,43 @@ const Summary = (props) => {
         </Flex>
         {/* OrderInfomation */}
         <Flex pb="1rem" direction="column" gap="1rem" fontSize="14px">
-          {pickDate ? (
+          {summary.data.date ? (
             <>
               <Divider color='gray.300' width="301px" />
               <Flex justifyContent="space-between">
                 <Text fontWeight="300px" color="gray.700" >วันที่</Text>
                 <Text color="utility.black" fontWeight="400">
-                  {pickDate
-                    ? pickDate.$d.toLocaleDateString("th-TH", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })
-                    : ""}
+                  {summary.data.date}
                 </Text>
               </Flex>
             </>
           ) : null}
-          {pickTime ? (
+          {summary.data.time && summary.data.time !== 'undefined' ? (
             <>
               <Flex justifyContent="space-between">
                 <Text fontWeight="300px" color="gray.700" >เวลา</Text>
                 <Text color="utility.black" fontWeight="400">
-                  {pickTime
-                    ? `${pickTime.$d.toLocaleTimeString("th", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })} น.`
-                    : ""}
+                  {summary.data.time} น.
                 </Text>
               </Flex>
             </>
           ) : null}
-          {homeAddress || summaryAddress ? (<>
+          {summary.data.address ? (<>
             <Flex justifyContent="space-between" direction="column" width="inherit" overflowWrap={"break-word"}>
               <Flex direction="row" textAlign="right" color="utility.black" fontWeight="400" gap="1rem">
                 <Text fontWeight="300px" color="gray.700" whiteSpace="nowrap" >สถานที่</Text>
                 <Text>
-                  {homeAddress ? `${homeAddress} ` : ""}
-                  {summaryAddress ? `${summaryAddress.subdistrict} ${summaryAddress.district} ${summaryAddress.province}` : ""}
+                  {summary.data.address.homeAddress ? `${summary.data.address.homeAddress} ` : ""}
+                  {summary.data.address.subdistrict ? `${summary.data.address.subdistrict} ` : ""}
+                  {summary.data.address.district ? `${summary.data.address.district} ` : ""}
+                  {summary.data.address.province ? `${summary.data.address.province} ` : ""}
+
                 </Text>
               </Flex>
-              {additionalText ? (
+              {summary.data.additionalText ? (
                 <Flex justifyContent="space-between" mt="0.5rem" textAlign="right" color="utility.black"  >
                   <Text fontWeight="300px" color="gray.700" whiteSpace="nowrap">หมายเหตุ</Text>
-                  <Text width="75%">{additionalText}</Text>
+                  <Text width="75%">{summary.data.additionalText}</Text>
                 </Flex>
               ) : null}
             </Flex>
@@ -93,11 +84,7 @@ const Summary = (props) => {
         <Flex justifyContent="space-between" mt="1rem">
           <Text textColor="gray.700" fontSize="1rem" fontWeight="400">รวม</Text>
           <Text textColor="utility.black" fontWeight="600" fontSize="1rem">
-            {subService.length > 1
-              ? subService.reduce((acc, cur) => {
-                return acc + cur.sub_total_price
-              }, 0)
-              : subService.map((subService) => subService.sub_total_price)} ฿
+            {summary.data.total_price}฿
           </Text>
         </Flex>
       </Flex>

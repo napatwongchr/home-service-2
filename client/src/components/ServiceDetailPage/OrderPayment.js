@@ -7,16 +7,10 @@ import React from "react";
 
 const OrderPayment = (props) => {
   const {
-    setCardNumber,
-    cardNumber,
-    setCardName,
-    cardName,
-    setCardExp,
-    cardExp,
-    setCardCVC,
-    cardCVC,
+    setSummary,
+    summary
   } = props;
-  
+
   const addGaps = (str) => {
     let v = str.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
     let matches = v.match(/\d{4,16}/g);
@@ -37,14 +31,34 @@ const OrderPayment = (props) => {
   const handleCardNumber = (e) => {
     const str = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
     if (str.length < 17) {
-      setCardNumber(str);
+      setSummary(prevState => (
+        {
+          data: {
+            ...prevState.data,
+            payment: {
+              ...prevState.data.payment,
+              cardNumber: str
+            }
+          }
+        }
+      ))
     }
   };
 
   const handleCardName = (e) => {
     const str = e.target.value.replace(/\s+/g, " ");
     if (str.length < 120) {
-      setCardName(str);
+      setSummary(prevState => (
+        {
+          data: {
+            ...prevState.data,
+            payment: {
+              ...prevState.data.payment,
+              cardName: str
+            }
+          }
+        }
+      ))
     }
   };
 
@@ -68,25 +82,44 @@ const OrderPayment = (props) => {
   const handleCardExp = (e) => {
     const str = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
     if (str.length < 5) {
-      setCardExp(str);
+      setSummary(prevState => (
+        {
+          data: {
+            ...prevState.data,
+            payment: {
+              ...prevState.data.payment,
+              cardExp: str
+            }
+          }
+        }
+      ))
     }
   };
 
   const handleCardCVC = (e) => {
     const str = e.target.value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
     if (str.length < 4) {
-      setCardCVC(str);
+      setSummary(prevState => (
+        {
+          data: {
+            ...prevState.data,
+            payment: {
+              ...prevState.data.payment,
+              cardCVC: str
+            }
+          }
+        }
+      ))
     }
   };
-
   return (
     <Formik
       enableReinitialize={true}
       initialValues={{
-        cardNo: cardNumber,
-        nameOnCard: cardName,
-        expiredDate: cardExp,
-        cvcCVV: cardCVC,
+        cardNo: summary.data.payment?.cardNumber || '',
+        nameOnCard: summary.data.payment?.cardName || '',
+        expiredDate: summary.data.payment?.cardExp || '',
+        cvcCVV: summary.data.payment?.cardCVC || '',
       }}
       validationSchema={Yup.object({
         cardNo: Yup.string()
@@ -151,7 +184,7 @@ const OrderPayment = (props) => {
                 id="cardNo"
                 name="cardNo"
                 placeholder="กรุณากรอกหมายเลขบัตรเครดิต"
-                value={addGaps(cardNumber)}
+                value={addGaps(summary.data.payment?.cardNumber || '')}
                 onChange={(e) => handleCardNumber(e)}
               />
             </Flex>
@@ -162,7 +195,7 @@ const OrderPayment = (props) => {
                 id="nameOnCard"
                 name="nameOnCard"
                 placeholder="กรุณากรอกชื่อบนบัตร"
-                value={cardName}
+                value={summary.data.payment?.cardName || ''}
                 onChange={(e) => handleCardName(e)}
               />
             </Flex>
@@ -178,7 +211,7 @@ const OrderPayment = (props) => {
                   id="expiredDate"
                   name="expiredDate"
                   placeholder="MM/YY"
-                  value={addSlash(cardExp)}
+                  value={addSlash(summary.data.payment?.cardExp || '')}
                   onChange={(e) => handleCardExp(e)}
                 />
               </Flex>
@@ -190,7 +223,7 @@ const OrderPayment = (props) => {
                   name="cvcCVV"
                   type="password"
                   placeholder="xxx"
-                  value={cardCVC}
+                  value={summary.data.payment?.cardCVC || ''}
                   onChange={(e) => handleCardCVC(e)}
                 />
               </Flex>

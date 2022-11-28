@@ -9,7 +9,6 @@ import {
 import { DatePicker, TimePicker } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { useState } from "react";
 import styled from "styled-components";
 import "./OrderInformation.css";
 
@@ -35,32 +34,27 @@ const StyledContainer = styled.div`
 
 const OrderInformation = (props) => {
   dayjs.extend(customParseFormat);
-
-  // value of date & time picker
   const {
-    pickDate,
-    setPickDate,
-    pickTime,
-    setPickTime,
-    homeAddress,
-    setHomeAddress,
-    setSummaryAddress,
-    additionalText,
-    setAdditionalText,
     ThailandAddressTypeahead,
-    ThailandAddressValue,
+    setSummary,
+    summary
   } = props;
 
-  // value of address - home address คือช่องที่อยู่ / address ที่ได้มาจะเป็น object มี 4 keys (district, postalCode, province, subdistrict)
-  const [address, setAddress] = useState(ThailandAddressValue.empty());
-
-  const handleSetAaddress = (address) => {
-    setSummaryAddress({
-      district: address.district,
-      postalCode: address.postalCode,
-      province: address.province,
-      subdistrict: address.subdistrict,
-    });
+  const handleSetAddress = (address) => {
+    setSummary(prevState => (
+      {
+        data: {
+          ...prevState.data,
+          address: {
+            ...prevState.data.address,
+            district: address.district,
+            postalCode: address.postalCode,
+            province: address.province,
+            subdistrict: address.subdistrict,
+          }
+        }
+      }
+    ))
   };
 
   // disable days
@@ -115,9 +109,19 @@ const OrderInformation = (props) => {
             <DatePicker
               className="picker"
               format="DD MMMM YYYY"
-              value={pickDate}
-              onChange={(date, dateString) => {
-                setPickDate(date, dateString);
+              onChange={(date) => {
+                setSummary(prevState => (
+                  {
+                    data: {
+                      ...prevState.data,
+                      date: date?.$d.toLocaleDateString("th-TH", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })
+                    }
+                  }
+                ))
               }}
               disabledDate={disabledDate}
               placeholder="กรุณาเลือกวันที่"
@@ -134,11 +138,19 @@ const OrderInformation = (props) => {
               เวลาที่สะดวกใช้บริการ<span style={{ color: "#C82438" }}>*</span>
             </Text>
             <TimePicker
-              defaultValue={dayjs().add(1, "hour")}
               format="HH:mm"
-              value={pickTime}
-              onChange={(time, timeString) => {
-                setPickTime(time, timeString);
+              onChange={(time) => {
+                setSummary(prevState => (
+                  {
+                    data: {
+                      ...prevState.data,
+                      time: `${time?.$d.toLocaleTimeString("th", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}`
+                    }
+                  }
+                ))
               }}
               showNow={false}
               disabledTime={disabledDateTime}
@@ -155,10 +167,9 @@ const OrderInformation = (props) => {
         <Flex className="address-info" direction="column">
           <StyledContainer>
             <ThailandAddressTypeahead
-              value={address}
+              value={summary.data?.address}
               onValueChange={(address) => {
-                setAddress(address);
-                handleSetAaddress(address);
+                handleSetAddress(address);
               }}
             >
               <Flex
@@ -172,9 +183,19 @@ const OrderInformation = (props) => {
                   </FormLabel>
                   <Input
                     id="home-address"
-                    value={homeAddress}
+                    value={summary.data?.address?.homeAddress || ''}
                     onChange={(e) => {
-                      setHomeAddress(e.target.value);
+                      setSummary(prevState => (
+                        {
+                          data: {
+                            ...prevState.data,
+                            address: {
+                              ...prevState.data.address,
+                              homeAddress: e.target.value
+                            }
+                          }
+                        }
+                      ))
                     }}
                     height="44px"
                     borderRadius="8px"
@@ -227,9 +248,16 @@ const OrderInformation = (props) => {
             type="text"
             color="gray.700"
             id="additional-text"
-            value={additionalText}
+            value={summary.data?.additionalText || ''}
             onChange={(e) => {
-              setAdditionalText(e.target.value);
+              setSummary(prevState => (
+                {
+                  data: {
+                    ...prevState.data,
+                    additionalText: (e.target.value)
+                  }
+                }
+              ))
             }}
             height="92px"
             borderRadius="8px"

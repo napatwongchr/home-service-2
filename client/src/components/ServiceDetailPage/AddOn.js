@@ -3,47 +3,69 @@ import { useEffect } from "react";
 import priceTag from "../../assets/image/homePage/priceTag.svg";
 
 const AddOnList = (props) => {
-  const { subService, setSubService, serviceList } = props;
+  const { serviceList, setSummary, summary } = props;
   const subServiceList = serviceList.subService;
 
   useEffect(() => {
-    setSubService(
-      subServiceList.map((subService) => {
-        subService.count = 0;
-        subService.sub_total_price = 0;
-        return { ...subService };
-      })
-    );
+    const subServices = subServiceList.map((subService) => {
+      subService.count = 0;
+      subService.sub_total_price = 0;
+      return { ...subService };
+    })
+    setSummary(prevState => (
+      {
+        data: {
+          ...prevState.data,
+          subServices,
+          total_price: 0
+        }
+      }
+    ))
   }, []);
 
-  const handleIncrese = (subServiceId) => {
-    setSubService(
-      subService.map((subService) => {
-        if (subService.sub_service_id === subServiceId) {
-          subService.count += 1;
-          subService.sub_total_price += subService.price_per_unit;
+  const handleIncrease = (subServiceId) => {
+    let total_price = summary.data.total_price
+    const subServices = summary.data.subServices.map((subService) => {
+      if (subService.sub_service_id === subServiceId) {
+        subService.count += 1;
+        subService.sub_total_price += subService.price_per_unit;
+        total_price += subService.price_per_unit
+      }
+      return { ...subService };
+    })
+    setSummary(prevState => (
+      {
+        data: {
+          ...prevState.data,
+          subServices,
+          total_price
         }
-        return { ...subService };
-      })
-    );
+      }
+    ))
   };
 
-  const handleDecrese = (subServiceId) => {
-    setSubService(
-      subService.map((subService) => {
-        if (subService.sub_service_id === subServiceId) {
-          subService.count < 1
-            ? (subService.count = 0)
-            : (subService.count -= 1);
-          subService.sub_total_price < subService.price_per_unit
-            ? (subService.sub_total_price = 0)
-            : (subService.sub_total_price -= subService.price_per_unit);
+  const handleDecrease = (subServiceId) => {
+    let total_price = summary.data.total_price
+    const subServices = summary.data.subServices.map((subService) => {
+      if (subService.sub_service_id === subServiceId) {
+        if (subService.count > 0) {
+          subService.count--;
+          subService.sub_total_price -= subService.price_per_unit
+          total_price -= subService.price_per_unit
         }
-        return { ...subService };
-      })
-    );
+      }
+      return { ...subService }
+    })
+    setSummary(prevState => (
+      {
+        data: {
+          ...prevState.data,
+          subServices,
+          total_price
+        }
+      }
+    ))
   };
-
 
   return (
     <Container maxW="735px" p={0} mb='100px'>
@@ -52,7 +74,7 @@ const AddOnList = (props) => {
         <Text textStyle="h3" textColor="gray.700" >
           เลือกรายการบริการ{props.serviceList.service.service_name}
         </Text>
-        {subService.map((subServiceObj, index) => {
+        {summary.data.subServices && summary.data.subServices.map((subServiceObj, index) => {
           return (
             <Flex direction={"column"}
               key={index}
@@ -88,7 +110,7 @@ const AddOnList = (props) => {
                     fontSize="4xl"
                     fontWeight="hairline"
                     onClick={() => {
-                      handleDecrese(subServiceObj.sub_service_id);
+                      handleDecrease(subServiceObj.sub_service_id);
                     }}
                   >
                     -
@@ -99,7 +121,7 @@ const AddOnList = (props) => {
                     fontSize="4xl"
                     fontWeight="hairline"
                     onClick={() => {
-                      handleIncrese(subServiceObj.sub_service_id);
+                      handleIncrease(subServiceObj.sub_service_id);
                     }}
                   >
                     +
