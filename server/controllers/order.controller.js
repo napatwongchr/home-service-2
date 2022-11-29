@@ -3,10 +3,9 @@ import { format } from 'date-fns'
 
 const orderController = {
   async createOrder(req, res) {
-    console.log(req.body);
-    console.log(req.body.serviceId);
-    // Preparing date
+    
     const address = `${req.body.address.homeAddress} ${req.body.address.subdistrict} ${req.body.address.district} ${req.body.address.province}`
+    const additionalText = req.body.additionalText
     //Set Order Code
     const getDateFormatted = format(new Date(), 'MMddyy')
     const getMilSec = Date.now().toString()
@@ -40,6 +39,7 @@ const orderController = {
           appointment_date, 
           appointment_time, 
           address,
+          additional_text,
           total_price, 
           engineer, 
           status)
@@ -52,8 +52,9 @@ const orderController = {
                     $6,
                     $7,
                     $8,
-                    $9
-                ) returning order_id`,
+                    $9,
+                    $10
+                ) returning order_id, user_id`,
         [
           req.body.userId,
           req.body.serviceId,
@@ -61,7 +62,8 @@ const orderController = {
           req.body.date,
           req.body.time,
           address,
-          req.body.total_price,
+          additionalText,
+          req.body.totalPrice,
           engineer,
           status
         ]
@@ -70,16 +72,18 @@ const orderController = {
       //Insert to Sub order table
 
       const orderId = order.rows[0].order_id
+      const userId = order.rows[0].user_id
       const subService = req.body.subServices
       // const subService = req.body.subService
 
       subService.map(async (subService) => {
         await pool.query(
           `
-          insert into sub_orders(order_id, sub_service_id, quantity, sub_total_price)
-          values($1, $2, $3, $4)`,
+          insert into sub_orders(order_id, user_id, sub_service_id, count, sub_total_price)
+          values($1, $2, $3, $4, $5)`,
           [
             orderId,
+            userId,
             subService.sub_service_id,
             subService.count,
             subService.sub_total_price
@@ -99,27 +103,28 @@ const orderController = {
   },
   async getOrders(req, res) {
     const orderId = req.query.orderId
+    const userId = req.query.userId
     const orderQuery = `
-      select order_code, service.service_name, appointment_date, appointment_time, total_price from orders
+      select orders.order_id, orders.user_id, order_code, service.service_name, address, additional_text, appointment_date, appointment_time, total_price, engineer, status from orders
       inner join service
       on service.service_id = orders.service_id
     `
-    const subOrderQuery = [`
-      select sub_orders.sub_order_id, sub_service.sub_service_name, sub_orders.quantity, sub_orders.sub_total_price from sub_orders
+    const subOrderQuery = `
+      select sub_orders.order_id, sub_orders.sub_order_id, sub_orders.user_id, sub_service.sub_service_name, sub_orders.count, sub_orders.sub_total_price from sub_orders
       inner join sub_service
       on sub_service.sub_service_id = sub_orders.sub_service_id
-      where order_id = $1
-      `, [orderId]]
+      `
 
 
     const allOrder = orderQuery
     const orderById = [`${orderQuery} where order_id = $1`, [orderId]]
+    const orderByUserId = [`${orderQuery} where user_id = $1`, [userId]]
 
     try {
-      //Get order by id
+      //Get order by order id
       if (orderId) {
         const getOrderById = await pool.query(...orderById)
-        const getSubOrder = await pool.query(...subOrderQuery)
+        const getSubOrder = await pool.query(`${subOrderQuery} where order_id = $1`, [orderId])
 
         return getOrderById.rows.length >= 1 ?
           res.status(200).json({
@@ -129,6 +134,24 @@ const orderController = {
             }
           }) :
           res.status(404).json({ msg: "order not found" })
+      } 
+      //Get order by user id
+      else if(userId){
+        const getOrderByUserId = await pool.query(...orderByUserId)
+        // console.log(getOrderByUserId.rows[0])
+        const getSubOrder = await pool.query(`${subOrderQuery} where user_id = $1`, [userId])
+
+        const setOrderList = getOrderByUserId.rows.map( order => {
+          const subOrder = getSubOrder.rows.filter( subOrder => subOrder.order_id === order.order_id )
+          order.subOrder = subOrder
+          return order
+        } )
+
+        return getOrderByUserId.rows.length >= 1 ?
+        res.status(200).json({
+          data: setOrderList
+        }) :
+        res.status(404).json({ msg: "order not found" })
       }
 
       //Get All Order
@@ -163,7 +186,7 @@ const orderController = {
       sub_orders.sub_order_id, 
       sub_orders.order_id, 
       sub_service.sub_service_name,
-      sub_orders.quantity,
+      sub_orders.count,
       sub_orders.sub_total_price
       from sub_orders 
 
