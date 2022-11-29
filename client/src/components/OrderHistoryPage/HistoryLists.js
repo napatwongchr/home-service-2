@@ -10,25 +10,19 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import calender from "../../assets/image/orderHistoryPage/calender.svg";
 import profile from "../../assets/image/orderHistoryPage/profile.svg";
 import axios from "../../api/axios";
 
 const HistoryLists = () => {
   const [orderLists, setOrderLists] = useState([]);
-  // const params = useParams();
+  const params = useParams();
 
   const getOrderLists = async (params) => {
     try {
-      let results = await axios.get(`/orders`);
-
-      // line 28: ข้อมูลมา
-      // console.log(results.data.data);
-      // set state = หาย
-      // console.log(`line 30: ${orderLists}`);
+      let results = await axios.get(`/orders?userId=${params}`);
       setOrderLists(results.data.data);
-      // setLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -36,7 +30,7 @@ const HistoryLists = () => {
 
   // getOrderLists();
   useEffect(() => {
-    getOrderLists();
+    getOrderLists(params.userId);
   }, []);
 
   return (
@@ -88,7 +82,6 @@ const HistoryLists = () => {
           </Box>
           <Box my="30px" w="830px" as={Flex} flexDirection="column" gap="20px">
             {orderLists.map((item, index) => {
-              // console.log(orderLists[index]);
               return (
                 <Flex
                   bg="utility.white"
@@ -113,10 +106,7 @@ const HistoryLists = () => {
                     </Flex>
                     <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
                       <Image src={profile} alt="prifle" />
-                      <Text textStyle={"b3"}>
-                        พนักงาน: สมาน เยี่ยมยอด
-                        {/* {item.sub_service_name} */}
-                      </Text>
+                      <Text textStyle={"b3"}>พนักงาน: {item.engineer}</Text>
                     </Flex>
                     <Text textStyle={"b1"} color="gray.700">
                       รายการ:
@@ -127,7 +117,13 @@ const HistoryLists = () => {
                       mt="-10px"
                       spacing={"5px"}
                     >
-                      <ListItem>{item.service_name}</ListItem>
+                      {item.subOrder.map((item, index) => {
+                        return (
+                          <ListItem key={index}>
+                            {item.sub_service_name}
+                          </ListItem>
+                        );
+                      })}
                     </UnorderedList>
                   </Flex>
                   <Flex
@@ -145,294 +141,6 @@ const HistoryLists = () => {
                 </Flex>
               );
             })}
-            {/* <Flex
-              bg="utility.white"
-              p="24px"
-              w="100%"
-              border="1px"
-              borderColor={"gray.300"}
-              borderRadius="8px"
-              justifyContent="space-between"
-            >
-              <Flex flexDirection={"column"} gap="15px">
-                <Text textStyle={"h2"} color="utility.black">
-                  คำสังการซ่อมรหัส : AD04071205
-                </Text>
-                <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
-                  <Image src={calender} alt="calender" />
-                  <Text textStyle={"b3"}>รายการคำสั่งซ่อม</Text>
-                </Flex>
-                <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
-                  <Image src={profile} alt="prifle" />
-                  <Text textStyle={"b3"}>พนักงาน: สมาน เยี่ยมยอด </Text>
-                </Flex>
-                <Text textStyle={"b1"} color="gray.700">
-                  รายการ:
-                </Text>
-                <UnorderedList
-                  color="utility.black"
-                  textStyle={"b3"}
-                  mt="-10px"
-                  spacing={"5px"}
-                >
-                  <ListItem>
-                    ล้างแอร์ 9,000 - 18,000 BTU, ติดผนัง 2 เครื่อง
-                  </ListItem>
-                </UnorderedList>
-              </Flex>
-              <Flex
-                alignItems={"center"}
-                h="100%"
-                gap="20px"
-                pos="relative"
-                top="-60px"
-              >
-                <Text textStyle={"b3"}>ราคารวม: </Text>
-                <Text textStyle={"h2"} color="gray.950">
-                  1,550.00 ฿
-                </Text>
-              </Flex>
-            </Flex>
-            <Flex
-              bg="utility.white"
-              p="24px"
-              w="100%"
-              border="1px"
-              borderColor={"gray.300"}
-              borderRadius="8px"
-              justifyContent="space-between"
-            >
-              <Flex flexDirection={"column"} gap="15px">
-                <Text textStyle={"h2"} color="utility.black">
-                  คำสังการซ่อมรหัส : AD04071205
-                </Text>
-                <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
-                  <Image src={calender} alt="calender" />
-                  <Text textStyle={"b3"}>รายการคำสั่งซ่อม</Text>
-                </Flex>
-                <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
-                  <Image src={profile} alt="prifle" />
-                  <Text textStyle={"b3"}>พนักงาน: สมาน เยี่ยมยอด </Text>
-                </Flex>
-                <Text textStyle={"b1"} color="gray.700">
-                  รายการ:
-                </Text>
-                <UnorderedList
-                  color="utility.black"
-                  textStyle={"b3"}
-                  mt="-10px"
-                  spacing={"5px"}
-                >
-                  <ListItem>
-                    ล้างแอร์ 9,000 - 18,000 BTU, ติดผนัง 2 เครื่อง
-                  </ListItem>
-                </UnorderedList>
-              </Flex>
-              <Flex
-                alignItems={"center"}
-                h="100%"
-                gap="20px"
-                pos="relative"
-                top="-60px"
-              >
-                <Text textStyle={"b3"}>ราคารวม: </Text>
-                <Text textStyle={"h2"} color="gray.950">
-                  1,550.00 ฿
-                </Text>
-              </Flex>
-            </Flex>
-            <Flex
-              bg="utility.white"
-              p="24px"
-              w="100%"
-              border="1px"
-              borderColor={"gray.300"}
-              borderRadius="8px"
-              justifyContent="space-between"
-            >
-              <Flex flexDirection={"column"} gap="15px">
-                <Text textStyle={"h2"} color="utility.black">
-                  คำสังการซ่อมรหัส : AD04071205
-                </Text>
-                <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
-                  <Image src={calender} alt="calender" />
-                  <Text textStyle={"b3"}>รายการคำสั่งซ่อม</Text>
-                </Flex>
-                <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
-                  <Image src={profile} alt="prifle" />
-                  <Text textStyle={"b3"}>พนักงาน: สมาน เยี่ยมยอด </Text>
-                </Flex>
-                <Text textStyle={"b1"} color="gray.700">
-                  รายการ:
-                </Text>
-                <UnorderedList
-                  color="utility.black"
-                  textStyle={"b3"}
-                  mt="-10px"
-                  spacing={"5px"}
-                >
-                  <ListItem>
-                    ล้างแอร์ 9,000 - 18,000 BTU, ติดผนัง 2 เครื่อง
-                  </ListItem>
-                </UnorderedList>
-              </Flex>
-              <Flex
-                alignItems={"center"}
-                h="100%"
-                gap="20px"
-                pos="relative"
-                top="-60px"
-              >
-                <Text textStyle={"b3"}>ราคารวม: </Text>
-                <Text textStyle={"h2"} color="gray.950">
-                  1,550.00 ฿
-                </Text>
-              </Flex>
-            </Flex>
-            <Flex
-              bg="utility.white"
-              p="24px"
-              w="100%"
-              border="1px"
-              borderColor={"gray.300"}
-              borderRadius="8px"
-              justifyContent="space-between"
-            >
-              <Flex flexDirection={"column"} gap="15px">
-                <Text textStyle={"h2"} color="utility.black">
-                  คำสังการซ่อมรหัส : AD04071205
-                </Text>
-                <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
-                  <Image src={calender} alt="calender" />
-                  <Text textStyle={"b3"}>รายการคำสั่งซ่อม</Text>
-                </Flex>
-                <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
-                  <Image src={profile} alt="prifle" />
-                  <Text textStyle={"b3"}>พนักงาน: สมาน เยี่ยมยอด </Text>
-                </Flex>
-                <Text textStyle={"b1"} color="gray.700">
-                  รายการ:
-                </Text>
-                <UnorderedList
-                  color="utility.black"
-                  textStyle={"b3"}
-                  mt="-10px"
-                  spacing={"5px"}
-                >
-                  <ListItem>
-                    ล้างแอร์ 9,000 - 18,000 BTU, ติดผนัง 2 เครื่อง
-                  </ListItem>
-                </UnorderedList>
-              </Flex>
-              <Flex
-                alignItems={"center"}
-                h="100%"
-                gap="20px"
-                pos="relative"
-                top="-60px"
-              >
-                <Text textStyle={"b3"}>ราคารวม: </Text>
-                <Text textStyle={"h2"} color="gray.950">
-                  1,550.00 ฿
-                </Text>
-              </Flex>
-            </Flex>
-            <Flex
-              bg="utility.white"
-              p="24px"
-              w="100%"
-              border="1px"
-              borderColor={"gray.300"}
-              borderRadius="8px"
-              justifyContent="space-between"
-            >
-              <Flex flexDirection={"column"} gap="15px">
-                <Text textStyle={"h2"} color="utility.black">
-                  คำสังการซ่อมรหัส : AD04071205
-                </Text>
-                <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
-                  <Image src={calender} alt="calender" />
-                  <Text textStyle={"b3"}>รายการคำสั่งซ่อม</Text>
-                </Flex>
-                <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
-                  <Image src={profile} alt="prifle" />
-                  <Text textStyle={"b3"}>พนักงาน: สมาน เยี่ยมยอด </Text>
-                </Flex>
-                <Text textStyle={"b1"} color="gray.700">
-                  รายการ:
-                </Text>
-                <UnorderedList
-                  color="utility.black"
-                  textStyle={"b3"}
-                  mt="-10px"
-                  spacing={"5px"}
-                >
-                  <ListItem>
-                    ล้างแอร์ 9,000 - 18,000 BTU, ติดผนัง 2 เครื่อง
-                  </ListItem>
-                </UnorderedList>
-              </Flex>
-              <Flex
-                alignItems={"center"}
-                h="100%"
-                gap="20px"
-                pos="relative"
-                top="-60px"
-              >
-                <Text textStyle={"b3"}>ราคารวม: </Text>
-                <Text textStyle={"h2"} color="gray.950">
-                  1,550.00 ฿
-                </Text>
-              </Flex>
-            </Flex>
-            <Flex
-              bg="utility.white"
-              p="24px"
-              w="100%"
-              border="1px"
-              borderColor={"gray.300"}
-              borderRadius="8px"
-              justifyContent="space-between"
-            >
-              <Flex flexDirection={"column"} gap="15px">
-                <Text textStyle={"h2"} color="utility.black">
-                  คำสังการซ่อมรหัส : AD04071205
-                </Text>
-                <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
-                  <Image src={calender} alt="calender" />
-                  <Text textStyle={"b3"}>รายการคำสั่งซ่อม</Text>
-                </Flex>
-                <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
-                  <Image src={profile} alt="prifle" />
-                  <Text textStyle={"b3"}>พนักงาน: สมาน เยี่ยมยอด </Text>
-                </Flex>
-                <Text textStyle={"b1"} color="gray.700">
-                  รายการ:
-                </Text>
-                <UnorderedList
-                  color="utility.black"
-                  textStyle={"b3"}
-                  mt="-10px"
-                  spacing={"5px"}
-                >
-                  <ListItem>
-                    ล้างแอร์ 9,000 - 18,000 BTU, ติดผนัง 2 เครื่อง
-                  </ListItem>
-                </UnorderedList>
-              </Flex>
-              <Flex
-                alignItems={"center"}
-                h="100%"
-                gap="20px"
-                pos="relative"
-                top="-60px"
-              >
-                <Text textStyle={"b3"}>ราคารวม: </Text>
-                <Text textStyle={"h2"} color="gray.950">
-                  1,550.00 ฿
-                </Text>
-              </Flex>
-            </Flex> */}
           </Box>
         </Box>
       </Container>
