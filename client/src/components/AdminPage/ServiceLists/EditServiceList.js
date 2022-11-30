@@ -557,9 +557,9 @@ const EditCreateServiceList = () => {
                                 values.serviceList.length > 1 &&
                                   setSubServiceArr(
                                     subServiceArr.filter(
-                                      (subService) =>
-                                        item.sub_service_id !==
-                                        subService.sub_service_id
+                                      (subService, subIndex) =>
+                                        index !==
+                                        subIndex
                                     )
                                   );
                               }}

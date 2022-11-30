@@ -29,7 +29,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/order-history/:userId" element={<OrderHistory />} />
-            <Route path="/service/:serviceId" element={<ServiceDetailPage/>} />
+            <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
             <Route
               path="/admin-dashboard/categories"
               element={<AdminDashboardPage />}
@@ -82,7 +82,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<LoginPage />} />
           <Route path="/service-list/select" element={<ServiceDetailPage />} />
-                 <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
+          <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
         </Routes>
       )}
     </>
