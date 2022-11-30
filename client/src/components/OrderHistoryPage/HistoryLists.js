@@ -81,66 +81,67 @@ const HistoryLists = () => {
             </Flex>
           </Box>
           <Box my="30px" w="830px" as={Flex} flexDirection="column" gap="20px">
-            {orderLists.map((item, index) => {
-              return (
-                <Flex
-                  bg="utility.white"
-                  p="24px"
-                  w="100%"
-                  border="1px"
-                  borderColor={"gray.300"}
-                  borderRadius="8px"
-                  justifyContent="space-between"
-                  key={index}
-                >
-                  <Flex flexDirection={"column"} gap="15px">
-                    <Text textStyle={"h2"} color="utility.black">
-                      คำสังการซ่อมรหัส : {item.order_code}
-                    </Text>
-                    <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
-                      <Image src={calender} alt="calender" />
-                      <Text textStyle={"b3"}>
-                        วันเวลาดำเนินการ: {item.appointment_date} เวลา{" "}
-                        {item.appointment_time} น.
+            {orderLists &&
+              orderLists.map((item, index) => {
+                return (
+                  <Flex
+                    bg="utility.white"
+                    p="24px"
+                    w="100%"
+                    border="1px"
+                    borderColor={"gray.300"}
+                    borderRadius="8px"
+                    justifyContent="space-between"
+                    key={index}
+                  >
+                    <Flex flexDirection={"column"} gap="15px">
+                      <Text textStyle={"h2"} color="utility.black">
+                        คำสังการซ่อมรหัส : {item.order_code}
+                      </Text>
+                      <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
+                        <Image src={calender} alt="calender" />
+                        <Text textStyle={"b3"}>
+                          วันเวลาดำเนินการ: {item.appointment_date} เวลา{" "}
+                          {item.appointment_time} น.
+                        </Text>
+                      </Flex>
+                      <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
+                        <Image src={profile} alt="prifle" />
+                        <Text textStyle={"b3"}>พนักงาน: {item.engineer}</Text>
+                      </Flex>
+                      <Text textStyle={"b1"} color="gray.700">
+                        รายการ:
+                      </Text>
+                      <UnorderedList
+                        color="utility.black"
+                        textStyle={"b3"}
+                        mt="-10px"
+                        spacing={"5px"}
+                      >
+                        {item.subOrder.map((item, index) => {
+                          return (
+                            <ListItem key={index}>
+                              {item.sub_service_name}
+                            </ListItem>
+                          );
+                        })}
+                      </UnorderedList>
+                    </Flex>
+                    <Flex
+                      alignItems={"center"}
+                      h="100%"
+                      gap="20px"
+                      pos="relative"
+                      top="-60px"
+                    >
+                      <Text textStyle={"b3"}>ราคารวม:</Text>
+                      <Text textStyle={"h2"} color="gray.950">
+                        {item.total_price} ฿
                       </Text>
                     </Flex>
-                    <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
-                      <Image src={profile} alt="prifle" />
-                      <Text textStyle={"b3"}>พนักงาน: {item.engineer}</Text>
-                    </Flex>
-                    <Text textStyle={"b1"} color="gray.700">
-                      รายการ:
-                    </Text>
-                    <UnorderedList
-                      color="utility.black"
-                      textStyle={"b3"}
-                      mt="-10px"
-                      spacing={"5px"}
-                    >
-                      {item.subOrder.map((item, index) => {
-                        return (
-                          <ListItem key={index}>
-                            {item.sub_service_name}
-                          </ListItem>
-                        );
-                      })}
-                    </UnorderedList>
                   </Flex>
-                  <Flex
-                    alignItems={"center"}
-                    h="100%"
-                    gap="20px"
-                    pos="relative"
-                    top="-60px"
-                  >
-                    <Text textStyle={"b3"}>ราคารวม:</Text>
-                    <Text textStyle={"h2"} color="gray.950">
-                      {item.total_price} ฿
-                    </Text>
-                  </Flex>
-                </Flex>
-              );
-            })}
+                );
+              })}
           </Box>
         </Box>
       </Container>

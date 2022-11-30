@@ -23,9 +23,7 @@ import paymentProcessIcon from "../../assets/image/serviceDetail/paymentProcess.
 import AddOnList from "./AddOn";
 import Summary from "./Summary";
 import OrderInformation from "./OrderInformation";
-import {
-  ThailandAddressTypeahead,
-} from "react-thailand-address-typeahead";
+import { ThailandAddressTypeahead } from "react-thailand-address-typeahead";
 import OrderPayment from "./OrderPayment";
 import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
@@ -42,9 +40,9 @@ const ServiceDetail = () => {
         postalCode: "",
         province: "",
         subdistrict: "",
-      }
-    }
-  })
+      },
+    },
+  });
   const navigate = useNavigate();
   useEffect(() => {
     getServiceListById(params);
@@ -86,21 +84,22 @@ const ServiceDetail = () => {
               whiteSpace="nowrap"
               w="100%"
             >
-              {summary.data.subServices && summary.data.subServices.map((subService, index) => {
-                return (
-                  <Flex
-                    key={index}
-                    alignItems="center"
-                    justify="space-between"
-                    fontSize="14px"
-                    textColor="utility.black"
-                    fontWeight={'500'}
-                  >
-                    <Text>{subService.sub_service_name}</Text>
-                    <Text>{subService.count} รายการ</Text>
-                  </Flex>
-                );
-              })}
+              {summary.data.subServices &&
+                summary.data.subServices.map((subService, index) => {
+                  return (
+                    <Flex
+                      key={index}
+                      alignItems="center"
+                      justify="space-between"
+                      fontSize="14px"
+                      textColor="utility.black"
+                      fontWeight={"500"}
+                    >
+                      <Text>{subService.sub_service_name}</Text>
+                      <Text>{subService.count} รายการ</Text>
+                    </Flex>
+                  );
+                })}
             </Flex>
             <Divider color="gray.200" />
             <Flex
@@ -143,7 +142,7 @@ const ServiceDetail = () => {
                 color="utility.black"
                 fontWeight="500"
                 gap="1rem"
-                justifyContent={'space-between'}
+                justifyContent={"space-between"}
               >
                 <Text fontWeight="300px" color="gray.700" whiteSpace="nowrap">
                   สถานที่
@@ -179,7 +178,15 @@ const ServiceDetail = () => {
                 {summary.data.totalPrice} ฿
               </Text>
             </Flex>
-            <Button w='100%' mt='10px'>เช็ครายการซ่อม</Button>
+            <Button
+              w="100%"
+              mt="10px"
+              onClick={() => {
+                navigate(`/order-history/${summary.data.userId}`);
+              }}
+            >
+              เช็ครายการซ่อม
+            </Button>
           </Flex>
         </Container>
       ) : serviceList.service && !loading ? (
@@ -242,8 +249,8 @@ const ServiceDetail = () => {
                     page === 1
                       ? informationIcon
                       : page === 2
-                        ? informationProcessIcon
-                        : informationSuccessIcon
+                      ? informationProcessIcon
+                      : informationSuccessIcon
                   }
                   alt="informationIcon"
                   h="40px"
@@ -281,7 +288,7 @@ const ServiceDetail = () => {
             </Flex>
           </Container>
           <Container maxW="1440px" px="160px" my="32px">
-            <Flex gap="35px" h="100%" mt='20px'>
+            <Flex gap="35px" h="100%" mt="20px">
               {page === 1 ? (
                 <>
                   <AddOnList
@@ -289,7 +296,6 @@ const ServiceDetail = () => {
                     setSummary={setSummary}
                     summary={summary}
                   />
-
                 </>
               ) : page === 2 ? (
                 <>
@@ -301,10 +307,7 @@ const ServiceDetail = () => {
                 </>
               ) : page === 3 ? (
                 <>
-                  <OrderPayment
-                    setSummary={setSummary}
-                    summary={summary}
-                  />
+                  <OrderPayment setSummary={setSummary} summary={summary} />
                 </>
               ) : null}
               <Summary summary={summary} />
