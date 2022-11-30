@@ -84,7 +84,7 @@ const Summary = (props) => {
         <Flex justifyContent="space-between" mt="1rem">
           <Text textColor="gray.700" fontSize="1rem" fontWeight="400">รวม</Text>
           <Text textColor="utility.black" fontWeight="600" fontSize="1rem">
-            {summary.data.total_price}฿
+            {summary.data.totalPrice}฿
           </Text>
         </Flex>
       </Flex>

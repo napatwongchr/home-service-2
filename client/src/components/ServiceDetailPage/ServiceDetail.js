@@ -49,6 +49,7 @@ const ServiceDetail = () => {
   useEffect(() => {
     getServiceListById(params);
   }, []);
+  console.log(summary);
   return (
     <>
       <NavComponent />
@@ -175,7 +176,7 @@ const ServiceDetail = () => {
                 รวม
               </Text>
               <Text textColor="utility.black" fontWeight="600" fontSize="1rem">
-                {summary.data.total_price} ฿
+                {summary.data.totalPrice} ฿
               </Text>
             </Flex>
             <Button w='100%' mt='10px'>เช็ครายการซ่อม</Button>

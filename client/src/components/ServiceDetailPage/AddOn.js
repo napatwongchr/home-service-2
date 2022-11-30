@@ -17,19 +17,19 @@ const AddOnList = (props) => {
         data: {
           ...prevState.data,
           subServices,
-          total_price: 0
+          totalPrice: 0
         }
       }
     ))
   }, []);
 
   const handleIncrease = (subServiceId) => {
-    let total_price = summary.data.total_price
+    let totalPrice = summary.data.totalPrice
     const subServices = summary.data.subServices.map((subService) => {
       if (subService.sub_service_id === subServiceId) {
         subService.count += 1;
         subService.sub_total_price += subService.price_per_unit;
-        total_price += subService.price_per_unit
+        totalPrice += subService.price_per_unit
       }
       return { ...subService };
     })
@@ -38,20 +38,20 @@ const AddOnList = (props) => {
         data: {
           ...prevState.data,
           subServices,
-          total_price
+          totalPrice
         }
       }
     ))
   };
 
   const handleDecrease = (subServiceId) => {
-    let total_price = summary.data.total_price
+    let totalPrice = summary.data.totalPrice
     const subServices = summary.data.subServices.map((subService) => {
       if (subService.sub_service_id === subServiceId) {
         if (subService.count > 0) {
           subService.count--;
           subService.sub_total_price -= subService.price_per_unit
-          total_price -= subService.price_per_unit
+          totalPrice -= subService.price_per_unit
         }
       }
       return { ...subService }
@@ -61,7 +61,7 @@ const AddOnList = (props) => {
         data: {
           ...prevState.data,
           subServices,
-          total_price
+          totalPrice
         }
       }
     ))

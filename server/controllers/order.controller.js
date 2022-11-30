@@ -3,7 +3,6 @@ import { format } from 'date-fns'
 
 const orderController = {
   async createOrder(req, res) {
-    
     const address = `${req.body.address.homeAddress} ${req.body.address.subdistrict} ${req.body.address.district} ${req.body.address.province}`
     const additionalText = req.body.additionalText
     //Set Order Code
@@ -134,24 +133,24 @@ const orderController = {
             }
           }) :
           res.status(404).json({ msg: "order not found" })
-      } 
+      }
       //Get order by user id
-      else if(userId){
+      else if (userId) {
         const getOrderByUserId = await pool.query(...orderByUserId)
         // console.log(getOrderByUserId.rows[0])
         const getSubOrder = await pool.query(`${subOrderQuery} where user_id = $1`, [userId])
 
-        const setOrderList = getOrderByUserId.rows.map( order => {
-          const subOrder = getSubOrder.rows.filter( subOrder => subOrder.order_id === order.order_id )
+        const setOrderList = getOrderByUserId.rows.map(order => {
+          const subOrder = getSubOrder.rows.filter(subOrder => subOrder.order_id === order.order_id)
           order.subOrder = subOrder
           return order
-        } )
+        })
 
         return getOrderByUserId.rows.length >= 1 ?
-        res.status(200).json({
-          data: setOrderList
-        }) :
-        res.status(404).json({ msg: "order not found" })
+          res.status(200).json({
+            data: setOrderList
+          }) :
+          res.status(404).json({ msg: "order not found" })
       }
 
       //Get All Order
