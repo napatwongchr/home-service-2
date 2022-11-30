@@ -96,8 +96,6 @@ const Footer = (props) => {
               setDisable(true);
             } else if (page === 3) {
               handleSubmit(summary.data)
-            }
-            else {
               setStatus(true);
             }
           }}

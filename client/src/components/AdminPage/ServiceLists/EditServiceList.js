@@ -130,9 +130,9 @@ const EditCreateServiceList = () => {
               เพิ่มบริการ
             </NavCreateService>
             {serviceList.service &&
-            serviceList.subService &&
-            !loading &&
-            !submitButton ? (
+              serviceList.subService &&
+              !loading &&
+              !submitButton ? (
               <Container
                 maxW="100%"
                 minH="100vh"
