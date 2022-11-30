@@ -2,46 +2,65 @@ import { Button, Container, Flex } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import axios from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 const Footer = (props) => {
   const user = JSON.parse(window.localStorage.getItem("user"));
-  const {
-    setPage,
-    page,
-    setStatus,
-    summary,
-    serviceList
-  } = props;
+  const { setPage, page, setStatus, summary, serviceList } = props;
   const [disable, setDisable] = useState(true);
+  const navigate = useNavigate();
 
   const validationForm = () => {
     if (page === 1) {
-      if (summary.data.total_price !== 0) {
-        setDisable(false)
+      if (summary.data.totalPrice !== 0) {
+        setDisable(false);
       } else {
-        setDisable(true)
+        setDisable(true);
       }
     }
 
     if (page === 2) {
-      if (summary.data.date && summary.data.date !== '' && summary.data.time && summary.data.time !== '' && summary.data.time !== 'undefined' && summary.data.address.homeAddress && summary.data.address.homeAddress !== '' && summary.data.address.district && summary.data.address.district !== '' && summary.data.address.province && summary.data.address.province !== '' && summary.data.address.subdistrict && summary.data.address.subdistrict !== '') {
-        setDisable(false)
+      if (
+        summary.data.date &&
+        summary.data.date !== "" &&
+        summary.data.time &&
+        summary.data.time !== "" &&
+        summary.data.time !== "undefined" &&
+        summary.data.address.homeAddress &&
+        summary.data.address.homeAddress !== "" &&
+        summary.data.address.district &&
+        summary.data.address.district !== "" &&
+        summary.data.address.province &&
+        summary.data.address.province !== "" &&
+        summary.data.address.subdistrict &&
+        summary.data.address.subdistrict !== ""
+      ) {
+        setDisable(false);
       } else {
-        setDisable(true)
+        setDisable(true);
       }
     }
     if (page === 3) {
-      if (summary.data?.payment?.cardNumber && summary.data?.payment?.cardNumber.length === 16 && summary.data?.payment?.cardName && summary.data?.payment?.cardName !== '' && summary.data?.payment?.cardExp && summary.data?.payment?.cardExp.length === 4 && summary.data?.payment?.cardCVC && summary.data?.payment?.cardCVC.length === 3) {
-        setDisable(false)
+      if (
+        summary.data?.payment?.cardNumber &&
+        summary.data?.payment?.cardNumber.length === 16 &&
+        summary.data?.payment?.cardName &&
+        summary.data?.payment?.cardName !== "" &&
+        summary.data?.payment?.cardExp &&
+        summary.data?.payment?.cardExp.length === 4 &&
+        summary.data?.payment?.cardCVC &&
+        summary.data?.payment?.cardCVC.length === 3
+      ) {
+        setDisable(false);
       } else {
-        setDisable(true)
+        setDisable(true);
       }
     }
-  }
+  };
 
   const handleSubmit = async (data) => {
     try {
-      data.userId = user.id
-      data.serviceId = serviceList.service.service_id
+      data.userId = user.id;
+      data.serviceId = serviceList.service.service_id;
       await axios.post("/orders", data);
     } catch (error) {
       console.log(error);
@@ -49,8 +68,8 @@ const Footer = (props) => {
   };
 
   useEffect(() => {
-    validationForm()
-  }, [summary])
+    validationForm();
+  }, [summary]);
 
   return (
     <Container
@@ -79,6 +98,8 @@ const Footer = (props) => {
           onClick={() => {
             if (page > 1) {
               setPage(page - 1);
+            } else if (page === 1) {
+              navigate(`/service-list`);
             }
           }}
         >
@@ -95,7 +116,7 @@ const Footer = (props) => {
               setPage(page + 1);
               setDisable(true);
             } else if (page === 3) {
-              handleSubmit(summary.data)
+              handleSubmit(summary.data);
               setStatus(true);
             }
           }}
