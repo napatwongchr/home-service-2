@@ -47,7 +47,6 @@ const ServiceDetail = () => {
   useEffect(() => {
     getServiceListById(params);
   }, []);
-  console.log(summary);
   return (
     <>
       <NavComponent />
