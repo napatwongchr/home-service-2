@@ -116,6 +116,7 @@ const EditCreateServiceList = () => {
       })}
       onSubmit={async (values) => {
         setSubmitButton(true);
+        console.log(values);
         formData.append("serviceName", values.serviceName);
         formData.append("serviceCategory", values.serviceCategory);
         formData.append("serviceImage", values.serviceImage);
@@ -479,15 +480,14 @@ const EditCreateServiceList = () => {
                               mt="0"
                               onChange={(e) => {
                                 setSubServiceArr(
-                                  subServiceArr.filter((subService) => {
-                                    if (
-                                      subService.sub_service_id ===
-                                      item.sub_service_id
-                                    ) {
-                                      return (subService.sub_service_name =
-                                        e.target.value);
+                                  subServiceArr.map((subService, subIndex) => {
+                                    if (index === subIndex) {
+                                      return {
+                                        ...subService,
+                                        sub_service_name: e.target.value
+                                      }
                                     } else {
-                                      return subService;
+                                      return subService
                                     }
                                   })
                                 );
@@ -503,15 +503,14 @@ const EditCreateServiceList = () => {
                               mt="0"
                               onChange={(e) => {
                                 setSubServiceArr(
-                                  subServiceArr.filter((subService) => {
-                                    if (
-                                      subService.sub_service_id ===
-                                      item.sub_service_id
-                                    ) {
-                                      return (subService.price_per_unit =
-                                        e.target.value);
+                                  subServiceArr.map((subService, subIndex) => {
+                                    if (index === subIndex) {
+                                      return {
+                                        ...subService,
+                                        price_per_unit: e.target.value
+                                      }
                                     } else {
-                                      return subService;
+                                      return subService
                                     }
                                   })
                                 );
@@ -527,15 +526,14 @@ const EditCreateServiceList = () => {
                               mt="0"
                               onChange={(e) => {
                                 setSubServiceArr(
-                                  subServiceArr.filter((subService) => {
-                                    if (
-                                      subService.sub_service_id ===
-                                      item.sub_service_id
-                                    ) {
-                                      return (subService.unit_name =
-                                        e.target.value);
+                                  subServiceArr.map((subService, subIndex) => {
+                                    if (index === subIndex) {
+                                      return {
+                                        ...subService,
+                                        unit_name: e.target.value
+                                      }
                                     } else {
-                                      return subService;
+                                      return subService
                                     }
                                   })
                                 );
