@@ -5,6 +5,8 @@ import searchIcon from "../../assets/image/adminDashboardPage/searchIcon.svg";
 import whitePlusIcon from "../../assets/image/adminDashboardPage/whitePlusIcon.svg";
 
 const NavDashBoard = (props) => {
+  const { setInput } = props
+
   return (
     <Flex
       h="80px"
@@ -34,6 +36,9 @@ const NavDashBoard = (props) => {
           w="350px"
           h="44px"
           pl="50px"
+          onChange={(e)=>{
+            setInput(e.target.value)
+          }}
         />
 
         <Link to={props.to}>
