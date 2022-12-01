@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Container, Flex, Link, Text } from '@chakra-ui/react';
-import { Formik, Form, } from 'formik';
+import { Formik, Form, Field, } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/authentication'
 import { MyTextInput, MyCheckbox } from '../../utils/formInput'
@@ -103,6 +103,7 @@ const RegisterForm = () => {
                         <MyCheckbox
                             id='checkbox'
                             name="acceptedTerms"
+                            w='100px'
                         >
                             <Flex mt={'8px'} ml={'16px'} alignItems={'center'} gap={'3px'}>{`ยอมรับ `}
                                 <Link textStyle='button'>
