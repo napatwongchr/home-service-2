@@ -182,11 +182,11 @@ const serviceListController = {
       }
       // query filter by user
       if (
-        serviceName === "undefined" &&
-        category === "undefined" &&
-        sort === "undefined" &&
-        !priceMin &&
-        !priceMax
+        (serviceName === "undefined" &&
+          category === "undefined" &&
+          sort === "undefined" &&
+          !priceMin &&
+          !priceMax)
       ) {
         serviceQuery += groupBy;
       } else if (
@@ -326,9 +326,9 @@ const serviceListController = {
                         ${groupBy}
                         order by service_name collate "th-x-icu" desc
                         `.replace("$serviceName", serviceName);
-          }else{
-          serviceQuery += groupBy;
-        }
+          } else {
+            serviceQuery += groupBy;
+          }
         }
       } else if (category !== "บริการทั้งหมด") {
         if (
@@ -367,9 +367,9 @@ const serviceListController = {
                         ${groupBy}
                         order by service_name collate "th-x-icu" desc
                         `.replace("$category", category);
-          }else{
-          serviceQuery += groupBy;
-        }
+          } else {
+            serviceQuery += groupBy;
+          }
         }
       } else if (priceMax && priceMin) {
         if (
@@ -403,9 +403,9 @@ const serviceListController = {
                         `
               .replace("$priceMin", priceMin)
               .replace("$priceMax", priceMax);
-          }else{
-          serviceQuery += groupBy;
-        }
+          } else {
+            serviceQuery += groupBy;
+          }
         }
       } else if (sort !== "บริการแนะนำ") {
         if (sort === "ตามตัวอักษร (Ascending)") {
@@ -420,7 +420,7 @@ const serviceListController = {
                         ${groupBy}
                         order by service_name collate "th-x-icu" desc
                         `;
-        }else{
+        } else {
           serviceQuery += groupBy;
         }
       } else {

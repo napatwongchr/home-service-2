@@ -6,6 +6,7 @@ import {
   Container
 } from "@chakra-ui/react";
 import React from "react";
+import { Link } from "react-router-dom";
 import bigbro from "../../assets/image/homePage/browithblueshirt.svg";
 
 const Banner = () => {
@@ -54,9 +55,11 @@ const Banner = () => {
             mt={47}
             variant='primary'
           >
-            <Text textStyle="h2" color="#FFFFFF">
-              เช็คราคาบริการ
-            </Text>
+            <Link to={"/service-list"}>
+              <Text textStyle="h2" color="#FFFFFF">
+                เช็คราคาบริการ
+              </Text>
+            </Link>
           </Button>
 
           <Box pos="absolute" right="0px" bottom="0">

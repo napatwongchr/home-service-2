@@ -28,13 +28,13 @@ const MyTextInput = ({ label, ...props }) => {
               <Text color={"utility.red"}>*</Text>
             </Flex>
           </FormLabel>
-          <Box pos="relative">
+          <Box pos="relative" w='100%'>
             <Input variant={"error"} {...field} {...props} />
             <Image
               src={errorIcon}
               pos="absolute"
               top="13px"
-              left="412px"
+              right="20px"
               bottom={"29px"}
               w={"14px"}
             />
@@ -142,7 +142,7 @@ const MyCheckbox = ({ children, ...props }) => {
   const [field, meta] = useField({ ...props, type: "checkbox" });
   return (
     <>
-      {meta.touched && meta.error ? (
+      {(meta.touched) ? (
         <>
           <Flex
             mb={"0px"}
@@ -150,7 +150,7 @@ const MyCheckbox = ({ children, ...props }) => {
             justifyContent={"center"}
             pos="relative"
           >
-            <Checkbox type="checkbox" {...field} {...props} />
+            <Field as={Checkbox} type="checkbox" {...field} {...props} />
             <FormLabel htmlFor="checkbox">{children}</FormLabel>
             <Text
               fontStyle={"b4"}
@@ -165,7 +165,8 @@ const MyCheckbox = ({ children, ...props }) => {
         </>
       ) : (
         <Flex alignItems="center" justifyContent={"center"}>
-          <Checkbox type="checkbox" {...field} {...props} />
+          <Field as={Checkbox} type="checkbox" {...field} {...props}
+            checked={field.value} />
           <FormLabel htmlFor="checkbox">{children}</FormLabel>
         </Flex>
       )}

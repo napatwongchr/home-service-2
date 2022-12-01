@@ -49,14 +49,16 @@ const NavComponent = () => {
               </Flex>
             </Link>
             <Box ml="20">
-              <Text
-                fontSize="16px"
-                textStyle="h5"
-                fontWeight="600"
-                color="utility.black"
-              >
-                บริการของเรา
-              </Text>
+              <Link to={"/service-list"}>
+                <Text
+                  fontSize="16px"
+                  textStyle="h5"
+                  fontWeight="600"
+                  color="utility.black"
+                >
+                  บริการของเรา
+                </Text>
+              </Link>
             </Box>
           </Flex>
           <Flex>

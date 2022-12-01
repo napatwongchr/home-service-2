@@ -53,7 +53,6 @@ const userController = {
       const lastName = removeSpace[1];
       const roles = "customer";
 
-      //user = <recent user_id>
       const user = await pool.query(
         `insert into users(email, password)
             values($1, $2) returning(user_id)`,
@@ -61,9 +60,9 @@ const userController = {
       );
       await pool.query(
         `insert into user_profile(user_id, first_name, last_name, phone_number, roles, created_at, updated_at)
-                values($1, $2, $3, $4, $5, to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM'), to_char(current_timestamp, 'DD/MM/YYYY HH:MI AM'))
+                values($1, $2, $3, $4, $5, $6, $7)
             `,
-        [user.rows[0].user_id, firstName, lastName, req.body.phoneNumber, roles]
+        [user.rows[0].user_id, firstName, lastName, req.body.phoneNumber, roles, new Date(), new Date()]
       );
 
       return res.status(201).json({
@@ -169,6 +168,15 @@ const userController = {
             `,
         [userIdQuery]
       );
+        //Set response format for Get User by Id
+        result.rows[0].created_at = result.rows[0].created_at
+        .toLocaleString()
+        .split(", ")
+        .join(" ");
+        result.rows[0].updated_at = result.rows[0].updated_at
+        .toLocaleString()
+        .split(", ")
+        .join(" ");
       return res.status(200).json({
         data: result.rows[0],
       });
@@ -190,6 +198,17 @@ const userController = {
                 from user_profile
                 inner join users
                 on users.user_id = user_profile.user_id`);
+
+      //Set response format for Get All User
+      result.rows[0].created_at = result.rows[0].created_at
+      .toLocaleString()
+      .split(", ")
+      .join(" ");
+      result.rows[0].updated_at = result.rows[0].updated_at
+      .toLocaleString()
+      .split(", ")
+      .join(" ");
+
       res.json({
         data: result.rows,
       });

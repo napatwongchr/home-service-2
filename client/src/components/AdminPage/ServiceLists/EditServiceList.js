@@ -130,9 +130,9 @@ const EditCreateServiceList = () => {
               เพิ่มบริการ
             </NavCreateService>
             {serviceList.service &&
-            serviceList.subService &&
-            !loading &&
-            !submitButton ? (
+              serviceList.subService &&
+              !loading &&
+              !submitButton ? (
               <Container
                 maxW="100%"
                 minH="100vh"
@@ -557,9 +557,9 @@ const EditCreateServiceList = () => {
                                 values.serviceList.length > 1 &&
                                   setSubServiceArr(
                                     subServiceArr.filter(
-                                      (subService) =>
-                                        item.sub_service_id !==
-                                        subService.sub_service_id
+                                      (subService, subIndex) =>
+                                        index !==
+                                        subIndex
                                     )
                                   );
                               }}
