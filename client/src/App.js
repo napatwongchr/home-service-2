@@ -82,7 +82,6 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<LoginPage />} />
           <Route path="/service-list/select" element={<ServiceDetailPage />} />
-          <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
         </Routes>
       )}
     </>

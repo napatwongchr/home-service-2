@@ -96,7 +96,7 @@ const HistoryLists = () => {
                   >
                     <Flex flexDirection={"column"} gap="15px">
                       <Text textStyle={"h2"} color="utility.black">
-                        คำสังการซ่อมรหัส : {item.order_code}
+                        คำสั่งการซ่อมรหัส : {item.order_code}
                       </Text>
                       <Flex gap={"10px"} color="gray.700" alignItems={"center"}>
                         <Image src={calender} alt="calender" />

@@ -59,26 +59,27 @@ const Summary = (props) => {
             </>
           ) : null}
           {summary.data.address ? (<>
-            <Flex justifyContent="space-between" direction="column" width="inherit" overflowWrap={"break-word"}>
-              <Flex direction="row" textAlign="right" color="utility.black" fontWeight="400" gap="1rem">
-                <Text fontWeight="300px" color="gray.700" whiteSpace="nowrap" >สถานที่</Text>
-                <Text>
-                  {summary.data.address.homeAddress ? `${summary.data.address.homeAddress} ` : ""}
-                  {summary.data.address.subdistrict ? `${summary.data.address.subdistrict} ` : ""}
-                  {summary.data.address.district ? `${summary.data.address.district} ` : ""}
-                  {summary.data.address.province ? `${summary.data.address.province} ` : ""}
+            <Flex justifyContent="space-between" direction="row" width="inherit" overflowWrap={"break-word"} textAlign="right">
 
-                </Text>
-              </Flex>
-              {summary.data.additionalText ? (
-                <Flex justifyContent="space-between" mt="0.5rem" textAlign="right" color="utility.black"  >
-                  <Text fontWeight="300px" color="gray.700" whiteSpace="nowrap">หมายเหตุ</Text>
-                  <Text width="75%">{summary.data.additionalText}</Text>
-                </Flex>
-              ) : null}
+              <Text fontWeight="300px" color="gray.700" whiteSpace="nowrap" >สถานที่</Text>
+              <Text>
+                {summary.data.address.homeAddress ? `${summary.data.address.homeAddress} ` : ""}
+                {summary.data.address.subdistrict ? `${summary.data.address.subdistrict} ` : ""}
+                {summary.data.address.district ? `${summary.data.address.district} ` : ""}
+                {summary.data.address.province ? `${summary.data.address.province} ` : ""}
+
+              </Text>
             </Flex>
           </>) : null}
         </Flex>
+        {
+          summary.data.additionalText ? (
+            <Flex justifyContent="space-between" textAlign="right" color="utility.black" mb={"1rem"}>
+              <Text fontWeight="300px" color="gray.700" whiteSpace="nowrap">หมายเหตุ</Text>
+              <Text width="75%">{summary.data.additionalText}</Text>
+            </Flex>
+          ) : null
+        }
         <Divider color='gray.300' width="301px" />
         {/* Total */}
         <Flex justifyContent="space-between" mt="1rem">
@@ -87,7 +88,7 @@ const Summary = (props) => {
             {summary.data.totalPrice}฿
           </Text>
         </Flex>
-      </Flex>
+      </Flex >
     </Container >
   );
 };
