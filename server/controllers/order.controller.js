@@ -135,11 +135,11 @@ const orderController = {
 
         return getOrderById.rows.length >= 1
           ? res.status(200).json({
-              data: {
-                order: getOrderById.rows[0],
-                subOrder: getSubOrder.rows,
-              },
-            })
+            data: {
+              order: getOrderById.rows[0],
+              subOrder: getSubOrder.rows,
+            },
+          })
           : res.status(200).json({ msg: "order not found" });
       }
       //Get order by user id
@@ -161,8 +161,8 @@ const orderController = {
 
         return getOrderByUserId.rows.length >= 1
           ? res.status(200).json({
-              data: setOrderList,
-            })
+            data: setOrderList,
+          })
           : res.status(200).json({ msg: "order not found" });
       }
 
@@ -209,11 +209,11 @@ const orderController = {
       );
       return getSubOrderByOrderId.rows.length >= 1
         ? res.status(200).json({
-            data: getSubOrderByOrderId.rows,
-          })
+          data: getSubOrderByOrderId.rows,
+        })
         : res.status(200).json({
-            msg: "order not found",
-          });
+          msg: "order not found",
+        });
     } else {
       const getAllSubOrder = await pool.query(`select * from sub_orders`);
       return res.status(200).json({

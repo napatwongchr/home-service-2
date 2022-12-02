@@ -477,6 +477,7 @@ const EditCreateServiceList = () => {
                               w={"440px"}
                               h={"44px"}
                               mt="0"
+                              value={subServiceArr[index].sub_service_name}
                               onChange={(e) => {
                                 setSubServiceArr(
                                   subServiceArr.map((subService, subIndex) => {
@@ -500,6 +501,7 @@ const EditCreateServiceList = () => {
                               w={"240px"}
                               h={"44px"}
                               mt="0"
+                              value={subServiceArr[index].price_per_unit}
                               onChange={(e) => {
                                 setSubServiceArr(
                                   subServiceArr.map((subService, subIndex) => {
@@ -523,6 +525,7 @@ const EditCreateServiceList = () => {
                               w={"240px"}
                               h={"44px"}
                               mt="0"
+                              value={subServiceArr[index].unit_name}
                               onChange={(e) => {
                                 setSubServiceArr(
                                   subServiceArr.map((subService, subIndex) => {
