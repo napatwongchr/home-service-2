@@ -103,7 +103,8 @@ const serviceCategoryController = {
 
       //Get All Service Category
       const allServiceCategory = await pool.query(
-        `select * from service_category`
+        `select * from service_category
+        order by updated_at desc`
       );
       //Set Response Format for get all category
       const mapedCategory = allServiceCategory.rows.map((category) => {
@@ -117,6 +118,7 @@ const serviceCategoryController = {
           .join(" ");
         return category;
       });
+
       return res.status(200).json({
         data: mapedCategory,
       });

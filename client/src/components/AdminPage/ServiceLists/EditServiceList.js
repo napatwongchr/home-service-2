@@ -116,7 +116,6 @@ const EditCreateServiceList = () => {
       })}
       onSubmit={async (values) => {
         setSubmitButton(true);
-        console.log(values);
         formData.append("serviceName", values.serviceName);
         formData.append("serviceCategory", values.serviceCategory);
         formData.append("serviceImage", values.serviceImage);

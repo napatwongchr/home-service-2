@@ -2,7 +2,7 @@ import { Box, Input } from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
 import React from "react";
 const UploadComponent = (props) => {
-  const { setFieldValue, setServiceImage } = props;
+  const { setFieldValue } = props;
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       "image/png": [".png"],
@@ -10,8 +10,6 @@ const UploadComponent = (props) => {
     },
     onDrop: (acceptedFiles) => {
       setFieldValue("serviceImage", acceptedFiles[0]);
-      setServiceImage(acceptedFiles[0])
-
     },
   });
   return (
@@ -36,7 +34,6 @@ const UploadComponent = (props) => {
         accept="image/png, image/jpg"
         onChange={(e) => {
           setFieldValue("serviceImage", e.currentTarget.files[0]);
-          setServiceImage(e.currentTarget.files[0])
         }}
       />
     </Box>

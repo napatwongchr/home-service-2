@@ -128,6 +128,7 @@ const serviceListController = {
 
       const groupBy = `group by service.service_id, service_image.service_image_id, service_category.service_category_name`;
 
+      const orderBy = `order by updated_at desc`
       //Query Service By ID
       if (serviceId) {
         let findService = await pool.query(
@@ -141,8 +142,8 @@ const serviceListController = {
 
         let findSubService = await pool.query(
           `
-                ${subServiceQueryByServiceId}
-                `,
+          ${subServiceQueryByServiceId}
+          `,
           [serviceId]
         );
 
@@ -189,6 +190,7 @@ const serviceListController = {
           !priceMax)
       ) {
         serviceQuery += groupBy
+        // serviceQuery += orderBy
       } else if (
         category !== "บริการทั้งหมด" &&
         priceMin &&
@@ -424,7 +426,10 @@ const serviceListController = {
           serviceQuery += groupBy;
         }
       } else {
-        serviceQuery += groupBy;
+        serviceQuery = `${serviceQuery}
+                        ${groupBy}
+                        ${orderBy}
+                        `
       }
 
       const findService = await pool.query(serviceQuery);
