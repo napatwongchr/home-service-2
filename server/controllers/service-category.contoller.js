@@ -69,8 +69,13 @@ const serviceCategoryController = {
         return res.status(200).json({
           data: CategoryById,
         });
-      } else if (req.query.categoryName) {
-        let categoryName = `%${req.query.categoryName}%` || "";
+      } else if (req.query.categoryName || req.query.checkName) {
+        let categoryName = ""
+        if( req.query.categoryName ){
+          categoryName = `%${req.query.categoryName}%`
+        } else if ( req.query.checkName ) {
+          categoryName = `${req.query.checkName}`
+        }
         const findCategoryByName = await pool.query(
           `
           select * from service_category

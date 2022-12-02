@@ -33,7 +33,7 @@ const CreateServiceCategory = () => {
             function (value) {
               return new Promise((resolve, reject) => {
                 axios
-                  .get(`/service/category?categoryName=${value}`)
+                  .get(`/service/category?checkName=${value}`)
                   .then((res) => {
                     if (res.data.data.length >= 1) {
                       resolve(false);

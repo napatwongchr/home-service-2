@@ -183,7 +183,7 @@ const DetailServiceList = () => {
                             ค่าบริการ / 1 หน่วย
                           </Text>
                           <Text textStyle="b1" color={"utility.black"}>
-                            {item.price_per_unit}
+                            {item.price_per_unit.toLocaleString()}
                           </Text>
                         </Flex>
                       </Flex>
