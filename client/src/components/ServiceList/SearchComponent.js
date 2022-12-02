@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import arrow from "../../assets/image/serviceListPage/dropdown.svg";
 import glass from "../../assets/image/serviceListPage/magnifying-glass.svg";
@@ -22,6 +22,7 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
 } from "@chakra-ui/react";
+import useServiceCategories from "../../hooks/useServiceCategories";
 
 const SearchSection = (props) => {
   const {
@@ -36,6 +37,12 @@ const SearchSection = (props) => {
     setPriceTouched,
   } = props;
   const [toggle, setToggle] = useState(false);
+  const { serviceCategories, getServiceCategories } = useServiceCategories();
+  const searchCategoryName = "";
+
+  useEffect(() => {
+    getServiceCategories({ searchCategoryName });
+  }, []);
 
   return (
     <Container
@@ -124,38 +131,24 @@ const SearchSection = (props) => {
                       >
                         บริการทั้งหมด
                       </MenuItem>
-                      <MenuItem
-                        px={"14px"}
-                        _hover={{ bg: "gray.100" }}
-                        color={category === "บริการทั่วไป" ? "blue.700" : null}
-                        onClick={() => {
-                          setCategory("บริการทั่วไป");
-                        }}
-                      >
-                        บริการทั่วไป
-                      </MenuItem>
-                      <MenuItem
-                        px={"14px"}
-                        _hover={{ bg: "gray.100" }}
-                        color={
-                          category === "บริการห้องครัว" ? "blue.700" : null
-                        }
-                        onClick={() => {
-                          setCategory("บริการห้องครัว");
-                        }}
-                      >
-                        บริการห้องครัว
-                      </MenuItem>
-                      <MenuItem
-                        px={"14px"}
-                        _hover={{ bg: "gray.100" }}
-                        color={category === "บริการห้องน้ำ" ? "blue.700" : null}
-                        onClick={() => {
-                          setCategory("บริการห้องน้ำ");
-                        }}
-                      >
-                        บริการห้องน้ำ
-                      </MenuItem>
+                      {
+                        serviceCategories && serviceCategories.map(item => {
+                          return (
+                            <MenuItem
+                              key={item.service_category_id}
+                              px={"14px"}
+                              _hover={{ bg: "gray.100" }}
+                              color={category === "บริการทั่วไป" ? "blue.700" : null}
+                              onClick={() => {
+                                setCategory(item.service_category_name);
+                              }}
+                            >
+                              {item.service_category_name}
+                            </MenuItem>
+
+                          )
+                        })
+                      }
                     </MenuList>
                   </Menu>
                 </Menu>
@@ -167,7 +160,7 @@ const SearchSection = (props) => {
                 alignItems="center"
                 pl="10px"
                 mr="20px"
-                w="140px"
+                w="150px"
               >
                 <Menu>
                   <Text
@@ -185,14 +178,13 @@ const SearchSection = (props) => {
                     <MenuButton
                       as={Button}
                       variant="dropdown"
-                      w="100%"
                       textAlign="left"
                       rightIcon={<Image src={arrow} />}
                       onClick={() => {
                         setToggle(!toggle);
                       }}
                     >
-                      {sliderValue[0]}-{sliderValue[1]}฿
+                      {sliderValue[0].toLocaleString()}-{sliderValue[1].toLocaleString()} ฿
                     </MenuButton>
                     {toggle && (
                       <Container
@@ -215,7 +207,7 @@ const SearchSection = (props) => {
                         >
                           <Stack height="100px" width="inherit">
                             <Text>
-                              {sliderValue[0]}-{sliderValue[1]}฿
+                              {sliderValue[0].toLocaleString()}-{sliderValue[1].toLocaleString()} ฿
                             </Text>
                             <RangeSlider
                               height="2rem"
@@ -301,7 +293,7 @@ const SearchSection = (props) => {
                       border="none"
                       textStyle={"b3"}
                     >
-                      <MenuItem
+                      {/* <MenuItem
                         px={"14px"}
                         _hover={{ bg: "gray.100" }}
                         color={order === "บริการแนะนำ" ? "blue.700" : null}
@@ -320,7 +312,7 @@ const SearchSection = (props) => {
                         }}
                       >
                         บริการยอดนิยม
-                      </MenuItem>
+                      </MenuItem> */}
                       <MenuItem
                         px={"14px"}
                         _hover={{ bg: "gray.100" }}
@@ -365,8 +357,8 @@ const SearchSection = (props) => {
             </Flex>
           </Box>
         </Stack>
-      </Container>
-    </Container>
+      </Container >
+    </Container >
   );
 };
 

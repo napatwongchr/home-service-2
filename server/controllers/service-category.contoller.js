@@ -69,8 +69,13 @@ const serviceCategoryController = {
         return res.status(200).json({
           data: CategoryById,
         });
-      } else if (req.query.categoryName) {
-        let categoryName = `%${req.query.categoryName}%` || "";
+      } else if (req.query.categoryName || req.query.checkName) {
+        let categoryName = ""
+        if( req.query.categoryName ){
+          categoryName = `%${req.query.categoryName}%`
+        } else if ( req.query.checkName ) {
+          categoryName = `${req.query.checkName}`
+        }
         const findCategoryByName = await pool.query(
           `
           select * from service_category
@@ -103,7 +108,8 @@ const serviceCategoryController = {
 
       //Get All Service Category
       const allServiceCategory = await pool.query(
-        `select * from service_category`
+        `select * from service_category
+        order by updated_at desc`
       );
       //Set Response Format for get all category
       const mapedCategory = allServiceCategory.rows.map((category) => {
@@ -117,6 +123,7 @@ const serviceCategoryController = {
           .join(" ");
         return category;
       });
+
       return res.status(200).json({
         data: mapedCategory,
       });

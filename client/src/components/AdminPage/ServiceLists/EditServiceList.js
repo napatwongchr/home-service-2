@@ -213,9 +213,10 @@ const EditCreateServiceList = () => {
                           type="text"
                           w={"440px"}
                           h={"44px"}
-                          onChange={(e) =>
-                            setFieldValue("serviceName", e.target.value)
-                          }
+                          onChange={(e) => {
+                            setFieldValue("serviceName", e.target.value);
+                            setServiceName(e.target.value);
+                          }}
                         />
                       </Flex>
                     )}
@@ -349,9 +350,11 @@ const EditCreateServiceList = () => {
                         <Text color={"utility.red"}>*</Text>
                       </Flex>
                     </FormLabel>
-                    <Flex flexDirection={"column"}>
-                      <UploadComponent setFieldValue={setFieldValue} />
-
+                    <Flex flexDirection={"column"} pos="relative">
+                      <UploadComponent
+                        setFieldValue={setFieldValue}
+                        setServiceImage={setServiceImage}
+                      />
                       {values.serviceImage ? (
                         <Box
                           pos="relative"
@@ -474,6 +477,21 @@ const EditCreateServiceList = () => {
                               w={"440px"}
                               h={"44px"}
                               mt="0"
+                              value={subServiceArr[index].sub_service_name}
+                              onChange={(e) => {
+                                setSubServiceArr(
+                                  subServiceArr.map((subService, subIndex) => {
+                                    if (index === subIndex) {
+                                      return {
+                                        ...subService,
+                                        sub_service_name: e.target.value
+                                      }
+                                    } else {
+                                      return subService
+                                    }
+                                  })
+                                );
+                              }}
                             />
                             <MyFieldInput
                               label="ค่าบริการ / 1 หน่วย"
@@ -483,6 +501,21 @@ const EditCreateServiceList = () => {
                               w={"240px"}
                               h={"44px"}
                               mt="0"
+                              value={subServiceArr[index].price_per_unit}
+                              onChange={(e) => {
+                                setSubServiceArr(
+                                  subServiceArr.map((subService, subIndex) => {
+                                    if (index === subIndex) {
+                                      return {
+                                        ...subService,
+                                        price_per_unit: e.target.value
+                                      }
+                                    } else {
+                                      return subService
+                                    }
+                                  })
+                                );
+                              }}
                             />
                             <MyFieldInput
                               label="หน่วยการบริการ"
@@ -492,6 +525,21 @@ const EditCreateServiceList = () => {
                               w={"240px"}
                               h={"44px"}
                               mt="0"
+                              value={subServiceArr[index].unit_name}
+                              onChange={(e) => {
+                                setSubServiceArr(
+                                  subServiceArr.map((subService, subIndex) => {
+                                    if (index === subIndex) {
+                                      return {
+                                        ...subService,
+                                        unit_name: e.target.value
+                                      }
+                                    } else {
+                                      return subService
+                                    }
+                                  })
+                                );
+                              }}
                             />
                             <Img
                               src={bathIcon}
@@ -504,9 +552,17 @@ const EditCreateServiceList = () => {
                               pos="relative"
                               top="-20px"
                               variant={"ghost"}
-                              onClick={() =>
-                                values.serviceList.length > 1 && remove(index)
-                              }
+                              onClick={() => {
+                                values.serviceList.length > 1 && remove(index);
+                                values.serviceList.length > 1 &&
+                                  setSubServiceArr(
+                                    subServiceArr.filter(
+                                      (subService, subIndex) =>
+                                        index !==
+                                        subIndex
+                                    )
+                                  );
+                              }}
                             >
                               ลบรายการ
                             </Button>
@@ -517,13 +573,21 @@ const EditCreateServiceList = () => {
                           rightIcon={<Image src={plusIcon} />}
                           mt="40px"
                           px="25px"
-                          onClick={() =>
+                          onClick={() => {
                             push({
                               sub_service_name: "",
                               price_per_unit: "",
                               unit_name: "",
-                            })
-                          }
+                            });
+                            setSubServiceArr([
+                              ...subServiceArr,
+                              {
+                                sub_service_name: "",
+                                price_per_unit: "",
+                                unit_name: "",
+                              },
+                            ]);
+                          }}
                         >
                           เพิ่มรายการ
                         </Button>

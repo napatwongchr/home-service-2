@@ -7,10 +7,20 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import priceTag from "../../assets/image/homePage/Group.svg";
+import useAdminServiceLists from "../../hooks/useAdminServiceLists";
+import filterCategory from "../../utils/filterCategory";
 const RecommendServiceSection = () => {
+  const navigate = useNavigate();
+  const { getServiceLists, serviceLists } = useAdminServiceLists();
+  const { handleColorButton, handleColorText } = filterCategory;
+  const input = undefined
+  useEffect(() => {
+    getServiceLists({ input });
+  }, []);
+
   return (
     <Container
       className="recommendService"
@@ -30,150 +40,80 @@ const RecommendServiceSection = () => {
         </Text>
         <Box w="100%">
           <Flex gap="37px" justifyContent={"center"}>
-            <Box
-              w="349px"
-              h="369px"
-              bg="utility.white"
-              overflow="hidden"
-              border="1px"
-              borderColor="gray.300"
-              borderRadius="8px"
-            >
-              <Image
-                src={require("../../assets/image/serviceImage/ทำความสะอาดทั่วไป.png")}
-                alt="ทำความสะอาดทั่วไป"
-                h="200px"
-                w="100%"
-              />
-              <Badge
-                borderRadius="10%"
-                px="10px"
-                py="4px"
-                bg="blue.100"
-                mx="24px"
-                mt="16px"
-                mb="8px"
-              >
-                <Text textStyle="b4" color="blue.800">
-                  บริการทั่วไป
-                </Text>
-              </Badge>
-              <Text textStyle="h2" color="gray.950" mx="24px" mb="4px">
-                ทำความสะอาดทั่วไป
-              </Text>
-              <Flex mx="24px" mb="22px">
-                <Image src={priceTag} />
-                <Text textStyle="b3" color="gray.700" ml="8px">
-                  ค่าบริการประมาณ 500.00 - 1,000.00 ฿
-                </Text>
-              </Flex>
-              <Button
-                textStyle="button"
-                color="blue.600"
-                variant="ghost"
-                px={0}
-                bottom={"5px"}
-                mx="24px"
-              >
-                เลือกบริการ
-              </Button>
-            </Box>
-            <Box
-              w="349px"
-              h="369px"
-              bg="utility.white"
-              overflow="hidden"
-              border="1px"
-              borderColor="gray.300"
-              borderRadius="8px"
-            >
-              <Image
-                src={require("../../assets/image/serviceImage/ล้างแอร์.png")}
-                alt={null}
-                h="200px"
-                w="100%"
-              />
-              <Badge
-                borderRadius="10%"
-                px="10px"
-                py="4px"
-                bg="blue.100"
-                mx="24px"
-                mt="16px"
-                mb="8px"
-              >
-                <Text textStyle="b4" color="blue.800">
-                  บริการทั่วไป
-                </Text>
-              </Badge>
-              <Text textStyle="h2" color="gray.950" mx="24px" mb="4px">
-                ล้างแอร์
-              </Text>
-              <Flex mx="24px" mb="22px">
-                <Image src={priceTag} />
-                <Text textStyle="b3" color="gray.700" ml="8px">
-                  ค่าบริการประมาณ 500.00 - 1,000.00 ฿
-                </Text>
-              </Flex>
-              <Button
-                textStyle="button"
-                color="blue.600"
-                variant="ghost"
-                px={0}
-                bottom={"5px"}
-                mx="24px"
-              >
-                เลือกบริการ
-              </Button>
-            </Box>
-            <Box
-              w="349px"
-              h="369px"
-              bg="utility.white"
-              overflow="hidden"
-              border="1px"
-              borderColor="gray.300"
-              borderRadius="8px"
-            >
-              <Image
-                src={require("../../assets/image/serviceImage/ซ่อมเครื่องซักผ้า.png")}
-                alt={null}
-                h="200px"
-                w="100%"
-              />
-              <Badge
-                borderRadius="10%"
-                px="10px"
-                py="4px"
-                bg="blue.100"
-                mx="24px"
-                mt="16px"
-                mb="8px"
-              >
-                <Text textStyle="b4" color="blue.800">
-                  บริการทั่วไป
-                </Text>
-              </Badge>
-              <Text textStyle="h2" color="gray.950" mx="24px" mb="4px">
-                ซ่อมเครื่องซักผ้า
-              </Text>
-              <Flex mx="24px" mb="22px">
-                <Image src={priceTag} />
-                <Text textStyle="b3" color="gray.700" ml="8px">
-                  ค่าบริการประมาณ 500.00 ฿
-                </Text>
-              </Flex>
-              <Button
-                textStyle="button"
-                color="blue.600"
-                variant="ghost"
-                px={0}
-                bottom={"5px"}
-                mx="24px"
-              >
-                เลือกบริการ
-              </Button>
-            </Box>
+            {
+              serviceLists.service && serviceLists.service.slice(0, 3).map((item) => {
+                return (
+                  <Box
+                    w="349px"
+                    h="369px"
+                    bg="utility.white"
+                    overflow="hidden"
+                    border="1px"
+                    borderColor="gray.300"
+                    borderRadius="8px"
+                    key={item.service_id}
+                  >
+                    <Box
+                      h="200px"
+                      overflow={"hidden"}
+                      display="flex"
+                      alignItems={"center"}
+                      justifyContent="center"
+                    >
+                      <Image src={item.url} alt={null} h="200px" />
+                    </Box>
+                    <Badge
+                      borderRadius="10%"
+                      px="10px"
+                      py="4px"
+                      bg={handleColorButton(item.service_category_name)}
+                      mx="24px"
+                      mt="16px"
+                      mb="8px"
+                    >
+                      <Text
+                        textStyle="b4"
+                        color={handleColorText(item.service_category_name)}
+                      >
+                        {item.service_category_name}
+                      </Text>
+                    </Badge>
+                    <Text textStyle="h2" color="gray.950" mx="24px" mb="4px">
+                      {item.service_name}
+                    </Text>
+                    <Flex mx="24px" mb="22px">
+                      <Image src={priceTag} />
+                      <Text
+                        className="price"
+                        textStyle="b3"
+                        color="gray.700"
+                        ml="8px"
+                      >
+                        ค่าบริการประมาณ{" "}
+                        {item.min === item.max
+                          ? item.min.toLocaleString()
+                          : `${item.min.toLocaleString()} - ${item.max.toLocaleString()}`}{" "}
+                        ฿
+                      </Text>
+                    </Flex>
+                    <Button
+                      textStyle="button"
+                      color="blue.600"
+                      variant="ghost"
+                      px={0}
+                      bottom={"5px"}
+                      mx="24px"
+                      onClick={() => {
+                        navigate(
+                          `/service/${item.service_id}`
+                        );
+                      }}
+                    >
+                      เลือกบริการ
+                    </Button>
+                  </Box>
+                );
+              })}
           </Flex>
         </Box>
         <Flex justifyContent={"center"}>

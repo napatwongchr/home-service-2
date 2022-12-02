@@ -6,6 +6,11 @@ import { protect } from "../middlewares/authProtect.js";
 
 const upload = multer({ dest: "uploads/" });
 const serviceRoute = Route();
+// Service
+serviceRoute.get("/", serviceListController.getService);
+// Service Category
+serviceRoute.get("/category", serviceCategoryController.getServiceCategory);
+
 serviceRoute.use(protect);
 // Service
 serviceRoute.post(
@@ -13,7 +18,6 @@ serviceRoute.post(
   upload.single("serviceImage"),
   serviceListController.createServiceList
 );
-serviceRoute.get("/", serviceListController.getService);
 serviceRoute.put(
   "/",
   upload.single("serviceImage"),
@@ -22,7 +26,6 @@ serviceRoute.put(
 serviceRoute.delete("/", serviceListController.deleteService);
 
 // Service Category
-serviceRoute.get("/category", serviceCategoryController.getServiceCategory);
 serviceRoute.post("/category", serviceCategoryController.createServiceCategory);
 serviceRoute.put("/category", serviceCategoryController.editServiceCategory);
 serviceRoute.delete(

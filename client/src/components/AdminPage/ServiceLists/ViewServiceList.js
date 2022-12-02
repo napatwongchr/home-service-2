@@ -30,17 +30,19 @@ import React from "react";
 import filterCategory from "../../../utils/filterCategory";
 import useAdminServiceLists from "../../../hooks/useAdminServiceLists.js";
 
-const AdminServiceList = () => {
+const AdminServiceList = (props) => {
   const navigate = useNavigate();
   const { serviceLists, getServiceLists, deleteServiceList, loading } =
     useAdminServiceLists();
   const [listName, setListName] = useState("");
   const [listUniqueId, setListUniqueId] = useState();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const priceTouched = false;
+  const { input } = props
+  const category = "บริการทั้งหมด"
+  const order = "บริการแนะนำ"
   useEffect(() => {
-    getServiceLists({ priceTouched });
-  }, []);
+    getServiceLists({ input, category, order });
+  }, [input]);
 
   const { handleColorText, handleColorButton } = filterCategory;
   return (
