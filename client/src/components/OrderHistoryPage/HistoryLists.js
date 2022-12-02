@@ -136,7 +136,7 @@ const HistoryLists = () => {
                     >
                       <Text textStyle={"b3"}>ราคารวม:</Text>
                       <Text textStyle={"h2"} color="gray.950">
-                        {item.total_price} ฿
+                        {item.total_price.toLocaleString()} ฿
                       </Text>
                     </Flex>
                   </Flex>

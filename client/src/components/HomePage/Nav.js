@@ -1,4 +1,4 @@
-import { Flex, Box, Button, Image, Text, Container, MenuItem, MenuList, Menu, MenuButton, Avatar } from "@chakra-ui/react";
+import { Flex, Box, Button, Image, Text, Container, MenuItem, MenuList, Menu, MenuButton, Avatar, Img } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/authentication";
 import notification from "../../assets/image/homePage/notification.svg";
@@ -7,7 +7,7 @@ import order from "../../assets/image/homePage/order.svg";
 import history from "../../assets/image/homePage/history.svg";
 import houseLogo from "../../assets/image/homePage/house-logo.svg";
 import logoutPic from "../../assets/image/homePage/logoutPic.svg";
-import bell from "../../assets/image/homePage/bell.svg";
+import userPic from "../../assets/image/homePage/user.svg";
 import { useState } from "react";
 const NavComponent = () => {
   const { isAuthenticated, logout } = useAuth();
@@ -70,7 +70,9 @@ const NavComponent = () => {
                   </Text>
                   <Menu>
                     <MenuButton as={Button} variant='dropdown' _hover={{ bg: 'none' }} minW="0px" w='100%px' onClick={() => setToggle(false)}>
-                      <Avatar name={user.firstname} src={bell} size={'40px'} onClick={() => setToggle(!toggle)} />
+                      <Box w='30px' h='30px' p='5px' border='1px' borderColor={'gray.300'} borderRadius='50%' display='flex' justifyContent='center' alignItems='center' onClick={() => setToggle(!toggle)} >
+                        <Img src={userPic} w='20px' />
+                      </Box>
                     </MenuButton>
                     <MenuList
                       minW="0px"
@@ -116,7 +118,7 @@ const NavComponent = () => {
                       </MenuItem>
                     </MenuList>
                   </Menu>
-                  <Image src={notification} w={"40px"} borderRadius={"999px"} />
+                  {/* <Image src={notification} w={"40px"} borderRadius={"999px"} /> */}
                 </Flex>
               </>
             ) : (

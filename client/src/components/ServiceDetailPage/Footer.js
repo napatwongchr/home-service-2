@@ -69,7 +69,7 @@ const Footer = (props) => {
 
   useEffect(() => {
     validationForm();
-  }, [summary]);
+  });
 
   return (
     <Container

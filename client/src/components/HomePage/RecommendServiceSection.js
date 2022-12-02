@@ -91,8 +91,8 @@ const RecommendServiceSection = () => {
                       >
                         ค่าบริการประมาณ{" "}
                         {item.min === item.max
-                          ? item.min
-                          : `${item.min} - ${item.max}`}{" "}
+                          ? item.min.toLocaleString()
+                          : `${item.min.toLocaleString()} - ${item.max.toLocaleString()}`}{" "}
                         ฿
                       </Text>
                     </Flex>

@@ -41,7 +41,7 @@ const AdminServiceList = (props) => {
   const category = "บริการทั้งหมด"
   const order = "บริการแนะนำ"
   useEffect(() => {
-    getServiceLists({input, category, order});
+    getServiceLists({ input, category, order });
   }, [input]);
 
   const { handleColorText, handleColorButton } = filterCategory;

@@ -126,7 +126,7 @@ const serviceListController = {
             updated_at 
             from sub_service where service_id = $1`;
 
-      const groupBy = `group by service.service_id, service_image.service_image_id, service_category.service_category_name`;
+      const groupBy = `group by service.service_id, service_image.service_image_id, service_category.service_category_name order by updated_at desc`;
 
       //Query Service By ID
       if (serviceId) {
@@ -188,7 +188,7 @@ const serviceListController = {
           !priceMin &&
           !priceMax)
       ) {
-        serviceQuery += groupBy;
+        serviceQuery += groupBy
       } else if (
         category !== "บริการทั้งหมด" &&
         priceMin &&

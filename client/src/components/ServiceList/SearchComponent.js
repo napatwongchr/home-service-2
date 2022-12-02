@@ -39,8 +39,8 @@ const SearchSection = (props) => {
   const [toggle, setToggle] = useState(false);
   const { serviceCategories, getServiceCategories } = useServiceCategories();
   const searchCategoryName = "";
-  
- useEffect(() => {
+
+  useEffect(() => {
     getServiceCategories({ searchCategoryName });
   }, []);
 
@@ -134,17 +134,17 @@ const SearchSection = (props) => {
                       {
                         serviceCategories && serviceCategories.map(item => {
                           return (
-                      <MenuItem
-                        key={item.service_category_id}
-                        px={"14px"}
-                        _hover={{ bg: "gray.100" }}
-                        color={category === "บริการทั่วไป" ? "blue.700" : null}
-                        onClick={() => {
-                          setCategory(item.service_category_name);
-                        }}
-                      >
-                        {item.service_category_name}
-                      </MenuItem>
+                            <MenuItem
+                              key={item.service_category_id}
+                              px={"14px"}
+                              _hover={{ bg: "gray.100" }}
+                              color={category === "บริการทั่วไป" ? "blue.700" : null}
+                              onClick={() => {
+                                setCategory(item.service_category_name);
+                              }}
+                            >
+                              {item.service_category_name}
+                            </MenuItem>
 
                           )
                         })
@@ -160,7 +160,7 @@ const SearchSection = (props) => {
                 alignItems="center"
                 pl="10px"
                 mr="20px"
-                w="140px"
+                w="150px"
               >
                 <Menu>
                   <Text
@@ -178,14 +178,13 @@ const SearchSection = (props) => {
                     <MenuButton
                       as={Button}
                       variant="dropdown"
-                      w="100%"
                       textAlign="left"
                       rightIcon={<Image src={arrow} />}
                       onClick={() => {
                         setToggle(!toggle);
                       }}
                     >
-                      {sliderValue[0]}-{sliderValue[1]}฿
+                      {sliderValue[0].toLocaleString()}-{sliderValue[1].toLocaleString()} ฿
                     </MenuButton>
                     {toggle && (
                       <Container
@@ -208,7 +207,7 @@ const SearchSection = (props) => {
                         >
                           <Stack height="100px" width="inherit">
                             <Text>
-                              {sliderValue[0]}-{sliderValue[1]}฿
+                              {sliderValue[0].toLocaleString()}-{sliderValue[1].toLocaleString()} ฿
                             </Text>
                             <RangeSlider
                               height="2rem"
@@ -358,8 +357,8 @@ const SearchSection = (props) => {
             </Flex>
           </Box>
         </Stack>
-      </Container>
-    </Container>
+      </Container >
+    </Container >
   );
 };
 

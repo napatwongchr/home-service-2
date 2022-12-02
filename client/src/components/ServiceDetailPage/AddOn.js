@@ -7,17 +7,27 @@ const AddOnList = (props) => {
   const subServiceList = serviceList.subService;
 
   useEffect(() => {
-    const subServices = subServiceList.map((subService) => {
-      subService.count = 0;
-      subService.sub_total_price = 0;
-      return { ...subService };
-    })
+    let subServices;
+    let totalPrice = 0
+    if (summary.data.subServices) {
+      subServices = summary.data.subServices.map((subService, index) => {
+        totalPrice += subService.count * subService.price_per_unit
+        return { ...subService };
+      })
+    } else {
+      subServices = subServiceList.map((subService, index) => {
+        subService.count = 0;
+        subService.sub_total_price = 0;
+        return { ...subService };
+      })
+    }
+
     setSummary(prevState => (
       {
         data: {
           ...prevState.data,
           subServices,
-          totalPrice: 0
+          totalPrice
         }
       }
     ))

@@ -24,7 +24,7 @@ const Summary = (props) => {
         <Flex pb="1rem" direction="column" mt="1rem" gap="1rem" w="18.5rem" whiteSpace="nowrap">
           {summary?.data.subServices && summary.data.subServices.map((subService, index) => {
             return (
-              <Flex key={index} gap="2rem" alignItems="center" justify="space-between" >
+              <Flex key={index} alignItems="center" justify="space-between" >
                 <Text textColor="utility.black" fontSize="14px">
                   {subService.sub_service_name}
                 </Text>
@@ -58,7 +58,7 @@ const Summary = (props) => {
               </Flex>
             </>
           ) : null}
-          {summary.data.address ? (<>
+          {summary.data.address.homeAddress !== "" || summary.data.address.subdistrict !== "" || summary.data.address.district !== "" || summary.data.address.province !== "" ? (<>
             <Flex justifyContent="space-between" direction="row" width="inherit" overflowWrap={"break-word"} textAlign="right">
 
               <Text fontWeight="300px" color="gray.700" whiteSpace="nowrap" >สถานที่</Text>
@@ -85,7 +85,7 @@ const Summary = (props) => {
         <Flex justifyContent="space-between" mt="1rem">
           <Text textColor="gray.700" fontSize="1rem" fontWeight="400">รวม</Text>
           <Text textColor="utility.black" fontWeight="600" fontSize="1rem">
-            {summary.data.totalPrice}฿
+            {summary.data.totalPrice.toLocaleString()} ฿
           </Text>
         </Flex>
       </Flex >

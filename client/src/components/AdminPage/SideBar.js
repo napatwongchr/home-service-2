@@ -81,7 +81,7 @@ const SideBar = () => {
               </Text>
             </Flex>
           </Link>
-          <Link>
+          {/* <Link>
             <Flex
               w="100%"
               h="54px"
@@ -96,7 +96,7 @@ const SideBar = () => {
                 Promotion Code
               </Text>
             </Flex>
-          </Link>
+          </Link> */}
         </Box>
         <Flex
           w="100%"

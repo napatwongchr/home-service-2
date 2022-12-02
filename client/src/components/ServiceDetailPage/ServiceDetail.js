@@ -174,7 +174,7 @@ const ServiceDetail = () => {
                 รวม
               </Text>
               <Text textColor="utility.black" fontWeight="600" fontSize="1rem">
-                {summary.data.totalPrice} ฿
+                {summary.data.totalPrice.toLocaleString()} ฿
               </Text>
             </Flex>
             <Button
@@ -248,8 +248,8 @@ const ServiceDetail = () => {
                     page === 1
                       ? informationIcon
                       : page === 2
-                      ? informationProcessIcon
-                      : informationSuccessIcon
+                        ? informationProcessIcon
+                        : informationSuccessIcon
                   }
                   alt="informationIcon"
                   h="40px"

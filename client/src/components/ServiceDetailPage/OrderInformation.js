@@ -63,7 +63,7 @@ const OrderInformation = (props) => {
   };
 
   // find disable times
-  var toArray = require("dayjs/plugin/toArray");
+  const toArray = require("dayjs/plugin/toArray");
   dayjs.extend(toArray);
   let ranged = [];
   const findDisableTime = () => {
@@ -77,6 +77,13 @@ const OrderInformation = (props) => {
   findDisableTime();
 
   const disabledDateTime = () => ({ disabledHours: () => [...ranged] });
+
+  const formatDate = (arr) => {
+    if (arr) {
+      return (`0${arr[2]}-${arr[1]}-${arr[0]}`)
+    }
+  }
+
 
   return (
     <Container maxW="735px" p={0} mb='100px'>
@@ -109,6 +116,8 @@ const OrderInformation = (props) => {
             <DatePicker
               className="picker"
               format="DD MMMM YYYY"
+              // value={"Text"}
+              value={summary?.data?.dateArr ? dayjs(formatDate(summary?.data.dateArr), 'DD-MM-YYYY') : null}
               onChange={(date) => {
                 setSummary(prevState => (
                   {
@@ -118,7 +127,8 @@ const OrderInformation = (props) => {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
-                      })
+                      }),
+                      dateArr: date?.toArray()
                     }
                   }
                 ))
@@ -139,6 +149,7 @@ const OrderInformation = (props) => {
             </Text>
             <TimePicker
               format="HH:mm"
+              value={summary.data?.time && summary.data?.time !== "undefined" ? dayjs(summary.data?.time, 'hh:mm') : null}
               onChange={(time) => {
                 setSummary(prevState => (
                   {
