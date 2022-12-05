@@ -1,4 +1,5 @@
 import { Container, Flex, Text, Divider } from "@chakra-ui/react";
+import { useState } from "react";
 
 const Summary = (props) => {
   const { summary } = props;
@@ -21,18 +22,20 @@ const Summary = (props) => {
         </Text>
 
         {/* AddOnList */}
-        <Flex pb="1rem" direction="column" mt="1rem" gap="1rem" w="18.5rem" whiteSpace="nowrap">
+        <Flex pb="1rem" direction="column" mt="1rem" gap="1rem" w="18.5rem" whiteSpace="wrap">
           {summary?.data.subServices && summary.data.subServices.map((subService, index) => {
-            return (
-              <Flex key={index} alignItems="center" justify="space-between" >
-                <Text textColor="utility.black" fontSize="14px">
-                  {subService.sub_service_name}
-                </Text>
-                <Text textColor="gray.900" fontWeight="300" fontSize="14px">
-                  {subService.count} รายการ
-                </Text>
-              </Flex>
-            );
+            if(subService.count >=1){
+              return (
+                <Flex key={index} alignItems="center" justify="space-between">
+                  <Text textColor="utility.black" fontSize="14px">
+                    {subService.sub_service_name}
+                  </Text>
+                  <Text textColor="gray.900" fontWeight="300" fontSize="14px">
+                    {subService.count} รายการ
+                  </Text>
+                </Flex>
+              );
+            }
           })}
         </Flex>
         {/* OrderInfomation */}
