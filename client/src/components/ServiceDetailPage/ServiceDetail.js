@@ -83,21 +83,23 @@ const ServiceDetail = () => {
               whiteSpace="nowrap"
               w="100%"
             >
-              {summary.data.subServices &&
+              {summary.data.subServices && 
                 summary.data.subServices.map((subService, index) => {
-                  return (
-                    <Flex
-                      key={index}
-                      alignItems="center"
-                      justify="space-between"
-                      fontSize="14px"
-                      textColor="utility.black"
-                      fontWeight={"500"}
-                    >
-                      <Text>{subService.sub_service_name}</Text>
-                      <Text>{subService.count} รายการ</Text>
-                    </Flex>
-                  );
+                  if(subService.count > 0) {
+                    return (
+                      <Flex
+                        key={index}
+                        alignItems="center"
+                        justify="space-between"
+                        fontSize="14px"
+                        textColor="utility.black"
+                        fontWeight={"500"}
+                      >
+                        <Text>{subService.sub_service_name}</Text>
+                        <Text>{subService.count} รายการ</Text>
+                      </Flex>
+                    );
+                  }
                 })}
             </Flex>
             <Divider color="gray.200" />
