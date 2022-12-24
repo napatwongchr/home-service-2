@@ -119,11 +119,13 @@ const HistoryLists = () => {
                         spacing={"5px"}
                       >
                         {item.subOrder.map((item, index) => {
-                          return (
-                            <ListItem key={index}>
-                              {item.sub_service_name}
-                            </ListItem>
-                          );
+                          if(item.count > 0){
+                            return (
+                              <ListItem key={index}>
+                                {item.sub_service_name}
+                              </ListItem>
+                            );
+                          }
                         })}
                       </UnorderedList>
                     </Flex>
